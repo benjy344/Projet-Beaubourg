@@ -1,0 +1,211 @@
+var Username = "";
+var devMod = false;
+var aleNumber = '';
+var binaire = '';
+/********************
+
+Chargement des levels et menu
+
+*******************/
+function loadChooseDevMod(){
+    Username = $('input#name').val();
+    $('main').load('./chooseDevMod.html', function(){
+        $('input').on('touch click', function(e) {
+            isdebMod = $('input#input1:checked').val();
+            if (isdebMod == 'on') {
+                devMod = false;
+            }
+            else {devMod = true;} 
+        }).off(); 
+    });
+}
+
+function loadChooseLevel(){
+    $('main').load('./accueil.html');
+}
+
+function loadlevel1(devMod) {
+    $('.hamburger').show();
+    if (devMod){
+        $('main').load('./level1.html', function(){
+            
+            //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
+            var heightNumber =  24;
+            var min = Math.ceil(0);
+            var max = Math.floor(9);
+   
+            for (var i = 0; i < heightNumber; i++){
+                var alea = Math.floor(Math.random() * (max - min +1)) + min;
+                if (alea % 2 == 0) {
+                    binaire = binaire+'0';
+                }
+                else { binaire = binaire+'1'; }
+                aleNumber = aleNumber+''+alea+''
+            }
+            $('.aleNumber').html(aleNumber);
+            //generation des cases du tableau
+            for (var i = 0; i < 5; i++){
+                 $('.tableau ul:first-child').clone().appendTo( ".tableau" );
+            }
+               
+
+            var div = $('.tableau ul li div');
+
+            div.on('touch click', function(e) {
+                $(this).toggleClass('white');
+            }).off();
+        });
+    }
+    else {
+        $('main').load('./level1.html', function(){
+            //generation du nombre aléatoir a 12 chiffres
+            var heightNumber =  12;
+            min = Math.ceil(0);
+            max = Math.floor(9);
+   
+            for (var i = 0; i < heightNumber; i++){
+                var alea = Math.floor(Math.random() * (max - min +1)) + min;
+                if (alea % 2 == 0) {
+                    binaire = binaire+'0';
+                }
+                else { binaire = binaire+'1'; }
+                aleNumber = aleNumber+''+alea+''
+            }
+            $('.aleNumber').html(aleNumber);
+            //generation des cases du tableau
+            for (var i = 0; i < 2; i++){
+                 $('.tableau ul:first-child').clone().appendTo( ".tableau" );
+            }
+            var div = $('.tableau ul li div');
+            
+
+            div.on('touch click', function(e) {
+                $(this).toggleClass('white');
+            });
+        }).off();
+    }    
+}
+function validChap1() {
+    var chaineTableau = '';
+    var div = $('.tableau ul li div');
+
+    $(div).each(function() {
+        if($( this ).hasClass( "white" )){
+            chaineTableau = chaineTableau + '1';
+        }
+        else{
+            chaineTableau = chaineTableau + '0';
+        }
+    });
+    if (chaineTableau == binaire ) {
+        Showpopup('Bravo !', 'loadlevel2()');
+    }else{Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()');}
+
+    
+}
+
+
+function loadlevel2() {
+    
+}
+
+function loadlevel3() {
+    
+}
+
+function loadlevel4() {
+    
+}
+
+function loadlevel5() {
+    
+}
+
+
+/********************
+*
+*   Popup
+*
+*********************/
+function Showpopup(content, loadfonction){
+    $Popup = $('.popup');
+    $content_popup = $('.popup .content-popup');
+    $button = $('.js-fleche-popup');
+    if ($Popup) {
+        $content_popup.html(''+content+'');
+        $button.attr("onclick", ''+loadfonction+'');
+        $Popup.removeClass('hide');
+    };
+}
+function hidePopup() {
+    $Popup = $('.popup');
+    $content_popup = $('.popup .content-popup');
+    $button = $('.popup .js-fleche-popup');
+
+    $content_popup.html('');
+    $button.attr("onclick", '');
+    $Popup.addClass('hide');
+}
+
+
+
+
+
+$(document).ready(function() {
+    $('.hamburger').hide();
+    
+    $('.hamburger, #overlay').on('touch click', function() {
+            $('.hamburger').toggleClass('is-active');
+            $('#overlay').toggleClass('open');
+        });
+
+    $('.loading').slideUp(1000);
+
+    $("#name").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            loadChooseDevMod();
+        }
+    });
+    /////////////////Formulaire
+    // Test for placeholder support
+    $.support.placeholder = (function(){
+        var i = document.createElement('input');
+        return 'placeholder' in i;
+    })();
+
+    // Hide labels by default if placeholders are supported
+    if($.support.placeholder) {
+        $('.form-label').each(function(){
+            $(this).addClass('js-hide-label');
+        });  
+
+        // Code for adding/removing classes here
+        $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
+            
+            // Cache our selectors
+            var $this = $(this),
+                $parent = $this.parent().find("label");
+
+            if (e.type == 'keyup') {
+                if( $this.val() == '' ) {
+                    $parent.addClass('js-hide-label'); 
+                } else {
+                    $parent.removeClass('js-hide-label');   
+                }                     
+            } 
+            else if (e.type == 'blur') {
+                if( $this.val() == '' ) {
+                    $parent.addClass('js-hide-label');
+                } 
+                else {
+                    $parent.removeClass('js-hide-label').addClass('js-unhighlight-label');
+                }
+            } 
+            else if (e.type == 'focus') {
+                if( $this.val() !== '' ) {
+                    $parent.removeClass('js-unhighlight-label');
+                }
+            }
+        }).off();
+    } 
+});

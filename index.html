@@ -1,0 +1,67 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Cod'Art</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<script src="//localhost:35729/livereload.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+</head>
+<body>
+	<div class="loading">
+		<img src="assets/loading.svg">
+	</div>
+	<div class='background'></div>
+	<div id="menu">
+		<div class="button-burger">
+			<button class="hamburger hamburger--spin" type="button">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</button>
+		</div>
+		<div class="overlay" id="overlay">
+			<nav>
+				<ul>
+					<li><a href="#">Chapitres</a></li>
+					<li><a href="#">Niveaux</a></li>
+					<li><a href="#">Encyclopedie</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	<main >
+		<div id="intro">
+			<figure class="logo">
+			<img src="assets/logo.png" alt="Logo Cod'Art">
+		</figure>
+		
+		<div class="content-form">
+          <form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
+              <div class="form-group">
+                  <label class="form-label" for="name">Username</label>
+                  <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
+              </div> 
+               <div >
+                  <div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
+              </div>
+          </form>
+        </div>
+		</div>
+		
+
+	
+	</main>
+	<div class="popup hide">
+		<div class="content-popup">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit sed, maxime dolorem consectetur officia at eum! Cupiditate enim voluptas at ducimus asperiores sapiente iure nisi cumque adipisci, alias, nemo, reiciendis!
+		</div>
+		<div >
+			<div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>

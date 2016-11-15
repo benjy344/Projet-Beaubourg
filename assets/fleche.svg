@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-28.3529" y1="49.7347" x2="102.2759" y2="49.7347">
+	<stop  offset="0" style="stop-color:#3FA9F5"/>
+	<stop  offset="1" style="stop-color:#7AC943"/>
+</linearGradient>
+<circle fill="url(#SVGID_1_)" cx="16.1" cy="49.7" r="5.5"/>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="-12.3529" y1="49.7347" x2="118.2759" y2="49.7347">
+	<stop  offset="0" style="stop-color:#3FA9F5"/>
+	<stop  offset="1" style="stop-color:#7AC943"/>
+</linearGradient>
+<circle fill="url(#SVGID_2_)" cx="32.1" cy="49.7" r="5.5"/>
+<g>
+	<g>
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="-30.3721" y1="49.7347" x2="113.642" y2="49.7347">
+			<stop  offset="0" style="stop-color:#3FA9F5"/>
+			<stop  offset="1" style="stop-color:#7AC943"/>
+		</linearGradient>
+		<path fill="url(#SVGID_3_)" d="M47,67.6c0,4.6,4.5,7.5,8.5,5.2l15.2-8.9l15.3-9c4-2.3,3.9-8.1-0.1-10.4l-15.5-9l-14.9-8.9
+			c-4-2.3-8.5,0.6-8.5,5.2v1c0,0,0.1,0.4,0.1,0.4c3,0,5.5,2.5,5.5,5.5s-2.5,5.5-5.5,5.5c0,0-0.1,0-0.1,0v0.1c-3,0.1-5.4,2.5-5.4,5.5
+			s2.4,5.4,5.4,5.5v0.1c0,0,0.1,0,0.1,0c3,0,5.5,2.5,5.5,5.5s-2.5,5.5-5.5,5.5"/>
+	</g>
+</g>
+</svg>
