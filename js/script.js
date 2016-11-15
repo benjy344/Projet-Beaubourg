@@ -2,6 +2,12 @@ var Username = "";
 var devMod = false;
 var aleNumber = '';
 var binaire = '';
+
+$Popup = $('.popup');
+$content_popup = $('.popup .content-popup');
+$button = $('.js-fleche-popup');
+$hoverlay = $('.hoverlay');
+$popup_icon = $('.popup-icon i');
 /********************
 
 Chargement des levels et menu
@@ -98,8 +104,8 @@ function validChap1() {
         }
     });
     if (chaineTableau == binaire ) {
-        Showpopup('Bravo !', 'loadlevel2()');
-    }else{Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()');}
+        Showpopup('Bravo !', 'loadlevel2()', 'succes');
+    }else{Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');}
 
     
 }
@@ -127,24 +133,21 @@ function loadlevel5() {
 *   Popup
 *
 *********************/
-function Showpopup(content, loadfonction){
-    $Popup = $('.popup');
-    $content_popup = $('.popup .content-popup');
-    $button = $('.js-fleche-popup');
+function Showpopup(content, loadfonction, icon){
     if ($Popup) {
         $content_popup.html(''+content+'');
         $button.attr("onclick", ''+loadfonction+'');
+        if(icon) $popup_icon.attr('class', 'icon icon-'+icon+'');
         $Popup.removeClass('hide');
+        $hoverlay.removeClass('hide');
     };
 }
 function hidePopup() {
-    $Popup = $('.popup');
-    $content_popup = $('.popup .content-popup');
-    $button = $('.popup .js-fleche-popup');
-
     $content_popup.html('');
     $button.attr("onclick", '');
+    $popup_icon.attr('class', '');
     $Popup.addClass('hide');
+    $hoverlay.addClass('hide');
 }
 
 

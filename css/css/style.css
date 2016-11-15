@@ -3,6 +3,65 @@
 		Variables
 
 *******************/
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+@include sprites($spritesheet-sprites);
+*/
+.icon-error {
+  background-image: url(../../assets/sprite-main.png);
+  background-position: 0px -103px;
+  width: 63px;
+  height: 101px;
+}
+
+.icon-succes {
+  background-image: url(../../assets/sprite-main.png);
+  background-position: 0px 0px;
+  width: 86px;
+  height: 98px;
+}
+
 body {
   background: #242322;
   font-family: "Josefin Sans", sans-serif;
@@ -29,6 +88,9 @@ body .loading img {
   right: calc( 50% - 28.5px);
   top: calc( 50% - 28.5px);
 }
+body .icon {
+  display: inline-block;
+}
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
 }
@@ -48,6 +110,7 @@ body .popup {
   position: fixed;
   width: 90vw;
   height: 90vh;
+  z-index: 3011;
   background-image: url("../assets/popup.svg");
   background-size: contain;
   background-repeat: no-repeat;
@@ -55,14 +118,39 @@ body .popup {
   right: 0;
   margin-right: calc( 10vw / 2);
   margin-top: calc( 10vh / 2);
+  transform-origin: right bottom;
+  transform: rotate(0deg);
+  transition: all 0.5s;
+  transition-delay: 0.5s;
 }
 body .popup.hide {
   visibility: 0;
   opacity: 0;
-  right: -100vw;
+  right: -200vw;
+  transition: all 0.5s;
+  transform-origin: right bottom;
+  transform: rotate(-90deg);
+  transition: all 0.5s;
 }
 body .popup .content-popup {
   padding: 10%;
+}
+body .popup .popup-icon {
+  text-align: center;
+}
+body .hoverlay {
+  background: rgba(24, 23, 22, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 3010;
+  top: 0;
+  left: 0;
+  transition: all 0.5s;
+}
+body .hoverlay.hide {
+  left: -100%;
+  transition: all 0.5s;
 }
 body .background {
   background-image: url("../assets/background.jpg");
@@ -371,6 +459,20 @@ body .overlay ul li a:after {
   100% {
     opacity: 1;
     left: 0;
+  }
+}
+@keyframes popup {
+  0% {
+    transform: scale(0.5);
+  }
+  33% {
+    transform: scale(1);
+  }
+  66% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 

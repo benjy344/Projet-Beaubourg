@@ -35,6 +35,21 @@ module.exports = function(grunt) {
         }
       }
     },
+    sprite: {
+      main: {
+        src: [
+        'assets/sprites/*.png'
+        ],
+        dest: 'assets/sprite-main.png',
+        destCss: 'css/scss/sprite-main.scss',
+        cssFormat: 'scss',
+        cssVarMap: function (sprite) {
+         sprite.name = 'icon-' + sprite.name;
+       },
+       algorithm   : 'binary-tree',
+       padding     : 5
+     }
+   },
     // Observons…
       watch: {
         options: {
@@ -42,15 +57,17 @@ module.exports = function(grunt) {
         },
         src: {
           files: ['js/*.js', 'css/**/*.scss', '**/*.html'], // Les fichiers à observer…
-          tasks: ['default'], // … la commande à effectuer
+          tasks: ['sass:dist', 'concat:dist', 'cssmin'], // … la commande à effectuer
         }
       }
   })
   grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-spritesmith');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
-  grunt.registerTask('default', ['sass:dist', 'concat:dist', 'cssmin']) // ici même.
+  grunt.registerTask('default', ['sass:dist', 'concat:dist', 'cssmin', 'sprite']);
+  grunt.registerTask('spritesmith', ['sprite']);
 }
