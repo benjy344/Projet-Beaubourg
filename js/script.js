@@ -104,27 +104,28 @@ function validChap1() {
         }
     });
     if (chaineTableau == binaire ) {
-        Showpopup('Bravo !', 'loadlevel2()', 'succes');
-    }else{Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');}
+        Showpopup('Bravo !', 'loadlevel2()', 'succes iconAnim');
+    }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
 
     
 }
 
 
 function loadlevel2() {
+    hidePopup();
     
 }
 
 function loadlevel3() {
-    
+    hidePopup();
 }
 
 function loadlevel4() {
-    
+    hidePopup();
 }
 
 function loadlevel5() {
-    
+    hidePopup();
 }
 
 
