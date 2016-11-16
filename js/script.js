@@ -16,14 +16,17 @@ Chargement des levels et menu
 function loadChooseDevMod(){
     Username = $('input#name').val();
     $('main').load('./chooseDevMod.html', function(){
-        $('input').on('touch click', function(e) {
+
+        $('#input1, #input2').on('touch click', function(e) {
             isdebMod = $('input#input1:checked').val();
             if (isdebMod == 'on') {
+
                 devMod = false;
             }
             else {devMod = true;} 
-        }).off(); 
+        }); 
     });
+    $('#input1, #input2').off();
 }
 
 function loadChooseLevel(){
@@ -36,7 +39,7 @@ function loadlevel1(devMod) {
         $('main').load('./level1.html', function(){
             
             //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
-            var heightNumber =  24;
+            var heightNumber =  16;
             var min = Math.ceil(0);
             var max = Math.floor(9);
    
@@ -50,7 +53,7 @@ function loadlevel1(devMod) {
             }
             $('.aleNumber').html(aleNumber);
             //generation des cases du tableau
-            for (var i = 0; i < 5; i++){
+            for (var i = 0; i < 3; i++){
                  $('.tableau ul:first-child').clone().appendTo( ".tableau" );
             }
                
@@ -59,7 +62,7 @@ function loadlevel1(devMod) {
 
             div.on('touch click', function(e) {
                 $(this).toggleClass('white');
-            }).off();
+            });
         });
     }
     else {
@@ -88,7 +91,7 @@ function loadlevel1(devMod) {
             div.on('touch click', function(e) {
                 $(this).toggleClass('white');
             });
-        }).off();
+        });
     }    
 }
 function validChap1() {
@@ -106,8 +109,6 @@ function validChap1() {
     if (chaineTableau == binaire ) {
         Showpopup('Bravo !', 'loadlevel2()', 'succes iconAnim');
     }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
-
-    
 }
 
 
