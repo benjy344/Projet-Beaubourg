@@ -10,51 +10,65 @@
 </head>
 <body>
 	<div class="loading">
-		<img src="assets/loading.svg">
+		<img src="assets/loading.svg" alt="loading">
 	</div>
-	<div class='background'></div>
-	<div id="menu">
-		<div class="button-burger">
-			<button class="hamburger hamburger--spin" type="button">
-				<span class="hamburger-box">
-					<span class="hamburger-inner"></span>
-				</span>
-			</button>
-		</div>
-		<div class="overlay" id="overlay">
-			<nav>
-				<ul>
-					<li><a href="#">Niveaux</a></li>
-					<li><a href="#">Activités</a></li>
-					<li><a href="#">Succès</a></li>
-					<li><a href="#">Encyclopedie</a></li>
-				</ul>
-			</nav>
+	<div id="modal-container">
+		<div class="modal-background">
+			<div class="modal">
+				<h2>I'm a Modal</h2>
+				<p>Hear me roar.</p>
+				<svg class="modal-svg" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+					<rect x="0" y="0" fill="none" width="226" height="162" rx="3" ry="3"></rect>
+				</svg>
+			</div>
 		</div>
 	</div>
-
-	<main >
-		<div id="intro">
-			<figure class="logo">
-			<img src="assets/logo.png" alt="Logo Cod'Art">
-		</figure>
-		
-		<div class="content-form">
-          <form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
-              <div class="form-group">
-                  <label class="form-label" for="name">Username</label>
-                  <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
-              </div> 
-               <div >
-                  <div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
-              </div>
-          </form>
-        </div>
+	<div class="content-global">
+		<div class='background'></div>
+		<div id="menu">
+			<div class="button-burger">
+				<button class="hamburger hamburger--spin" type="button">
+					<span class="hamburger-box">
+						<span class="hamburger-inner"></span>
+					</span>
+				</button>
+			</div>
+			<div class="overlay" id="overlay">
+				<nav>
+					<ul>
+						<li><a href="#">Niveaux</a></li>
+						<li><a href="#">Activités</a></li>
+						<li><a href="#">Succès</a></li>
+						<li><a href="#">Encyclopedie</a></li>
+					</ul>
+				</nav>
+			</div>
 		</div>
-		
 
+		<main >
+			<div id="intro">
+				<figure class="logo">
+					<img src="assets/logo.png" alt="Logo Cod'Art">
+				</figure>
+
+				<div class="content-form">
+					<form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
+						<div class="form-group">
+							<label class="form-label" for="name">Username</label>
+							<input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
+						</div> 
+						<div >
+							<div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+			<div id="three" class="button">Uncovering</div>
+		</main>
+	</div>
 	
-	</main>
 	<div class="popup hide">
 		<div class="overflow">
 			<div class="content-popup">

@@ -106,6 +106,78 @@ body .fleche {
   position: absolute;
   right: 16%;
 }
+body .modal-active {
+  overflow: hidden;
+}
+body #modal-container {
+  position: fixed;
+  display: table;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  z-index: 1;
+}
+body #modal-container.three {
+  z-index: 0;
+  transform: scale(1);
+}
+body #modal-container.three .modal-background {
+  background: #242322;
+}
+body #modal-container.three .modal-background .modal {
+  animation: moveUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+body #modal-container.three + .content-global {
+  z-index: 1;
+  animation: slideUpLarge 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+body #modal-container.three.out {
+  transform: scale(0);
+}
+body #modal-container.three.out .modal-background .modal {
+  animation: moveDown 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+body #modal-container.three.out + .content-global {
+  animation: slideDownLarge 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+body #modal-container .modal-background {
+  display: table-cell;
+  background: #242322;
+  text-align: center;
+  vertical-align: middle;
+}
+body #modal-container .modal-background .modal {
+  background: white;
+  padding: 50px;
+  display: inline-block;
+  border-radius: 3px;
+  font-weight: 300;
+  position: relative;
+}
+body .content-global {
+  min-height: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 0;
+}
+body .content-global .button {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 10px;
+  background: red;
+  font-size: 18px;
+  background-color: #efefef;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+body .content-global .button:hover {
+  color: white;
+  background: #009bd5;
+}
 body .popup {
   position: fixed;
   width: 90vw;
@@ -497,6 +569,52 @@ body .iconAnim {
   }
   100% {
     transform: scale(1);
+  }
+}
+@keyframes popup-codmirror {
+  0% {
+    width: 70vw;
+    right: calc(50% - 35vw);
+  }
+  50% {
+    width: 70vw;
+    right: calc(50% - 35vw);
+  }
+  100% {
+    width: 100vw;
+    right: calc(50% - 50vw);
+  }
+}
+@keyframes slideUpLarge {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes slideDownLarge {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+@keyframes moveUp {
+  0% {
+    transform: translateY(150px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes moveDown {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(150px);
   }
 }
 
