@@ -11,6 +11,17 @@ $icon-home: x y offset_x offset_y width height total_width total_height image_pa
 At the bottom of this section, we provide information about the spritesheet itself
 $spritesheet: width height image $spritesheet-sprites;
 */
+$icon-close-name: 'icon-close';
+$icon-close-x: 91px;
+$icon-close-y: 0px;
+$icon-close-offset-x: -91px;
+$icon-close-offset-y: 0px;
+$icon-close-width: 50px;
+$icon-close-height: 50px;
+$icon-close-total-width: 141px;
+$icon-close-total-height: 204px;
+$icon-close-image: '../../assets/sprite-main.png';
+$icon-close: (91px, 0px, -91px, 0px, 50px, 50px, 141px, 204px, '../../assets/sprite-main.png', 'icon-close', );
 $icon-error-name: 'icon-error';
 $icon-error-x: 0px;
 $icon-error-y: 103px;
@@ -18,10 +29,10 @@ $icon-error-offset-x: 0px;
 $icon-error-offset-y: -103px;
 $icon-error-width: 63px;
 $icon-error-height: 101px;
-$icon-error-total-width: 86px;
+$icon-error-total-width: 141px;
 $icon-error-total-height: 204px;
 $icon-error-image: '../../assets/sprite-main.png';
-$icon-error: (0px, 103px, 0px, -103px, 63px, 101px, 86px, 204px, '../../assets/sprite-main.png', 'icon-error', );
+$icon-error: (0px, 103px, 0px, -103px, 63px, 101px, 141px, 204px, '../../assets/sprite-main.png', 'icon-error', );
 $icon-succes-name: 'icon-succes';
 $icon-succes-x: 0px;
 $icon-succes-y: 0px;
@@ -29,15 +40,15 @@ $icon-succes-offset-x: 0px;
 $icon-succes-offset-y: 0px;
 $icon-succes-width: 86px;
 $icon-succes-height: 98px;
-$icon-succes-total-width: 86px;
+$icon-succes-total-width: 141px;
 $icon-succes-total-height: 204px;
 $icon-succes-image: '../../assets/sprite-main.png';
-$icon-succes: (0px, 0px, 0px, 0px, 86px, 98px, 86px, 204px, '../../assets/sprite-main.png', 'icon-succes', );
-$spritesheet-width: 86px;
+$icon-succes: (0px, 0px, 0px, 0px, 86px, 98px, 141px, 204px, '../../assets/sprite-main.png', 'icon-succes', );
+$spritesheet-width: 141px;
 $spritesheet-height: 204px;
 $spritesheet-image: '../../assets/sprite-main.png';
-$spritesheet-sprites: ($icon-error, $icon-succes, );
-$spritesheet: (86px, 204px, '../../assets/sprite-main.png', $spritesheet-sprites, );
+$spritesheet-sprites: ($icon-close, $icon-error, $icon-succes, );
+$spritesheet: (141px, 204px, '../../assets/sprite-main.png', $spritesheet-sprites, );
 
 /*
 The provided mixins are intended to be used with the array-like variables

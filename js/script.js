@@ -114,6 +114,24 @@ function validChap1() {
 
 function loadlevel2() {
     hidePopup();
+    $('main').load('./level2.html', function(){
+        var pixel = $('.tableau ul li .pixel');
+        var theCase = "";
+        var Modificatecase = $('#modal-container .modal .modifie-element');
+        $(pixel).on('touch click', function(){
+            $('#modal-container').removeAttr('class').addClass('three');
+            $('body').addClass('modal-active');
+            theCase = $(this);
+            Modificatecase.html(theCase);
+      })
+        $('.close').on('touch click', function(){
+            $('#modal-container').addClass('out');
+            $('body').removeClass('modal-active');
+            console.log(theCase);
+            //theCase.html(Modificatecase.children());
+      })
+
+    })
     
 }
 
@@ -152,18 +170,20 @@ function hidePopup() {
     $hoverlay.addClass('hide');
 }
 
-
-
-$('.button').click(function(){
+$('.button').on('touch click', function(){
   var buttonId = $(this).attr('id');
   $('#modal-container').removeAttr('class').addClass(buttonId);
   $('body').addClass('modal-active');
 })
 
-$('#modal-container').click(function(){
-  $(this).addClass('out');
+$('#modal-container .close').on('touch click',function(){
+  $('#modal-container').addClass('out');
   $('body').removeClass('modal-active');
 });
+
+
+
+
 
 $(document).ready(function() {
     $('.hamburger').hide();

@@ -1,3 +1,4 @@
+@import "utilities/reset";
 @import "utilities/variables";
 @import 'sprite-main.scss';
 @include sprites($spritesheet-sprites);
@@ -23,6 +24,12 @@ body {
 	}
 	.icon {
 		display: inline-block;
+	}
+	.close {
+		position: absolute;
+		height: 50px;
+		width: 50px;
+		right: 145px;
 	}
 	input[type="text"], input[type="password"], textarea, select, button { 
 		outline: none;
@@ -86,8 +93,10 @@ body {
 			text-align:center;
 			vertical-align:middle;
 			.modal {
-				background:white;
+				background: $black;
 				padding:50px;
+				height: 100%;
+				width: 100%;
 				display:inline-block;
 				border-radius:3px;
 				font-weight:300;

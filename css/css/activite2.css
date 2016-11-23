@@ -1,0 +1,46 @@
+/*******************
+
+		Variables
+
+*******************/
+#modal-container .pixel {
+  height: 150px;
+  width: 150px;
+  background-color: #FFF;
+}
+
+#Level2 .consigne p {
+  text-align: center;
+  padding-top: 100px;
+}
+#Level2 .consigne span {
+  text-align: center;
+  display: block;
+  width: 100%;
+  letter-spacing: 10;
+}
+#Level2 .tableau {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#Level2 .tableau ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: calc(100vw / 7);
+  padding: 0;
+}
+#Level2 .tableau ul li {
+  list-style: none;
+  width: calc( 100% / 7);
+  height: calc(100%);
+}
+#Level2 .tableau ul li .pixel {
+  height: 100%;
+  width: 100%;
+  background-color: #FFF;
+}
+
+/*# sourceMappingURL=activite2.css.map */
