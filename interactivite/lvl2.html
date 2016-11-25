@@ -30,6 +30,10 @@
             .pixelActive {
                 border : #008bff solid 2px;
             }
+            
+            .checkBg {
+                background-color: black;
+            }
 
         </style>
 
@@ -48,9 +52,15 @@
         <button>RUN</button>
 
         <div class="buttons">
-            <input type="checkbox" class="red" />
-            <input type="checkbox" class="green"/>
-            <input type="checkbox" class="blue"/>
+            <div class="checkBg">
+                <input type="checkbox" class="red" />
+            </div>
+            <div class="checkBg">
+                <input type="checkbox" class="green"/>
+            </div>
+            <div class="checkBg">
+                <input type="checkbox" class="blue"/>
+            </div>
         </div>
 
         <div id="wrapper">
@@ -83,79 +93,107 @@
                     autofocus: false
                     //matchBrackets: true
                 }
-                
+
                 if (!devMode) {
                     codeConfig.readOnly = 'nocursor';
                 }
-                
-                var answers = [{red : true, green : false, blue : false},{red : false, green : true, blue : false},{red : true,green : false,blue : true}]
-                //console.log(answers)
-                
+
+                var answers;
                 var myCodeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
 
                 var value = false;
 
-                $('#wrapper').children().each(function(){            
-                    $(this).data('rvb', {red: value, green: value, blue: value});
-                });
+                $.getJSON('answers.json', function(data){
+                    console.log(data);
+                    answers = data.lvl2;
 
-                if (!devMode) {
-                    $('button').hide();
-                } else {
-                    $('.buttons').hide(); 
-                }
+                    console.log(answers);
 
 
-                //Change Active Pixel
-                $('.pixel').click(function() {
-                    if (!$(this).hasClass('pixelActive')) {
-                        $('.pixelActive').removeClass('pixelActive');
-                    }
-                    $(this).toggleClass('pixelActive');
 
-                    var thisColors = $(this).data('rvb');
+                    $('#wrapper').children().each(function(){            
+                        $(this).data('rvb', {red: value, green: value, blue: value});
+                    });
 
-                    if ($('.pixelActive').length != 0) {
-                        resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
-                        resetCode('pixel' + $('.pixelActive').index(), thisColors.red, thisColors.green, thisColors.blue);
-                        $('.buttons').show();
+                    if (!devMode) {
+                        $('button').hide();
                     } else {
-                        $('.buttons').hide();
+                        $('.buttons').hide(); 
                     }
-                })
 
-                //Run Code
-                $('button').click(function(){
-                    runCode();
-                });
 
-                //Change input
-                $('input:checkbox').change(function(){
-                    var name = $(this).attr('class');
-                    var thisColors = $('.pixelActive').data('rvb');
+                    //Change Active Pixel
+                    $('.pixel').click(function() {
+                        if (!$(this).hasClass('pixelActive')) {
+                            $('.pixelActive').removeClass('pixelActive');
+                        }
+                        $(this).toggleClass('pixelActive');
 
-                    if($(this).is(':checked')) {
-                        thisColors[name] = true;
-                    } else {
-                        thisColors[name] = false;
-                    }
-                    
-                    applyColor(thisColors);
-                })
+                        var thisColors = $(this).data('rvb');
 
-                myCodeMirror.on('focus', function(){
-                    myCodeMirror.setCursor({line:0,ch:0});
-                    setSelection('atom');
-                })
+                        if ($('.pixelActive').length != 0) {
+                            resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
+                            resetCode('pixel' + $('.pixelActive').index(), thisColors.red, thisColors.green, thisColors.blue);
+                            $('.buttons').show();
+                        } else {
+                            $('.buttons').hide();
+                        }
+                    })
 
-                //cm.addKeyMap(map: object, bottom: boolean)
-                // OU
-                //extraKeys: Dans la config du CM
-                myCodeMirror.addKeyMap({
-                    Enter: function(cm) {
+                    //Run Code
+                    $('button').click(function(){
+                        runCode();
+                    });
+
+                    //Change input
+                    $('input:checkbox').change(function(){
+                        var name = $(this).attr('class');
+                        var thisColors = $('.pixelActive').data('rvb');
+                        var val;
+
+                        if($(this).is(':checked')) {
+                            thisColors[name] = true;
+                            val = 255;
+                        } else {
+                            thisColors[name] = false;
+                            val = 0;
+                        }
+
+
+                        switch(name) {
+                            case 'red':
+                                $(this).parent().css('background-color', 'rgb('+ val +', 0, 0)');
+                                break;
+                            case 'green': 
+                                $(this).parent().css('background-color', 'rgb(0, '+ val +', 0)');
+                                break;
+                            case 'blue':
+                                $(this).parent().css('background-color', 'rgb(0, 0, ' + val +')');
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                        applyColor(thisColors);
+                    })
+
+                    myCodeMirror.on('focus', function(){
+                        myCodeMirror.setCursor({line:0,ch:0});
                         setSelection('atom');
-                    }
-                });
+                    })
+
+                    //cm.addKeyMap(map: object, bottom: boolean)
+                    // OU
+                    //extraKeys: Dans la config du CM
+                    myCodeMirror.addKeyMap({
+                        Enter: function(cm) {
+                            setSelection('atom');
+                        }
+                    });
+                })
+
 
                 function setSelection(varType) {
                     var setPos = true;
@@ -210,8 +248,7 @@
                     //console.log(tokens[i])
                 }
 
-                //"keyHandled" (instance: CodeMirror, name: string, event: Event)
-                //Fired after a key is handled through a key map. name is the name of the handled key (for example "Ctrl-X" or "'q'"), and event is the DOM keydown or keypress event.
+
 
                 function alertErr() {
                     var pixel = $('.pixelActive').data('rvb');
@@ -227,33 +264,33 @@
                     eval(code)
 
                     pixel = eval('pixel' + $('.pixelActive').index());
-                    console.log(pixel)                    
-                             
+                    //console.log(pixel)                    
+
                     $('.pixelActive').data('rvb', {red: pixel.red, green: pixel.green, blue: pixel.blue});
-                    
+
                     resetCheckboxes(pixel.red, pixel.green, pixel.blue);
-                    
+
                     applyColor(pixel);
-                    
-                    
+
+
                 }
-                
+
                 function applyColor(pixel) {
                     resetCode('pixel' + $('.pixelActive').index(), pixel.red, pixel.green, pixel.blue);
                     colorPixelRVB(pixel);     
                     verif();
                 }
-                
+
                 function verif() {
-                     var rvb = $('.pixelActive').data('rvb');
-                    
-                    console.log(rvb)
-                    console.log(answers[$('.pixelActive').index()]);
-                
-                    
+                    var rvb = $('.pixelActive').data('rvb');
+
+                    //console.log(rvb)
+                    //console.log(answers[$('.pixelActive').index()]);
+
+
                     if (JSON.stringify(rvb) == JSON.stringify(answers[$('.pixelActive').index()])) {
                         console.log('right');
-                        
+
                     } else {
                         console.log('nope');
                         //Est-ce que l'utilisateur peut changer les variables une fois que le carré a été validé?
@@ -285,9 +322,13 @@
                 }
 
                 function resetCheckboxes(r, g, b) {
-                    $('input.red').prop('checked', r)
-                    $('input.green').prop('checked', g)
-                    $('input.blue').prop('checked', b)
+                    var valR, valG, valB;
+                    if (r) {valR = 255} else {valR = 0}
+                    if (g) {valG = 255} else {valG = 0}
+                    if (b) {valB = 255} else {valB = 0}
+                    $('input.red').prop('checked', r).parent().css('background-color', 'rgb('+valR+', 0, 0)')
+                    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, '+valG+', 0)')
+                    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, '+valB+')')
                 }
 
                 function reset() {
