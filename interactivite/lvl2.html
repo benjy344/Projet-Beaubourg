@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="theme-color" content="#999999" />
+
+        <link rel="stylesheet" href="css/codemirror.css">
+        <link rel="stylesheet" href="css/icecoder.css">
+
+        <style>
+
+            #wrapper {
+                background-color: #ededed;
+                padding: 1em;
+            }
+
+            .pixel {
+                width: 100px;
+                height: 100px;
+                border: solid 1px black;  
+                display: inline-block;
+                background-color: black;
+                transition: background ease 0.5s;
+            }
+
+            .pixelActive {
+                border : #008bff solid 2px;
+            }
+            
+            .checkBg {
+                background-color: black;
+            }
+
+        </style>
+
+        <title>New HMTL document by NewJect</title>
+
+    </head>
+    <body>
+
+        <header>HEADER</header>
+
+        <div></div>
+
+        <textarea id="code">
+        </textarea>
+
+        <button>RUN</button>
+
+        <div class="buttons">
+            <div class="checkBg">
+                <input type="checkbox" class="red" />
+            </div>
+            <div class="checkBg">
+                <input type="checkbox" class="green"/>
+            </div>
+            <div class="checkBg">
+                <input type="checkbox" class="blue"/>
+            </div>
+        </div>
+
+        <div id="wrapper">
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+            <div class="pixel"></div>
+
+        </div>
+
+        <footer>FOOTER</footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="js/codemirror.js"></script>
+        <script src="js/javascript.js"></script>
+        <!--        <script src="js/matchbrackets.js"></script>-->
+        <script src="js/script.js"></script>
+
+        <script>
+
+            $(function(){
+
+                var devMode = true;
+
+                //CodeMirror
+                var textArea = $('#code')[0];
+                var codeConfig = {
+                    mode: "text/javascript",
+                    theme: "icecoder",
+                    lineWrapping: true,
+                    lineNumbers: true,
+                    autofocus: false
+                    //matchBrackets: true
+                }
+
+                if (!devMode) {
+                    codeConfig.readOnly = 'nocursor';
+                }
+
+                var answers;
+                var myCodeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+
+                var value = false;
+
+                $.getJSON('answers.json', function(data){
+                    console.log(data);
+                    answers = data.lvl2;
+
+                    console.log(answers);
+
+
+
+                    $('#wrapper').children().each(function(){            
+                        $(this).data('rvb', {red: value, green: value, blue: value});
+                    });
+
+                    if (!devMode) {
+                        $('button').hide();
+                    } else {
+                        $('.buttons').hide(); 
+                    }
+
+
+                    //Change Active Pixel
+                    $('.pixel').click(function() {
+                        if (!$(this).hasClass('pixelActive')) {
+                            $('.pixelActive').removeClass('pixelActive');
+                        }
+                        $(this).toggleClass('pixelActive');
+
+                        var thisColors = $(this).data('rvb');
+
+                        if ($('.pixelActive').length != 0) {
+                            resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
+                            resetCode('pixel' + $('.pixelActive').index(), thisColors.red, thisColors.green, thisColors.blue);
+                            $('.buttons').show();
+                        } else {
+                            $('.buttons').hide();
+                        }
+                    })
+
+                    //Run Code
+                    $('button').click(function(){
+                        runCode();
+                    });
+
+                    //Change input
+                    $('input:checkbox').change(function(){
+                        var name = $(this).attr('class');
+                        var thisColors = $('.pixelActive').data('rvb');
+                        var val;
+
+                        if($(this).is(':checked')) {
+                            thisColors[name] = true;
+                            val = 255;
+                        } else {
+                            thisColors[name] = false;
+                            val = 0;
+                        }
+
+
+                        switch(name) {
+                            case 'red':
+                                $(this).parent().css('background-color', 'rgb('+ val +', 0, 0)');
+                                break;
+                            case 'green': 
+                                $(this).parent().css('background-color', 'rgb(0, '+ val +', 0)');
+                                break;
+                            case 'blue':
+                                $(this).parent().css('background-color', 'rgb(0, 0, ' + val +')');
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                        applyColor(thisColors);
+                    })
+
+                    myCodeMirror.on('focus', function(){
+                        myCodeMirror.setCursor({line:0,ch:0});
+                        setSelection('atom');
+                    })
+
+                    //cm.addKeyMap(map: object, bottom: boolean)
+                    // OU
+                    //extraKeys: Dans la config du CM
+                    myCodeMirror.addKeyMap({
+                        Enter: function(cm) {
+                            setSelection('atom');
+                        }
+                    });
+                })
+
+
+                function setSelection(varType) {
+                    var setPos = true;
+                    var cm = myCodeMirror;
+                    var currentPos = cm.getCursor();
+                    var line = currentPos.line;
+                    //Commencer la recherche en début de ligne suivante si le curseur est en fin de ligne
+                    if (currentPos.ch == cm.getLine(line).length) {
+                        line++;
+                        currentPos.ch = 0;
+                    }
+                    var tokens = cm.getLineTokens(line);
+                    var i = 0;
+                    //Commencer la recherche après la position actuelle du curseur
+                    while (tokens[i].end <= currentPos.ch) {
+                        i++;
+                    }
+                    if (tokens[i].type == varType) {
+                        i++;
+                    }
+                    if (typeof tokens[i] == 'undefined') {
+                        i = 0;
+                        line++
+                        tokens = cm.getLineTokens(line)
+                    }
+                    while (tokens[i].type != varType) {
+                        i++
+                        if (typeof tokens[i] == 'undefined') {
+                            i = 0;
+                            line++
+                            tokens = cm.getLineTokens(line)
+                        }
+                        if (line > myCodeMirror.lineCount()) {
+                            setPos = false;
+                            //console.log('should run code')
+                            break;
+                        }
+                    }
+                    //console.log('oui')
+                    if (setPos) {
+                        cm.setSelection({line:line,ch:tokens[i].start},{line:line,ch:tokens[i].end});
+                    } else {
+                        console.log('runcode')
+                        if ($('.cm-atom').length != 3) {
+                            alertErr();
+                            //console.log('nope')
+                        } else {
+                            runCode();
+                            myCodeMirror.getInputField().blur();
+                        }
+                    }
+                    //console.log(tokens[i])
+                }
+
+
+
+                function alertErr() {
+                    var pixel = $('.pixelActive').data('rvb');
+                    resetCode('pixel' + $('.pixelActive').index(), pixel.red, pixel.green, pixel.blue)
+                    myCodeMirror.getInputField().blur();
+                    myCodeMirror.focus();
+                    alert('ERROR');
+                }
+
+                function runCode() {
+                    console.log('running code')
+                    var code = myCodeMirror.getValue();
+                    eval(code)
+
+                    pixel = eval('pixel' + $('.pixelActive').index());
+                    //console.log(pixel)                    
+
+                    $('.pixelActive').data('rvb', {red: pixel.red, green: pixel.green, blue: pixel.blue});
+
+                    resetCheckboxes(pixel.red, pixel.green, pixel.blue);
+
+                    applyColor(pixel);
+
+
+                }
+
+                function applyColor(pixel) {
+                    resetCode('pixel' + $('.pixelActive').index(), pixel.red, pixel.green, pixel.blue);
+                    colorPixelRVB(pixel);     
+                    verif();
+                }
+
+                function verif() {
+                    var rvb = $('.pixelActive').data('rvb');
+
+                    //console.log(rvb)
+                    //console.log(answers[$('.pixelActive').index()]);
+
+
+                    if (JSON.stringify(rvb) == JSON.stringify(answers[$('.pixelActive').index()])) {
+                        console.log('right');
+
+                    } else {
+                        console.log('nope');
+                        //Est-ce que l'utilisateur peut changer les variables une fois que le carré a été validé?
+                    }
+                }
+
+
+                function colorPixelRVB(pixel) {
+                    //console.log(pixel)
+                    var red = 0,
+                        green = 0,
+                        blue = 0;
+                    if (pixel.red) { red = 255; }
+                    if (pixel.green) { green = 255; }
+                    if (pixel.blue) { blue = 255; }
+                    $('.pixelActive').css('background-color', 'rgb('+ red +', '+ green +', '+ blue +')');
+                }
+
+                function colorPixel(pixel) {
+                    $('.pixelActive').css('background-color', 'rgb('+pixel.red+', '+pixel.green+', '+pixel.blue+')');
+                }
+
+                function resetCode(id, r, g, b) {
+                    myCodeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}');
+                    myCodeMirror.markText({line:0,ch:0},{line:1,ch:7},{readOnly:true})
+                    myCodeMirror.markText({line:2,ch:0},{line:2,ch:9},{readOnly:true})
+                    myCodeMirror.markText({line:3,ch:0},{line:3,ch:8},{readOnly:true})
+                    myCodeMirror.markText({line:4,ch:0},{line:5,ch:0},{readOnly:true})  
+                }
+
+                function resetCheckboxes(r, g, b) {
+                    var valR, valG, valB;
+                    if (r) {valR = 255} else {valR = 0}
+                    if (g) {valG = 255} else {valG = 0}
+                    if (b) {valB = 255} else {valB = 0}
+                    $('input.red').prop('checked', r).parent().css('background-color', 'rgb('+valR+', 0, 0)')
+                    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, '+valG+', 0)')
+                    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, '+valB+')')
+                }
+
+                function reset() {
+                    $('.pixel').off()
+                    $('button').off()
+                    $('input:checkbox').off()
+                }
+            });
+
+        </script>
+    </body>
+</html>

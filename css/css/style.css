@@ -68,14 +68,15 @@ body {
   font-size: 1.3rem;
   color: #FBFBFB;
   /******************
-  *
-  *	   Menu
-  *
-  ******************/
+	*
+	*	   Menu
+	*
+	******************/
   /*
-  * Spin
-  */
+	* Spin
+	*/
 }
+
 body .loading {
   z-index: 20000;
   position: fixed;
@@ -83,17 +84,21 @@ body .loading {
   width: 100%;
   background-color: #242322;
 }
+
 body .loading img {
   position: absolute;
   right: calc( 50% - 28.5px);
   top: calc( 50% - 28.5px);
 }
+
 body .icon {
   display: inline-block;
 }
+
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
 }
+
 body .fleche {
   background: transparent;
   color: transparent;
@@ -106,6 +111,7 @@ body .fleche {
   position: absolute;
   right: 16%;
 }
+
 body .popup {
   position: fixed;
   width: 90vw;
@@ -123,6 +129,7 @@ body .popup {
   transition: all 0.5s;
   transition-delay: 0.5s;
 }
+
 body .popup.hide {
   visibility: 0;
   opacity: 0;
@@ -132,12 +139,15 @@ body .popup.hide {
   transform: rotate(-90deg);
   transition: all 0.5s;
 }
+
 body .popup .content-popup {
   padding: 10%;
 }
+
 body .popup .popup-icon {
   text-align: center;
 }
+
 body .hoverlay {
   background: rgba(24, 23, 22, 0.5);
   position: fixed;
@@ -148,10 +158,12 @@ body .hoverlay {
   left: 0;
   transition: all 0.5s;
 }
+
 body .hoverlay.hide {
   left: -100%;
   transition: all 0.5s;
 }
+
 body .background {
   background-image: url("../assets/background.jpg");
   height: 100%;
@@ -163,20 +175,24 @@ body .background {
   z-index: -1;
   background-size: cover;
 }
+
 body main {
   min-width: 100%;
   min-height: 100%;
 }
+
 body main #menu .button-burger {
   display: block;
   position: relative;
   z-index: 21;
 }
+
 body main #intro .logo {
   max-width: 60%;
   margin: 0 auto;
   padding-top: 100px;
 }
+
 body main #intro .logo img {
   width: 100%;
   height: auto;
@@ -184,15 +200,18 @@ body main #intro .logo img {
   margin: 0 auto;
   display: block;
 }
+
 body main #intro .content-form {
   margin: 0 auto;
   width: 60%;
   max-width: 300px;
   padding-top: 60px;
 }
+
 body main #intro .content-form .form-group {
   margin: 20px 0;
 }
+
 body main #intro .content-form .form-label {
   font-family: "Josefin Sans", sans-serif;
   color: #3fa9f5;
@@ -205,6 +224,7 @@ body main #intro .content-form .form-label {
   -webkit-transition: .333s ease top, .333s ease opacity;
   transition: .333s ease top, .333s ease opacity;
 }
+
 body main #intro .content-form .form-control {
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.3rem;
@@ -218,16 +238,20 @@ body main #intro .content-form .form-control {
   color: #D9D9D9;
   width: 100%;
 }
+
 body main #intro .content-form .form-control:focus {
   box-shadow: none;
   border-image: linear-gradient(90deg, #3fa9f5, #7ac943) 10;
 }
+
 body main #intro .content-form .js-hide-label {
   opacity: 0;
 }
+
 body main #intro .content-form .js-unhighlight-label {
   color: #FFF;
 }
+
 body main #ChooseLevel ul {
   width: 90%;
   height: 90%;
@@ -236,16 +260,19 @@ body main #ChooseLevel ul {
   flex-direction: column;
   justify-content: space-around;
 }
+
 body main #ChooseLevel ul li {
   list-style: none;
   margin: 30px 0;
 }
+
 body main #ChooseLevel ul li a {
   text-decoration: none;
   color: #FBFBFB;
   font-size: 1.3rem;
   position: absolute;
 }
+
 body main #ChooseLevel ul li a::after {
   content: "";
   height: 4px;
@@ -254,10 +281,12 @@ body main #ChooseLevel ul li a::after {
   display: block;
   transition: all 0.5s;
 }
+
 body main #ChooseLevel ul li a:hover::after {
   width: 100%;
   transition: all 0.5s;
 }
+
 body .hamburger {
   display: inline-block;
   cursor: pointer;
@@ -279,15 +308,18 @@ body .hamburger {
   right: 0%;
   z-index: 3000;
 }
+
 body .hamburger:hover {
   opacity: 0.7;
 }
+
 body .hamburger-box {
   width: 40px;
   height: 24px;
   display: inline-block;
   position: relative;
 }
+
 body .hamburger-box .hamburger-inner {
   display: block;
   top: 50%;
@@ -303,6 +335,7 @@ body .hamburger-box .hamburger-inner {
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
+
 body .hamburger-box .hamburger-inner::before {
   content: "";
   display: block;
@@ -318,6 +351,7 @@ body .hamburger-box .hamburger-inner::before {
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
+
 body .hamburger-box .hamburger-inner::after {
   content: "";
   display: block;
@@ -333,32 +367,39 @@ body .hamburger-box .hamburger-inner::after {
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
+
 body .hamburger--spin.is-active .hamburger-inner, body .hamburger--spin.is-active .hamburger-inner::before, body .hamburger--spin.is-active .hamburger-inner::after {
   background-color: #FBFBFB;
 }
+
 body .hamburger--spin .hamburger-inner {
   transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
+
 body .hamburger--spin .hamburger-inner::before {
   transition: top 0.1s 0.34s ease-in, opacity 0.1s ease-in;
 }
+
 body .hamburger--spin .hamburger-inner::after {
   transition: bottom 0.1s 0.34s ease-in, -webkit-transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
   transition: bottom 0.1s 0.34s ease-in, transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
   transition: bottom 0.1s 0.34s ease-in, transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19), -webkit-transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
+
 body .hamburger--spin.is-active .hamburger-inner {
   -webkit-transform: rotate(225deg);
   transform: rotate(225deg);
   transition-delay: 0.14s;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+
 body .hamburger--spin.is-active .hamburger-inner::before {
   top: 0;
   opacity: 0;
   transition: top 0.1s ease-out, opacity 0.1s 0.14s ease-out;
 }
+
 body .hamburger--spin.is-active .hamburger-inner::after {
   bottom: 0;
   -webkit-transform: rotate(-90deg);
@@ -367,6 +408,7 @@ body .hamburger--spin.is-active .hamburger-inner::after {
   transition: bottom 0.1s ease-out, transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: bottom 0.1s ease-out, transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+
 body .overlay {
   position: absolute;
   top: 0;
@@ -380,24 +422,30 @@ body .overlay {
   visibility: hidden;
   z-index: 100;
 }
+
 body .overlay.open {
   opacity: .8;
   visibility: visible;
   width: 100%;
 }
+
 body .overlay.open li {
   animation: menuFade .5s ease forwards;
   animation-delay: .35s;
 }
+
 body .overlay.open li:nth-of-type(2) {
   animation-delay: .4s;
 }
+
 body .overlay.open li:nth-of-type(3) {
   animation-delay: .45s;
 }
+
 body .overlay.open li:nth-of-type(4) {
   animation-delay: .5s;
 }
+
 body .overlay nav {
   position: relative;
   height: 80%;
@@ -408,6 +456,7 @@ body .overlay nav {
   font-weight: 400;
   text-align: center;
 }
+
 body .overlay ul {
   list-style: none;
   padding: 0;
@@ -416,6 +465,7 @@ body .overlay ul {
   position: relative;
   height: 100%;
 }
+
 body .overlay ul li {
   display: block;
   height: 25%;
@@ -424,6 +474,7 @@ body .overlay ul li {
   position: relative;
   opacity: 0;
 }
+
 body .overlay ul li a {
   display: block;
   position: relative;
@@ -431,9 +482,11 @@ body .overlay ul li a {
   text-decoration: none;
   overflow: hidden;
 }
+
 body .overlay ul li a:hover:after, body .overlay ul li a:focus:after, body .overlay ul li a:active:after {
   width: 100%;
 }
+
 body .overlay ul li a:after {
   content: '';
   position: absolute;
@@ -461,6 +514,7 @@ body .overlay ul li a:after {
     left: 0;
   }
 }
+
 @keyframes popup {
   0% {
     transform: scale(0.5);
@@ -475,5 +529,3 @@ body .overlay ul li a:after {
     transform: scale(1);
   }
 }
-
-/*# sourceMappingURL=style.css.map */
