@@ -31,10 +31,6 @@
                 border : #008bff solid 2px;
             }
 
-            .rangeBg {
-                background-color: black;
-            }
-
         </style>
 
         <title>New HMTL document by NewJect</title>
@@ -80,6 +76,8 @@
         <script src="js/codemirror.js"></script>
         <script src="js/javascript.js"></script>
         <!--        <script src="js/matchbrackets.js"></script>-->
+        <script src="js/script.js"></script>
+
 
         <script>
 
@@ -193,7 +191,7 @@
 
                     $('input[type=range]').on("change", function(){
                         verif();
-                        
+
                     })
 
                     myCodeMirror.on('focus', function(){
@@ -372,7 +370,7 @@
                     $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
                     $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
                     $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
-                    
+
                 }
 
                 function reset() {
