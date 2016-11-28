@@ -13,22 +13,27 @@
   text-align: center;
 }
 #chooseDevMod .level {
+  display: -ms-flexbox;
   display: flex;
   margin-top: 20%;
+  -ms-flex-align: center;
   align-items: center;
 }
 #chooseDevMod .level .dev {
   text-align: center;
+  -ms-flex-positive: 1;
   flex-grow: 1;
 }
 #chooseDevMod .level .deb {
   text-align: center;
+  -ms-flex-positive: 1;
   flex-grow: 1;
 }
 #chooseDevMod .level #radios {
   position: relative;
   width: 50%;
   margin: 0 auto;
+  -ms-flex-positive: 2;
   flex-grow: 2;
 }
 #chooseDevMod .level #radios input[type="radio"] {

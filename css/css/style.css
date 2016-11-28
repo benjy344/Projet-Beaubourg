@@ -580,27 +580,27 @@ body #modal-container {
   transform: scale(0);
   z-index: 1;
 }
-body #modal-container.three {
+body #modal-container.openCode {
   z-index: 0;
   transform: scale(1);
 }
-body #modal-container.three .modal-background {
+body #modal-container.openCode .modal-background {
   background: #242322;
 }
-body #modal-container.three .modal-background .modal {
+body #modal-container.openCode .modal-background .modal {
   animation: moveUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-body #modal-container.three + .content-global {
+body #modal-container.openCode + .content-global {
   z-index: 1;
   animation: slideUpLarge 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-body #modal-container.three.out {
+body #modal-container.openCode.out {
   transform: scale(0);
 }
-body #modal-container.three.out .modal-background .modal {
+body #modal-container.openCode.out .modal-background .modal {
   animation: moveDown 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
-body #modal-container.three.out + .content-global {
+body #modal-container.openCode.out + .content-global {
   animation: slideDownLarge 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 body #modal-container .modal-background {
@@ -761,7 +761,6 @@ body main #intro .content-form .form-label {
   display: block;
   text-shadow: 0.4px 0px 7px #242321;
   opacity: 1;
-  -webkit-transition: .333s ease top, .333s ease opacity;
   transition: .333s ease top, .333s ease opacity;
 }
 body main #intro .content-form .form-control {
@@ -791,8 +790,11 @@ body main #ChooseLevel ul {
   width: 90%;
   height: 90%;
   margin: 0 auto;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -ms-flex-pack: distribute;
   justify-content: space-around;
 }
 body main #ChooseLevel ul li {
@@ -856,9 +858,7 @@ body .hamburger-box .hamburger-inner {
   background-color: #FBFBFB;
   border-radius: 4px;
   position: absolute;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
@@ -871,9 +871,7 @@ body .hamburger-box .hamburger-inner::before {
   background-color: #FBFBFB;
   border-radius: 4px;
   position: absolute;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
@@ -886,9 +884,7 @@ body .hamburger-box .hamburger-inner::after {
   background-color: #FBFBFB;
   border-radius: 4px;
   position: absolute;
-  transition-property: -webkit-transform;
   transition-property: transform;
-  transition-property: transform, -webkit-transform;
   transition-duration: 0.15s;
   transition-timing-function: ease;
 }
@@ -903,12 +899,9 @@ body .hamburger--spin .hamburger-inner::before {
   transition: top 0.1s 0.34s ease-in, opacity 0.1s ease-in;
 }
 body .hamburger--spin .hamburger-inner::after {
-  transition: bottom 0.1s 0.34s ease-in, -webkit-transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
   transition: bottom 0.1s 0.34s ease-in, transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  transition: bottom 0.1s 0.34s ease-in, transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19), -webkit-transform 0.3s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 body .hamburger--spin.is-active .hamburger-inner {
-  -webkit-transform: rotate(225deg);
   transform: rotate(225deg);
   transition-delay: 0.14s;
   transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -920,11 +913,8 @@ body .hamburger--spin.is-active .hamburger-inner::before {
 }
 body .hamburger--spin.is-active .hamburger-inner::after {
   bottom: 0;
-  -webkit-transform: rotate(-90deg);
   transform: rotate(-90deg);
-  transition: bottom 0.1s ease-out, -webkit-transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: bottom 0.1s ease-out, transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
-  transition: bottom 0.1s ease-out, transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-transform 0.3s 0.14s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 body .overlay {
   position: absolute;

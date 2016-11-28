@@ -15,13 +15,18 @@
 		}
 	}
 	.tableau{
+		display: -ms-flexbox;
 		display: flex;
-		justify-content: center;
+		-ms-flex-pack: center;
+		    justify-content: center;
 
 		ul {
+			display: -ms-flexbox;
 			display: flex;
-			justify-content: center;
-			flex-wrap: wrap;
+			-ms-flex-pack: center;
+			    justify-content: center;
+			-ms-flex-wrap: wrap;
+			    flex-wrap: wrap;
 			width: calc( 100vw / 6);
 			height: calc(100vw / 6);
 			padding: 0;

@@ -68,6 +68,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
-  grunt.registerTask('default', ['sass:dist', 'concat:dist', 'cssmin', 'sprite']);
+  grunt.registerTask('default', ['sass:dist', 'sprite', 'concat:dist', 'cssmin']);
   grunt.registerTask('spritesmith', ['sprite']);
 }

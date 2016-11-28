@@ -9,25 +9,30 @@
     text-align: center;
   }
   .level{
+    display: -ms-flexbox;
     display: flex; 
     margin-top: 20%;
-    align-items: center;
+    -ms-flex-align: center;
+        align-items: center;
     
     .dev {
       text-align: center;
-      flex-grow : 1;
+      -ms-flex-positive : 1;
+          flex-grow : 1;
     }
 
     .deb {
       text-align: center;
-      flex-grow : 1;
+      -ms-flex-positive : 1;
+          flex-grow : 1;
     }
 
     #radios {
       position: relative;
       width: 50%;
       margin: 0 auto;
-      flex-grow : 2;
+      -ms-flex-positive : 2;
+          flex-grow : 2;
 
       input[type="radio"]{
         position:absolute;

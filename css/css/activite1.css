@@ -14,12 +14,17 @@
   letter-spacing: 10;
 }
 #Level1 .tableau {
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: center;
   justify-content: center;
 }
 #Level1 .tableau ul {
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: center;
   justify-content: center;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   width: calc( 100vw / 6);
   height: calc(100vw / 6);

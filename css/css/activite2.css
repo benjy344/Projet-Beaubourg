@@ -20,17 +20,27 @@
   letter-spacing: 10;
 }
 #Level2 .tableau {
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: center;
   justify-content: center;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
 }
 #Level2 .tableau ul {
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: center;
   justify-content: center;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   width: 100vw;
   height: calc(100vw / 7);
   padding: 0;
+  margin: 0;
+}
+#Level2 .tableau ul:first-child {
+  margin-top: 40px;
 }
 #Level2 .tableau ul li {
   list-style: none;
@@ -41,6 +51,18 @@
   height: 100%;
   width: 100%;
   background-color: #FFF;
+}
+
+.red {
+  background-color: red !important;
+}
+
+.blue {
+  background-color: blue !important;
+}
+
+.black {
+  background-color: #242322 !important;
 }
 
 /*# sourceMappingURL=activite2.css.map */
