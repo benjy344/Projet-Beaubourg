@@ -1,0 +1,22 @@
+@import "utilities/variables";
+
+#Level2 {
+    #wrapper {
+        background-color: #ededed;
+        padding: 1em;
+        .pixel {
+            width: 100px;
+            height: 100px;
+            border: solid 1px black;
+            display: inline-block;
+            background-color: black;
+            transition: background ease 0.5s;
+        }
+    }
+    .pixelActive {
+        border: #008bff solid 2px;
+    }
+    .checkBg {
+        background-color: black;
+    }
+}
