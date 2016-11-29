@@ -1,6 +1,6 @@
 @import "utilities/reset";
 @import "utilities/variables";
-@import 'sprite-main.scss';
+@import "utilities/sprite-main";
 @include sprites($spritesheet-sprites);
 
 body {

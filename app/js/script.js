@@ -1,3 +1,7 @@
+var dest = './dist/';
+var level = './app/views/levels/';
+var views = './app/views/';
+
 var Username = "";
 var devMod = false;
 var aleNumber = '';
@@ -8,7 +12,6 @@ $content_popup = $('.popup .content-popup');
 $button = $('.js-fleche-popup');
 $hoverlay = $('.hoverlay');
 $popup_icon = $('.popup-icon i');
-
 
 
 /********************
@@ -26,7 +29,7 @@ Chargement des levels et menu
 function loadChooseDevMod(){
     Showpopup(accueil, 'hidePopup()', '');
     Username = $('input#name').val();
-    $('main').load('./chooseDevMod.html', function(){
+    $('main').load(views+'chooseDevMod.html', function(){
 
         $('#input1, #input2').on('touch click', function(e) {
             isdebMod = $('input#input1:checked').val();
@@ -48,7 +51,7 @@ function loadChooseDevMod(){
 *
 *********************/
 function loadChooseLevel(){
-    $('main').load('./accueil.html');
+    $('main').load(views+'accueil.html');
 }
 
 
@@ -61,11 +64,11 @@ function loadlevel1() {
     $('.hamburger').show();
     showpop1C = "Showpopup(jeu1c, 'hidePopup()', '')";
     showpop1B = "Showpopup(jeu1b, showpop1C, '')";
-    Showpopup(jeu1a, showpop1B, '');
+    //Showpopup(jeu1a, showpop1B, '');
     
     
     if (devMod){
-        $('main').load('./level1.html', function(){
+        $('main').load(level+'level1.html', function(){
             
             //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
             var heightNumber =  16;
@@ -95,7 +98,8 @@ function loadlevel1() {
         });
     }
     else {
-        $('main').load('./level1.html', function(){
+
+        $('main').load(level+'level1.html', function(){
             //generation du nombre aléatoir a 12 chiffres
             var heightNumber =  12;
             min = Math.ceil(0);
@@ -159,7 +163,7 @@ function loadlevel2() {
     showpop2C = "Showpopup(jeu2c, 'hidePopup()', '')";
     showpop2B = "Showpopup(jeu2b, showpop2C, '')";
     Showpopup(jeu2a, showpop2B, '');
-    $('main').load('./level2.html', function(){
+    $('main').load(level+'level2.html', function(){
         var pixel = $('.tableau ul li .pixel');
         $(pixel).on('touch click', function(){
             $('#modal-container').removeAttr('class').addClass('openCode');
@@ -272,15 +276,15 @@ function hidePopup() {
     Popup Aide
 
 ********************/
-level = 'dev';
-time = 2000;
-numberOftips = 3;
-tips = {
-  0 : 'blabla1',
-  1 : 'blabla2',
-  2 : 'blabla'
-}
-nb = 0;
+// level = 'dev';
+// time = 2000;
+// numberOftips = 3;
+// tips = {
+//   0 : 'blabla1',
+//   1 : 'blabla2',
+//   2 : 'blabla'
+// }
+// nb = 0;
 function constructTips(level, time, numberOftips, tips ) {
     if (level === 'dev') {
 
