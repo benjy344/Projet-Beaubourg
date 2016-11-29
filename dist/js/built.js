@@ -13,6 +13,8 @@ $button = $('.js-fleche-popup');
 $hoverlay = $('.hoverlay');
 $popup_icon = $('.popup-icon i');
 
+popinIsOpen = false;
+
 
 /********************
 
@@ -74,7 +76,12 @@ function loadlevel1() {
             var heightNumber =  16;
             var min = Math.ceil(0);
             var max = Math.floor(9);
-   
+            var tips1 = {
+               0 : 'dev blabla1',
+               1 : 'dev blabla2',
+               2 : 'dev blabla3'
+            }
+            constructTips(3000, 3, tips1);
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -104,7 +111,12 @@ function loadlevel1() {
             var heightNumber =  12;
             min = Math.ceil(0);
             max = Math.floor(9);
-   
+            var tips1 = {
+               0 : 'blabla1',
+               1 : 'blabla2',
+               2 : 'blabla3'
+            }
+            constructTips(3000, 3, tips1);
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -233,6 +245,7 @@ function loadlevel5() {
 **/
 function Showpopup(content, loadfonction, icon){
     if ($Popup) {
+        popinIsOpen = true;
         $content_popup.html(''+content+'');
         if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
         if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+'') } else {$popup_icon.attr('class', '')};
@@ -247,6 +260,7 @@ function Showpopup(content, loadfonction, icon){
 * function de clean des popups
 **/
 function hidePopup() {
+    popinIsOpen = false;
     $content_popup.html('');
     $button.attr("onclick", '');
     $popup_icon.attr('class', '');
@@ -276,37 +290,46 @@ function hidePopup() {
     Popup Aide
 
 ********************/
-// level = 'dev';
-// time = 2000;
-// numberOftips = 3;
-// tips = {
-//   0 : 'blabla1',
-//   1 : 'blabla2',
-//   2 : 'blabla'
-// }
-// nb = 0;
-function constructTips(level, time, numberOftips, tips ) {
-    if (level === 'dev') {
-
-        var number = 0
-        setTimeout( function(){getATip(number, time, tips, numberOftips)} , time);
-
-       
-    } else {
-
-    }
+/**
+* constructTips
+* function de construction des popups d'aide
+* time en ms, durée entre chaque aide;
+* numberOftips nombre total de tips;
+* tips = {
+*   0 : 'blabla1',
+*   1 : 'blabla2',
+*   2 : 'blabla'
+* }
+**/
+function constructTips(time, numberOftips, tips ) {
+    var number = 0
+    setTimeout( function(){getATip(number, time, tips, numberOftips)} , time);
 }
 
 
 function getATip(number, time, tips, total) {
-
-    // ... Fabriquer la popup
-    console.log('aide numero' + number);
-
-    //if (nb === 2){ duration = 1000 } else { duration = 3000 } 
+    var intervale = 0;
+    var t = 0;
+    Showpopup(tips[number], 'hidePopup()');
     number++;
     if (number < total) {
-        setTimeout( function(){getATip(number, time, tips, total)} , time);
+        //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+        intervale = setInterval(function () {
+            if (popinIsOpen) {
+                clearTimeout(t);
+                t = 0;
+            } else {
+                console.log('else '+number);
+                t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+                clearInterval(intervale);
+            }
+        }, 3000);
+       
+    } else {
+        clearTimeout(t);
+        t = 0;
+        clearInterval(intervale);
+        intervale = 0;
     }
 
 }
