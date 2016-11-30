@@ -146,7 +146,7 @@ function loadlevel1() {
 *   Validation Chapitre 1
 *
 *********************/
-function validChap1() {
+function submitLevel1() {
     var chaineTableau = '';
     var div = $('.tableau ul li div');
 
