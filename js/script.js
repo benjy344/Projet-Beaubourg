@@ -3,7 +3,7 @@ var Username = ""
 , aleNumber = ''
 , binaire = ''
 , codeMirror = null
-, answers = ''
+, answers = {}
 , thisLvlAnswers = {}
 $.getJSON('./js/answers.json', function (data) {
     answers = data;
@@ -199,7 +199,7 @@ function loadLvl2() {
         //console.log(codeConfig.readOnly)
 
         thisLvlAnswers = answers.lvl2;
-        console.log(thisLvlAnswers);
+        //console.log(thisLvlAnswers);
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);

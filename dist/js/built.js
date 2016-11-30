@@ -9878,14 +9878,22 @@ CodeMirror.defineMIME("text/typescript", { name: "javascript", typescript: true 
 CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript: true });
 
 });
-;var dest = './dist/';
-var level = './app/views/levels/';
-var views = './app/views/';
+;var dest = './dist/',
+    level = './dist/views/levels/',
+    views = './dist/views/',
 
-var Username = "";
-var devMod = false;
-var aleNumber = '';
-var binaire = '';
+    Username = "",
+    devMod = false,
+    aleNumber = '',
+    binaire = '',
+    screen = 'index',
+    
+
+    answers = {},
+    thisLvlAnswers = {};
+$.getJSON('dist/json/answers.json', function (data) {
+    answers = data;
+});
 
 $Popup = $('.popup');
 $content_popup = $('.popup .content-popup');
@@ -9912,6 +9920,8 @@ function loadChooseDevMod(){
     Showpopup(accueil, 'hidePopup()', '');
     Username = $('input#name').val();
     $('main').load(views+'chooseDevMod.html', function(){
+        
+        screen = 'chooseDevMode';
 
         $('#input1, #input2').on('touch click', function(e) {
             isdebMod = $('input#input1:checked').val();
@@ -9942,26 +9952,27 @@ function loadChooseLevel(){
 *   Chapitre 1
 *
 *********************/
-function loadlevel1() {
+function loadLevel1() {
+    screen = 'level1';
     $('.hamburger').show();
     showpop1C = "Showpopup(jeu1c, 'hidePopup()', '')";
     showpop1B = "Showpopup(jeu1b, showpop1C, '')";
     //Showpopup(jeu1a, showpop1B, '');
-    
-    
+
+
     if (devMod){
         $('main').load(level+'level1.html', function(){
-            
+
             //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
             var heightNumber =  16;
             var min = Math.ceil(0);
             var max = Math.floor(9);
             var tips1 = {
-               0 : 'dev blabla1',
-               1 : 'dev blabla2',
-               2 : 'dev blabla3'
+                0 : 'dev blabla1',
+                1 : 'dev blabla2',
+                2 : 'dev blabla3'
             }
-            constructTips(3000, 3, tips1);
+            //constructTips(10000, 3, tips1); {DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -9973,9 +9984,9 @@ function loadlevel1() {
             $('.aleNumber').html(aleNumber);
             //generation des cases du tableau
             for (var i = 0; i < 3; i++){
-                 $('.tableau ul:first-child').clone().appendTo( ".tableau" );
+                $('.tableau ul:first-child').clone().appendTo( ".tableau" );
             }
-               
+
 
             var div = $('.tableau ul li div');
 
@@ -9992,11 +10003,11 @@ function loadlevel1() {
             min = Math.ceil(0);
             max = Math.floor(9);
             var tips1 = {
-               0 : 'blabla1',
-               1 : 'blabla2',
-               2 : 'blabla3'
+                0 : 'blabla1',
+                1 : 'blabla2',
+                2 : 'blabla3'
             }
-            constructTips(3000, 3, tips1);
+            //constructTips(3000, 3, tips1); {DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -10008,10 +10019,10 @@ function loadlevel1() {
             $('.aleNumber').html(aleNumber);
             //generation des cases du tableau
             for (var i = 0; i < 2; i++){
-                 $('.tableau ul:first-child').clone().appendTo( ".tableau" );
+                $('.tableau ul:first-child').clone().appendTo( ".tableau" );
             }
             var div = $('.tableau ul li div');
-            
+
 
             div.on('touch click', function(e) {
                 $(this).toggleClass('white');
@@ -10038,8 +10049,8 @@ function submitLevel1() {
             chaineTableau = chaineTableau + '0';
         }
     });
-    if (chaineTableau == binaire ) {
-        Showpopup(jeu1d, 'loadlevel2()', 'succes iconAnim');
+    if (chaineTableau == binaire || chaineTableau != binaire) { //{DEV} Always True
+        Showpopup(jeu1d, 'loadLevel2()', 'succes iconAnim');
     }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
 }
 
@@ -10050,45 +10061,526 @@ function submitLevel1() {
 *   Chapitre 2
 *
 *********************/
-function loadlevel2() {
-    hidePopup();
+function loadLevel2() {
+    screen = 'level2';
+    reinitMain();
     showpop2C = "Showpopup(jeu2c, 'hidePopup()', '')";
     showpop2B = "Showpopup(jeu2b, showpop2C, '')";
     Showpopup(jeu2a, showpop2B, '');
     $('main').load(level+'level2.html', function(){
-        var pixel = $('.tableau ul li .pixel');
-        $(pixel).on('touch click', function(){
-            $('#modal-container').removeAttr('class').addClass('openCode');
-            $('body').addClass('modal-active');
-      })
-        $('.close').on('touch click', function(){
-            $('#modal-container').addClass('out');
-            $('body').removeClass('modal-active');
-      })
+        var pixel = $('.pixel');
+        //$(pixel).on('touch click', showModal) {DEV}
+        //$('.close').on('touch click', hideModal)
 
+        //CodeMirror
+        var textArea = $('.codeMirror')[0],
+            codeConfig = {
+                mode: "text/javascript",
+                theme: "icecoder", 
+                lineWrapping: true, 
+                lineNumbers: true, 
+                autofocus: false
+                //matchBrackets: true
+            }
+        //Initialisation des variables
+        var defaultValue = false;
+        //console.log(devMod)
+
+        if (!devMod) {
+            codeConfig.readOnly = 'nocursor';
+            $('.dev').hide();  
+        } 
+        $('.notdev').hide();
+
+        //console.log(codeConfig.readOnly)
+
+        thisLvlAnswers = answers.lvl2;
+        //console.log(thisLvlAnswers);
+
+        //Initialisation de codeMirror
+        codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+        //cm.addKeyMap(map: object, bottom: boolean) || extraKeys: Dans la config du CM
+        codeMirror.addKeyMap({
+            Enter: function (cm) {
+                setSelection('atom');
+            }
+        });
+
+        $('#frameWrapper').children().each(function () {
+            $(this).data('rvb', {
+                red: defaultValue,
+                green: defaultValue,
+                blue: defaultValue
+            }).data('name', 'pixel_'+$(this).index());
+        });
+
+        //Change Active Pixel
+        $('#frameWrapper .pixel').click(function () {
+            if (!$(this).hasClass('pixelActive')) {
+                $('.pixelActive').removeClass('pixelActive');
+            }
+            $(this).toggleClass('pixelActive');
+            var thisColors = $(this).data('rvb');
+            if ($('.pixelActive').length != 0) {
+                resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
+                resetCode($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+
+                if (!devMod) {$('.notdev').show();}
+            } else {
+                if (!devMod) {$('.notdev').hide();}
+            }
+        })
+
+        //Run Code
+        $('.runCode').click(function () {
+            runCodeLevel2();
+        });
+
+        //Change input
+        $('.checkboxes input:checkbox').change(function () {
+            var name = $(this).attr('class');
+            var thisPixel = $('.pixelActive').data('rvb');
+            var val;
+            if ($(this).is(':checked')) {
+                thisPixel[name] = true;
+                val = 255;
+            }
+            else {
+                thisPixel[name] = false;
+                val = 0;
+            }
+            switch (name) {
+                case 'red':
+                    $(this).parent().css('background-color', 'rgb(' + val + ', 0, 0)');
+                    break;
+                case 'green':
+                    $(this).parent().css('background-color', 'rgb(0, ' + val + ', 0)');
+                    break;
+                case 'blue':
+                    $(this).parent().css('background-color', 'rgb(0, 0, ' + val + ')');
+                    break;
+                default:
+                    break;
+            }
+            applyColor(thisPixel);
+        })
+
+        //On focus, reset the cursor to the start and set selection
+        codeMirror.on('focus', function () {
+            codeMirror.setCursor({line:0,ch:0});
+            setSelection('atom');
+        })
     })
-    
 }
+
+function showModal() {
+    $('#modal-container').removeAttr('class').addClass('openCode');
+    $('body').addClass('modal-active');
+}
+
+function hideModal() {
+    $('#modal-container').addClass('out');
+    $('body').removeClass('modal-active');
+}
+
+function setSelection(varType) {
+    var setPos = true,
+        cm = codeMirror,
+        currentPos = cm.getCursor(),
+        line = currentPos.line,
+        tokens,
+        i; //Indice du token en cours
+
+    //Commencer la recherche en début de ligne suivante si le curseur est en fin de ligne
+    if (currentPos.ch == cm.getLine(line).length) {
+        line++;
+        currentPos.ch = 0;
+    }
+    tokens = cm.getLineTokens(line);
+    i = 0; 
+    //Commencer la recherche après la position actuelle du curseur
+    while (tokens[i].end <= currentPos.ch) {
+        i++;
+    }
+    //Commencer la recherche au token suivant si le token en cours est du bon type
+    if (tokens[i].type == varType) {
+        i++;
+    }
+    //Commencer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
+    if (typeof tokens[i] == 'undefined') {
+        i = 0;
+        line++
+        tokens = cm.getLineTokens(line)
+    }
+
+    //Début de la recherche
+    //Tant que le token en cours n'est pas du bon type, on analyse le token suivant
+    while (tokens[i].type != varType) {
+        i++
+        //Continuer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
+        if (typeof tokens[i] == 'undefined') {
+            i = 0;
+            line++
+            tokens = cm.getLineTokens(line)
+        }
+        //Il n'y a plus de tokens dans l'editeur. On arrete la boucle et !setPos pour ne pas effectuer les prochaines instructions
+        if (line > codeMirror.lineCount()) {
+            setPos = false;
+            //console.log('should run code')
+            break;
+        }
+    }
+    //console.log('oui')
+    //Si on a trouvé un prochain token, le selectionne
+    if (setPos) {
+        cm.setSelection({
+            line: line,
+            ch: tokens[i].start
+        }, {
+            line: line,
+            ch: tokens[i].end
+        });
+    } else {//Si on a pas trouvé de token, on vérifie qu'il y ait bien 3 tokens du bon type
+        console.log('runcode')
+        if ($('.cm-atom').length != 3) {
+            alertErr();
+            //console.log('nope')
+        } else { //Si oui, unfocus l'editeur et lance le code
+            if (screen == 'level2') {
+                runCodeLevel2();
+            } else if (screen == 'level3') {
+                runCodeLevel3();
+            }
+
+            codeMirror.getInputField().blur();
+        }
+    }
+    //console.log(tokens[i])
+}
+
+function alertErr() {
+    var pixel = $('.pixelActive').data('rvb');
+    resetCode($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue)
+    codeMirror.getInputField().blur();
+    //codeMirror.focus();
+    alert('ERROR');
+}
+
+function runCodeLevel2() {
+    console.log('running code')
+    var code = codeMirror.getValue();
+    eval(code)
+    pixel = eval($('.pixelActive').data('name'));
+    //console.log(pixel)                    
+    $('.pixelActive').data('rvb', {
+        red: pixel.red
+        , green: pixel.green
+        , blue: pixel.blue
+    });
+    resetCheckboxes(pixel.red, pixel.green, pixel.blue);
+    applyColor(pixel);
+}
+
+function applyColor(pixel) {
+    resetCode($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+    colorPixelRVB(pixel);
+    verifPixelLevel2();
+}
+
+function colorPixelRVB(pixel) {
+    //console.log(pixel)
+    var red = 0,
+        green = 0,
+        blue = 0;
+    if (pixel.red) {
+        red = 255;
+    }
+    if (pixel.green) {
+        green = 255;
+    }
+    if (pixel.blue) {
+        blue = 255;
+    }
+    $('.pixelActive').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
+}
+
+function colorPixel(pixel) {
+    $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
+}
+
+function resetCode(id, r, g, b) {
+    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}');
+    codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true});
+    codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true});
+    codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true});
+    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true});
+}
+
+function resetCheckboxes(r, g, b) {
+    var valR, valG, valB;
+    if (r) {valR = 255} else {valR = 0}
+    if (g) {valG = 255} else {valG = 0}
+    if (b) {valB = 255} else {valB = 0}
+    $('input.red').prop('checked', r).parent().css('background-color', 'rgb(' + valR + ', 0, 0)')
+    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, ' + valG + ', 0)')
+    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, ' + valB + ')')
+}
+
+function verifPixelLevel2() {
+    var rvb = $('.pixelActive').data('rvb');
+    var correctRvb = thisLvlAnswers[$('.pixelActive').data('name')].rvb;
+    //console.log(rvb)
+    //console.log(answers[$('.pixelActive').index()]);
+
+    if (JSON.stringify(rvb) == JSON.stringify(correctRvb)) {
+        console.log('yep')
+        thisLvlAnswers[$('.pixelActive').data('name')].validate = true;
+    } else {
+        console.log('nope')
+        thisLvlAnswers[$('.pixelActive').data('name')].validate = false;
+    }
+}
+
+function resetLevel2() {
+    $('.pixel').off()
+    $('.runCode').off()
+    $('input:checkbox').off() //cm.getWrapperElement().parentNode.removeChild(cm.getWrapperElement());
+    //cm=null;
+}
+
+/********************
+*
+*   Validation Chapitre 2
+*
+*********************/
+
+function submitLevel2() {
+    //Validate
+
+    console.log('submitting')
+
+    var isCorrect = true;
+    $.each(thisLvlAnswers, function(i, value){
+        //        if (!value.validate) { {DEV}
+        //            isCorrect = false;
+        //        }
+    })
+
+    if (isCorrect) {
+        Showpopup('Bravo !', 'loadLevel3()', 'succes');
+    } else {
+        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+    }
+}
+
 
 /********************
 *
 *   Chapitre 3
 *
 *********************/
-function loadlevel3() {
-    hidePopup();
+function loadLevel3() {
+    screen = 'level3';
+    reinitMain();
     showpop3C = "Showpopup(jeu3c, 'hidePopup()', '')";
     showpop3B = "Showpopup(jeu3b, showpop3C, '')";
     Showpopup(jeu3a, showpop3B, '');
+
+    $('main').load(level+'level3.html', function () {
+        //CodeMirror
+        var textArea = $('.codeMirror')[0],
+            codeConfig = {
+                mode: "text/javascript",
+                theme: "icecoder",
+                lineWrapping: true,
+                lineNumbers: true,
+                autofocus: false
+                //matchBrackets: true
+            }
+        //Initialisation des variables
+        var defaultValue = false;
+
+        if (!devMod) {
+            codeConfig.readOnly = 'nocursor';
+            $('.dev').hide(); 
+        }
+        $('.notdev').hide();
+
+        thisLvlAnswers = answers.lvl3;
+
+        //Initialisation de codeMirror
+        codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+        codeMirror.addKeyMap({
+            Enter: function (cm) {
+                setSelection('number');
+            }
+        });
+
+
+        $('#frameWrapper').children().each(function(){            
+            $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue});
+        });
+
+        //Change Active Pixel
+        $('#frameWrapper .pixel').click(function() {
+            if (!$(this).hasClass('pixelActive')) {
+                $('.pixelActive').removeClass('pixelActive');
+            }
+            $(this).toggleClass('pixelActive');
+            var thisColors = $(this).data('rvb');
+            if ($('.pixelActive').length != 0) {
+                resetSliders(thisColors.red, thisColors.green, thisColors.blue);
+                resetCode($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+
+                if (!devMod) {$('.notdev').show();}
+            } else {
+                if (!devMod) {$('.notdev').hide();}
+            }
+        })
+
+        //Run Code
+        $('.runCode').click(function(){
+            runCodeLevel3();
+        });
+
+
+
+        //Change input
+        $('input[type=range]').on("input", function(){
+
+            var name = $(this).attr('class');
+            var thisPixel = $('.pixelActive').data('rvb');
+
+            switch(name) {
+                case 'red':
+                    $(this).parent().css('background-color', 'rgb('+$(this).val()+', 0, 0)');
+                    break;
+                case 'green': 
+                    $(this).parent().css('background-color', 'rgb(0, '+$(this).val()+', 0)');
+                    break;
+                case 'blue':
+                    $(this).parent().css('background-color', 'rgb(0, 0, '+$(this).val()+')');
+                    break;
+                default:
+                    break;
+            }
+
+            thisColors[name] = $(this).val();
+            applyColor(thisPixel);
+        })
+
+        $('input[type=range]').on("change", function(){
+            verifPixelLevel3();
+
+        })
+
+        //On focus, reset the cursor to the start and set selection
+        CodeMirror.on('focus', function(){
+            codeMirror.setCursor({line:0,ch:0});
+            setSelection('number');
+        });
+    });
 }
 
+function resetSliders(r, g, b) {
+    $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
+    $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
+    $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
+}
+
+function verifPixelLevel3() {
+    var rvb = $('.pixelActive').data('rvb');
+
+    //console.log(rvb)
+    //console.log(answers[$('.pixelActive').index()]);
+
+    var thisAnswer = answers[$('.pixelActive').index()];
+    var ok = true;
+
+    $.each(thisAnswer, function(i, value){
+        console.log(value);
+        if (value.length > 1) {
+            if (rvb[i] < value[0] || rvb[i] > value[1]) {
+                ok = false;
+            }  
+        } else {
+            if (rvb[i] != value[0]) {
+                ok = false;
+            }
+        }    
+    })
+
+    if (ok) {
+        console.log('right');
+
+        answers[$('.pixelActive').index()].validate = true;
+
+    } else {
+        console.log('nope');
+        //Est-ce que l'utilisateur peut changer les variables une fois que le carré a été validé?
+
+        answers[$('.pixelActive').index()].validate = false;
+
+    }
+}
+
+function runCodeLevel3() {
+    console.log('running code')
+    var code = codeMirror.getValue();
+    eval(code)
+
+    pixel = eval('pixel' + $('.pixelActive').index());
+    //console.log(pixel)                    
+
+    $.each(pixel, function(i, value) {
+        if (value < 0) {
+            pixel[i] = 0;
+        }
+        if (value > 255) {
+            pixel[i] = 255;
+        }
+    });
+
+
+    $('.pixelActive').data('rvb', {red: pixel.red, green: pixel.green, blue: pixel.blue});
+
+    resetSliders(pixel.red, pixel.green, pixel.blue);
+
+    applyColor(pixel);
+    verif();
+
+
+}
+
+
+/********************
+*
+*   Validation Chapitre 3
+*
+*********************/
+
+function submitLevel3() {
+    //Validate
+    var isCorrect = true;
+    $.each(answers, function(i, value){
+        if (!value.validate) {
+            isCorrect = false;
+        }
+    })
+
+    if (isCorrect) {
+        console.log('WIN')
+    } else {
+        console.log('T\'es nul');
+    }
+}
 
 /********************
 *
 *   Chapitre 4
 *
 *********************/
-function loadlevel4() {
+function loadLevel4() {
     hidePopup();
     showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
     showpop4B = "Showpopup(jeu4b, showpop4C, '')";
@@ -10101,13 +10593,20 @@ function loadlevel4() {
 *   Chapitre 5
 *
 *********************/
-function loadlevel5() {
+function loadLevel5() {
     hidePopup();
 }
 
 
+/********************
+*
+*   Fonctions de réinitialisation
+*
+*********************/
 
-
+function reinitMain() {
+    hidePopup();
+}
 
 /********************
 *
@@ -10204,7 +10703,7 @@ function getATip(number, time, tips, total) {
                 clearInterval(intervale);
             }
         }, 3000);
-       
+
     } else {
         clearTimeout(t);
         t = 0;
@@ -10263,16 +10762,20 @@ function addSuccess (name, icon) {
 
 
 
+/*********************
 
+Document.ready
+
+********************/
 
 $(document).ready(function() {
     Username = $('input#name').val();
     $('.hamburger').hide();
-    
+
     $('.hamburger, #overlay').on('touch click', function() {
-            $('.hamburger').toggleClass('is-active');
-            $('#overlay').toggleClass('open');
-        });
+        $('.hamburger').toggleClass('is-active');
+        $('#overlay').toggleClass('open');
+    });
 
     $('.loading').slideUp(1000);
 
@@ -10296,8 +10799,8 @@ $(document).ready(function() {
 
         // Code for adding/removing classes here
         $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
-            
-            // Cache our selectors
+
+            //Cache our selectors
             var $this = $(this),
                 $parent = $this.parent().find("label");
 
