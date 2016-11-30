@@ -8,9 +8,9 @@ module.exports = function(grunt) {
         },
         files: [{
           "expand": true,
-          "cwd": "css/scss/",
+          "cwd": "app/css/scss/",
           "src": ["*.scss"],
-          "dest": "css/css/",
+          "dest": "app/css/css/",
           "ext": ".css"
         }]
       }
@@ -20,8 +20,8 @@ module.exports = function(grunt) {
         separator: ';', // permet d'ajouter un point-virgule entre chaque fichier concaténé.
       },
       dist: {
-        src: ['src/intro.js', 'src/project.js', 'src/outro.js'], // la source
-        dest: 'dist/built.js' // la destination finale
+        src: ['app/js/*.js'], // la source
+        dest: 'dist/js/built.js' // la destination finale
       }
     },
     cssmin: {
@@ -31,17 +31,17 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          'css/main.css': ['css/css/*.css', '!css/main.css']
+          'dist/css/main.css': ['app/css/css/*.css', '!css/main.css']
         }
       }
     },
     sprite: {
       main: {
         src: [
-        'assets/sprites/*.png'
+        'app/assets/sprites/*.png'
         ],
-        dest: 'assets/sprite-main.png',
-        destCss: 'css/scss/sprite-main.scss',
+        dest: 'dist/assets/sprite-main.png',
+        destCss: 'app/css/scss/sprite-main.scss',
         cssFormat: 'scss',
         cssVarMap: function (sprite) {
          sprite.name = 'icon-' + sprite.name;
@@ -56,7 +56,7 @@ module.exports = function(grunt) {
           livereload: true, // Activons le livereload du navigateur
         },
         src: {
-          files: ['js/*.js', 'css/**/*.scss', '**/*.html'], // Les fichiers à observer…
+          files: ['app/js/*.js', 'app/css/**/*.scss', 'app/views/**/*.html'], // Les fichiers à observer…
           tasks: ['sass:dist', 'concat:dist', 'cssmin'], // … la commande à effectuer
         }
       }
@@ -68,6 +68,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
 
-  grunt.registerTask('default', ['sass:dist', 'concat:dist', 'cssmin', 'sprite']);
+  grunt.registerTask('default', ['sass:dist', 'sprite', 'concat:dist', 'cssmin']);
   grunt.registerTask('spritesmith', ['sprite']);
 }

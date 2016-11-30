@@ -78,9 +78,9 @@
                 }
                 var answers, value = false;
                 //Initialisation de codeMirror
-                var myCodeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+                var codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
                 //cm.addKeyMap(map: object, bottom: boolean) || extraKeys: Dans la config du CM
-                myCodeMirror.addKeyMap({
+                codeMirror.addKeyMap({
                     Enter: function (cm) {
                         setSelection('atom');
                     }
@@ -154,8 +154,8 @@
                     })
 
                     //On focus, reset the cursor to the start and set selection
-                    myCodeMirror.on('focus', function () {
-                        myCodeMirror.setCursor({
+                    codeMirror.on('focus', function () {
+                        codeMirror.setCursor({
                             line: 0
                             , ch: 0
                         });
@@ -165,7 +165,7 @@
 
                 function setSelection(varType) {
                     var setPos = true,
-                        cm = myCodeMirror,
+                        cm = codeMirror,
                         currentPos = cm.getCursor(),
                         line = currentPos.line,
                         tokens,
@@ -204,7 +204,7 @@
                             tokens = cm.getLineTokens(line)
                         }
                         //Il n'y a plus de tokens dans l'editeur. On arrete la boucle et !setPos pour ne pas effectuer les prochaines instructions
-                        if (line > myCodeMirror.lineCount()) {
+                        if (line > codeMirror.lineCount()) {
                             setPos = false;
                             //console.log('should run code')
                             break;
@@ -227,7 +227,7 @@
                             //console.log('nope')
                         } else { //Si oui, unfocus l'editeur et lance le code
                             runCode();
-                            myCodeMirror.getInputField().blur();
+                            codeMirror.getInputField().blur();
                         }
                     }
                     //console.log(tokens[i])
@@ -236,14 +236,14 @@
                 function alertErr() {
                     var pixel = $('.pixelActive').data('rvb');
                     resetCode('pixel' + $('.pixelActive').index(), pixel.red, pixel.green, pixel.blue)
-                    myCodeMirror.getInputField().blur();
-                    myCodeMirror.focus();
+                    codeMirror.getInputField().blur();
+                    codeMirror.focus();
                     alert('ERROR');
                 }
 
                 function runCode() {
                     console.log('running code')
-                    var code = myCodeMirror.getValue();
+                    var code = codeMirror.getValue();
                     eval(code)
                     pixel = eval('pixel' + $('.pixelActive').index());
                     //console.log(pixel)                    
@@ -297,11 +297,11 @@
                 }
 
                 function resetCode(id, r, g, b) {
-                    myCodeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}');
-                    myCodeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true});
-                    myCodeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true});
-                    myCodeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true});
-                    myCodeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true});
+                    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}');
+                    codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true});
+                    codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true});
+                    codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true});
+                    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true});
                 }
 
                 function resetCheckboxes(r, g, b) {

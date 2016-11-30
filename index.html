@@ -1,72 +1,105 @@
 <html>
+<<<<<<< HEAD
 <head>
 	<meta charset="UTF-8">
 	<title>Cod'Art</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<script src="//localhost:35729/livereload.js"></script>
-	<link rel="stylesheet" type="text/css" href="./css/main.css">
+	<link rel="stylesheet" type="text/css" href="dist/css/main.css">
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+	<script src="js/codemirror.js"></script>
+    <script src="js/javascript.js"></script>
+
+	<link rel="stylesheet" href="css/codemirror/codemirror.css">
+    <link rel="stylesheet" href="css/codemirror/icecoder.css">
+
+    <link rel="prefetch" href="views/chooseDevMod.html">
+    <link rel="prefetch" href="views/levels/level1.html">
+    <link rel="prefetch" href="views/levels/level2.html">
 </head>
 <body>
 	<div class="loading">
-		<img src="assets/loading.svg">
+		<img src="dist/assets/loading.svg" alt="loading">
 	</div>
-	<div class='background'></div>
-	<div id="menu">
-		<div class="button-burger">
-			<button class="hamburger hamburger--spin" type="button">
-				<span class="hamburger-box">
-					<span class="hamburger-inner"></span>
-				</span>
-			</button>
-		</div>
-		<div class="overlay" id="overlay">
-			<nav>
-				<ul>
-					<li><a href="#">Chapitres</a></li>
-					<li><a href="#">Niveaux</a></li>
-					<li><a href="#">Encyclopedie</a></li>
-				</ul>
-			</nav>
+	<div id="modal-container">
+		<div class="modal-background">
+			<div class="modal">
+				<div class="close">
+					<i class="icon icon-close"></i>
+				</div>
+				<div class="modifie-element">
+					
+				</div>
+				<div class="code-interface">
+					<div class="buttons">
+						<input type="checkbox" class="red" />
+						<input type="checkbox" class="green"/>
+						<input type="checkbox" class="blue"/>
+					</div>
+					<textarea id="code"></textarea>
+
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<main >
-		<div id="intro">
-			<figure class="logo">
-			<img src="assets/logo.png" alt="Logo Cod'Art">
-		</figure>
-		
-		<div class="content-form">
-          <form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
-              <div class="form-group">
-                  <label class="form-label" for="name">Username</label>
-                  <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
-              </div> 
-               <div >
-                  <div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
-              </div>
-          </form>
-        </div>
+	<div class="content-global">
+		<div class='background'></div>
+		<div id="menu">
+			<div class="button-burger">
+				<button class="hamburger hamburger--spin" type="button">
+					<span class="hamburger-box">
+						<span class="hamburger-inner"></span>
+					</span>
+				</button>
+			</div>
+			<div class="overlay" id="overlay">
+				<nav>
+					<ul>
+						<li><a href="#">Niveaux</a></li>
+						<li><a href="#">Activités</a></li>
+						<li><a href="#">Succès</a></li>
+						<li><a href="#">Encyclopedie</a></li>
+					</ul>
+				</nav>
+			</div>
 		</div>
-		
 
+		<main >
+			<div id="intro">
+				<figure class="logo">
+					<img src="dist/assets/logo.png" alt="Logo Cod'Art">
+				</figure>
+
+				<div class="content-form">
+					<form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
+						<div class="form-group">
+							<label class="form-label" for="name">Username</label>
+							<input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
+						</div> 
+						<div >
+							<div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
 	
-	</main>
 	<div class="popup hide">
-		<div class="content-popup">
-			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit sed, maxime dolorem consectetur officia at eum! Cupiditate enim voluptas at ducimus asperiores sapiente iure nisi cumque adipisci, alias, nemo, reiciendis!
-		</div>
-		<div class="popup-icon">
-			<i class="icon icon-error"></i>
-		</div>
-		
-		<div >
-			<div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
+		<div class="overflow">
+			<div class="content-popup">
+			</div>
+			<div class="popup-icon">
+				<i class="icon icon-error"></i>
+			</div>
+
+			<div >
+				<div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
+			</div>
 		</div>
 	</div>
 	<div class='hoverlay hide'></div>
-	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="dist/js/built.js"></script>
 </body>
 </html>
