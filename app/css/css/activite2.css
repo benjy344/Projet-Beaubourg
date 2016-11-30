@@ -53,6 +53,65 @@
   background-color: #FFF;
 }
 
+#Level2 #kiteII, #Level2 #frameWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 200px;
+  width: 700px;
+}
+
+#frameWrapper {
+  /*padding: 1em;*/
+}
+
+#kiteII .pixel, #frameWrapper .pixel {
+  box-sizing: border-box;
+  flex-basis: 100px;
+  border: solid 1px black;
+}
+
+#frameWrapper .pixel {
+  background-color: black;
+  transition: background ease 0.5s;
+}
+
+#kiteII .blue {
+  background-color: blue;
+}
+
+#kiteII .red {
+  background-color: red;
+}
+
+#kiteII .yellow {
+  background-color: yellow;
+}
+
+#kiteII .green {
+  background-color: green;
+}
+
+#kiteII .white {
+  background-color: white;
+}
+
+#kiteII .black {
+  background-color: black;
+}
+
+#kiteII .pixel.large, #frameWrapper .pixel.large {
+  flex-basis: 200px;
+}
+
+#frameWrapper .pixelActive {
+  border: #008bff solid 2px;
+}
+
+.checkBg {
+  background-color: black;
+}
+
 .red {
   background-color: red !important;
 }
