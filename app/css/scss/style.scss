@@ -31,6 +31,13 @@ body {
 		width: 50px;
 		right: 145px;
 	}
+
+	.help-button {
+		margin: 20px;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
 	input[type="text"], input[type="password"], textarea, select, button { 
 		outline: none;
 	}
@@ -145,6 +152,7 @@ body {
 		transition: all 0.5s;
 		transition-delay: 0.5s;
 		border-radius: 30px;
+		padding: 15px 0;
 		
 		&:after {
 			content: "";
@@ -175,8 +183,8 @@ body {
 			width: 100%;
 			height : 100%;
 			.content-popup {
-				padding: 10%;
-				background: $black;
+				padding: 10% 10% 3% 10%;
+				background: transparent;
 				border-radius: 30px;
 				text-align: center;
 			}
