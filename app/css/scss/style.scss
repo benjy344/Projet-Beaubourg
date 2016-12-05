@@ -37,6 +37,11 @@ body {
 		position: absolute;
 		left: 0;
 		top: 0;
+		display: none;
+
+		&.newTip {
+			animation: iconAnim 2s infinite;
+		}
 	}
 	input[type="text"], input[type="password"], textarea, select, button { 
 		outline: none;
@@ -575,13 +580,13 @@ body {
 
 @keyframes iconAnim {
   0% {
-    transform: scale(1);
+    transform: scale(0.7);
   }
   50%{
     transform: scale(0.5);
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.7);
   }
 }
 

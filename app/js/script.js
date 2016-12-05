@@ -22,6 +22,8 @@ $hoverlay = $('.hoverlay');
 $popup_icon = $('.popup-icon i');
 
 popinIsOpen = false;
+tipIsOpened = false;
+isNewTip = false;
 
 
 /********************
@@ -92,7 +94,7 @@ function loadLevel1() {
                 1 : 'dev blabla2',
                 2 : 'dev blabla3'
             }
-            //constructTips(10000, 3, tips1); {DEV}
+            constructTips(2000, 3, tips1); //{DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -127,7 +129,7 @@ function loadLevel1() {
                 1 : 'blabla2',
                 2 : 'blabla3'
             }
-            //constructTips(3000, 3, tips1); {DEV}
+            constructTips(10000, 3, tips1); //{DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -809,12 +811,14 @@ function constructTips(time, numberOftips, tips ) {
 function getATip(number, time, tips, total) {
     var intervale = 0;
     var t = 0;
-    Showpopup(tips[number], 'hidePopup()');
+    $('.help-button').show().addClass('newTip');
+    ConstructPopupAide(tips[number]);
     number++;
     if (number < total) {
         //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
         intervale = setInterval(function () {
-            if (popinIsOpen) {
+            if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+                console.log('clear le set')
                 clearTimeout(t);
                 t = 0;
             } else {
@@ -833,7 +837,29 @@ function getATip(number, time, tips, total) {
 
 }
 
+function ConstructPopupAide(tip) {
+    if (tip) {
+        $content_popup.html(''+tip+'');
+        $button.attr("onclick", 'closePopupAide()');
+        isNewTip = true;
+    };
+}
 
+function ShowPopupAide() {
+    tipIsOpened = true;
+    popinIsOpen = true;
+    isNewTip = false;
+    $('.help-button').removeClass('newTip');
+    $Popup.removeClass('hide');
+    $hoverlay.removeClass('hide');
+}
+
+function closePopupAide() {
+    tipIsOpened = false;
+    popinIsOpen = false;
+    $Popup.addClass('hide');
+    $hoverlay.addClass('hide');
+}
 
 /*********************
 

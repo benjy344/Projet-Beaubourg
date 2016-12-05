@@ -108,7 +108,7 @@ module.exports = function(grunt) {
 
 
 
-  grunt.registerTask('default', ['sass:dist', 'sprite', 'concat:dist', 'cssmin']);
+  grunt.registerTask('default', ['sprite','sass:dist', 'concat:dist', 'cssmin']);
   grunt.registerTask('spritesmith', ['sprite']);
   grunt.registerTask('minifyImg', ['imagemin:png']);
 

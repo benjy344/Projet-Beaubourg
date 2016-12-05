@@ -513,8 +513,8 @@ The `sprites` mixin generates identical output to the CSS template
 .icon-help {
   background-image: url(../../../../dist/assets/sprite-main.png);
   background-position: -91px -55px;
-  width: 50px;
-  height: 49px;
+  width: 40px;
+  height: 39px;
 }
 
 .icon-succes {
@@ -564,6 +564,10 @@ body .help-button {
   position: absolute;
   left: 0;
   top: 0;
+  display: none;
+}
+body .help-button.newTip {
+  animation: iconAnim 2s infinite;
 }
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
@@ -1029,13 +1033,13 @@ body .iconAnim {
 }
 @keyframes iconAnim {
   0% {
-    transform: scale(1);
+    transform: scale(0.7);
   }
   50% {
     transform: scale(0.5);
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.7);
   }
 }
 @keyframes popup-codmirror {
