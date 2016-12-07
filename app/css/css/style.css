@@ -517,6 +517,13 @@ The `sprites` mixin generates identical output to the CSS template
   height: 39px;
 }
 
+.icon-return {
+  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-position: -91px -99px;
+  width: 35px;
+  height: 40px;
+}
+
 .icon-succes {
   background-image: url(../../../../dist/assets/sprite-main.png);
   background-position: 0px 0px;
@@ -975,15 +982,21 @@ body .overlay nav {
   font-weight: 400;
   text-align: center;
 }
-body .overlay ul {
+body .overlay nav ul {
   list-style: none;
   padding: 0;
   margin: 0 auto;
   display: inline-block;
   position: relative;
   height: 100%;
+  transition: all 1s;
+  left: 0vw;
 }
-body .overlay ul li {
+body .overlay nav ul.childOpen {
+  transition: all 1s;
+  left: -100vw;
+}
+body .overlay nav ul li {
   display: block;
   height: 25%;
   height: calc(100% / 4);
@@ -991,17 +1004,17 @@ body .overlay ul li {
   position: relative;
   opacity: 0;
 }
-body .overlay ul li a {
+body .overlay nav ul li a {
   display: block;
   position: relative;
   color: #FBFBFB;
   text-decoration: none;
   overflow: hidden;
 }
-body .overlay ul li a:hover:after, body .overlay ul li a:focus:after, body .overlay ul li a:active:after {
+body .overlay nav ul li a:hover:after, body .overlay nav ul li a:focus:after, body .overlay nav ul li a:active:after {
   width: 100%;
 }
-body .overlay ul li a:after {
+body .overlay nav ul li a:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1011,6 +1024,35 @@ body .overlay ul li a:after {
   height: 3px;
   background: linear-gradient(90deg, #3fa9f5, #7ac943);
   transition: .35s;
+}
+body .overlay nav .child {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  position: absolute;
+  height: 0;
+  transition: left 1s;
+  left: 100vw;
+  display: inline-block;
+  overflow: auto;
+}
+body .overlay nav .child > * {
+  display: none;
+}
+body .overlay nav .child.isOpen {
+  transition: left 1s;
+  left: 15px;
+  height: 100%;
+  display: inline-block;
+}
+body .overlay nav .child.isOpen > * {
+  display: block;
+}
+body .overlay nav .child .child-content #chooseDevMod h2 {
+  font-size: 0.75em;
+}
+body .overlay nav .child .child-content #chooseDevMod .deb, body .overlay nav .child .child-content #chooseDevMod .dev {
+  font-size: 0.65em;
 }
 body .iconAnim {
   animation: iconAnim 3s infinite;

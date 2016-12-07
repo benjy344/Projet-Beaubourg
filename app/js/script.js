@@ -25,6 +25,8 @@ popinIsOpen = false;
 tipIsOpened = false;
 isNewTip = false;
 
+countip = 0;
+
 
 /********************
 
@@ -41,23 +43,21 @@ Chargement des levels et menu
 function loadChooseDevMod(){
     Showpopup(accueil, 'hidePopup()', '');
     Username = $('input#name').val();
-    $('main').load(views+'chooseDevMod.html', function(){
-        
-        screen = 'chooseDevMode';
+    $('main').load(views+'chooseDevMod.html', chooseMode);
+    $('#input1, #input2').off('touch click');
+}
+
+function chooseMode(){
 
         $('#input1, #input2').on('touch click', function(e) {
             isdebMod = $('input#input1:checked').val();
             if (isdebMod == 'on') {
-
+                console.log('korf');
                 devMod = false;
             }
             else {devMod = true;} 
         }); 
-    });
-    $('#input1, #input2').off();
-}
-
-
+    }
 
 /********************
 *
@@ -839,9 +839,12 @@ function getATip(number, time, tips, total) {
 
 function ConstructPopupAide(tip) {
     if (tip) {
+        countip++;
         $content_popup.html(''+tip+'');
         $button.attr("onclick", 'closePopupAide()');
         isNewTip = true;
+
+        addEncyclo('Aide n°'+countip+'', tip);
     };
 }
 
@@ -921,6 +924,8 @@ $(document).ready(function() {
     $('.hamburger, #overlay').on('touch click', function() {
         $('.hamburger').toggleClass('is-active');
         $('#overlay').toggleClass('open');
+        $('.main-nav>ul').removeClass('childOpen');
+        $('.main-nav .child').removeClass('isOpen');
     });
 
     $('.loading').slideUp(1000);
@@ -930,6 +935,56 @@ $(document).ready(function() {
             loadChooseDevMod();
         }
     });
+    /////////////////Gestion menu
+
+    $('.haveChild').on('click touch', function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+        var loader = $(this).attr('data-loading');
+
+        var $parent = $('.main-nav>ul');
+        var $child = $('.main-nav .child');
+        var $child_content = $('.main-nav .child .child-content');
+
+        $parent.addClass('childOpen');
+        $child.addClass('isOpen');
+        $child_content.load(views+loader+'.html');
+        if (loader == 'chooseDevMod') {
+            setTimeout(function(){
+                console.log('ionin');
+            if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');}
+
+            }, 500)
+        }
+
+
+    });
+    $('.main-nav .child i').on('click touch', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        var $parent = $('.main-nav>ul');
+        var $child = $('.main-nav .child');
+
+        $parent.removeClass('childOpen');
+        $child.removeClass('isOpen');
+
+    });
+
+    $('.main-nav .child ').on('click touch', function(event){
+        isdebMod = $('input#input1:checked').val();
+        if (isdebMod == 'on') {
+            devMod = false;
+        }
+        else {devMod = true;} 
+        event.stopPropagation();
+    });
+    
+
+
+
+
+
     /////////////////Formulaire
     // Test for placeholder support
     $.support.placeholder = (function(){
@@ -942,10 +997,9 @@ $(document).ready(function() {
         $('.form-label').each(function(){
             $(this).addClass('js-hide-label');
         });  
-
+        
         // Code for adding/removing classes here
         $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
-
             //Cache our selectors
             var $this = $(this),
                 $parent = $this.parent().find("label");
@@ -970,7 +1024,7 @@ $(document).ready(function() {
                     $parent.removeClass('js-unhighlight-label');
                 }
             }
-        }).off();
+        });
     } 
 });
 
