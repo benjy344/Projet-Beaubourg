@@ -9905,6 +9905,10 @@ $hoverlay = $('.hoverlay');
 $popup_icon = $('.popup-icon i');
 
 popinIsOpen = false;
+tipIsOpened = false;
+isNewTip = false;
+
+countip = 0;
 
 
 /********************
@@ -9922,23 +9926,21 @@ Chargement des levels et menu
 function loadChooseDevMod(){
     Showpopup(accueil, 'hidePopup()', '');
     Username = $('input#name').val();
-    $('main').load(views+'chooseDevMod.html', function(){
+    $('main').load(views+'chooseDevMod.html', chooseMode);
+    $('#input1, #input2').off('touch click');
+}
 
-        screen = 'chooseDevMode';
+function chooseMode(){
 
         $('#input1, #input2').on('touch click', function(e) {
             isdebMod = $('input#input1:checked').val();
             if (isdebMod == 'on') {
-
+                console.log('korf');
                 devMod = false;
             }
             else {devMod = true;} 
         }); 
-    });
-    $('#input1, #input2').off();
-}
-
-
+    }
 
 /********************
 *
@@ -9975,7 +9977,7 @@ function loadLevel1() {
                 1 : 'dev blabla2',
                 2 : 'dev blabla3'
             }
-            //constructTips(10000, 3, tips1); {DEV}
+            constructTips(2000, 3, tips1); //{DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -10008,7 +10010,7 @@ function loadLevel1() {
                 1 : 'blabla2',
                 2 : 'blabla3'
             }
-            //constructTips(3000, 3, tips1); {DEV}
+            constructTips(10000, 3, tips1); //{DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -11002,12 +11004,14 @@ function constructTips(time, numberOftips, tips ) {
 function getATip(number, time, tips, total) {
     var intervale = 0;
     var t = 0;
-    Showpopup(tips[number], 'hidePopup()');
+    $('.help-button').show().addClass('newTip');
+    ConstructPopupAide(tips[number]);
     number++;
     if (number < total) {
         //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
         intervale = setInterval(function () {
-            if (popinIsOpen) {
+            if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+                console.log('clear le set')
                 clearTimeout(t);
                 t = 0;
             } else {
@@ -11026,7 +11030,32 @@ function getATip(number, time, tips, total) {
 
 }
 
+function ConstructPopupAide(tip) {
+    if (tip) {
+        countip++;
+        $content_popup.html(''+tip+'');
+        $button.attr("onclick", 'closePopupAide()');
+        isNewTip = true;
 
+        addEncyclo('Aide n°'+countip+'', tip);
+    };
+}
+
+function ShowPopupAide() {
+    tipIsOpened = true;
+    popinIsOpen = true;
+    isNewTip = false;
+    $('.help-button').removeClass('newTip');
+    $Popup.removeClass('hide');
+    $hoverlay.removeClass('hide');
+}
+
+function closePopupAide() {
+    tipIsOpened = false;
+    popinIsOpen = false;
+    $Popup.addClass('hide');
+    $hoverlay.addClass('hide');
+}
 
 /*********************
 
@@ -11043,13 +11072,20 @@ Implementation de l'encyclopedie
 */
 
 function addEncyclo (name, content) {
-    encyclo = $('.encyclo ul');
-    archive = $('.archive');
-    countEncyclo = encyclo.children().length;
-    if (name && content) {
-        encyclo.prepend('<li class="encycloLink"><a href="#" data-link="'+countEncyclo+'">'+name+'</a></li>');
-        archive.prepend('<li data-link="'+countEncyclo+'">'+content+'</li>');
-    }
+    $.ajax({
+        url: views+'encyclo.html',
+        success : function(){
+            encyclo = $('.encyclo ul');
+            archive = $('.archive');
+            countEncyclo = encyclo.children().length;
+            console.log(countEncyclo)
+            if (name && content) {
+                encyclo.prepend('<li class="encycloLink"><a href="#" data-link="'+countEncyclo+'">'+name+'</a></li>');
+                archive.prepend('<li data-link="'+countEncyclo+'">'+content+'</li>');
+            }  
+        }
+    });
+    
 }
 
 /*********************
@@ -11088,6 +11124,8 @@ $(document).ready(function() {
     $('.hamburger, #overlay').on('touch click', function() {
         $('.hamburger').toggleClass('is-active');
         $('#overlay').toggleClass('open');
+        $('.main-nav>ul').removeClass('childOpen');
+        $('.main-nav .child').removeClass('isOpen');
     });
 
     $('.loading').slideUp(1000);
@@ -11097,6 +11135,56 @@ $(document).ready(function() {
             loadChooseDevMod();
         }
     });
+    /////////////////Gestion menu
+
+    $('.haveChild').on('click touch', function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+        var loader = $(this).attr('data-loading');
+
+        var $parent = $('.main-nav>ul');
+        var $child = $('.main-nav .child');
+        var $child_content = $('.main-nav .child .child-content');
+
+        $parent.addClass('childOpen');
+        $child.addClass('isOpen');
+        $child_content.load(views+loader+'.html');
+        if (loader == 'chooseDevMod') {
+            setTimeout(function(){
+                console.log('ionin');
+            if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');}
+
+            }, 500)
+        }
+
+
+    });
+    $('.main-nav .child i').on('click touch', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        var $parent = $('.main-nav>ul');
+        var $child = $('.main-nav .child');
+
+        $parent.removeClass('childOpen');
+        $child.removeClass('isOpen');
+
+    });
+
+    $('.main-nav .child ').on('click touch', function(event){
+        isdebMod = $('input#input1:checked').val();
+        if (isdebMod == 'on') {
+            devMod = false;
+        }
+        else {devMod = true;} 
+        event.stopPropagation();
+    });
+    
+
+
+
+
+
     /////////////////Formulaire
     // Test for placeholder support
     $.support.placeholder = (function(){
@@ -11109,10 +11197,9 @@ $(document).ready(function() {
         $('.form-label').each(function(){
             $(this).addClass('js-hide-label');
         });  
-
+        
         // Code for adding/removing classes here
         $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
-
             //Cache our selectors
             var $this = $(this),
                 $parent = $this.parent().find("label");
@@ -11137,7 +11224,7 @@ $(document).ready(function() {
                     $parent.removeClass('js-unhighlight-label');
                 }
             }
-        }).off();
+        });
     } 
 });
 

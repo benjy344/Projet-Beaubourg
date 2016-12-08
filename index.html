@@ -58,15 +58,23 @@
 				</button>
 			</div>
 			<div class="overlay" id="overlay">
-				<nav>
+				<nav class="main-nav">
 					<ul>
-						<li><a href="#">Niveaux</a></li>
-						<li><a href="#">Activités</a></li>
-						<li><a href="#">Succès</a></li>
-						<li><a href="#">Encyclopedie</a></li>
+						<li><a href="#" class='haveChild' data-loading="chooseDevMod" >Niveaux</a></li>
+						<li><a href="#" class='haveChild' data-loading="accueil" >Activités</a></li>
+						<li><a href="#" class='haveChild' data-loading="success" >Succès</a></li>
+						<li><a href="#" class='haveChild' data-loading="encyclo" >Encyclopedie</a></li>
 					</ul>
+					<div class="child">
+						<i class="icon icon-return"></i>
+						<div class="child-content"></div>
+					</div>
 				</nav>
 			</div>
+		</div>
+
+		<div class="help-button newTip" onclick="ShowPopupAide()">
+			<i class="icon icon-help"></i>
 		</div>
 
 		<main >
@@ -92,6 +100,7 @@
 	
 	<div class="popup hide">
 		<div class="overflow">
+
 			<div class="content-popup">
 			</div>
 			<div class="popup-icon">

@@ -497,21 +497,35 @@ The `sprites` mixin generates identical output to the CSS template
 @include sprites($spritesheet-sprites);
 */
 .icon-close {
-  background-image: url(../../../dist/assets/sprite-main.png);
+  background-image: url(../../../../dist/assets/sprite-main.png);
   background-position: -91px 0px;
   width: 50px;
   height: 50px;
 }
 
 .icon-error {
-  background-image: url(../../../dist/assets/sprite-main.png);
+  background-image: url(../../../../dist/assets/sprite-main.png);
   background-position: 0px -103px;
   width: 63px;
   height: 101px;
 }
 
+.icon-help {
+  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-position: -91px -55px;
+  width: 40px;
+  height: 39px;
+}
+
+.icon-return {
+  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-position: -91px -99px;
+  width: 35px;
+  height: 40px;
+}
+
 .icon-succes {
-  background-image: url(../../../dist/assets/sprite-main.png);
+  background-image: url(../../../../dist/assets/sprite-main.png);
   background-position: 0px 0px;
   width: 86px;
   height: 98px;
@@ -553,6 +567,16 @@ body .close {
   right: 145px;
   z-index: 1000;
   background-color: red;
+}
+body .help-button {
+  margin: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+}
+body .help-button.newTip {
+  animation: iconAnim 2s infinite;
 }
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
@@ -657,6 +681,7 @@ body .popup {
   transition: all 0.5s;
   transition-delay: 0.5s;
   border-radius: 30px;
+  padding: 15px 0;
 }
 body .popup:after {
   content: "";
@@ -686,8 +711,8 @@ body .popup .overflow {
   height: 100%;
 }
 body .popup .overflow .content-popup {
-  padding: 10%;
-  background: #242322;
+  padding: 10% 10% 3% 10%;
+  background: transparent;
   border-radius: 30px;
   text-align: center;
 }
@@ -958,15 +983,21 @@ body .overlay nav {
   font-weight: 400;
   text-align: center;
 }
-body .overlay ul {
+body .overlay nav ul {
   list-style: none;
   padding: 0;
   margin: 0 auto;
   display: inline-block;
   position: relative;
   height: 100%;
+  transition: all 1s;
+  left: 0vw;
 }
-body .overlay ul li {
+body .overlay nav ul.childOpen {
+  transition: all 1s;
+  left: -100vw;
+}
+body .overlay nav ul li {
   display: block;
   height: 25%;
   height: calc(100% / 4);
@@ -974,17 +1005,17 @@ body .overlay ul li {
   position: relative;
   opacity: 0;
 }
-body .overlay ul li a {
+body .overlay nav ul li a {
   display: block;
   position: relative;
   color: #FBFBFB;
   text-decoration: none;
   overflow: hidden;
 }
-body .overlay ul li a:hover:after, body .overlay ul li a:focus:after, body .overlay ul li a:active:after {
+body .overlay nav ul li a:hover:after, body .overlay nav ul li a:focus:after, body .overlay nav ul li a:active:after {
   width: 100%;
 }
-body .overlay ul li a:after {
+body .overlay nav ul li a:after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -994,6 +1025,45 @@ body .overlay ul li a:after {
   height: 3px;
   background: linear-gradient(90deg, #3fa9f5, #7ac943);
   transition: .35s;
+}
+body .overlay nav .child {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  position: absolute;
+  height: 0;
+  transition: left 1s;
+  left: 100vw;
+  display: inline-block;
+  overflow: auto;
+}
+body .overlay nav .child i {
+  margin-left: 10px;
+}
+body .overlay nav .child > * {
+  display: none;
+}
+body .overlay nav .child.isOpen {
+  transition: left 1s;
+  left: 0px;
+  width: 100vw;
+  height: 100%;
+  display: inline-block;
+}
+body .overlay nav .child.isOpen > * {
+  display: block;
+}
+body .overlay nav .child .child-content #chooseDevMod h2 {
+  font-size: 0.75em;
+}
+body .overlay nav .child .child-content #chooseDevMod .deb, body .overlay nav .child .child-content #chooseDevMod .dev {
+  font-size: 0.65em;
+}
+body .overlay nav .child .child-content #chooseDevMod .fleche {
+  display: none;
+}
+body .overlay nav .child .child-content #ChooseLevel a {
+  font-size: 0.75em;
 }
 body .iconAnim {
   animation: iconAnim 3s infinite;
@@ -1016,13 +1086,13 @@ body .iconAnim {
 }
 @keyframes iconAnim {
   0% {
-    transform: scale(1);
+    transform: scale(0.7);
   }
   50% {
     transform: scale(0.5);
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.7);
   }
 }
 @keyframes popup-codmirror {
