@@ -10759,13 +10759,20 @@ Implementation de l'encyclopedie
 */
 
 function addEncyclo (name, content) {
-    encyclo = $('.encyclo ul');
-    archive = $('.archive');
-    countEncyclo = encyclo.children().length;
-    if (name && content) {
-        encyclo.prepend('<li class="encycloLink"><a href="#" data-link="'+countEncyclo+'">'+name+'</a></li>');
-        archive.prepend('<li data-link="'+countEncyclo+'">'+content+'</li>');
-    }
+    $.ajax({
+        url: views+'encyclo.html',
+        success : function(){
+            encyclo = $('.encyclo ul');
+            archive = $('.archive');
+            countEncyclo = encyclo.children().length;
+            console.log(countEncyclo)
+            if (name && content) {
+                encyclo.prepend('<li class="encycloLink"><a href="#" data-link="'+countEncyclo+'">'+name+'</a></li>');
+                archive.prepend('<li data-link="'+countEncyclo+'">'+content+'</li>');
+            }  
+        }
+    });
+    
 }
 
 /*********************

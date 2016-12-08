@@ -1036,12 +1036,16 @@ body .overlay nav .child {
   display: inline-block;
   overflow: auto;
 }
+body .overlay nav .child i {
+  margin-left: 10px;
+}
 body .overlay nav .child > * {
   display: none;
 }
 body .overlay nav .child.isOpen {
   transition: left 1s;
-  left: 15px;
+  left: 0px;
+  width: 100vw;
   height: 100%;
   display: inline-block;
 }
@@ -1053,6 +1057,12 @@ body .overlay nav .child .child-content #chooseDevMod h2 {
 }
 body .overlay nav .child .child-content #chooseDevMod .deb, body .overlay nav .child .child-content #chooseDevMod .dev {
   font-size: 0.65em;
+}
+body .overlay nav .child .child-content #chooseDevMod .fleche {
+  display: none;
+}
+body .overlay nav .child .child-content #ChooseLevel a {
+  font-size: 0.75em;
 }
 body .iconAnim {
   animation: iconAnim 3s infinite;
