@@ -126,5 +126,9 @@
 #modalContent .black {
   background-color: #242322 !important;
 }
+#modalContent .pixelModel {
+  width: 100px;
+  height: 100px;
+}
 
 /*# sourceMappingURL=activite2.css.map */

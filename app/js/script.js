@@ -52,15 +52,15 @@ function loadChooseDevMod(){
 
 function chooseMode(){
 
-        $('#input1, #input2').on('touch click', function(e) {
-            isdebMod = $('input#input1:checked').val();
-            if (isdebMod == 'on') {
-                console.log('korf');
-                devMod = false;
-            }
-            else {devMod = true;} 
-        }); 
-    }
+    $('#input1, #input2').on('touch click', function(e) {
+        isdebMod = $('input#input1:checked').val();
+        if (isdebMod == 'on') {
+            console.log('korf');
+            devMod = false;
+        }
+        else {devMod = true;} 
+    }); 
+}
 
 /********************
 *
@@ -443,10 +443,10 @@ function colorModel(red, green, blue) {
 
 function resetCodePixel(id, r, g, b) {
     codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}');
-    codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true});
-    codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true});
-    codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true});
-    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true});
+    codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
+    codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
+    codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
+    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
 }
 
 function resetCheckboxes(r, g, b) {
@@ -641,6 +641,8 @@ function resetSliders(r, g, b) {
     $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
     $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
     $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
+    
+    colorModel(r, g, b)
 }
 
 function verifPixelLevel3() {
@@ -741,7 +743,7 @@ function loadLevel4() {
     reinitMain();
     showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
     showpop4B = "Showpopup(jeu4b, showpop4C, '')";
-    //Showpopup(jeu4a, showpop4B, ''); {DEV}
+    Showpopup(jeu4a, showpop4B, '');
 
     $('main').loadLevel('Level4', function () {
 
@@ -760,6 +762,13 @@ function loadLevel4() {
                 //matchBrackets: true
             }
         //Initialisation des variables
+        if (!devMod) {
+            codeConfig.readOnly = 'nocursor';
+            $('.dev').hide();  
+        } else {
+            $('.notdev').hide();
+        }
+
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -784,12 +793,6 @@ function loadLevel4() {
             $(this).addClass('imgActive');
 
             resetCode();
-
-            if (devMod) {
-                var thisPos = $(this).data('pos');
-                resetCodePixel($('.imgActive').data('name'), thisPos.x, thisPos.y, thisPos.rot);
-            }
-
         })
 
         //Run Code
@@ -804,6 +807,9 @@ function loadLevel4() {
         })
 
         $('.reinitImg').click(reinitImg);
+
+        codeMirror.setValue('init');
+        //resetCode();
 
     })
 
@@ -929,33 +935,34 @@ function rotate(deg) {
     $('.imgActive').data('pos', pos)
 }
 
-function move(direction, re) {
-    switch(direction) {
-        case 'up':
-        case 'haut':
-            moveUp();
-            break;
-        case 'down':
-        case 'bas':
-            moveDown();
-            break;
-        case 'left':
-        case 'gauche':
-            moveLeft();
-            break;
-        case 'right':
-        case 'droite':
-            moveRight();
-            break;
-        default:
-            console.log("error") //{DEV}   
-            break;
-    }
-}
-
 function move(direction, repeat) {
-    for (i = 0; i < repeat; i++) {
-        move(direction);
+
+    if (repeat) {
+        for (i = 0; i < repeat; i++) {
+            move(direction);
+        }
+    } else {
+        switch(direction) {
+            case 'up':
+            case 'haut':
+                moveUp();
+                break;
+            case 'down':
+            case 'bas':
+                moveDown();
+                break;
+            case 'left':
+            case 'gauche':
+                moveLeft();
+                break;
+            case 'right':
+            case 'droite':
+                moveRight();
+                break;
+            default:
+                console.log("error") //{DEV}   
+                break;
+        }
     }
 } 
 
@@ -986,11 +993,6 @@ function resetCode() {
 function submitLevel4() {
     //Validate
     var isCorrect = true;
-    $.each(answers, function(i, value){
-        if (!value.validate) {
-            isCorrect = false;
-        }
-    })
 
     if (isCorrect || !isCorrect) { //{DEV}
         console.log('WIN');
@@ -1205,7 +1207,7 @@ function addEncyclo (name, content) {
             }  
         }
     });
-    
+
 }
 
 /*********************
@@ -1273,7 +1275,7 @@ $(document).ready(function() {
         if (loader == 'chooseDevMod') {
             setTimeout(function(){
                 console.log('ionin');
-            if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');}
+                if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');}
 
             }, 500)
         }
@@ -1299,7 +1301,7 @@ $(document).ready(function() {
         else {devMod = true;} 
         event.stopPropagation();
     });
-    
+
 
 
 
@@ -1317,7 +1319,7 @@ $(document).ready(function() {
         $('.form-label').each(function(){
             $(this).addClass('js-hide-label');
         });  
-        
+
         // Code for adding/removing classes here
         $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
             //Cache our selectors
