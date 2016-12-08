@@ -56,8 +56,8 @@
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: 200px;
-  width: 700px;
+  height: calc( (100vw/7)*2 );
+  width: 100vw;
 }
 #Level2 #frameWrapper {
   /*padding: 1em;*/
@@ -72,7 +72,7 @@
 }
 #Level2 #kiteII .pixel, #Level2 #frameWrapper .pixel {
   box-sizing: border-box;
-  flex-basis: 100px;
+  height: calc(100vw / 7 );
   border: solid 1px black;
 }
 #Level2 #frameWrapper .pixel {
@@ -99,7 +99,7 @@
   background-color: black;
 }
 #Level2 #kiteII .pixel.large, #Level2 #frameWrapper .pixel.large {
-  flex-basis: 200px;
+  height: 100%;
 }
 #Level2 #frameWrapper .pixelActive {
   border: #008bff solid 2px;
@@ -107,24 +107,29 @@
 
 #modalContent .checkboxes {
   display: flex;
-  /* width: 90px; */
-  height: 90px;
+  height: calc(100vw/3);
+}
+#modalContent .checkboxes input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
 }
 #modalContent .checkBg {
   background-color: black;
-  flex-basis: 30px;
+  width: calc(100%/3);
   align-items: center;
   display: flex;
   justify-content: center;
+  border: 2px solid white;
 }
-#modalContent .red {
-  background-color: red !important;
+#modalContent .buttons {
+  display: flex;
+  justify-content: center;
 }
-#modalContent .blue {
-  background-color: blue !important;
-}
-#modalContent .black {
-  background-color: #242322 !important;
+#modalContent .buttons .runCode {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid linear-gradient(90deg, #3fa9f5, #7ac943);
 }
 
 /*# sourceMappingURL=activite2.css.map */
