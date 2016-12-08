@@ -30,6 +30,8 @@ body {
 		height: 50px;
 		width: 50px;
 		right: 145px;
+        z-index: 1000;
+        background-color: red;
 	}
 	input[type="text"], input[type="password"], textarea, select, button { 
 		outline: none;
@@ -88,9 +90,9 @@ body {
 		}
 
 		.modal-background {
-			display:table-cell;
+			//display:table-cell;
 			background: $black;
-			text-align:center;
+			//text-align:center;
 			vertical-align:middle;
 			.modal {
 				background: $black;
@@ -101,6 +103,7 @@ body {
 				border-radius:3px;
 				font-weight:300;
 				position:relative;
+                box-sizing: border-box;
 			}
 		}
 	}

@@ -52,7 +52,6 @@
   width: 100%;
   background-color: #FFF;
 }
-
 #Level2 #kiteII, #Level2 #frameWrapper {
   display: flex;
   flex-direction: column;
@@ -60,67 +59,71 @@
   height: 200px;
   width: 700px;
 }
-
-#frameWrapper {
+#Level2 #frameWrapper {
   /*padding: 1em;*/
 }
-
-#kiteII .pixel, #frameWrapper .pixel {
+#Level2 .pixelModel {
+  width: 90px;
+  height: 90px;
+  background-color: black;
+}
+#Level2 #kiteII {
+  display: none;
+}
+#Level2 #kiteII .pixel, #Level2 #frameWrapper .pixel {
   box-sizing: border-box;
   flex-basis: 100px;
   border: solid 1px black;
 }
-
-#frameWrapper .pixel {
+#Level2 #frameWrapper .pixel {
   background-color: black;
   transition: background ease 0.5s;
+  border: solid 1px white;
 }
-
-#kiteII .blue {
+#Level2 #kiteII .blue {
   background-color: blue;
 }
-
-#kiteII .red {
+#Level2 #kiteII .red {
   background-color: red;
 }
-
-#kiteII .yellow {
+#Level2 #kiteII .yellow {
   background-color: yellow;
 }
-
-#kiteII .green {
+#Level2 #kiteII .green {
   background-color: green;
 }
-
-#kiteII .white {
+#Level2 #kiteII .white {
   background-color: white;
 }
-
-#kiteII .black {
+#Level2 #kiteII .black {
   background-color: black;
 }
-
-#kiteII .pixel.large, #frameWrapper .pixel.large {
+#Level2 #kiteII .pixel.large, #Level2 #frameWrapper .pixel.large {
   flex-basis: 200px;
 }
-
-#frameWrapper .pixelActive {
+#Level2 #frameWrapper .pixelActive {
   border: #008bff solid 2px;
 }
 
-.checkBg {
-  background-color: black;
+#modalContent .checkboxes {
+  display: flex;
+  /* width: 90px; */
+  height: 90px;
 }
-
-.red {
+#modalContent .checkBg {
+  background-color: black;
+  flex-basis: 30px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+#modalContent .red {
   background-color: red !important;
 }
-
-.blue {
+#modalContent .blue {
   background-color: blue !important;
 }
-
-.black {
+#modalContent .black {
   background-color: #242322 !important;
 }
 

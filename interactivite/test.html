@@ -1,5 +1,134 @@
-var pixel0 = {
-red : false,
-green : false,
-blue : false
-}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>New HMTL document by NewJect</title>
+
+        <style>
+
+            .wrapper {
+                position: relative;
+                height: 400px;
+                width: 400px;
+            }
+
+            .wrapperGrad {
+                background: radial-gradient(circle at center, #eddb01, #f2ba23, #b9b32f, #AB6D5E, #cc525c, #896B83, #585F79);
+                opacity: 0;
+                height: 100%;
+                width: 100%;
+            }
+
+            .wrapper.done .wrapperGrad {
+                opacity: 1;
+            }
+
+            .wrapper.done .square {
+                opacity: 0;
+            }
+
+            .wrapper, .square, .wrapperGrad {
+                transition: 5s ease;
+            }
+
+            .square {
+                transition-delay: 2s;
+                transition-duration: 3s;
+            }
+            
+            .square, .wrapperGrad {
+                position: absolute;
+                box-sizing: border-box;
+            }
+
+            .square:nth-child(2) {
+                border: #585F79 solid 15px;
+                height: 100%;
+                width: 100%;
+            }
+
+            .square:nth-child(3) {
+                border: #896B83 solid 15px;
+                height: 85%;
+                width: 85%;
+                top: 7.5%;
+                left: 7.5%;
+            }
+
+            .square:nth-child(4) {
+                border: #cc525c solid 15px;
+                height: 70%;
+                width: 70%;
+                top: 15%;
+                left: 15%;
+            }
+
+            .square:nth-child(5) {
+                border: #AB6D5E solid 15px;
+                height: 55%;
+                width: 55%;
+                top: 22.5%;
+                left: 22.5%;
+            }
+
+            .square:nth-child(6) {
+                border: #b9b32f solid 15px;
+                height: 40%;
+                width: 40%;
+                top: 30%;
+                left: 30%;
+            }
+
+            .square:nth-child(7) {
+                border: #f2ba23 solid 15px;
+                height: 25%;
+                width: 25%;
+                top: 37.5%;
+                left: 37.5%;
+            }
+
+            .square:nth-child(8) {
+                border: #eddb01 solid 15px;
+                height: 10%;
+                width: 10%;
+                top: 45%;
+                left: 45%;
+            }
+
+
+
+
+
+        </style>
+
+    </head>
+    <body>
+
+        <div class="wrapper">
+            <div class="wrapperGrad"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+        </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script>
+
+
+
+
+        </script>
+
+    </body>
+</html>

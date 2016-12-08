@@ -1,0 +1,41 @@
+#Level4 .consigne p {
+  text-align: center;
+  padding-top: 100px;
+}
+#Level4 .consigne span {
+  text-align: center;
+  display: block;
+  width: 100%;
+  letter-spacing: 10;
+}
+#Level4 #frameWrapper {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  background-color: white;
+}
+#Level4 #frameWrapper .startContainer {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 100px;
+  height: 100px;
+}
+#Level4 #frameWrapper .startContainer .imageObject {
+  position: absolute;
+  background-image: url(../../app/assets/icon.jpg);
+  width: 100px;
+  height: 100px;
+  background-size: contain;
+}
+#Level4 #frameWrapper .startContainer .imageObject .imgActive {
+  border: #008bff solid 2px;
+}
+
+.btn {
+  /*{DEV}*/
+  background-color: #008BFF;
+  padding: 5px 10px;
+}
+
+/*# sourceMappingURL=activite%CC%814.css.map */

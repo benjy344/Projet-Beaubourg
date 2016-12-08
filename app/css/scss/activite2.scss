@@ -1,133 +1,157 @@
 @import "utilities/variables";
 
 #modal-container {
-	.pixel {
-		height: 150px;
-		width: 150px;
-		background-color: #FFF;
-	}
+    .pixel {
+        height: 150px;
+        width: 150px;
+        background-color: #FFF;
+    }
 }
 
 #Level2 {
-	.consigne {
+    .consigne {
 
-		p { 
-			text-align: center;
-			padding-top : 100px;
-		}
-		span {
-			text-align: center;
-			display: block;
-			width: 100%;
-			letter-spacing: 10;
-		}
-	}
-	.tableau{
-		display: -ms-flexbox;
-		display: flex;
-		-ms-flex-pack: center;
-		    justify-content: center;
-		-ms-flex-wrap: wrap;
-		    flex-wrap: wrap;
+        p { 
+            text-align: center;
+            padding-top : 100px;
+        }
+        span {
+            text-align: center;
+            display: block;
+            width: 100%;
+            letter-spacing: 10;
+        }
+    }
+    .tableau{
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
 
-		ul {
-			display: -ms-flexbox;
-			display: flex;
-			-ms-flex-pack: center;
-			    justify-content: center;
-			-ms-flex-wrap: wrap;
-			    flex-wrap: wrap;
-			width: 100vw;
-			height: calc(100vw / 7);
-			padding: 0;
-			margin: 0;
+        ul {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            width: 100vw;
+            height: calc(100vw / 7);
+            padding: 0;
+            margin: 0;
 
-			&:first-child {
-				margin-top: 40px;
-			}
+            &:first-child {
+                margin-top: 40px;
+            }
 
-			li {
-				list-style: none;
-				width: calc( 100% / 7);
-				height: calc(100%);
+            li {
+                list-style: none;
+                width: calc( 100% / 7);
+                height: calc(100%);
 
-				.pixel {
-					height: 100%;
-					width: 100%;
-					background-color: #FFF;
+                .pixel {
+                    height: 100%;
+                    width: 100%;
+                    background-color: #FFF;
 
-					
-				}
-			}
-		}
-	}
+
+                }
+            }
+        }
+    }
+
+    #kiteII, #frameWrapper {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 200px;
+        width: 700px;
+    }
+
+    #frameWrapper {
+        /*padding: 1em;*/
+    }
+
+    .pixelModel {
+        width: 90px;
+        height: 90px;
+        background-color: black;
+    }
+
+    #kiteII { //{DEV}
+        display: none;
+    }
+
+    #kiteII .pixel, #frameWrapper .pixel {
+        box-sizing: border-box;
+        flex-basis: 100px;
+        border: solid 1px black;
+    }
+
+    #frameWrapper .pixel {
+        background-color: black;
+        transition: background ease 0.5s;
+        border: solid 1px white;
+    }
+
+    #kiteII .blue {
+        background-color: blue;
+    }
+
+    #kiteII .red {
+        background-color: red;
+    }
+
+    #kiteII .yellow {
+        background-color: yellow;
+    }
+
+    #kiteII .green {
+        background-color: green;
+    }
+
+    #kiteII .white {
+        background-color: white;
+    }
+
+    #kiteII .black {
+        background-color: black;
+    }
+
+    #kiteII .pixel.large, #frameWrapper .pixel.large {
+        flex-basis: 200px;
+    }
+
+    #frameWrapper .pixelActive {
+        border: #008bff solid 2px;
+    }
+}
+
+#modalContent {
+    .checkboxes {
+        display: flex;
+        /* width: 90px; */
+        height: 90px;
+    }
+
+    .checkBg {
+        background-color: black;
+        flex-basis: 30px;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .red {
+        background-color: red !important;
+    }
+    .blue {
+        background-color: blue !important;
+    }
+    .black {
+        background-color: $black !important;
+    }
 }
 
 
-            #Level2 #kiteII, #Level2 #frameWrapper {
-                display: flex;
-                flex-direction: column;
-                flex-wrap: wrap;
-                height: 200px;
-                width: 700px;
-            }
-
-            #frameWrapper {
-                /*padding: 1em;*/
-            }
-
-            #kiteII .pixel, #frameWrapper .pixel {
-                box-sizing: border-box;
-                flex-basis: 100px;
-                border: solid 1px black;
-            }
-
-            #frameWrapper .pixel {
-                background-color: black;
-                transition: background ease 0.5s;
-            }
-
-            #kiteII .blue {
-                background-color: blue;
-            }
-
-            #kiteII .red {
-                background-color: red;
-            }
-
-            #kiteII .yellow {
-                background-color: yellow;
-            }
-
-            #kiteII .green {
-                background-color: green;
-            }
-
-            #kiteII .white {
-                background-color: white;
-            }
-
-            #kiteII .black {
-                background-color: black;
-            }
-
-            #kiteII .pixel.large, #frameWrapper .pixel.large {
-                flex-basis: 200px;
-            }
-
-            #frameWrapper .pixelActive {
-                border: #008bff solid 2px;
-            }
-
-            .checkBg {
-                background-color: black;
-            }
-.red {
-	background-color: red !important;
-}
-.blue {
-	background-color: blue !important;
-}
-.black {
-	background-color: $black !important;
-}
