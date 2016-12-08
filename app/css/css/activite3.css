@@ -1,0 +1,102 @@
+#Level3 .consigne p {
+  text-align: center;
+  padding-top: 100px;
+}
+#Level3 .consigne span {
+  text-align: center;
+  display: block;
+  width: 100%;
+  letter-spacing: 10;
+}
+#Level3 #frameWrapper {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  transition: 5s ease;
+  background-color: black;
+}
+#Level3 #frameWrapper .center {
+  background-color: white;
+}
+#Level3 #frameWrapper .square {
+  background-color: black;
+}
+#Level3 #frameWrapper .square:not(:nth-child(2)) {
+  border: solid white 15px;
+}
+#Level3 #frameWrapper .square, #Level3 #frameWrapper .wrapperGrad, #Level3 #frameWrapper .center {
+  position: absolute;
+  box-sizing: border-box;
+}
+#Level3 #frameWrapper .square:nth-child(2) {
+  height: 100%;
+  width: 100%;
+}
+#Level3 #frameWrapper .square:nth-child(3) {
+  height: 90%;
+  width: 90%;
+  top: 5%;
+  left: 5%;
+}
+#Level3 #frameWrapper .square:nth-child(4) {
+  height: 75%;
+  width: 75%;
+  top: 12.5%;
+  left: 12.5%;
+}
+#Level3 #frameWrapper .square:nth-child(5) {
+  height: 60%;
+  width: 60%;
+  top: 20%;
+  left: 20%;
+}
+#Level3 #frameWrapper .square:nth-child(6) {
+  height: 45%;
+  width: 45%;
+  top: 27.5%;
+  left: 27.5%;
+}
+#Level3 #frameWrapper .square:nth-child(7) {
+  height: 30%;
+  width: 30%;
+  top: 35%;
+  left: 35%;
+}
+#Level3 #frameWrapper .square:nth-child(8) {
+  height: 15%;
+  width: 15%;
+  top: 42.5%;
+  left: 42.5%;
+}
+#Level3 #frameWrapper .center {
+  height: 2.5%;
+  width: 2.5%;
+  top: 48.75%;
+  left: 48.75%;
+}
+#Level3 #frameWrapper.done .wrapperGrad {
+  opacity: 1;
+}
+#Level3 #frameWrapper.done .square {
+  opacity: 0;
+}
+
+#modalContent .sliders {
+  display: flex;
+  /* width: 90px; */
+  height: 90px;
+}
+#modalContent .rangeBg {
+  background-color: black;
+  flex-basis: 30px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+#modalContent .rangeBg input {
+  width: 5px;
+  height: 80px;
+  -webkit-appearance: slider-vertical;
+}
+
+/*# sourceMappingURL=activite3.css.map */
