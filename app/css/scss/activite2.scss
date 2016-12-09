@@ -133,6 +133,7 @@
     .checkboxes {
         display: flex;
         height: calc(100vw/3);
+        width: 100%;
 
 
         input {
@@ -161,12 +162,12 @@
             border: 1px solid $gradiant;
         }
     }
-    .blue {
-        background-color: blue !important;
-    }
-    .black {
-        background-color: $black !important;
-    }
+//    .blue {
+//        background-color: blue !important;
+//    }
+//    .black {
+//        background-color: $black !important;
+//    }
     
     .pixelModel {
         width: 100px;
