@@ -108,6 +108,7 @@
 #modalContent .checkboxes {
   display: flex;
   height: calc(100vw/3);
+  width: 100%;
 }
 #modalContent .checkboxes input {
   opacity: 0;
