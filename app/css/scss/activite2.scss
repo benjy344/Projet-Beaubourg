@@ -161,15 +161,18 @@
             border: 1px solid $gradiant;
         }
     }
-    // .red {
-    //     background-color: red !important;
-    // }
-    // .blue {
-    //     background-color: blue !important;
-    // }
-    // .black {
-    //     background-color: $black !important;
-    // }
+    .blue {
+        background-color: blue !important;
+    }
+    .black {
+        background-color: $black !important;
+    }
+    
+    .pixelModel {
+        width: 100px;
+        height: 100px;
+    }
+    
 }
 
 

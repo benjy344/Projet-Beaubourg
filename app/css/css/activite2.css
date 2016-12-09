@@ -131,5 +131,9 @@
   padding: 10px;
   border: 1px solid linear-gradient(90deg, #3fa9f5, #7ac943);
 }
+#modalContent .pixelModel {
+  width: 100px;
+  height: 100px;
+}
 
 /*# sourceMappingURL=activite2.css.map */

@@ -132,4 +132,20 @@
             -webkit-appearance: slider-vertical;
         }
     }
+    
+    .pixelModel {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        background-color: black;
+        
+        .center {
+            position: absolute;
+            height: 70px;
+            width: 70px;
+            top: 15px;
+            left: 15px;
+            background-color: white;
+        }
+    }
 }
