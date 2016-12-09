@@ -132,9 +132,8 @@
 #modalContent {
     .checkboxes {
         display: flex;
-        height: calc(100vw/3);
-        width: 100%;
-
+        height: calc(100vw/2);
+        width: calc(100vw/2);
 
         input {
                 opacity: 0;
@@ -162,16 +161,10 @@
             border: 1px solid $gradiant;
         }
     }
-//    .blue {
-//        background-color: blue !important;
-//    }
-//    .black {
-//        background-color: $black !important;
-//    }
-    
     .pixelModel {
-        width: 100px;
-        height: 100px;
+        width: 30vw;
+        height: 30vw;
+        margin: 0 auto; 
     }
     
 }

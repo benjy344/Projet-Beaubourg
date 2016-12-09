@@ -9891,7 +9891,9 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
     codeMirror = null,
 
     answers = {},
-    thisLvlAnswers = {};
+    thisLvlAnswers = {},
+
+    timeOut = 0;
 
 $.getJSON('dist/json/answers.json', function(data) {
     answers = data;
@@ -9961,7 +9963,7 @@ function loadLevel1() {
     $('.hamburger').show();
     showpop1C = "Showpopup(jeu1c, 'hidePopup()', '')";
     showpop1B = "Showpopup(jeu1b, showpop1C, '')";
-    //Showpopup(jeu1a, showpop1B, '');
+    Showpopup(jeu1a, showpop1B, '');
 
     $('main').loadLevel('Level1', function(){
 
@@ -10094,9 +10096,21 @@ function loadLevel2() {
 
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide();  
+            $('.dev').hide(); 
+            // var tips2 = {
+            //     0 : 'deb2 blabla1',
+            //     1 : 'deb2 blabla2',
+            //     2 : 'deb2 blabla3'
+            // }
+            // constructTips(4000, 3, tips2); //{DEV} 
         } else {
             $('.notdev').hide();
+            // var tips2 = {
+            //     0 : 'dev2 blabla1',
+            //     1 : 'dev2 blabla2',
+            //     2 : 'dev2 blabla3'
+            // }
+            // constructTips(4000, 3, tips2); //{DEV} 
         }
 
 
@@ -10563,7 +10577,7 @@ function runCodeLevel3() {
     var code = codeMirror.getValue();
     eval(code)
 
-    pixel = eval('pixel' + $('.pixelActive').index());
+    pixel = eval($('.pixelActive').data('name'));
     //console.log(pixel)                    
 
     $.each(pixel, function(i, value) {
@@ -10901,6 +10915,8 @@ function loadLevel5() {
 
 function reinitMain() {
     hidePopup();
+    $('.help-button').hide();
+    clearTimeout(timeOut);
 }
 
 /********************
@@ -10998,8 +11014,11 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 * }
 **/
 function constructTips(time, numberOftips, tips ) {
+    console.log('iub');
     var number = 0
-    setTimeout( function(){getATip(number, time, tips, numberOftips)} , time);
+    if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+        timeOut = setTimeout( function(){getATip(number, time, tips, numberOftips)} , time);
+    }
 }
 
 
@@ -11013,15 +11032,14 @@ function getATip(number, time, tips, total) {
         //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
         intervale = setInterval(function () {
             if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
-                console.log('clear le set')
+                console.log(t)
                 clearTimeout(t);
                 t = 0;
             } else {
-                console.log('else '+number);
                 t = setTimeout( function(){getATip(number, time, tips, total)} , time);
                 clearInterval(intervale);
             }
-        }, 3000);
+        }, 1000);
 
     } else {
         clearTimeout(t);

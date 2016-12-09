@@ -107,8 +107,8 @@
 
 #modalContent .checkboxes {
   display: flex;
-  height: calc(100vw/3);
-  width: 100%;
+  height: calc(100vw/2);
+  width: calc(100vw/2);
 }
 #modalContent .checkboxes input {
   opacity: 0;
@@ -133,8 +133,9 @@
   border: 1px solid linear-gradient(90deg, #3fa9f5, #7ac943);
 }
 #modalContent .pixelModel {
-  width: 100px;
-  height: 100px;
+  width: 30vw;
+  height: 30vw;
+  margin: 0 auto;
 }
 
 /*# sourceMappingURL=activite2.css.map */
