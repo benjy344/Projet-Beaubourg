@@ -566,7 +566,8 @@ body .close {
   width: 50px;
   right: 145px;
   z-index: 1000;
-  background-color: red;
+  top: 5px;
+  right: 10px;
 }
 body .help-button {
   margin: 20px;
@@ -635,7 +636,7 @@ body #modal-container .modal-background {
 }
 body #modal-container .modal-background .modal {
   background: #242322;
-  padding: 50px;
+  padding: 70px 10px;
   height: 100%;
   width: 100%;
   display: inline-block;
