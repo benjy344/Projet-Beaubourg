@@ -10389,12 +10389,12 @@ function submitLevel2() {
 
     var isCorrect = true;
     $.each(thisLvlAnswers, function(i, value){
-        //        if (!value.validate) { {DEV}
-        //            isCorrect = false;
-        //        }
+        if (!value.validate) {
+            isCorrect = false;
+        }
     })
 
-    if (isCorrect) {
+    if (isCorrect || !isCorrect) { //{DEV}
         Showpopup('Bravo !', 'loadLevel3()', 'succes');
     } else {
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
@@ -10521,7 +10521,7 @@ function resetSliders(r, g, b) {
     $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
     $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
     $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
-    
+
     colorModel(r, g, b)
 }
 
@@ -10649,6 +10649,7 @@ function loadLevel4() {
             $('.notdev').hide();
         }
 
+        thisLvlAnswers = answers.lvl4;
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -10706,38 +10707,38 @@ function reinitImg() {
     });
 }
 
-function verifImgLevel4() {
-    var rvb = $('.pixelActive').data('rvb');
-    var pixelName = $('.pixelActive').data('name');
-
-    console.log(thisLvlAnswers)
-
-    var correctRvb = thisLvlAnswers[pixelName].rvb;
-    var isCorrect = true;
-
-    $.each(correctRvb, function(i, value){
-        //console.log(value);
-        if (value.length > 1) {
-            if (rvb[i] < value[0] || rvb[i] > value[1]) {
-                isCorrect = false;
-            }  
-        } else {
-            if (rvb[i] != value[0]) {
-                isCorrect = false;
-            }
-        }    
-    })
-
-    if (isCorrect) {
-        console.log('right');
-        thisLvlAnswers[pixelName].validate = false;
-
-    } else {
-        console.log('nope');
-        thisLvlAnswers[pixelName].validate = false;
-
-    }
-}
+//function verifImgLevel4() {
+//    var rvb = $('.pixelActive').data('rvb');
+//    var pixelName = $('.pixelActive').data('name');
+//
+//    console.log(thisLvlAnswers)
+//
+//    var correctRvb = thisLvlAnswers[pixelName].rvb;
+//    var isCorrect = true;
+//
+//    $.each(correctRvb, function(i, value){
+//        //console.log(value);
+//        if (value.length > 1) {
+//            if (rvb[i] < value[0] || rvb[i] > value[1]) {
+//                isCorrect = false;
+//            }  
+//        } else {
+//            if (rvb[i] != value[0]) {
+//                isCorrect = false;
+//            }
+//        }    
+//    })
+//
+//    if (isCorrect) {
+//        console.log('right');
+//        thisLvlAnswers[pixelName].validate = false;
+//
+//    } else {
+//        console.log('nope');
+//        thisLvlAnswers[pixelName].validate = false;
+//
+//    }
+//}
 
 function runCodeLevel4() {
     console.log('running code')
@@ -10750,7 +10751,6 @@ function runCodeLevel4() {
     resetCode();
 
     //verifImgLevel4();
-
 
 }
 
@@ -10872,9 +10872,18 @@ function resetCode() {
 
 function submitLevel4() {
     //Validate
-    var isCorrect = true;
-
-    if (isCorrect || !isCorrect) { //{DEV}
+    var isCorrect = 0;
+    $.each($('.imageObject'), function(i) {
+        var pos = $(this).data('pos');
+        $.each(thisLvlAnswers, function(i, value) {
+            if (JSON.stringify(pos) == JSON.stringify(value)) {
+                console.log(pos);
+                console.log(value);
+                isCorrect++;
+            }
+        });
+    })
+    if (isCorrect == 9) { //{DEV}
         console.log('WIN');
         Showpopup('Bravo !', 'loadLevel4()', 'succes');
     } else {
