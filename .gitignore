@@ -8,3 +8,5 @@ git_save/
 node_modules/
 npm-debug.log
 .sass-cache
+dist/css/main.css
+app/css/css
