@@ -9953,6 +9953,46 @@ function loadChooseLevel(){
     $('main').load(views+'accueil.html');
 }
 
+$.fn.loadLevel = function(levelToLoad, callback) {
+
+    screen = levelToLoad;
+
+    var file = level+levelToLoad+'.html',
+        lvl = '#'+levelToLoad,
+        modal = '#modalContent';
+
+    this.load(file + ' ' + lvl, function() {    
+        $('.modalContent').load(file + ' ' + modal, function() {
+
+            callback();
+
+
+        })
+    })
+}
+
+function reloadLevel() {
+    //console.log(level+' '+screen+' '+devMod);
+    switch(screen) {
+        case 'level1':
+            //console.log('jrfeiu')
+            reinitMain();
+            loadLevel1();
+            break;
+        case 'level2':
+            reinitMain();
+            loadLevel2();
+            break;
+        case 'level3':
+            reinitMain();
+            loadLevel3();
+            break;
+        case 'level4':
+            reinitMain();
+            loadLevel4();
+            break;
+    }
+}
 
 /********************
 *
@@ -9965,7 +10005,7 @@ function loadLevel1() {
     showpop1B = "Showpopup(jeu1b, showpop1C, '')";
     Showpopup(jeu1a, showpop1B, '');
 
-    $('main').loadLevel('Level1', function(){
+    $('main').loadLevel('level1', function(){
 
         if (devMod){
 
@@ -9979,7 +10019,9 @@ function loadLevel1() {
                 1 : 'dev blabla2',
                 2 : 'dev blabla3'
             }
-            constructTips(2000, 3, tips1); //{DEV}
+            $(document).on('click', function() {
+                constructTips(2000, 3, tips1); //{DEV}
+            });
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -10073,7 +10115,7 @@ function loadLevel2() {
     showpop2B = "Showpopup(jeu2b, showpop2C, '')";
     Showpopup(jeu2a, showpop2B, '');
     //    $('main').load(level+'Level2.html', function(){
-    $('main').loadLevel('Level2', function() {
+    $('main').loadLevel('level2', function() {
 
 
         var pixel = $('.pixel');
@@ -10427,7 +10469,7 @@ function loadLevel3() {
     showpop3B = "Showpopup(jeu3b, showpop3C, '')";
     Showpopup(jeu3a, showpop3B, '');
 
-    $('main').loadLevel('Level3', function () {
+    $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');
         pixel.on('touch click', showModal) //{DEV}
@@ -10639,7 +10681,7 @@ function loadLevel4() {
     showpop4B = "Showpopup(jeu4b, showpop4C, '')";
     Showpopup(jeu4a, showpop4B, '');
 
-    $('main').loadLevel('Level4', function () {
+    $('main').loadLevel('level4', function () {
 
         var image = $('.imageObject');
         image.on('touch click', showModal);
@@ -10924,6 +10966,10 @@ function loadLevel5() {
 
 function reinitMain() {
     hidePopup();
+    $('.hamburger').removeClass('is-active');
+    $('#overlay').removeClass('open');
+    $('.main-nav>ul').removeClass('childOpen');
+    $('.main-nav .child').removeClass('isOpen');
     $('.help-button').hide();
     clearTimeout(timeOut);
 }
@@ -10984,28 +11030,6 @@ function hidePopup() {
 // });
 
 
-$.fn.loadLevel = function(levelToLoad, callback) {
-
-    screen = levelToLoad;
-
-    var file = level+levelToLoad+'.html',
-        lvl = '#'+levelToLoad,
-        modal = '#modalContent';
-
-    this.load(file + ' ' + lvl, function() {    
-        $('.modalContent').load(file + ' ' + modal, function() {
-
-            callback();
-
-
-        })
-    })
-
-
-
-}
-
-
 /*********************
 
     Popup Aide
@@ -11023,10 +11047,11 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 * }
 **/
 function constructTips(time, numberOftips, tips ) {
-    console.log('iub');
     var number = 0
-    if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+    if (popinIsOpen == false) {
         timeOut = setTimeout( function(){getATip(number, time, tips, numberOftips)} , time);
+    } else {
+        timeOut = setTimeout( function(){constructTips(time, numberOftips, tips )}, 3000);
     }
 }
 
@@ -11041,7 +11066,6 @@ function getATip(number, time, tips, total) {
         //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
         intervale = setInterval(function () {
             if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
-                console.log(t)
                 clearTimeout(t);
                 t = 0;
             } else {
@@ -11202,6 +11226,7 @@ $(document).ready(function() {
 
     $('.main-nav .child ').on('click touch', function(event){
         isdebMod = $('input#input1:checked').val();
+        $('#chooseDevMod .button-reload').show();
         if (isdebMod == 'on') {
             devMod = false;
         }
