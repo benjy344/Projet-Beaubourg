@@ -305,7 +305,6 @@ function loadLevel2() {
             var thisColors = $(this).data('rvb');
             resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
             resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
-
         })
 
         //Run Code
@@ -340,7 +339,7 @@ function loadLevel2() {
                     break;
             }
             resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
-            colorPixelRVB(thisPixel);
+            colorPixelRVB();
             verifPixelLevel2();
         })
 
@@ -452,13 +451,13 @@ function runCodeLevel2() {
     pixel = eval($('.pixelActive').data('name'));
     //console.log(pixel)                    
     $('.pixelActive').data('rvb', {
-        red: pixel.red
-        , green: pixel.green
-        , blue: pixel.blue
+        red: pixel.red, 
+        green: pixel.green, 
+        blue: pixel.blue
     });
     resetCheckboxes(pixel.red, pixel.green, pixel.blue);
     resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
-    colorPixelRVB(pixel);
+    colorPixelRVB();
     verifPixelLevel2();
 }
 
@@ -468,8 +467,9 @@ function runCodeLevel2() {
 //    verifPixelLevel2();
 //}
 
-function colorPixelRVB(pixel) {
+function colorPixelRVB() {
     //console.log(pixel)
+    var pixel = $('.pixelActive').data('rvb')
     var red = 0,
         green = 0,
         blue = 0;
@@ -487,7 +487,8 @@ function colorPixelRVB(pixel) {
     colorModel(red, green, blue);
 }
 
-function colorPixel(pixel) {    
+function colorPixel() {    
+    var pixel = $('.pixelActive').data('rvb')
     $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
 
     colorModel(pixel.red, pixel.green, pixel.blue);
@@ -677,11 +678,11 @@ function loadLevel3() {
 
             thisPixel[name] = $(this).val();
             resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
-            colorPixel(thisPixel);
+            colorPixel();
         })
 
         $('input[type=range]').on("change", function(){
-            verifPixelLevel3();
+            //verifPixelLevel3();
 
         })
 
@@ -701,7 +702,7 @@ function resetSliders(r, g, b) {
     colorModel(r, g, b)
 }
 
-function verifPixelLevel3() {
+/*function verifPixelLevel3bis() {
     var rvb = $('.pixelActive').data('rvb');
     var pixelName = $('.pixelActive').data('name');
 
@@ -732,7 +733,7 @@ function verifPixelLevel3() {
         thisLvlAnswers[pixelName].validate = false;
 
     }
-}
+}*/
 
 function runCodeLevel3() {
     console.log('running code')
@@ -757,8 +758,8 @@ function runCodeLevel3() {
     resetSliders(pixel.red, pixel.green, pixel.blue);
 
     resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
-    colorPixel(pixel);
-    verifPixelLevel3();
+    colorPixel();
+    //verifPixelLevel3();
 
 
 }
@@ -771,21 +772,57 @@ function runCodeLevel3() {
 *********************/
 
 function submitLevel3() {
-    //Validate
-    var isCorrect = true;
-    $.each(answers, function(i, value){
-        if (!value.validate) {
-            isCorrect = false;
-        }
-    })
 
-    if (isCorrect || !isCorrect) { //{DEV}
+    var numCorrect = 0;
+    var which = 'left';
+    var squares = $('.square');
+
+    var i = 0;
+
+    while (i < squares.length-1) {
+        console.log(i);
+        var rvb = $(squares[i]).data('rvb');
+        var pixelName = $(squares[i]).data('name'),
+            correctRvb = thisLvlAnswers[which][pixelName],
+            isCorrect = true;
+
+        $.each(correctRvb, function(j, value){
+            if (value.length > 1) { 
+                if (rvb[j] < value[0] || rvb[j] > value[1]) { 
+                    isCorrect = false; 
+                }   
+            } else { 
+                if (rvb[j] != value[0]) { 
+                    isCorrect = false; 
+                } 
+            }     
+        }) 
+
+        console.log(isCorrect);
+        if (isCorrect) {
+            numCorrect++;
+            i++;
+        } else {
+            if (which == 'left') {
+                numCorrect = 0;
+                i = 0;
+                which = 'right';
+                console.log('should reset i')
+            } else {
+                break;
+            }
+        }
+        console.log(i);
+    }
+
+    if (numCorrect == squares.length) { //{DEV}
         console.log('WIN');
         Showpopup('Bravo !', 'loadLevel4()', 'succes');
     } else {
         //console.log('T\'es nul');
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
     }
+
 }
 
 /********************
@@ -883,51 +920,13 @@ function reinitImg() {
     });
 }
 
-//function verifImgLevel4() {
-//    var rvb = $('.pixelActive').data('rvb');
-//    var pixelName = $('.pixelActive').data('name');
-//
-//    console.log(thisLvlAnswers)
-//
-//    var correctRvb = thisLvlAnswers[pixelName].rvb;
-//    var isCorrect = true;
-//
-//    $.each(correctRvb, function(i, value){
-//        //console.log(value);
-//        if (value.length > 1) {
-//            if (rvb[i] < value[0] || rvb[i] > value[1]) {
-//                isCorrect = false;
-//            }  
-//        } else {
-//            if (rvb[i] != value[0]) {
-//                isCorrect = false;
-//            }
-//        }    
-//    })
-//
-//    if (isCorrect) {
-//        console.log('right');
-//        thisLvlAnswers[pixelName].validate = false;
-//
-//    } else {
-//        console.log('nope');
-//        thisLvlAnswers[pixelName].validate = false;
-//
-//    }
-//}
-
 function runCodeLevel4() {
     console.log('running code')
     console.log($('.imgActive').data('pos'))
     var code = codeMirror.getValue();
     eval(code)
-
     applyPosition();
-
     resetCode();
-
-    //verifImgLevel4();
-
 }
 
 function addCode(btn) {
@@ -981,7 +980,6 @@ function moveDown() {
     pos.y++;
     $('.imgActive').data('pos', pos)
 }
-
 function rotate(deg) {
     if (!deg) {
         deg = 90;
@@ -990,7 +988,6 @@ function rotate(deg) {
     pos.rot = pos.rot + deg;
     $('.imgActive').data('pos', pos)
 }
-
 function move(direction, repeat) {
 
     if (repeat) {
@@ -1059,9 +1056,9 @@ function submitLevel4() {
             }
         });
     })
-    if (isCorrect == 9) { //{DEV}
+    if (isCorrect == 9 || isCorrect != 9) { //{DEV}
         console.log('WIN');
-        Showpopup('Bravo !', 'loadLevel4()', 'succes');
+        Showpopup('Bravo !', 'loadSandbox()', 'succes');
     } else {
         //console.log('T\'es nul');
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
@@ -1073,8 +1070,125 @@ function submitLevel4() {
 *   Chapitre 5
 *
 *********************/
-function loadLevel5() {
-    hidePopup();
+function loadSandbox() {
+    resetCM();
+    reinitMain();
+    //    showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
+    //    showpop4B = "Showpopup(jeu4b, showpop4C, '')";
+    //    Showpopup(jeu4a, showpop4B, '');
+
+    $('main').loadLevel('sandbox', function () {
+
+        //var image = $('.imageObject');
+        $('.close').on('touch click', hideModal);
+
+        //CodeMirror
+        var textArea = $('.codeMirror')[0],
+            codeConfig = {
+                mode: "text/javascript",
+                theme: "icecoder", 
+                lineWrapping: true, 
+                lineNumbers: true, 
+                autofocus: false
+                //matchBrackets: true
+            }
+
+        //Initialisation de codeMirror
+        codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+
+
+        //        $('#frameWrapper .imageObject').each(function () {
+        //            $(this).data('pos', {
+        //                x: 0,
+        //                y: 0,
+        //                rot: 0
+        //            }).data('name', 'img_'+$(this).index());
+        //        });
+
+
+
+        //Change Active Pixel
+        $(document).on('touch click', '.pixel', function () {
+            $('.pixelActive').removeClass('pixelActive imgActive');
+            $(this).addClass('pixelActive imgActive');
+
+            var name = $(this).data('name');
+            var thisColors = $(this).data('rvb');
+
+            resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
+
+
+            showModal();
+        })
+
+        //Run Code
+        //        $('.runCode').click(function () {
+        //            runCodeLevel4();
+        //            hideModal();
+        //        });
+
+        //        $('.functions-btn .btn').click(function() {
+        //            console.log($(this))
+        //            addCode($(this));
+        //        })
+
+        //        $('.reinitImg').click(reinitImg);
+
+        codeMirror.setValue('init');
+        //resetCode();
+
+        $('.addPixel').click(addPixel);
+
+        $('.runCode').click(runSandbox);
+
+    })
+}
+
+function runSandbox() {
+
+    var code = codeMirror.getValue();
+    eval(code)
+
+    pixel = eval($('.pixelActive').data('name'));
+
+    $('.pixelActive').data('rvb', {
+        red: pixel.red, 
+        green: pixel.green, 
+        blue: pixel.blue
+    });
+    colorPixel();
+
+    
+    var pos = $('.pixelActive').data('pos'); 
+    pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x;
+    pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
+    pos.rot %= 360;
+
+    $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
+    $('.pixelActive').css('left', pos.x * 100 + 'px');
+    $('.pixelActive').css('top', pos.y * 100 + 'px');
+
+    hideModal();
+
+    
+}
+
+function addPixel() {
+    var pixel = $('<div class="pixel"></div>');
+
+    pixel.data('rvb', {
+        red: 0, 
+        green: 0, 
+        blue: 0
+    })
+        .data('pos', {
+        x: 0,
+        y: 0,
+        rot: 0
+    })
+        .data('name', 'pixel_'+$(this).index());
+
+    $('#sandboxWrapper').append(pixel);
 }
 
 
