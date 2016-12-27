@@ -48,7 +48,19 @@ body {
 	input[type="text"], input[type="password"], textarea, select, button { 
 		outline: none;
 	}
-	
+	::-webkit-scrollbar {
+	  width: 3px;
+	  }
+	 
+	::-webkit-scrollbar-track {
+	    background-color: transparent;
+	    border-radius: 8px;
+	}
+	 
+	::-webkit-scrollbar-thumb {
+	    border-radius: 10px;
+	    background: $gradiant-scrollbar;
+	}
 	.fleche {
 		background: transparent;
 		color: transparent;
@@ -60,6 +72,13 @@ body {
 		width: 70px;
 		position: absolute;
 		right: 16%;
+	}
+	.button-reload {
+		display: none;
+		   margin-top: 70px;
+	    font-size: 0.75em;
+	    border: 1px solid;
+	    padding: 10px;
 	}
 	.modal-active {
 		overflow: hidden;
