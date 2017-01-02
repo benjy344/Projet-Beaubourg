@@ -129,7 +129,7 @@
 }
 }
 
-#modalContent {
+#modalContent.level2 {
     .checkboxes {
         display: flex;
         height: calc(100vw/2);
@@ -155,12 +155,6 @@
         display: flex;
         justify-content : center; 
     }
-    .pixelModel {
-        width: 30vw;
-        height: 30vw;
-        margin: 0 auto; 
-    }
-    
 }
 
 

@@ -19,6 +19,7 @@
         width: 400px;
         transition: 5s ease;
         background-color: black;
+        margin: auto;
 
         .center {
             background-color: white;
@@ -111,7 +112,7 @@
     }
 }
 
-#modalContent {
+#modalContent.level3 {
 
     .sliders {
         display: -ms-flexbox;
@@ -139,7 +140,10 @@
             -webkit-appearance: slider-vertical;
         }
     }
+}
 
+#modalContent {
+    
     .pixelModel {
         width: 100%;
         height: 100px;

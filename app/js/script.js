@@ -4,6 +4,7 @@ var dest = './dist/',
     screen = 'index',
 
     Username = "",
+    testing = false,
     devMod = false,
     aleNumber = '',
     binaire = '',
@@ -59,6 +60,9 @@ Chargement des levels et menu
 function loadChooseDevMod(){
     Showpopup(accueil, 'hidePopup()', '');
     Username = $('input#name').val();
+    if (Username == 'test') { // {DEV}
+        testing = true;
+    }
     $('main').load(views+'chooseDevMod.html', chooseMode);
     $('#input1, #input2').off('touch click');
 }
@@ -91,7 +95,10 @@ $.fn.loadLevel = function(levelToLoad, callback) {
     var file = level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
         modal = '#modalContent';
-
+    
+    thisLvlAnswers = answers[levelToLoad];
+    console.log(thisLvlAnswers);
+    
     this.load(file + ' ' + lvl, function() {    
         $('.modalContent').load(file + ' ' + modal, function() {
 
@@ -228,7 +235,7 @@ function submitLevel1() {
             chaineTableau = chaineTableau + '0';
         }
     });
-    if (chaineTableau == binaire || chaineTableau != binaire) { //{DEV} Always True
+    if (chaineTableau == binaire || testing) { //{TEST} Always True
         Showpopup(jeu1d, 'loadLevel2()', 'succes iconAnim');
     }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
 }
@@ -270,27 +277,24 @@ function loadLevel2() {
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
             $('.dev').hide(); 
-            // var tips2 = {
-            //     0 : 'deb2 blabla1',
-            //     1 : 'deb2 blabla2',
-            //     2 : 'deb2 blabla3'
-            // }
-            // constructTips(4000, 3, tips2); //{DEV} 
+             var tips2 = {
+                 0 : 'deb2 blabla1',
+                 1 : 'deb2 blabla2',
+                 2 : 'deb2 blabla3'
+             }
+             constructTips(4000, 3, tips2); //{DEV} 
         } else {
             $('.notdev').hide();
-            // var tips2 = {
-            //     0 : 'dev2 blabla1',
-            //     1 : 'dev2 blabla2',
-            //     2 : 'dev2 blabla3'
-            // }
-            // constructTips(4000, 3, tips2); //{DEV} 
+             var tips2 = {
+                 0 : 'dev2 blabla1',
+                 1 : 'dev2 blabla2',
+                 2 : 'dev2 blabla3'
+             }
+             constructTips(4000, 3, tips2); //{DEV} 
         }
 
 
         //console.log(codeConfig.readOnly)
-
-        thisLvlAnswers = answers.lvl2;
-        console.log(thisLvlAnswers);
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -505,8 +509,8 @@ function colorPixel() {
     colorModel(pixel.red, pixel.green, pixel.blue);
 }
 
-function colorModel(red, green, blue) {
-    $('.pixelModel').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')')
+function colorModel(r, g, b) {
+    $('.pixelModel').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
 }
 
 function resetCodePixel(id, r, g, b) {
@@ -582,7 +586,7 @@ function submitLevel2() {
         }
     })
 
-    if (isCorrect || !isCorrect) { //{DEV}
+    if (isCorrect || testing) { //{TEST}
         Showpopup('Bravo !', 'loadLevel3()', 'succes');
     } else {
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
@@ -627,8 +631,8 @@ function loadLevel3() {
             $('.notdev').hide();
         }
 
-        thisLvlAnswers = answers.lvl3;
-        console.log(thisLvlAnswers)
+        //thisLvlAnswers = answers.lvl3;
+        //console.log(thisLvlAnswers)
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -645,10 +649,8 @@ function loadLevel3() {
 
         //Change Active Pixel
         pixel.click(function() {
-            if (!$(this).hasClass('pixelActive')) {
-                $('.pixelActive').removeClass('pixelActive');
-            }
-            $(this).toggleClass('pixelActive');
+            $('.pixelActive').removeClass('pixelActive');
+            $(this).addClass('pixelActive');
             var thisColors = $(this).data('rvb');
             if ($('.pixelActive').length != 0) {
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
@@ -713,64 +715,31 @@ function resetSliders(r, g, b) {
     colorModel(r, g, b)
 }
 
-/*function verifPixelLevel3bis() {
-    var rvb = $('.pixelActive').data('rvb');
-    var pixelName = $('.pixelActive').data('name');
-
-    console.log(thisLvlAnswers)
-
-    var correctRvb = thisLvlAnswers[pixelName].rvb;
-    var isCorrect = true;
-
-    $.each(correctRvb, function(i, value){
-        //console.log(value);
-        if (value.length > 1) {
-            if (rvb[i] < value[0] || rvb[i] > value[1]) {
-                isCorrect = false;
-            }  
-        } else {
-            if (rvb[i] != value[0]) {
-                isCorrect = false;
-            }
-        }    
-    })
-
-    if (isCorrect) {
-        console.log('right');
-        thisLvlAnswers[pixelName].validate = false;
-
-    } else {
-        console.log('nope');
-        thisLvlAnswers[pixelName].validate = false;
-
-    }
-}*/
-
 function runCodeLevel3() {
     console.log('running code')
     var code = codeMirror.getValue();
     eval(code)
 
-    pixel = eval($('.pixelActive').data('name'));
-    //console.log(pixel)                    
+    var pixelBorder = eval($('.pixelActive').data('name'));
 
-    $.each(pixel, function(i, value) {
+    $.each(pixelBorder, function(i, value) {
         if (value < 0) {
-            pixel[i] = 0;
+            pixelBorder[i] = 0;
         }
         if (value > 255) {
-            pixel[i] = 255;
+            pixelBorder[i] = 255;
         }
     });
 
+    $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
 
-    $('.pixelActive').data('rvb', {red: pixel.red, green: pixel.green, blue: pixel.blue});
+    resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
 
-    resetSliders(pixel.red, pixel.green, pixel.blue);
-
-    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+    resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
     colorPixel();
     //verifPixelLevel3();
+    
+    pixelBorder = undefined;
 
 
 }
@@ -826,7 +795,7 @@ function submitLevel3() {
         console.log(i);
     }
 
-    if (numCorrect == squares.length) { //{DEV}
+    if (numCorrect == squares.length || testing) { //{TEST}
         console.log('WIN');
         Showpopup('Bravo !', 'loadLevel4()', 'succes');
     } else {
@@ -873,7 +842,7 @@ function loadLevel4() {
             $('.notdev').hide();
         }
 
-        thisLvlAnswers = answers.lvl4;
+        //thisLvlAnswers = answers.lvl4;
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -1093,7 +1062,7 @@ function submitLevel4() {
             }
         });
     })
-    if (isCorrect == 9 || isCorrect != 9) { //{DEV}
+    if (isCorrect == 9 || testing) { //{TEST}
         console.log('WIN');
         Showpopup('Bravo !', 'loadSandbox()', 'succes');
     } else {
