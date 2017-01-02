@@ -15,6 +15,17 @@ var dest = './dist/',
 
     timeOut = 0;
 
+var up = 'up',
+    haut = 'up',
+    down = 'down',
+    bas = 'down',
+    left = 'left',
+    gauche = 'left',
+    right = 'right',
+    droite = 'right',
+    plus = 'up',
+    moins = 'down';
+
 $.getJSON('dist/json/answers.json', function(data) {
     answers = data;
 });
@@ -239,7 +250,7 @@ function loadLevel2() {
 
 
         var pixel = $('.pixel');
-        $(pixel).on('touch click', showModal) //{DEV}
+        pixel.on('touch click', showModal) //{DEV}
         $('.close').on('touch click', hideModal)
 
         //CodeMirror
@@ -499,7 +510,7 @@ function colorModel(red, green, blue) {
 }
 
 function resetCodePixel(id, r, g, b) {
-    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}');
+    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}\n');
     codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
@@ -989,27 +1000,27 @@ function rotate(deg) {
     $('.imgActive').data('pos', pos)
 }
 function move(direction, repeat) {
-
-    if (repeat) {
+    if (repeat && typeof repeat == 'number') {
         for (i = 0; i < repeat; i++) {
             move(direction);
         }
     } else {
+        console.log('moving')
         switch(direction) {
-            case 'up':
-            case 'haut':
+            case up:
+            case haut:
                 moveUp();
                 break;
-            case 'down':
-            case 'bas':
+            case down:
+            case bas:
                 moveDown();
                 break;
-            case 'left':
-            case 'gauche':
+            case left:
+            case gauche:
                 moveLeft();
                 break;
-            case 'right':
-            case 'droite':
+            case right:
+            case droite:
                 moveRight();
                 break;
             default:
@@ -1018,6 +1029,32 @@ function move(direction, repeat) {
         }
     }
 } 
+
+function scale(sens) {
+
+    var size =   parseInt($('.imgActive').css('width'));
+
+    if (!sens) {
+        sens = up;
+    }
+    switch(sens) {
+        case up:
+        case plus:
+            size += 25;
+            break;
+        case down:
+        case moins:
+            size -= 25;
+            break;
+        default:
+            console.log("error") //{DEV}   
+            break;
+    }
+
+    size += 'px';
+    $('.imgActive').css('width', size);
+    $('.imgActive').css('height', size);
+}
 
 function applyPosition() {
     var pos = $('.imgActive').data('pos'); 
@@ -1067,7 +1104,7 @@ function submitLevel4() {
 
 /********************
 *
-*   Chapitre 5
+*   Sandbox
 *
 *********************/
 function loadSandbox() {
@@ -1114,11 +1151,11 @@ function loadSandbox() {
 
             var name = $(this).data('name');
             var thisColors = $(this).data('rvb');
-
+            showModal();
             resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
 
 
-            showModal();
+
         })
 
         //Run Code
@@ -1133,6 +1170,7 @@ function loadSandbox() {
         //        })
 
         //        $('.reinitImg').click(reinitImg);
+
 
         codeMirror.setValue('init');
         //resetCode();
@@ -1158,10 +1196,10 @@ function runSandbox() {
     });
     colorPixel();
 
-    
+
     var pos = $('.pixelActive').data('pos'); 
-    pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x;
-    pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
+    //pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x; {DEV}
+    //pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
     pos.rot %= 360;
 
     $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
@@ -1170,7 +1208,7 @@ function runSandbox() {
 
     hideModal();
 
-    
+
 }
 
 function addPixel() {
