@@ -1,3 +1,12 @@
+/*
+Choses a implementer
+
+applyposition et applyColor pour la sandbox
+
+supprimer verifPixelLvl2
+
+*/
+
 var dest = './dist/',
     level = './dist/views/levels/',
     views = './dist/views/',
@@ -95,10 +104,10 @@ $.fn.loadLevel = function(levelToLoad, callback) {
     var file = level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
         modal = '#modalContent';
-    
+
     thisLvlAnswers = answers[levelToLoad];
     console.log(thisLvlAnswers);
-    
+
     this.load(file + ' ' + lvl, function() {    
         $('.modalContent').load(file + ' ' + modal, function() {
 
@@ -277,20 +286,20 @@ function loadLevel2() {
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
             $('.dev').hide(); 
-             var tips2 = {
-                 0 : 'deb2 blabla1',
-                 1 : 'deb2 blabla2',
-                 2 : 'deb2 blabla3'
-             }
-             constructTips(4000, 3, tips2); //{DEV} 
+            var tips2 = {
+                0 : 'deb2 blabla1',
+                1 : 'deb2 blabla2',
+                2 : 'deb2 blabla3'
+            }
+            constructTips(4000, 3, tips2); //{DEV} 
         } else {
             $('.notdev').hide();
-             var tips2 = {
-                 0 : 'dev2 blabla1',
-                 1 : 'dev2 blabla2',
-                 2 : 'dev2 blabla3'
-             }
-             constructTips(4000, 3, tips2); //{DEV} 
+            var tips2 = {
+                0 : 'dev2 blabla1',
+                1 : 'dev2 blabla2',
+                2 : 'dev2 blabla3'
+            }
+            constructTips(4000, 3, tips2); //{DEV} 
         }
 
 
@@ -355,7 +364,7 @@ function loadLevel2() {
             }
             resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixelRVB();
-            verifPixelLevel2();
+            //verifPixelLevel2();
         })
 
         //On focus, reset the cursor to the start and set selection
@@ -473,7 +482,7 @@ function runCodeLevel2() {
     resetCheckboxes(pixel.red, pixel.green, pixel.blue);
     resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
     colorPixelRVB();
-    verifPixelLevel2();
+    //verifPixelLevel2();
 }
 
 //function applyColor(pixel) {
@@ -575,6 +584,36 @@ function resetCM() {
 *********************/
 
 function submitLevel2() {
+    var numCorrect = 0;
+    var pixels = $('.pixel');
+
+    for (i=0; i < pixels.length; i++) {
+        var rvb = $(pixels[i]).data('rvb'),
+            pixelName = $(pixels[i]).data('name'),
+            correctRVB = thisLvlAnswers[pixelName].rvb;
+        
+        console.log(rvb, correctRVB);
+        
+        if (JSON.stringify(rvb) == JSON.stringify(correctRVB)) {
+            numCorrect++;
+        } else {
+            break;
+        }
+    }
+    
+    console.log(numCorrect, pixels.length);
+    
+
+    if (numCorrect == pixels.length || testing) { //{}
+        Showpopup('Bravo !', 'loadLevel3()', 'succes');
+    } else {
+        //console.log('T\'es nul');
+        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+    }
+
+}
+
+function submitLevel2bis() {
     //Validate
 
     console.log('submitting')
@@ -738,7 +777,7 @@ function runCodeLevel3() {
     resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
     colorPixel();
     //verifPixelLevel3();
-    
+
     pixelBorder = undefined;
 
 
