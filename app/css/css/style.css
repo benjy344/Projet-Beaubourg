@@ -498,43 +498,58 @@ The `sprites` mixin generates identical output to the CSS template
 */
 .icon-close {
   background-image: url(../../../../dist/assets/sprite-main.png);
-  background-position: -91px 0px;
+  background-position: -377px -106px;
   width: 50px;
   height: 50px;
 }
 
 .icon-error {
   background-image: url(../../../../dist/assets/sprite-main.png);
-  background-position: 0px -103px;
+  background-position: -377px 0px;
   width: 63px;
   height: 101px;
 }
 
 .icon-help {
   background-image: url(../../../../dist/assets/sprite-main.png);
-  background-position: -91px -55px;
+  background-position: -377px -161px;
   width: 40px;
   height: 39px;
 }
 
 .icon-return {
   background-image: url(../../../../dist/assets/sprite-main.png);
-  background-position: -91px -99px;
+  background-position: -377px -205px;
   width: 35px;
   height: 40px;
 }
 
 .icon-succes {
   background-image: url(../../../../dist/assets/sprite-main.png);
-  background-position: 0px 0px;
+  background-position: 0px -241px;
   width: 86px;
   height: 98px;
+}
+
+.icon-succes1 {
+  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-position: -186px 0px;
+  width: 186px;
+  height: 210px;
+}
+
+.icon-succes2 {
+  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-position: 0px 0px;
+  width: 181px;
+  height: 236px;
 }
 
 body {
   background: #242322;
   font-family: "Josefin Sans", sans-serif;
-  font-size: 1.3rem;
+  font-size: 20.8px;
+  font-size: 5vw;
   color: #FBFBFB;
   /******************
   *
@@ -544,6 +559,16 @@ body {
   /*
   * Spin
   */
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  body {
+    font-size: 3vw;
+  }
+}
+@media (min-width: 768px) {
+  body {
+    font-size: 2vw;
+  }
 }
 body .loading {
   z-index: 20000;
@@ -597,6 +622,36 @@ body input[type="text"], body input[type="password"], body textarea, body select
 }
 body ::-webkit-scrollbar {
   width: 3px;
+}
+body ::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 8px;
+}
+body ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: linear-gradient(rgba(63, 169, 245, 0.5), rgba(122, 201, 67, 0.5));
+}
+body .fleche {
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+  border: none;
+  background-image: url("../assets/fleche.svg");
+  background-repeat: no-repeat;
+  height: 70px;
+  width: 70px;
+  position: absolute;
+  right: 16%;
+}
+body .button-reload {
+  display: none;
+  margin-top: 70px;
+  font-size: 0.75em;
+  border: 1px solid;
+  padding: 10px;
+}
+body .modal-active {
+  overflow: hidden;
 }
 body ::-webkit-scrollbar-track {
   background-color: transparent;
@@ -689,7 +744,7 @@ body .content-global .button {
   padding: 10px 15px;
   margin: 10px;
   background: red;
-  font-size: 18px;
+  font-size: 1.125em;
   background-color: #efefef;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -814,7 +869,7 @@ body main #intro .content-form .form-group {
 body main #intro .content-form .form-label {
   font-family: "Josefin Sans", sans-serif;
   color: #3fa9f5;
-  font-size: 1.3rem;
+  font-size: 5vw;
   height: 26px;
   margin: 0;
   display: block;
@@ -863,7 +918,7 @@ body main #ChooseLevel ul li {
 body main #ChooseLevel ul li a {
   text-decoration: none;
   color: #FBFBFB;
-  font-size: 1.3rem;
+  font-size: 5vw;
   position: absolute;
 }
 body main #ChooseLevel ul li a::after {
@@ -1011,7 +1066,7 @@ body .overlay nav {
   height: 80%;
   top: 50%;
   transform: translateY(-40%);
-  font-size: 34px;
+  font-size: 2em;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
   text-align: center;

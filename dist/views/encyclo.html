@@ -16,13 +16,10 @@
          	$laPopin = $('.archive').find('#'+$popEncycloLink);
          	$popinEncyclo = $('.popencyclo');
 
-         	$popinEncyclo.html($laPopin);
-
-         	$popinEncyclo.addClass('open');
+         	$popinEncyclo.html($laPopin).addClass('open');
          });
 
          $('.popinClose').on('click touch', function () {
-         	console.log('lekzf,lekrz')
          	$popinEncyclo.removeClass('open');
          })
 </script>

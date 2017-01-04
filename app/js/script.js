@@ -52,6 +52,7 @@ countip = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
+$tabSuccess = [];
 
 
 /********************
@@ -242,7 +243,7 @@ function submitLevel1() {
         }
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
-        Showpopup(jeu1d, 'loadLevel2()', 'succes iconAnim');
+        Showpopup(jeu1d, 'loadLevel2()', 'succes1', true);
     }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
 }
 
@@ -1254,12 +1255,13 @@ function resetSandbox() {
 *       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
 *       icon (string) la class de l'icon, par default sans class     
 **/
-function Showpopup(content, loadfonction, icon){
+function Showpopup(content, loadfonction, icon, isSuccess=false){
     if ($Popup) {
         popinIsOpen = true;
         $content_popup.html(''+content+'');
         if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
-        if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+'') } else {$popup_icon.attr('class', '')};
+        if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+' iconAnim') } else {$popup_icon.attr('class', '')};
+        if(isSuccess) addSuccess(icon);
         $Popup.removeClass('hide');
         $hoverlay.removeClass('hide');
     };
@@ -1415,13 +1417,10 @@ Implementation des success
 * class de l'icon du success
 *
 */
-function addSuccess (name, icon) {
-    gallery = $('.successGalery ul');
-    if (name && icon) {
-        gallery.prepend('<li class="succes"><i class="icon icon-'+icon+'"></i><p>'+name+'</p></li>');
-    }
+function addSuccess (icon) {
+    countSuccess = $tabSuccess.length;
+    if (icon) $tabSuccess.push(icon);
 }
-
 
 
 
