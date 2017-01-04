@@ -1,5 +1,5 @@
 {
-    "lvl2" : {
+    "level2" : {
         "pixel_0" : {
             "rvb" : { 
                 "red": false,
@@ -89,65 +89,83 @@
             "validate": true
         }
     },
-    "lvl3" : {
-        "purple" : {
-            "rvb" : {
+    "level3" : {
+        "left" :{
+            "purple" : {
                 "red": [75, 105],
                 "green": [75, 105],
                 "blue": [120, 150]
             },
-            "validate": false
-        },
-        "violet" : {
-            "rvb" : {
+            "violet" : {
                 "red": [60, 90], 
                 "green": [90, 120], 
                 "blue": [135, 165]
             },
-            "validate": false
-        },
-        "magenta" : {
-            "rvb" : {
+            "magenta" : {
                 "red": [0, 30], 
                 "green": [105, 135], 
                 "blue": [180, 210]
             },
-            "validate": false
-        },
-        "pink" : {
-            "rvb" : {
+            "pink" : {
                 "red": [105, 135], 
                 "green": [135, 165], 
                 "blue": [105, 135]
             },
-            "validate": false
-        },
-        "orange" : {
-            "rvb" : {
+            "orange" : {
                 "red": [165, 195], 
                 "green": [150, 180], 
                 "blue": [30, 60]
             },
-            "validate": false
-        },
-        "yellow" : {
-            "rvb" : {
+            "yellow" : {
                 "red": [225, 255], 
                 "green": [195, 225], 
                 "blue": [0, 30]
             },
-            "validate": false
-        },
-        "lime" : {
-            "rvb" : {
+            "lime" : {
                 "red": [240, 255], 
                 "green": [210, 230], 
                 "blue": [0, 15]
+            }
+        },
+        "right" :{        
+            "purple" : {
+                "red": [75, 105],
+                "green": [75, 105],
+                "blue": [120, 150]
             },
-            "validate": false
+            "violet" : {
+                "red": [150, 180], 
+                "green": [45, 75], 
+                "blue": [75, 105]
+            },
+            "magenta" : {
+                "red": [175, 205], 
+                "green": [15, 45], 
+                "blue": [15, 45]
+            },
+            "pink" : {
+                "red": [210, 240], 
+                "green": [75, 105], 
+                "blue": [0, 30]
+            },
+            "orange" : {
+                "red": [225, 255], 
+                "green": [150, 180], 
+                "blue": [0, 30]
+            },
+            "yellow" : {
+                "red": [225, 255], 
+                "green": [180, 210], 
+                "blue": [0, 30]
+            },
+            "lime" : {
+                "red": [240, 255], 
+                "green": [210, 230], 
+                "blue": [0, 15]
+            }
         }
     },
-    "lvl4" : [
+    "level4" : [
         {"x": -1, "y": -1, "rot": 270},
         {"x": 0, "y": -1, "rot": 0},
         {"x": 1, "y": -1, "rot": 270},

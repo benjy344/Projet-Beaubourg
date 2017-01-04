@@ -105,17 +105,17 @@
   border: #008bff solid 2px;
 }
 
-#modalContent .checkboxes {
+#modalContent.level2 .checkboxes {
   display: flex;
   height: calc(100vw/2);
   width: calc(100vw/2);
 }
-#modalContent .checkboxes input {
+#modalContent.level2 .checkboxes input {
   opacity: 0;
   width: 100%;
   height: 100%;
 }
-#modalContent .checkBg {
+#modalContent.level2 .checkBg {
   background-color: black;
   width: calc(100%/3);
   align-items: center;
@@ -123,19 +123,9 @@
   justify-content: center;
   border: 2px solid white;
 }
-#modalContent .buttons {
+#modalContent.level2 .buttons {
   display: flex;
   justify-content: center;
-}
-#modalContent .buttons .runCode {
-  margin: 20px 0;
-  padding: 10px;
-  border: 1px solid linear-gradient(90deg, #3fa9f5, #7ac943);
-}
-#modalContent .pixelModel {
-  width: 30vw;
-  height: 30vw;
-  margin: 0 auto;
 }
 
 /*# sourceMappingURL=activite2.css.map */

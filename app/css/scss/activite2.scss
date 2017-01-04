@@ -129,7 +129,7 @@
 }
 }
 
-#modalContent {
+#modalContent.level2 {
     .checkboxes {
         display: flex;
         height: calc(100vw/2);
@@ -154,19 +154,7 @@
     .buttons {
         display: flex;
         justify-content : center; 
-
-        .runCode {
-            margin: 20px 0; 
-            padding: 10px;
-            border: 1px solid $gradiant;
-        }
     }
-    .pixelModel {
-        width: 30vw;
-        height: 30vw;
-        margin: 0 auto; 
-    }
-    
 }
 
 

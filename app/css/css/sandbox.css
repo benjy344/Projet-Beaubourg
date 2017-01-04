@@ -1,0 +1,15 @@
+#sandbox #sandboxWrapper {
+  position: relative;
+  height: 75%;
+  background-color: white;
+}
+#sandbox #sandboxWrapper .pixel {
+  background-color: red;
+  box-sizing: border-box;
+  height: 100px;
+  width: 100px;
+  border: solid 1px black;
+  position: absolute;
+}
+
+/*# sourceMappingURL=sandbox.css.map */

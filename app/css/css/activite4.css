@@ -34,8 +34,9 @@
 
 .btn {
   /*{DEV}*/
-  background-color: #008BFF;
-  padding: 5px 10px;
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid;
 }
 
 /*# sourceMappingURL=activite4.css.map */

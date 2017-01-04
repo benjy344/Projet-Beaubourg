@@ -664,10 +664,11 @@ body #modal-container.openCode.out + .content-global {
 body #modal-container .modal-background {
   background: #242322;
   vertical-align: middle;
+  height: 100%;
 }
 body #modal-container .modal-background .modal {
   background: #242322;
-  padding: 70px 10px;
+  padding: 70px 10px 0 10px;
   height: 100%;
   width: 100%;
   display: inline-block;

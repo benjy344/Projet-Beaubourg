@@ -14,6 +14,7 @@
   width: 400px;
   transition: 5s ease;
   background-color: black;
+  margin: auto;
 }
 #Level3 #frameWrapper .center {
   background-color: white;
@@ -89,13 +90,13 @@
   opacity: 0;
 }
 
-#modalContent .sliders {
+#modalContent.level3 .sliders {
   display: -ms-flexbox;
   display: flex;
   height: calc(100vw/2);
   width: calc(100vw/2);
 }
-#modalContent .rangeBg {
+#modalContent.level3 .rangeBg {
   background-color: black;
   width: calc(100%/3);
   -ms-flex-align: center;
@@ -104,27 +105,35 @@
   display: flex;
   -ms-flex-pack: center;
   justify-content: center;
+  border: 2px solid white;
 }
-#modalContent .rangeBg input {
+#modalContent.level3 .rangeBg input {
   width: 100%;
   height: 100%;
   -moz-appearance: slider-vertical;
   appearance: slider-vertical;
   -webkit-appearance: slider-vertical;
 }
+
 #modalContent .pixelModel {
-  width: 100px;
+  width: 100%;
   height: 100px;
   position: relative;
   background-color: black;
+  height: calc(100% - 300px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  box-sizing: border-box;
 }
 #modalContent .pixelModel .center {
-  position: absolute;
-  height: 70px;
-  width: 70px;
-  top: 15px;
-  left: 15px;
+  height: 100%;
+  width: 100%;
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*# sourceMappingURL=activite3.css.map */
