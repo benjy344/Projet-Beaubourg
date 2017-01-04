@@ -8,14 +8,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script> 
 
-    <link rel="prefetch" href="dist/views/accueil.html">
-    <link rel="prefetch" href="dist/views/chooseDevMod.html">
-    <link rel="prefetch" href="dist/views/success.html">
-    <link rel="prefetch" href="dist/views/encyclo.html">
-    <link rel="prefetch" href="dist/views/levels/Level1.html">
-    <link rel="prefetch" href="dist/views/levels/Level2.html">
-    <link rel="prefetch" href="dist/views/levels/Level3.html">
-    <link rel="prefetch" href="dist/json/answers.json">
+	<link rel="prefetch" href="dist/views/accueil.html">
+	<link rel="prefetch" href="dist/views/chooseDevMod.html">
+	<link rel="prefetch" href="dist/views/success.html">
+	<link rel="prefetch" href="dist/views/encyclo.html">
+	<link rel="prefetch" href="dist/views/levels/Level1.html">
+	<link rel="prefetch" href="dist/views/levels/Level2.html">
+	<link rel="prefetch" href="dist/views/levels/Level3.html">
+	<link rel="prefetch" href="dist/json/answers.json">
 </head>
 <body>
 	<div class="loading">
@@ -42,77 +42,87 @@
                         <textarea id="code"></textarea>
 
 				    </div>
--->
-                </div>
+				-->
 			</div>
 		</div>
 	</div>
-	<div class="content-global">
-		<div class='background'></div>
-		<div id="menu">
-			<div class="button-burger">
-				<button class="hamburger hamburger--spin" type="button">
-					<span class="hamburger-box">
-						<span class="hamburger-inner"></span>
-					</span>
-				</button>
-			</div>
-			<div class="overlay" id="overlay">
-				<nav class="main-nav">
-					<ul>
-						<li><a href="#" class='haveChild' data-loading="chooseDevMod" >Niveaux</a></li>
-						<li><a href="#" class='haveChild' data-loading="accueil" >Activités</a></li>
-						<li><a href="#" class='haveChild' data-loading="success" >Succès</a></li>
-						<li><a href="#" class='haveChild' data-loading="encyclo" >Encyclopedie</a></li>
-					</ul>
-					<div class="child">
-						<i class="icon icon-return"></i>
-						<div class="child-content"></div>
-					</div>
-				</nav>
-			</div>
+</div>
+<div class="content-global">
+	<div class='background'></div>
+	<div id="menu">
+		<div class="button-burger">
+			<button class="hamburger hamburger--spin" type="button">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</button>
 		</div>
-
-		<div class="help-button newTip" onclick="ShowPopupAide()">
-			<i class="icon icon-help"></i>
-		</div>
-
-		<main >
-			<div id="intro">
-				<figure class="logo">
-					<img src="dist/assets/logo.png" alt="Logo Cod'Art">
-				</figure>
-
-				<div class="content-form">
-					<form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
-						<div class="form-group">
-							<label class="form-label" for="name">Username</label>
-							<input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
-						</div> 
-						<div >
-							<div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
-						</div>
-					</form>
+		<div class="overlay" id="overlay">
+			<nav class="main-nav">
+				<ul>
+					<li><a href="#" class='haveChild' data-loading="chooseDevMod" >Niveaux</a></li>
+					<li><a href="#" class='haveChild' data-loading="accueil" >Activités</a></li>
+					<li><a href="#" class='haveChild' data-loading="success" >Succès</a></li>
+					<li><a href="#" class='haveChild' data-loading="encyclo" >Encyclopedie</a></li>
+				</ul>
+				<div class="child">
+					<i class="icon icon-return"></i>
+					<div class="child-content"></div>
 				</div>
-			</div>
-		</main>
-	</div>
-	
-	<div class="popup hide">
-		<div class="overflow">
-
-			<div class="content-popup">
-			</div>
-			<div class="popup-icon">
-				<i class="icon icon-error"></i>
-			</div>
-
-			<div >
-				<div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
-			</div>
+			</nav>
 		</div>
 	</div>
-	<div class='hoverlay hide'></div>
-	<script type="text/javascript" src="dist/js/built.js"></script>
+
+	<div class="help-button newTip" onclick="ShowPopupAide()">
+		<i class="icon icon-help"></i>
+	</div>
+
+	<main >
+		<div id="intro">
+			<figure class="logo">
+				<img src="dist/assets/logo.png" alt="Logo Cod'Art">
+			</figure>
+
+			<div class="content-form">
+				<form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
+					<div class="form-group">
+						<label class="form-label" for="name">Username</label>
+						<input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
+					</div> 
+					<div >
+						<div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+</div>
+
+<div class="popup hide">
+	<div class="overflow">
+
+		<div class="content-popup">
+		</div>
+		<div class="popup-icon">
+			<i class="icon icon-error"></i>
+		</div>
+
+		<div >
+			<div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
+		</div>
+	</div>
+</div>
+<div class="archive" style="display : none; ">
+
+</div>
+<div class="popencyclo">
+	<div class="close">
+		<i class="icon icon-close"></i>
+	</div>
+	<h1></h1>
+	<div class="content"></div>
+</div>
+<div class='hoverlay hide'></div>
+<script type="text/javascript" src="dist/js/built.js"></script>
 </body>
 </html>

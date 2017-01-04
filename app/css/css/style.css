@@ -578,6 +578,20 @@ body .help-button {
 body .help-button.newTip {
   animation: iconAnim 2s infinite;
 }
+body .popencyclo {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #242322;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  transition: all 0.3s;
+}
+body .popencyclo.open {
+  right: 0;
+  transition: all 0.3s;
+}
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
 }

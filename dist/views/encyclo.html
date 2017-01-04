@@ -2,6 +2,27 @@
 	<ul>
 	</ul>
 </div>
-<div class="encycloPop"></div>
-<ul class="archive">
-</ul>
+<div class="ContentEncycloPop"></div>
+<script type="text/javascript">
+
+	for (var i = 0; i < $tabArchiveContent.length; i++) {
+					//console.log($tabArchiveContent[i]);
+                    $('.encyclo ul').prepend($tabArchiveTitle[i]);
+                    $('.archive').prepend($tabArchiveContent[i])
+                }
+
+         $('.encyclo li').on('click touch', function (e) {
+         	$popEncycloLink = $(this).attr('data-link');
+         	$laPopin = $('.archive').find('#'+$popEncycloLink);
+         	$popinEncyclo = $('.popencyclo');
+
+         	$popinEncyclo.html($laPopin);
+
+         	$popinEncyclo.addClass('open');
+         });
+
+         $('.popinClose').on('click touch', function () {
+         	console.log('lekzf,lekrz')
+         	$popinEncyclo.removeClass('open');
+         })
+</script>

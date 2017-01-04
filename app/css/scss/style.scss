@@ -45,6 +45,24 @@ body {
 			animation: iconAnim 2s infinite;
 		}
 	}
+
+	.popencyclo {
+		display: block; 
+		height: 100%;
+		width: 100%; 
+		background: $black;
+		position: fixed;
+		top: 0;
+		right: -100%;
+		transition : all 0.3s; 
+		
+		&.open {
+			right: 0;
+			transition : all 0.3s; 
+		}
+
+	}
+
 	input[type="text"], input[type="password"], textarea, select, button { 
 		outline: none;
 	}

@@ -32,6 +32,9 @@ isNewTip = false;
 
 countip = 0;
 
+$tabArchiveTitle = [];
+$tabArchiveContent = [];
+
 
 /********************
 
@@ -139,9 +142,7 @@ function loadLevel1() {
                 1 : 'dev blabla2',
                 2 : 'dev blabla3'
             }
-            $(document).on('click', function() {
-                constructTips(2000, 3, tips1); //{DEV}
-            });
+            constructTips(2000, 3, tips1);
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
@@ -1245,19 +1246,14 @@ Implementation de l'encyclopedie
 */
 
 function addEncyclo (name, content) {
-    $.ajax({
-        url: views+'encyclo.html',
-        success : function(){
-            encyclo = $('.encyclo ul');
-            archive = $('.archive');
-            countEncyclo = encyclo.children().length;
-            console.log(countEncyclo)
-            if (name && content) {
-                encyclo.prepend('<li class="encycloLink"><a href="#" data-link="'+countEncyclo+'">'+name+'</a></li>');
-                archive.prepend('<li data-link="'+countEncyclo+'">'+content+'</li>');
-            }  
-        }
-    });
+
+    // encyclo = $('.encyclo ul');
+    // archive = $('.archive');
+    countEncyclo = $tabArchiveTitle.length;
+    if (name && content) {
+        $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
+        $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
+    } 
 
 }
 
@@ -1322,13 +1318,24 @@ $(document).ready(function() {
 
         $parent.addClass('childOpen');
         $child.addClass('isOpen');
-        $child_content.load(views+loader+'.html');
-        if (loader == 'chooseDevMod') {
-            setTimeout(function(){
-                console.log('ionin');
-                if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');}
 
-            }, 500)
+        $child_content.load(views+loader+'.html');
+     
+        switch(loader) {
+            case 'chooseDevMod':
+                setTimeout(function(){
+                    if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');} 
+                }, 500)
+                break;
+            case 'accueil':
+                
+                break;
+            case 'success':
+                
+                break;
+            case 'encyclo':
+                
+                break;
         }
 
 
