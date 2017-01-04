@@ -2,9 +2,6 @@
 Choses a implementer
 
 applyposition et applyColor pour la sandbox
-
-supprimer verifPixelLvl2
-
 */
 
 var dest = './dist/',
@@ -72,6 +69,7 @@ Chargement des levels et menu
 function loadChooseDevMod(){
     Showpopup(accueil, 'hidePopup()', '');
     Username = $('input#name').val();
+    $('#username').text(Username);
     if (Username == 'test') { // {DEV}
         testing = true;
     }
@@ -93,7 +91,7 @@ function chooseMode(){
 
 /********************
 *
-*   page de choix des chapitres 
+*   Page de choix des chapitres 
 *
 *********************/
 function loadChooseLevel(){
@@ -101,6 +99,8 @@ function loadChooseLevel(){
 }
 
 $.fn.loadLevel = function(levelToLoad, callback) {
+    
+    reinitMain();
 
     screen = levelToLoad;
 
@@ -109,7 +109,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
         modal = '#modalContent';
 
     thisLvlAnswers = answers[levelToLoad];
-    console.log(thisLvlAnswers);
+    //console.log(thisLvlAnswers);
 
     this.load(file + ' ' + lvl, function() {    
         $('.modalContent').load(file + ' ' + modal, function() {
@@ -126,19 +126,15 @@ function reloadLevel() {
     switch(screen) {
         case 'level1':
             //console.log('jrfeiu')
-            reinitMain();
             loadLevel1();
             break;
         case 'level2':
-            reinitMain();
             loadLevel2();
             break;
         case 'level3':
-            reinitMain();
             loadLevel3();
             break;
         case 'level4':
-            reinitMain();
             loadLevel4();
             break;
     }
@@ -230,7 +226,7 @@ function loadLevel1() {
 
 /********************
 *
-*   Validation Chapitre 1
+*   Fonctions du Chapitre 1
 *
 *********************/
 function submitLevel1() {
@@ -251,24 +247,20 @@ function submitLevel1() {
 }
 
 
-
 /********************
 *
 *   Chapitre 2
 *
 *********************/
 function loadLevel2() {
-    reinitMain();
     showpop2C = "Showpopup(jeu2c, 'hidePopup()', '')";
     showpop2B = "Showpopup(jeu2b, showpop2C, '')";
     Showpopup(jeu2a, showpop2B, '');
     //    $('main').load(level+'Level2.html', function(){
     $('main').loadLevel('level2', function() {
 
-
         var pixel = $('.pixel');
         pixel.on('touch click', showModal) //{DEV}
-        $('.close').on('touch click', hideModal)
 
         //CodeMirror
         var textArea = $('.codeMirror')[0],
@@ -486,12 +478,6 @@ function runCodeLevel2() {
     //verifPixelLevel2();
 }
 
-//function applyColor(pixel) {
-//    resetCode($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
-//    colorPixelRVB(pixel);
-//    verifPixelLevel2();
-//}
-
 function colorPixelRVB() {
     //console.log(pixel)
     var pixel = $('.pixelActive').data('rvb')
@@ -514,6 +500,7 @@ function colorPixelRVB() {
 
 function colorPixel() {    
     var pixel = $('.pixelActive').data('rvb')
+
     $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
 
     colorModel(pixel.red, pixel.green, pixel.blue);
@@ -543,44 +530,9 @@ function resetCheckboxes(r, g, b) {
     colorModel(valR, valG, valB)
 }
 
-function verifPixelLevel2() {
-    var rvb = $('.pixelActive').data('rvb');
-    var pixelName = $('.pixelActive').data('name');
-    var correctRvb = thisLvlAnswers[pixelName].rvb;
-    //console.log(rvb)
-    //console.log(answers[$('.pixelActive').index()]);
-
-    if (JSON.stringify(rvb) == JSON.stringify(correctRvb)) {
-        console.log('yep')
-        thisLvlAnswers[pixelName].validate = true;
-    } else {
-        console.log('nope')
-        thisLvlAnswers[pixelName].validate = false;
-    }
-}
-
-function resetLevel2() {
-    $('.pixel').off()
-    $('.runCode').off()
-    $('input:checkbox').off()
-
-    resetCM();
-}
-
-function resetCM() {
-
-    if(codeMirror) {
-
-        codeMirror.off();
-        codeMirror.getWrapperElement().parentNode.removeChild(codeMirror.getWrapperElement());
-        codeMirror=null;
-        console.log('cm = ' + codeMirror);
-    }
-}
-
 /********************
 *
-*   Validation Chapitre 2
+*   Fonctions du Chapitre 2
 *
 *********************/
 
@@ -592,18 +544,18 @@ function submitLevel2() {
         var rvb = $(pixels[i]).data('rvb'),
             pixelName = $(pixels[i]).data('name'),
             correctRVB = thisLvlAnswers[pixelName].rvb;
-        
+
         console.log(rvb, correctRVB);
-        
+
         if (JSON.stringify(rvb) == JSON.stringify(correctRVB)) {
             numCorrect++;
         } else {
             break;
         }
     }
-    
+
     console.log(numCorrect, pixels.length);
-    
+
 
     if (numCorrect == pixels.length || testing) { //{}
         Showpopup('Bravo !', 'loadLevel3()', 'succes');
@@ -614,33 +566,12 @@ function submitLevel2() {
 
 }
 
-function submitLevel2bis() {
-    //Validate
-
-    console.log('submitting')
-
-    var isCorrect = true;
-    $.each(thisLvlAnswers, function(i, value){
-        if (!value.validate) {
-            isCorrect = false;
-        }
-    })
-
-    if (isCorrect || testing) { //{TEST}
-        Showpopup('Bravo !', 'loadLevel3()', 'succes');
-    } else {
-        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
-    }
-}
-
-
 /********************
 *
 *   Chapitre 3
 *
 *********************/
 function loadLevel3() {
-    reinitMain();
     showpop3C = "Showpopup(jeu3c, 'hidePopup()', '')";
     showpop3B = "Showpopup(jeu3b, showpop3C, '')";
     Showpopup(jeu3a, showpop3B, '');
@@ -649,7 +580,6 @@ function loadLevel3() {
 
         var pixel = $('.square');
         pixel.on('touch click', showModal) //{DEV}
-        $('.close').on('touch click', hideModal)
 
         //CodeMirror
         var textArea = $('.codeMirror')[0],
@@ -779,7 +709,7 @@ function runCodeLevel3() {
     colorPixel();
     //verifPixelLevel3();
 
-    pixelBorder = undefined;
+    //pixelBorder = undefined;
 
 
 }
@@ -787,7 +717,7 @@ function runCodeLevel3() {
 
 /********************
 *
-*   Validation Chapitre 3
+*   Fonctions du Chapitre 3
 *
 *********************/
 
@@ -851,9 +781,6 @@ function submitLevel3() {
 *
 *********************/
 function loadLevel4() {
-
-    resetCM();
-    reinitMain();
     showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
     showpop4B = "Showpopup(jeu4b, showpop4C, '')";
     Showpopup(jeu4a, showpop4B, '');
@@ -862,7 +789,6 @@ function loadLevel4() {
 
         var image = $('.imageObject');
         image.on('touch click', showModal);
-        $('.close').on('touch click', hideModal);
 
         //CodeMirror
         var textArea = $('.codeMirror')[0],
@@ -1038,7 +964,6 @@ function move(direction, repeat) {
         }
     }
 } 
-
 function scale(sens) {
 
     var size =   parseInt($('.imgActive').css('width'));
@@ -1085,7 +1010,7 @@ function resetCode() {
 
 /********************
 *
-*   Validation Chapitre 4
+*   Fonctions du Chapitre 4
 *
 *********************/
 
@@ -1117,8 +1042,6 @@ function submitLevel4() {
 *
 *********************/
 function loadSandbox() {
-    resetCM();
-    reinitMain();
     //    showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
     //    showpop4B = "Showpopup(jeu4b, showpop4C, '')";
     //    Showpopup(jeu4a, showpop4B, '');
@@ -1126,7 +1049,6 @@ function loadSandbox() {
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');
-        $('.close').on('touch click', hideModal);
 
         //CodeMirror
         var textArea = $('.codeMirror')[0],
@@ -1178,8 +1100,7 @@ function loadSandbox() {
         //            addCode($(this));
         //        })
 
-        //        $('.reinitImg').click(reinitImg);
-
+        $('.reinitSandbox').click(reinitSandbox);
 
         codeMirror.setValue('init');
         //resetCode();
@@ -1238,6 +1159,9 @@ function addPixel() {
     $('#sandboxWrapper').append(pixel);
 }
 
+function reinitSandbox() {
+    $('#sandboxWrapper').empty(); 
+}
 
 /********************
 *
@@ -1245,14 +1169,75 @@ function addPixel() {
 *
 *********************/
 
+function resetCM() {
+
+    if(codeMirror) {
+
+        codeMirror.off();
+        codeMirror.getWrapperElement().parentNode.removeChild(codeMirror.getWrapperElement());
+        codeMirror=null;
+        //console.log('cm = ' + codeMirror);
+    }
+}
+
 function reinitMain() {
     hidePopup();
+    hideModal();
+    resetCM();
     $('.hamburger').removeClass('is-active');
     $('#overlay').removeClass('open');
     $('.main-nav>ul').removeClass('childOpen');
     $('.main-nav .child').removeClass('isOpen');
     $('.help-button').hide();
     clearTimeout(timeOut);
+    
+    switch(screen) {
+         case 'level1':
+            resetLevel1(); 
+            break;
+        case 'level2':
+            resetLevel2();
+            break;
+        case 'level3':
+            resetLevel3();
+            break;
+        case 'level4':
+            resetLevel4();
+            break;
+        case 'sandbox':
+            resetSandbox();
+            break;
+        default:
+            
+    }
+}
+
+function resetLevel1() {
+    
+}
+
+function resetLevel2() {
+    $('.pixel').off()
+    $('.runCode').off()
+    $('.checkboxes input:checkbox').off();
+}
+
+function resetLevel3() {
+    $('.square').off();
+    $('.runCode').off()
+    $('input[type=range]').off();
+}
+
+function resetLevel4() {
+    $('.imageObject').off();
+    $('.functions-btn .btn');
+    $('.runCode').off()
+    $('.reinitImg').off();
+    
+}
+
+function resetSandbox() {
+    
 }
 
 /********************
@@ -1464,6 +1449,8 @@ $(document).ready(function() {
             loadChooseDevMod();
         }
     });
+    
+    $('.modal .close').on('touch click', hideModal);
     /////////////////Gestion menu
 
     $('.haveChild').on('click touch', function(event) {
@@ -1577,7 +1564,7 @@ Variable de textes
 *********************/
 
 //Présentation ouverture application
-var accueil = '<p>Bonjour '+Username+' et bienvenue sur notre application !</p> <p>Afin de vous accompagner dans votre découverte du code informatique et de vous expliquer des notions sur le code informatique, nous avons mené une mission de “vulgarisation scientifique” du code informatique pour vous ! <br>Au fil des quelques jeux que nous vous avons préparez, vous allez découvrir des notions fondamentales sur la création d’une image numérique.</p> <p>Bonne chance et bon jeu !</p>';
+var accueil = '<p>Bonjour <span id="username"></span> et bienvenue sur notre application !</p> <p>Afin de vous accompagner dans votre découverte du code informatique et de vous expliquer des notions sur le code informatique, nous avons mené une mission de “vulgarisation scientifique” du code informatique pour vous ! <br>Au fil des quelques jeux que nous vous avons préparez, vous allez découvrir des notions fondamentales sur la création d’une image numérique.</p> <p>Bonne chance et bon jeu !</p>';
 
 //Jeu 1
 
