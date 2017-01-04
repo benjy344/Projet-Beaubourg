@@ -7,16 +7,16 @@
 body {
     background: $black;
     font-family : $principal-font;
-    font-size: 20.8px;
     font-size : $font-size;
+    //font-size: 5vw;
     color: $white;
     
     @include tablet {
-        font-size: 3vw
+        //font-size: 3vw
     }
     
     @include desktop {
-        font-size: 2vw
+        //font-size: 2vw
     }
 
     .loading {
