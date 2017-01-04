@@ -549,7 +549,6 @@ body {
   background: #242322;
   font-family: "Josefin Sans", sans-serif;
   font-size: 20.8px;
-  font-size: 5vw;
   color: #FBFBFB;
   /******************
   *
@@ -559,16 +558,6 @@ body {
   /*
   * Spin
   */
-}
-@media (min-width: 480px) and (max-width: 767px) {
-  body {
-    font-size: 3vw;
-  }
-}
-@media (min-width: 768px) {
-  body {
-    font-size: 2vw;
-  }
 }
 body .loading {
   z-index: 20000;
@@ -869,7 +858,7 @@ body main #intro .content-form .form-group {
 body main #intro .content-form .form-label {
   font-family: "Josefin Sans", sans-serif;
   color: #3fa9f5;
-  font-size: 5vw;
+  font-size: 20.8px;
   height: 26px;
   margin: 0;
   display: block;
@@ -918,7 +907,7 @@ body main #ChooseLevel ul li {
 body main #ChooseLevel ul li a {
   text-decoration: none;
   color: #FBFBFB;
-  font-size: 5vw;
+  font-size: 20.8px;
   position: absolute;
 }
 body main #ChooseLevel ul li a::after {
