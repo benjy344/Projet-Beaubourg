@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        separator: ';', // permet d'ajouter un point-virgule entre chaque fichier concaténé.
+        separator: '; /*********************************************************/', // permet d'ajouter un point-virgule entre chaque fichier concaténé.
       },
       dist: {
         src: ['app/js/*.js'], // la source
@@ -50,6 +50,30 @@ module.exports = function(grunt) {
        padding     : 5
      }
    },
+   webfont: {
+    icons: {
+      src: 'app/assets/font/*.svg',
+      dest: 'dist/assets/fonts',
+      destCss: 'app/css/scss/utilities/',
+      options: {
+        stylesheet: 'scss',
+        fontFilename: 'font-icons',
+        types: 'eot,woff,ttf,svg',
+        template: 'app/css/scss/mixin/_webfont-mixin.css',
+        templateOptions: {
+          fontBaseName: 'font-icons',
+          baseClass: 'font-icon',
+          classPrefix: 'font-',
+          mixinPrefix: 'font-'
+        },
+        htmlDemo: false,
+        normalize: true,
+        autoHint: false,
+        hashes: false
+      }
+    }
+  },
+
     imagemin: {                          // Task 
       png: {
         options: {
@@ -57,7 +81,7 @@ module.exports = function(grunt) {
           optimizationLevel: 7
         },
         files: [
-          {
+        {
             // Set to true to enable the following options…
             expand: true,
             // cwd is 'current working directory'
@@ -67,14 +91,14 @@ module.exports = function(grunt) {
             dest: 'dist/assets/',
             ext: '.png'
           }
-        ]
-      },
-      jpg: {
-        options: {
-          progressive: true,
-          optimizationLevel: 7
+          ]
         },
-        files: [
+        jpg: {
+          options: {
+            progressive: true,
+            optimizationLevel: 7
+          },
+          files: [
           {
             // Set to true to enable the following options…
             expand: true,
@@ -85,9 +109,9 @@ module.exports = function(grunt) {
             dest: 'dist/assets/',
             ext: '.jpg'
           }
-        ]
-      }
-    },
+          ]
+        }
+      },
     // Observons…
     watch: {
       options: {
@@ -105,11 +129,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
+  grunt.loadNpmTasks('grunt-webfont');
 
 
 
   grunt.registerTask('default', ['sprite','sass:dist', 'concat:dist', 'cssmin']);
   grunt.registerTask('spritesmith', ['sprite']);
+  grunt.registerTask('font', ['webfont']);
   grunt.registerTask('minifyImg', ['imagemin:png']);
 
 }

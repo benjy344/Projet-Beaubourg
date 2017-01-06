@@ -1,4 +1,69 @@
-// CodeMirror, copyright (c) by Marijn Haverbeke and others
+/*
+Choses a implementer
+
+applyposition et applyColor pour la sandbox
+*/
+
+var dest = './dist/',
+    level = './dist/views/levels/',
+    views = './dist/views/',
+    screen = 'index',
+
+    Username = "",
+    testing = false,
+    devMod = false,
+    aleNumber = '',
+    binaire = '',
+
+    codeMirror = null,
+
+    answers = {},
+    thisLvlAnswers = {},
+
+    timeOut = 0,
+
+    content = {};
+
+
+var up = 'up',
+    haut = 'up',
+    down = 'down',
+    bas = 'down',
+    left = 'left',
+    gauche = 'left',
+    right = 'right',
+    droite = 'right',
+    plus = 'up',
+    moins = 'down';
+
+$.getJSON('dist/json/answers.json', function(data) {
+    answers = data;
+});
+
+$.get("dist/content/content_fr.html", function(data) {
+    $(data).filter('div').each(function(i) {
+        var name = $(this).attr("id");
+        content[name] = $(this).html()
+    })
+});
+
+
+
+$Popup = $('.popup');
+$content_popup = $('.popup .content-popup');
+$button = $('.js-fleche-popup');
+$hoverlay = $('.hoverlay');
+$popup_icon = $('.popup-icon i');
+
+popinIsOpen = false;
+tipIsOpened = false;
+isNewTip = false;
+
+countip = 0;
+
+$tabArchiveTitle = [];
+$tabArchiveContent = [];
+$tabSuccess = [];; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
 // This is CodeMirror (http://codemirror.net), a code editor
@@ -9094,7 +9159,583 @@ CodeMirror$1.version = "5.20.2"
 return CodeMirror$1;
 
 })));
-;// CodeMirror, copyright (c) by Marijn Haverbeke and others
+; /*********************************************************//********************
+*
+*   gestion niveaux/chapitres 
+*
+*********************/
+
+function reloadLevel() {
+    //console.log(level+' '+screen+' '+devMod);
+    switch(screen) {
+        case 'level1':
+            //console.log('jrfeiu')
+            loadLevel1();
+            break;
+        case 'level2':
+            loadLevel2();
+            break;
+        case 'level3':
+            loadLevel3();
+            break;
+        case 'level4':
+            loadLevel4();
+            break;
+    }
+}
+
+/********************
+*
+*   Choix du niveau 
+*
+*********************/
+function loadChooseDevMod(){
+    Showpopup(content['accueil'], 'hidePopup()', '');
+    Username = $('input#name').val();
+    $('#username').text(Username);
+    if (Username == 'test') { // {DEV}
+        testing = true;
+    }
+    $('main').load(views+'chooseDevMod.html', chooseMode);
+    $('#input1, #input2').off('touch click');
+}
+
+function chooseMode(){
+
+    $('#input1, #input2').on('touch click', function(e) {
+        isdebMod = $('input#input1:checked').val();
+        if (isdebMod == 'on') {
+            console.log('korf');
+            devMod = false;
+        }
+        else {devMod = true;} 
+    }); 
+}
+
+/********************
+*
+*   Page de choix des chapitres 
+*
+*********************/
+function loadChooseLevel(){
+    $('main').load(views+'accueil.html');
+}
+
+$.fn.loadLevel = function(levelToLoad, callback) {
+
+    reinitMain();
+
+    screen = levelToLoad;
+
+    var file = level+levelToLoad+'.html',
+        lvl = '#'+levelToLoad,
+        modal = '#modalContent';
+
+    thisLvlAnswers = answers[levelToLoad];
+    //console.log(thisLvlAnswers);
+
+    this.load(file + ' ' + lvl, function() {    
+        $('.modalContent').load(file + ' ' + modal, function() {
+
+            callback();
+
+
+        })
+    })
+}
+
+
+/********************
+*
+*   Popup & Modal
+*
+*********************/
+
+/**
+* showpopup
+* function de création des popups
+* Params : 
+*       content (string) contenu text de la popup 
+*       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
+*       icon (string) la class de l'icon, par default sans class     
+**/
+function Showpopup(content, loadfonction, icon, isSuccess=false){
+
+    if ($Popup) {
+
+        popinIsOpen = true;
+        $content_popup.html(''+content+'');
+        if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
+        if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+' iconAnim') } else {$popup_icon.attr('class', '')};
+        if(isSuccess) addSuccess(icon);
+        $Popup.removeClass('hide');
+        $hoverlay.removeClass('hide');
+    };
+}
+
+
+/**
+* hidePopup
+* function de clean des popups
+**/
+function hidePopup() {
+    popinIsOpen = false;
+    $content_popup.html('');
+    $button.attr("onclick", '');
+    $popup_icon.attr('class', '');
+    $Popup.addClass('hide');
+    $hoverlay.addClass('hide');
+}
+
+
+/*********************
+
+    Popup Aide
+
+********************/
+/**
+* constructTips
+* function de construction des popups d'aide
+* time en ms, durée entre chaque aide;
+* numberOftips nombre total de tips;
+* tips = {
+*   0 : 'blabla1',
+*   1 : 'blabla2',
+*   2 : 'blabla'
+* }
+**/
+function constructTips(time, numberOftips, tips ) {
+    var number = 0;
+    timeOut = setTimeout( function () {
+      if (popinIsOpen === false) {
+         getATip(number, time, tips, numberOftips);
+        } else {
+            constructTips(time, numberOftips, tips );
+        } 
+    } , time);
+    
+}
+
+
+function getATip(number, time, tips, total) {
+    var intervale = 0;
+    var t = 0;
+    $('.help-button').show().addClass('newTip');
+    ConstructPopupAide(tips[number]);
+    number++;
+    if (number < total) {
+        //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+        intervale = setInterval(function () {
+            if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+                clearTimeout(t);
+                t = 0;
+            } else {
+                t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+                clearInterval(intervale);
+            }
+        }, 1000);
+
+    } else {
+        clearTimeout(t);
+        t = 0;
+        clearInterval(intervale);
+        intervale = 0;
+    }
+
+}
+
+function ConstructPopupAide(tip) {
+    if (tip) {
+        countip++;
+        $content_popup.html(''+tip+'');
+        $button.attr("onclick", 'closePopupAide()');
+        isNewTip = true;
+
+        addEncyclo('Aide n°'+countip+'', tip);
+    };
+}
+
+function ShowPopupAide() {
+    tipIsOpened = true;
+    popinIsOpen = true;
+    isNewTip = false;
+    $('.help-button').removeClass('newTip');
+    $Popup.removeClass('hide');
+    $hoverlay.removeClass('hide');
+}
+
+function closePopupAide() {
+    tipIsOpened = false;
+    popinIsOpen = false;
+    $Popup.addClass('hide');
+    $hoverlay.addClass('hide');
+}
+
+/*********************
+
+Implementation de l'encyclopedie
+
+********************/
+
+// ici tout le contenu designé sera stoqué en tant que page dans l'encyclopedie
+// en param de la fonction => 
+/**
+* Nom de la page ( titre du li)
+* contenu textuel
+*
+*/
+
+function addEncyclo (name, content) {
+
+    // encyclo = $('.encyclo ul');
+    // archive = $('.archive');
+    countEncyclo = $tabArchiveTitle.length;
+    if (name && content) {
+        $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
+        $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
+    } 
+
+}
+
+/*********************
+
+Implementation des success 
+
+********************/
+
+// ici tout le contenu designé sera stoqué en tant trophé dans la pages des success 
+// en param de la fonction => 
+/**
+* class de l'icon du success
+*
+*/
+function addSuccess (icon) {
+    countSuccess = $tabSuccess.length;
+    if (icon) $tabSuccess.push(icon);
+}
+
+
+function alertErr() {
+    var pixel = $('.pixelActive').data('rvb');
+    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue)
+    codeMirror.getInputField().blur();
+    //codeMirror.focus();
+    alert('ERROR');
+}
+
+
+
+
+
+// Modal gestion
+function showModal() {
+    $('#modal-container').removeAttr('class').addClass('openCode');
+    $('body').addClass('modal-active');
+}
+
+function hideModal() {
+    $('#modal-container').addClass('out');
+    $('body').removeClass('modal-active');
+}; /*********************************************************/// add pixel
+function addPixel() {
+    var pixel = $('<div class="pixel"></div>');
+
+    pixel.data('rvb', {
+        red: 0, 
+        green: 0, 
+        blue: 0
+    })
+        .data('pos', {
+        x: 0,
+        y: 0,
+        rot: 0
+    })
+        .data('name', 'pixel_'+$(this).index());
+
+    $('#sandboxWrapper').append(pixel);
+}
+
+function colorPixelRVB() {
+    //console.log(pixel)
+    var pixel = $('.pixelActive').data('rvb')
+    var red = 0,
+        green = 0,
+        blue = 0;
+    if (pixel.red) {
+        red = 255;
+    }
+    if (pixel.green) {
+        green = 255;
+    }
+    if (pixel.blue) {
+        blue = 255;
+    }
+    $('.pixelActive').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
+
+    colorModel(red, green, blue);
+}
+
+function colorPixel() {    
+    var pixel = $('.pixelActive').data('rvb')
+
+    $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
+
+    colorModel(pixel.red, pixel.green, pixel.blue);
+}
+
+function colorModel(r, g, b) {
+    $('.pixelModel').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
+}
+
+function resetCodePixel(id, r, g, b) {
+    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}\n');
+    codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
+    codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
+    codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
+    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
+}
+
+function resetCheckboxes(r, g, b) {
+    var valR, valG, valB;
+    if (r) {valR = 255} else {valR = 0}
+    if (g) {valG = 255} else {valG = 0}
+    if (b) {valB = 255} else {valB = 0}
+    $('input.red').prop('checked', r).parent().css('background-color', 'rgb(' + valR + ', 0, 0)')
+    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, ' + valG + ', 0)')
+    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, ' + valB + ')')
+
+    colorModel(valR, valG, valB)
+}
+
+function setSelection(varType) {
+    var setPos = true,
+        cm = codeMirror,
+        currentPos = cm.getCursor(),
+        line = currentPos.line,
+        tokens,
+        i; //Indice du token en cours
+
+    //Commencer la recherche en début de ligne suivante si le curseur est en fin de ligne
+    if (currentPos.ch == cm.getLine(line).length) {
+        line++;
+        currentPos.ch = 0;
+    }
+    tokens = cm.getLineTokens(line);
+    i = 0; 
+    //Commencer la recherche après la position actuelle du curseur
+    while (tokens[i].end <= currentPos.ch) {
+        i++;
+    }
+    //Commencer la recherche au token suivant si le token en cours est du bon type
+    if (tokens[i].type == varType) {
+        i++;
+    }
+    //Commencer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
+    if (typeof tokens[i] == 'undefined') {
+        i = 0;
+        line++
+        tokens = cm.getLineTokens(line)
+    }
+
+    //Début de la recherche
+    //Tant que le token en cours n'est pas du bon type, on analyse le token suivant
+    while (tokens[i].type != varType) {
+        i++
+        //Continuer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
+        if (typeof tokens[i] == 'undefined') {
+            i = 0;
+            line++
+            tokens = cm.getLineTokens(line)
+        }
+        //Il n'y a plus de tokens dans l'editeur. On arrete la boucle et !setPos pour ne pas effectuer les prochaines instructions
+        if (line > codeMirror.lineCount()) {
+            setPos = false;
+            //console.log('should run code')
+            break;
+        }
+    }
+    //console.log('oui')
+    //Si on a trouvé un prochain token, le selectionne
+    if (setPos) {
+        cm.setSelection({
+            line: line,
+            ch: tokens[i].start
+        }, {
+            line: line,
+            ch: tokens[i].end
+        });
+    } else {//Si on a pas trouvé de token, on vérifie qu'il y ait bien 3 tokens du bon type
+        //console.log('runcode')
+        if ($('.cm-atom').length != 3) {
+            alertErr();
+            //console.log('nope')
+        } else { //Si oui, unfocus l'editeur et lance le code
+            if (screen == 'level2') {
+                runCodeLevel2();
+            } else if (screen == 'level3') {
+                runCodeLevel3();
+            }
+
+            codeMirror.getInputField().blur();
+        }
+    }
+    //console.log(tokens[i])
+}
+
+function reinitImg() {
+    $('#frameWrapper .imageObject').each(function () {
+        $(this).data('pos', {
+            x: 0,
+            y: 0,
+            rot: 0
+        });
+        $(this).attr('style', '');
+    });
+}
+
+
+function addCode(btn) {
+    var cmContent = codeMirror.getValue();
+
+    var fn = btn.html();
+    var comment = ''
+
+    switch (btn.attr('data-function')) {
+        case 'left':
+            comment = '//Déplacer de 1 case à gauche';
+            break;
+        case 'right':
+            comment = '//Déplacer de 1 case à droite';
+            break;
+        case 'up':
+            comment = '//Déplacer de 1 case en haut';
+            break;
+        case 'down':
+            comment = '//Déplacer de 1 case en bas';
+            break;
+        case 'rotate':
+            comment = '//Touner de 90 degrés dans le sens horaire';
+            break;
+        default:
+            break;
+    }
+
+    //console.log(cmContent, fn, comment);
+
+    codeMirror.setValue(cmContent + "\n" + comment + "\n" + fn);
+}
+
+function moveLeft() {
+    var pos = $('.imgActive').data('pos'); 
+    pos.x--;
+    $('.imgActive').data('pos', pos)
+}
+function moveRight() {
+    var pos = $('.imgActive').data('pos'); 
+    pos.x++;
+    $('.imgActive').data('pos', pos)
+}
+function moveUp() {
+    var pos = $('.imgActive').data('pos'); 
+    pos.y--;
+    $('.imgActive').data('pos', pos)
+}
+function moveDown() {
+    var pos = $('.imgActive').data('pos'); 
+    pos.y++;
+    $('.imgActive').data('pos', pos)
+}
+function rotate(deg) {
+    if (!deg) {
+        deg = 90;
+    }  
+    var pos = $('.imgActive').data('pos'); 
+    pos.rot = pos.rot + deg;
+    $('.imgActive').data('pos', pos)
+}
+function move(direction, repeat) {
+    if (repeat && typeof repeat == 'number') {
+        for (i = 0; i < repeat; i++) {
+            move(direction);
+        }
+    } else {
+        //console.log('moving')
+        switch(direction) {
+            case up:
+            case haut:
+                moveUp();
+                break;
+            case down:
+            case bas:
+                moveDown();
+                break;
+            case left:
+            case gauche:
+                moveLeft();
+                break;
+            case right:
+            case droite:
+                moveRight();
+                break;
+            default:
+                console.log("error") //{DEV}   
+                break;
+        }
+    }
+} 
+function scale(sens) {
+
+    var size =   parseInt($('.imgActive').css('width'));
+
+    if (!sens) {
+        sens = up;
+    }
+    switch(sens) {
+        case up:
+        case plus:
+            size += 25;
+            break;
+        case down:
+        case moins:
+            size -= 25;
+            break;
+        default:
+            console.log("error") //{DEV}   
+            break;
+    }
+
+    size += 'px';
+    $('.imgActive').css('width', size);
+    $('.imgActive').css('height', size);
+}
+
+function applyPosition() {
+    var pos = $('.imgActive').data('pos'); 
+    pos.x = pos.x > 1 ? 1 : (pos.x < -1) ? -1 : pos.x;
+    pos.y = pos.y > 1 ? 1 : (pos.y < -1) ? -1 : pos.y;
+    pos.rot %= 360;
+
+    //console.log(pos.rot)
+
+    $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
+
+    $('.imgActive').css('left', pos.x * 100 + 'px');
+    $('.imgActive').css('top', pos.y * 100 + 'px');
+}
+
+function resetCode() {
+    codeMirror.setValue('');
+}
+
+function resetSliders(r, g, b) {
+    $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
+    $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
+    $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
+
+    colorModel(r, g, b)
+}
+
+; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
 (function(mod) {
@@ -9878,162 +10519,7 @@ CodeMirror.defineMIME("text/typescript", { name: "javascript", typescript: true 
 CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript: true });
 
 });
-;/*
-Choses a implementer
-
-applyposition et applyColor pour la sandbox
-*/
-
-var dest = './dist/',
-    level = './dist/views/levels/',
-    views = './dist/views/',
-    screen = 'index',
-
-    Username = "",
-    testing = false,
-    devMod = false,
-    aleNumber = '',
-    binaire = '',
-
-    codeMirror = null,
-
-    answers = {},
-    thisLvlAnswers = {},
-
-    timeOut = 0,
-
-    content = {};
-
-
-var up = 'up',
-    haut = 'up',
-    down = 'down',
-    bas = 'down',
-    left = 'left',
-    gauche = 'left',
-    right = 'right',
-    droite = 'right',
-    plus = 'up',
-    moins = 'down';
-
-$.getJSON('dist/json/answers.json', function(data) {
-    answers = data;
-});
-
-
-$.get("dist/content/content_fr.html", function(data) {
-    $(data).filter('div').each(function(i) {
-        var name = $(this).attr("id");
-        content[name] = $(this).html()
-    })
-});
-
-
-
-$Popup = $('.popup');
-$content_popup = $('.popup .content-popup');
-$button = $('.js-fleche-popup');
-$hoverlay = $('.hoverlay');
-$popup_icon = $('.popup-icon i');
-
-popinIsOpen = false;
-tipIsOpened = false;
-isNewTip = false;
-
-countip = 0;
-
-$tabArchiveTitle = [];
-$tabArchiveContent = [];
-$tabSuccess = [];
-
-
-/********************
-
-Chargement des levels et menu
-
-*******************/
-
-
-/********************
-*
-*   Choix du niveau 
-*
-*********************/
-function loadChooseDevMod(){
-    Showpopup(content['accueil'], 'hidePopup()', '');
-    Username = $('input#name').val();
-    $('#username').text(Username);
-    if (Username == 'test') { // {DEV}
-        testing = true;
-    }
-    $('main').load(views+'chooseDevMod.html', chooseMode);
-    $('#input1, #input2').off('touch click');
-}
-
-function chooseMode(){
-
-    $('#input1, #input2').on('touch click', function(e) {
-        isdebMod = $('input#input1:checked').val();
-        if (isdebMod == 'on') {
-            console.log('korf');
-            devMod = false;
-        }
-        else {devMod = true;} 
-    }); 
-}
-
-/********************
-*
-*   Page de choix des chapitres 
-*
-*********************/
-function loadChooseLevel(){
-    $('main').load(views+'accueil.html');
-}
-
-$.fn.loadLevel = function(levelToLoad, callback) {
-
-    reinitMain();
-
-    screen = levelToLoad;
-
-    var file = level+levelToLoad+'.html',
-        lvl = '#'+levelToLoad,
-        modal = '#modalContent';
-
-    thisLvlAnswers = answers[levelToLoad];
-    //console.log(thisLvlAnswers);
-
-    this.load(file + ' ' + lvl, function() {    
-        $('.modalContent').load(file + ' ' + modal, function() {
-
-            callback();
-
-
-        })
-    })
-}
-
-function reloadLevel() {
-    //console.log(level+' '+screen+' '+devMod);
-    switch(screen) {
-        case 'level1':
-            //console.log('jrfeiu')
-            loadLevel1();
-            break;
-        case 'level2':
-            loadLevel2();
-            break;
-        case 'level3':
-            loadLevel3();
-            break;
-        case 'level4':
-            loadLevel4();
-            break;
-    }
-}
-
-/********************
+; /*********************************************************//********************
 *
 *   Chapitre 1
 *
@@ -10054,9 +10540,9 @@ function loadLevel1() {
             var min = Math.ceil(0);
             var max = Math.floor(9);
             var tips1 = {
-                0 : 'dev blabla1',
-                1 : 'dev blabla2',
-                2 : 'dev blabla3'
+                0 : content['jeu1astuce1dev'],
+                1 : content['jeu1astuce2dev'],
+                2 : content['jeu1astuce3dev']
             }
             constructTips(2000, 3, tips1);
             for (var i = 0; i < heightNumber; i++){
@@ -10087,9 +10573,9 @@ function loadLevel1() {
             min = Math.ceil(0);
             max = Math.floor(9);
             var tips1 = {
-                0 : 'blabla1',
-                1 : 'blabla2',
-                2 : 'blabla3'
+                0 : content['jeu1astuce1'],
+                1 : content['jeu1astuce2'],
+                2 : content['jeu1astuce3']
             }
             constructTips(10000, 3, tips1); //{DEV}
             for (var i = 0; i < heightNumber; i++){
@@ -10141,8 +10627,7 @@ function submitLevel1() {
     }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
 }
 
-
-/********************
+; /*********************************************************//********************
 *
 *   Chapitre 2
 *
@@ -10263,98 +10748,7 @@ function loadLevel2() {
     })
 }
 
-function showModal() {
-    $('#modal-container').removeAttr('class').addClass('openCode');
-    $('body').addClass('modal-active');
-}
 
-function hideModal() {
-    $('#modal-container').addClass('out');
-    $('body').removeClass('modal-active');
-}
-
-function setSelection(varType) {
-    var setPos = true,
-        cm = codeMirror,
-        currentPos = cm.getCursor(),
-        line = currentPos.line,
-        tokens,
-        i; //Indice du token en cours
-
-    //Commencer la recherche en début de ligne suivante si le curseur est en fin de ligne
-    if (currentPos.ch == cm.getLine(line).length) {
-        line++;
-        currentPos.ch = 0;
-    }
-    tokens = cm.getLineTokens(line);
-    i = 0; 
-    //Commencer la recherche après la position actuelle du curseur
-    while (tokens[i].end <= currentPos.ch) {
-        i++;
-    }
-    //Commencer la recherche au token suivant si le token en cours est du bon type
-    if (tokens[i].type == varType) {
-        i++;
-    }
-    //Commencer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
-    if (typeof tokens[i] == 'undefined') {
-        i = 0;
-        line++
-        tokens = cm.getLineTokens(line)
-    }
-
-    //Début de la recherche
-    //Tant que le token en cours n'est pas du bon type, on analyse le token suivant
-    while (tokens[i].type != varType) {
-        i++
-        //Continuer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
-        if (typeof tokens[i] == 'undefined') {
-            i = 0;
-            line++
-            tokens = cm.getLineTokens(line)
-        }
-        //Il n'y a plus de tokens dans l'editeur. On arrete la boucle et !setPos pour ne pas effectuer les prochaines instructions
-        if (line > codeMirror.lineCount()) {
-            setPos = false;
-            //console.log('should run code')
-            break;
-        }
-    }
-    //console.log('oui')
-    //Si on a trouvé un prochain token, le selectionne
-    if (setPos) {
-        cm.setSelection({
-            line: line,
-            ch: tokens[i].start
-        }, {
-            line: line,
-            ch: tokens[i].end
-        });
-    } else {//Si on a pas trouvé de token, on vérifie qu'il y ait bien 3 tokens du bon type
-        console.log('runcode')
-        if ($('.cm-atom').length != 3) {
-            alertErr();
-            //console.log('nope')
-        } else { //Si oui, unfocus l'editeur et lance le code
-            if (screen == 'level2') {
-                runCodeLevel2();
-            } else if (screen == 'level3') {
-                runCodeLevel3();
-            }
-
-            codeMirror.getInputField().blur();
-        }
-    }
-    //console.log(tokens[i])
-}
-
-function alertErr() {
-    var pixel = $('.pixelActive').data('rvb');
-    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue)
-    codeMirror.getInputField().blur();
-    //codeMirror.focus();
-    alert('ERROR');
-}
 
 function runCodeLevel2() {
     console.log('running code')
@@ -10373,57 +10767,7 @@ function runCodeLevel2() {
     //verifPixelLevel2();
 }
 
-function colorPixelRVB() {
-    //console.log(pixel)
-    var pixel = $('.pixelActive').data('rvb')
-    var red = 0,
-        green = 0,
-        blue = 0;
-    if (pixel.red) {
-        red = 255;
-    }
-    if (pixel.green) {
-        green = 255;
-    }
-    if (pixel.blue) {
-        blue = 255;
-    }
-    $('.pixelActive').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 
-    colorModel(red, green, blue);
-}
-
-function colorPixel() {    
-    var pixel = $('.pixelActive').data('rvb')
-
-    $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
-
-    colorModel(pixel.red, pixel.green, pixel.blue);
-}
-
-function colorModel(r, g, b) {
-    $('.pixelModel').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
-}
-
-function resetCodePixel(id, r, g, b) {
-    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}\n');
-    codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
-    codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
-    codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
-    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
-}
-
-function resetCheckboxes(r, g, b) {
-    var valR, valG, valB;
-    if (r) {valR = 255} else {valR = 0}
-    if (g) {valG = 255} else {valG = 0}
-    if (b) {valB = 255} else {valB = 0}
-    $('input.red').prop('checked', r).parent().css('background-color', 'rgb(' + valR + ', 0, 0)')
-    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, ' + valG + ', 0)')
-    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, ' + valB + ')')
-
-    colorModel(valR, valG, valB)
-}
 
 /********************
 *
@@ -10459,9 +10803,7 @@ function submitLevel2() {
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
     }
 
-}
-
-/********************
+}; /*********************************************************//********************
 *
 *   Chapitre 3
 *
@@ -10572,16 +10914,8 @@ function loadLevel3() {
     });
 }
 
-function resetSliders(r, g, b) {
-    $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
-    $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
-    $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
-
-    colorModel(r, g, b)
-}
-
 function runCodeLevel3() {
-    console.log('running code')
+    //console.log('running code')
     var code = codeMirror.getValue();
     eval(code)
 
@@ -10625,7 +10959,7 @@ function submitLevel3() {
     var i = 0;
 
     while (i < squares.length-1) {
-        console.log(i);
+        //console.log(i);
         var rvb = $(squares[i]).data('rvb');
         var pixelName = $(squares[i]).data('name'),
             correctRvb = thisLvlAnswers[which][pixelName],
@@ -10643,7 +10977,7 @@ function submitLevel3() {
             }     
         }) 
 
-        console.log(isCorrect);
+        //console.log(isCorrect);
         if (isCorrect) {
             numCorrect++;
             i++;
@@ -10657,11 +10991,11 @@ function submitLevel3() {
                 break;
             }
         }
-        console.log(i);
+        //console.log(i);
     }
 
     if (numCorrect == squares.length || testing) { //{TEST}
-        console.log('WIN');
+        //console.log('WIN');
         Showpopup('Bravo !', 'loadLevel4()', 'succes');
     } else {
         //console.log('T\'es nul');
@@ -10669,8 +11003,7 @@ function submitLevel3() {
     }
 
 }
-
-/********************
+; /*********************************************************//********************
 *
 *   Chapitre 4
 *
@@ -10750,158 +11083,18 @@ function loadLevel4() {
 
 }
 
-function reinitImg() {
-    $('#frameWrapper .imageObject').each(function () {
-        $(this).data('pos', {
-            x: 0,
-            y: 0,
-            rot: 0
-        });
-        $(this).attr('style', '');
-    });
-}
+
 
 function runCodeLevel4() {
-    console.log('running code')
-    console.log($('.imgActive').data('pos'))
+    // console.log('running code')
+    // console.log($('.imgActive').data('pos'))
     var code = codeMirror.getValue();
     eval(code)
     applyPosition();
     resetCode();
 }
 
-function addCode(btn) {
-    var cmContent = codeMirror.getValue();
 
-    var fn = btn.html();
-    var comment = ''
-
-    switch (btn.attr('data-function')) {
-        case 'left':
-            comment = '//Déplacer de 1 case à gauche';
-            break;
-        case 'right':
-            comment = '//Déplacer de 1 case à droite';
-            break;
-        case 'up':
-            comment = '//Déplacer de 1 case en haut';
-            break;
-        case 'down':
-            comment = '//Déplacer de 1 case en bas';
-            break;
-        case 'rotate':
-            comment = '//Touner de 90 degrés dans le sens horaire';
-            break;
-        default:
-            break;
-    }
-
-    console.log(cmContent, fn, comment);
-
-    codeMirror.setValue(cmContent + "\n" + comment + "\n" + fn);
-}
-
-function moveLeft() {
-    var pos = $('.imgActive').data('pos'); 
-    pos.x--;
-    $('.imgActive').data('pos', pos)
-}
-function moveRight() {
-    var pos = $('.imgActive').data('pos'); 
-    pos.x++;
-    $('.imgActive').data('pos', pos)
-}
-function moveUp() {
-    var pos = $('.imgActive').data('pos'); 
-    pos.y--;
-    $('.imgActive').data('pos', pos)
-}
-function moveDown() {
-    var pos = $('.imgActive').data('pos'); 
-    pos.y++;
-    $('.imgActive').data('pos', pos)
-}
-function rotate(deg) {
-    if (!deg) {
-        deg = 90;
-    }  
-    var pos = $('.imgActive').data('pos'); 
-    pos.rot = pos.rot + deg;
-    $('.imgActive').data('pos', pos)
-}
-function move(direction, repeat) {
-    if (repeat && typeof repeat == 'number') {
-        for (i = 0; i < repeat; i++) {
-            move(direction);
-        }
-    } else {
-        console.log('moving')
-        switch(direction) {
-            case up:
-            case haut:
-                moveUp();
-                break;
-            case down:
-            case bas:
-                moveDown();
-                break;
-            case left:
-            case gauche:
-                moveLeft();
-                break;
-            case right:
-            case droite:
-                moveRight();
-                break;
-            default:
-                console.log("error") //{DEV}   
-                break;
-        }
-    }
-} 
-function scale(sens) {
-
-    var size =   parseInt($('.imgActive').css('width'));
-
-    if (!sens) {
-        sens = up;
-    }
-    switch(sens) {
-        case up:
-        case plus:
-            size += 25;
-            break;
-        case down:
-        case moins:
-            size -= 25;
-            break;
-        default:
-            console.log("error") //{DEV}   
-            break;
-    }
-
-    size += 'px';
-    $('.imgActive').css('width', size);
-    $('.imgActive').css('height', size);
-}
-
-function applyPosition() {
-    var pos = $('.imgActive').data('pos'); 
-    pos.x = pos.x > 1 ? 1 : (pos.x < -1) ? -1 : pos.x;
-    pos.y = pos.y > 1 ? 1 : (pos.y < -1) ? -1 : pos.y;
-    pos.rot %= 360;
-
-    console.log(pos.rot)
-
-    $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
-
-    $('.imgActive').css('left', pos.x * 100 + 'px');
-    $('.imgActive').css('top', pos.y * 100 + 'px');
-}
-
-function resetCode() {
-    codeMirror.setValue('');
-}
 
 /********************
 *
@@ -10930,7 +11123,213 @@ function submitLevel4() {
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
     }
 }
+; /*********************************************************//*********************
 
+Document.ready
+
+********************/
+
+$(document).ready(function() {
+    Username = $('input#name').val();
+    $('.hamburger').hide();
+
+    $('.hamburger, #overlay').on('touch click', function() {
+        $('.hamburger').toggleClass('is-active');
+        $('#overlay').toggleClass('open');
+        $('.main-nav>ul').removeClass('childOpen');
+        $('.main-nav .child').removeClass('isOpen');
+    });
+
+    $('.loading').slideUp(1000);
+
+    $("#name").on('keyup', function (e) {
+        if (e.keyCode == 13) {
+            loadChooseDevMod();
+        }
+    });
+
+    $('.modal .close').on('touch click', hideModal);
+    /////////////////Gestion menu
+
+    $('.haveChild').on('click touch', function(event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+        var loader = $(this).attr('data-loading');
+
+        var $parent = $('.main-nav>ul');
+        var $child = $('.main-nav .child');
+        var $child_content = $('.main-nav .child .child-content');
+
+        $parent.addClass('childOpen');
+        $child.addClass('isOpen');
+
+        $child_content.load(views+loader+'.html');
+
+        switch(loader) {
+            case 'chooseDevMod':
+                setTimeout(function(){
+                    if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');} 
+                }, 500)
+                break;
+            case 'accueil':
+
+                break;
+            case 'success':
+
+                break;
+            case 'encyclo':
+
+                break;
+        }
+
+
+    });
+    $('.main-nav .child i').on('click touch', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        var $parent = $('.main-nav>ul');
+        var $child = $('.main-nav .child');
+
+        $parent.removeClass('childOpen');
+        $child.removeClass('isOpen');
+
+    });
+
+    $('.main-nav .child ').on('click touch', function(event){
+        isdebMod = $('input#input1:checked').val();
+        $('#chooseDevMod .button-reload').show();
+        if (isdebMod == 'on') {
+            devMod = false;
+        }
+        else {devMod = true;} 
+        event.stopPropagation();
+    });
+
+
+
+    /////////////////Formulaire
+    // Test for placeholder support
+    $.support.placeholder = (function(){
+        var i = document.createElement('input');
+        return 'placeholder' in i;
+    })();
+
+    // Hide labels by default if placeholders are supported
+    if($.support.placeholder) {
+        $('.form-label').each(function(){
+            $(this).addClass('js-hide-label');
+        });  
+
+        // Code for adding/removing classes here
+        $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
+            //Cache our selectors
+            var $this = $(this),
+                $parent = $this.parent().find("label");
+
+            if (e.type == 'keyup') {
+                if( $this.val() == '' ) {
+                    $parent.addClass('js-hide-label'); 
+                } else {
+                    $parent.removeClass('js-hide-label');   
+                }                     
+            } 
+            else if (e.type == 'blur') {
+                if( $this.val() == '' ) {
+                    $parent.addClass('js-hide-label');
+                } 
+                else {
+                    $parent.removeClass('js-hide-label').addClass('js-unhighlight-label');
+                }
+            } 
+            else if (e.type == 'focus') {
+                if( $this.val() !== '' ) {
+                    $parent.removeClass('js-unhighlight-label');
+                }
+            }
+        });
+    } 
+});; /*********************************************************//********************
+*
+*   Fonctions de réinitialisation
+*
+*********************/
+
+function resetCM() {
+
+    if(codeMirror) {
+
+        codeMirror.off();
+        codeMirror.getWrapperElement().parentNode.removeChild(codeMirror.getWrapperElement());
+        codeMirror=null;
+        //console.log('cm = ' + codeMirror);
+    }
+}
+
+function reinitMain() {
+    //hidePopup();
+    hideModal();
+    resetCM();
+    $('.hamburger').removeClass('is-active');
+    $('#overlay').removeClass('open');
+    $('.main-nav>ul').removeClass('childOpen');
+    $('.main-nav .child').removeClass('isOpen');
+    $('.help-button').hide();
+    clearTimeout(timeOut);
+
+    switch(screen) {
+        case 'level1':
+            resetLevel1(); 
+            break;
+        case 'level2':
+            resetLevel2();
+            break;
+        case 'level3':
+            resetLevel3();
+            break;
+        case 'level4':
+            resetLevel4();
+            break;
+        case 'sandbox':
+            resetSandbox();
+            break;
+        default:
+
+    }
+}
+
+function resetLevel1() {
+
+}
+
+function resetLevel2() {
+    $('.pixel').off()
+    $('.runCode').off()
+    $('.checkboxes input:checkbox').off();
+}
+
+function resetLevel3() {
+    $('.square').off();
+    $('.runCode').off()
+    $('input[type=range]').off();
+}
+
+function resetLevel4() {
+    $('.imageObject').off();
+    $('.functions-btn .btn');
+    $('.runCode').off()
+    $('.reinitImg').off();
+
+}
+
+function resetSandbox() {
+
+}
+
+function reinitSandbox() {
+    $('#sandboxWrapper').empty(); 
+}
+; /*********************************************************/
 /********************
 *
 *   Sandbox
@@ -11035,416 +11434,3 @@ function runSandbox() {
 
 
 }
-
-function addPixel() {
-    var pixel = $('<div class="pixel"></div>');
-
-    pixel.data('rvb', {
-        red: 0, 
-        green: 0, 
-        blue: 0
-    })
-        .data('pos', {
-        x: 0,
-        y: 0,
-        rot: 0
-    })
-        .data('name', 'pixel_'+$(this).index());
-
-    $('#sandboxWrapper').append(pixel);
-}
-
-function reinitSandbox() {
-    $('#sandboxWrapper').empty(); 
-}
-
-/********************
-*
-*   Fonctions de réinitialisation
-*
-*********************/
-
-function resetCM() {
-
-    if(codeMirror) {
-
-        codeMirror.off();
-        codeMirror.getWrapperElement().parentNode.removeChild(codeMirror.getWrapperElement());
-        codeMirror=null;
-        //console.log('cm = ' + codeMirror);
-    }
-}
-
-function reinitMain() {
-    hidePopup();
-    hideModal();
-    resetCM();
-    $('.hamburger').removeClass('is-active');
-    $('#overlay').removeClass('open');
-    $('.main-nav>ul').removeClass('childOpen');
-    $('.main-nav .child').removeClass('isOpen');
-    $('.help-button').hide();
-    clearTimeout(timeOut);
-
-    switch(screen) {
-        case 'level1':
-            resetLevel1(); 
-            break;
-        case 'level2':
-            resetLevel2();
-            break;
-        case 'level3':
-            resetLevel3();
-            break;
-        case 'level4':
-            resetLevel4();
-            break;
-        case 'sandbox':
-            resetSandbox();
-            break;
-        default:
-
-    }
-}
-
-function resetLevel1() {
-
-}
-
-function resetLevel2() {
-    $('.pixel').off()
-    $('.runCode').off()
-    $('.checkboxes input:checkbox').off();
-}
-
-function resetLevel3() {
-    $('.square').off();
-    $('.runCode').off()
-    $('input[type=range]').off();
-}
-
-function resetLevel4() {
-    $('.imageObject').off();
-    $('.functions-btn .btn');
-    $('.runCode').off()
-    $('.reinitImg').off();
-
-}
-
-function resetSandbox() {
-
-}
-
-/********************
-*
-*   Popup & Modal
-*
-*********************/
-
-/**
-* showpopup
-* function de création des popups
-* Params : 
-*       content (string) contenu text de la popup 
-*       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
-*       icon (string) la class de l'icon, par default sans class     
-**/
-function Showpopup(content, loadfonction, icon, isSuccess=false){
-    if ($Popup) {
-        popinIsOpen = true;
-        $content_popup.html(''+content+'');
-        if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
-        if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+' iconAnim') } else {$popup_icon.attr('class', '')};
-        if(isSuccess) addSuccess(icon);
-        $Popup.removeClass('hide');
-        $hoverlay.removeClass('hide');
-    };
-}
-
-
-/**
-* hidePopup
-* function de clean des popups
-**/
-function hidePopup() {
-    popinIsOpen = false;
-    $content_popup.html('');
-    $button.attr("onclick", '');
-    $popup_icon.attr('class', '');
-    $Popup.addClass('hide');
-    $hoverlay.addClass('hide');
-}
-
-
-/**
-* open popup code
-* inactive 
-**/
-// $('.button').on('touch click', function(){
-//   var buttonId = $(this).attr('id');
-//   $('#modal-container').removeAttr('class').addClass(buttonId);
-//   $('body').addClass('modal-active');
-// })
-
-// $('#modal-container .close').on('touch click',function(){
-//   $('#modal-container').addClass('out');
-//   $('body').removeClass('modal-active');
-// });
-
-
-/*********************
-
-    Popup Aide
-
-********************/
-/**
-* constructTips
-* function de construction des popups d'aide
-* time en ms, durée entre chaque aide;
-* numberOftips nombre total de tips;
-* tips = {
-*   0 : 'blabla1',
-*   1 : 'blabla2',
-*   2 : 'blabla'
-* }
-**/
-function constructTips(time, numberOftips, tips ) {
-    var number = 0
-    if (popinIsOpen == false) {
-        timeOut = setTimeout( function(){getATip(number, time, tips, numberOftips)} , time);
-    } else {
-        timeOut = setTimeout( function(){constructTips(time, numberOftips, tips )}, 3000);
-    }
-}
-
-
-function getATip(number, time, tips, total) {
-    var intervale = 0;
-    var t = 0;
-    $('.help-button').show().addClass('newTip');
-    ConstructPopupAide(tips[number]);
-    number++;
-    if (number < total) {
-        //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-        intervale = setInterval(function () {
-            if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
-                clearTimeout(t);
-                t = 0;
-            } else {
-                t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-                clearInterval(intervale);
-            }
-        }, 1000);
-
-    } else {
-        clearTimeout(t);
-        t = 0;
-        clearInterval(intervale);
-        intervale = 0;
-    }
-
-}
-
-function ConstructPopupAide(tip) {
-    if (tip) {
-        countip++;
-        $content_popup.html(''+tip+'');
-        $button.attr("onclick", 'closePopupAide()');
-        isNewTip = true;
-
-        addEncyclo('Aide n°'+countip+'', tip);
-    };
-}
-
-function ShowPopupAide() {
-    tipIsOpened = true;
-    popinIsOpen = true;
-    isNewTip = false;
-    $('.help-button').removeClass('newTip');
-    $Popup.removeClass('hide');
-    $hoverlay.removeClass('hide');
-}
-
-function closePopupAide() {
-    tipIsOpened = false;
-    popinIsOpen = false;
-    $Popup.addClass('hide');
-    $hoverlay.addClass('hide');
-}
-
-/*********************
-
-Implementation de l'encyclopedie
-
-********************/
-
-// ici tout le contenu designé sera stoqué en tant que page dans l'encyclopedie
-// en param de la fonction => 
-/**
-* Nom de la page ( titre du li)
-* contenu textuel
-*
-*/
-
-function addEncyclo (name, content) {
-
-    // encyclo = $('.encyclo ul');
-    // archive = $('.archive');
-    countEncyclo = $tabArchiveTitle.length;
-    if (name && content) {
-        $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
-        $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
-    } 
-
-}
-
-/*********************
-
-Implementation des success 
-
-********************/
-
-// ici tout le contenu designé sera stoqué en tant trophé dans la pages des success 
-// en param de la fonction => 
-/**
-* Nom du success ( titre du li)
-* class de l'icon du success
-*
-*/
-function addSuccess (icon) {
-    countSuccess = $tabSuccess.length;
-    if (icon) $tabSuccess.push(icon);
-}
-
-
-
-/*********************
-
-Document.ready
-
-********************/
-
-$(document).ready(function() {
-    Username = $('input#name').val();
-    $('.hamburger').hide();
-
-    $('.hamburger, #overlay').on('touch click', function() {
-        $('.hamburger').toggleClass('is-active');
-        $('#overlay').toggleClass('open');
-        $('.main-nav>ul').removeClass('childOpen');
-        $('.main-nav .child').removeClass('isOpen');
-    });
-
-    $('.loading').slideUp(1000);
-
-    $("#name").on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            loadChooseDevMod();
-        }
-    });
-
-    $('.modal .close').on('touch click', hideModal);
-    /////////////////Gestion menu
-
-    $('.haveChild').on('click touch', function(event) {
-
-        event.preventDefault();
-        event.stopPropagation();
-        var loader = $(this).attr('data-loading');
-
-        var $parent = $('.main-nav>ul');
-        var $child = $('.main-nav .child');
-        var $child_content = $('.main-nav .child .child-content');
-
-        $parent.addClass('childOpen');
-        $child.addClass('isOpen');
-
-        $child_content.load(views+loader+'.html');
-
-        switch(loader) {
-            case 'chooseDevMod':
-                setTimeout(function(){
-                    if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');} 
-                }, 500)
-                break;
-            case 'accueil':
-
-                break;
-            case 'success':
-
-                break;
-            case 'encyclo':
-
-                break;
-        }
-
-
-    });
-    $('.main-nav .child i').on('click touch', function(event){
-        event.preventDefault();
-        event.stopPropagation();
-        var $parent = $('.main-nav>ul');
-        var $child = $('.main-nav .child');
-
-        $parent.removeClass('childOpen');
-        $child.removeClass('isOpen');
-
-    });
-
-    $('.main-nav .child ').on('click touch', function(event){
-        isdebMod = $('input#input1:checked').val();
-        $('#chooseDevMod .button-reload').show();
-        if (isdebMod == 'on') {
-            devMod = false;
-        }
-        else {devMod = true;} 
-        event.stopPropagation();
-    });
-
-
-
-
-
-
-    /////////////////Formulaire
-    // Test for placeholder support
-    $.support.placeholder = (function(){
-        var i = document.createElement('input');
-        return 'placeholder' in i;
-    })();
-
-    // Hide labels by default if placeholders are supported
-    if($.support.placeholder) {
-        $('.form-label').each(function(){
-            $(this).addClass('js-hide-label');
-        });  
-
-        // Code for adding/removing classes here
-        $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
-            //Cache our selectors
-            var $this = $(this),
-                $parent = $this.parent().find("label");
-
-            if (e.type == 'keyup') {
-                if( $this.val() == '' ) {
-                    $parent.addClass('js-hide-label'); 
-                } else {
-                    $parent.removeClass('js-hide-label');   
-                }                     
-            } 
-            else if (e.type == 'blur') {
-                if( $this.val() == '' ) {
-                    $parent.addClass('js-hide-label');
-                } 
-                else {
-                    $parent.removeClass('js-hide-label').addClass('js-unhighlight-label');
-                }
-            } 
-            else if (e.type == 'focus') {
-                if( $this.val() !== '' ) {
-                    $parent.removeClass('js-unhighlight-label');
-                }
-            }
-        });
-    } 
-});

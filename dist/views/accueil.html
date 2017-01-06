@@ -1,9 +1,17 @@
 <div id="ChooseLevel">
 	<ul>
-		<li><a href="#" onClick="loadLevel1()">I . Le Pixel</a></li>
-		<li><a href="#" onClick="loadLevel2()">II . La Couleur</a></li>
-		<li><a href="#" onClick="loadLevel3()">III . La Couleur Aditive</a></li>
-		<li><a href="#" onClick="loadLevel4()">IV . Le Positionnement</a></li>
-		<li><a href="#" onClick="loadLevel5()">V . Le SVG</a></li>
+		<li><a href="#" data-load="loadLevel1()">I . Le Pixel</a></li>
+		<li><a href="#" class="lock" data-load="loadLevel2()">II . La Couleur</a></li>
+		<li><a href="#" class="lock" data-load="loadLevel3()">III . La Couleur Aditive</a></li>
+		<li><a href="#" class="lock" data-load="loadLevel4()">IV . Le Positionnement</a></li>
+		<li><a href="#" class="lock" data-load="loadSandbox()">Sandbox</a></li>
 	</ul>
 </div>
+
+<script type="text/javascript">
+	 $('#ChooseLevel li a ').on('click', function (e) {
+        var toLoad = $(this).attr('data-load');
+        if ($(this).hasClass('lock')) {e.preventDefault()} else {eval(toLoad);}
+    })
+
+</script>

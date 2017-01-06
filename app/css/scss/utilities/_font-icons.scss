@@ -1,0 +1,66 @@
+
+@font-face {
+    font-family:"font-icons";
+    src:url("../../../../dist/assets/fonts/font-icons.eot");
+    src:url("../../../../dist/assets/fonts/font-icons.eot?#iefix") format("embedded-opentype"),
+		url("../../../../dist/assets/fonts/font-icons.woff") format("woff"),
+		url("../../../../dist/assets/fonts/font-icons.ttf") format("truetype"),
+		url("../../../../dist/assets/fonts/font-icons.svg#icons") format("svg");
+    font-weight:normal;
+    font-style:normal;
+}
+
+.font-icon {
+    display: block;
+    &:before {
+        -webkit-font-smoothing: antialiased;
+    }
+
+}
+
+
+// Icons
+
+.font-icon-arrow:before {
+     font-family: "font-icons";
+     content:"\f101";
+}
+
+
+.font-icon-pint:before {
+     font-family: "font-icons";
+     content:"\f102";
+}
+
+
+.font-icon-succes:before {
+     font-family: "font-icons";
+     content:"\f103";
+}
+
+
+@mixin font-icon($icon) {
+
+
+
+ @if  ($icon == "arrow") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f101";
+}
+
+
+@else if ($icon == "pint") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f102";
+}
+
+
+@else if ($icon == "succes") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f103";
+}
+
+}

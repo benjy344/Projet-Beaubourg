@@ -1,0 +1,37 @@
+
+@font-face {
+    font-family:"<%= fontBaseName %>";<% if ("eot") { %>
+    src:<%= fontSrc1 %>;<% }%>
+    src:<%= fontSrc2 %>;
+    font-weight:normal;
+    font-style:normal;
+}
+
+.font-icon {
+    display: block;
+    &:before {
+        -webkit-font-smoothing: antialiased;
+    }
+
+}
+
+
+/* Icons */<% for (var glyphIdx = 0; glyphIdx < glyphs.length; glyphIdx++) { %>
+
+.font-icon-<%= glyphs[glyphIdx] %>:before {
+     font-family: "<%= fontBaseName %>";
+     content:"\<%= codepoints[glyphIdx] %>";
+}
+<% }%>
+
+@mixin font-icon($icon) {
+
+<% for (var glyphIdx = 0; glyphIdx < glyphs.length; glyphIdx++) { %>
+
+<% if (glyphIdx === 0) { %> @if <% } else { %>@else if<% } %> ($icon == "<%= glyphs[glyphIdx] %>") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "<%= fontBaseName %>";
+    content:"\<%= codepoints[glyphIdx] %>";
+}
+<% } %>
+}

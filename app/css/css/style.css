@@ -496,6 +496,35 @@ The `sprites` mixin generates identical output to the CSS template
 
 @include sprites($spritesheet-sprites);
 */
+@font-face {
+  font-family: "font-icons";
+  src: url("../../../../dist/assets/fonts/font-icons.eot");
+  src: url("../../../../dist/assets/fonts/font-icons.eot?#iefix") format("embedded-opentype"), url("../../../../dist/assets/fonts/font-icons.woff") format("woff"), url("../../../../dist/assets/fonts/font-icons.ttf") format("truetype"), url("../../../../dist/assets/fonts/font-icons.svg#icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+.font-icon {
+  display: block;
+}
+.font-icon:before {
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-icon-arrow:before {
+  font-family: "font-icons";
+  content: "\f101";
+}
+
+.font-icon-pint:before {
+  font-family: "font-icons";
+  content: "\f102";
+}
+
+.font-icon-succes:before {
+  font-family: "font-icons";
+  content: "\f103";
+}
+
 .icon-close {
   background-image: url(../../../../dist/assets/sprite-main.png);
   background-position: -377px -106px;
@@ -592,8 +621,34 @@ body .help-button {
 body .help-button.newTip {
   animation: iconAnim 2s infinite;
 }
+body .successGalery {
+  display: flex;
+  flex-wrap: wrap;
+}
+body .successGalery .succes {
+  width: 33vw;
+  height: 33vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body .successGalery .succes p {
+  display: none;
+}
+body .successGalery .succes.unlock i.font-icon {
+  background: linear-gradient(#3fa9f5, #7ac943);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: normal;
+}
+body .successGalery .succes i.font-icon {
+  color: #777777;
+  font-style: normal;
+}
 body .popencyclo {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 100%;
   background: #242322;
@@ -605,6 +660,11 @@ body .popencyclo {
 body .popencyclo.open {
   right: 0;
   transition: all 0.3s;
+}
+body .popencyclo .icon-close {
+  position: absolute;
+  right: 25px;
+  left: 25px;
 }
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
@@ -1025,15 +1085,14 @@ body .overlay {
   left: 0;
   height: 100%;
   width: 0%;
-  opacity: 0;
-  background: #242322;
+  background: rgba(24, 23, 22, 0);
   border-radius: 5px;
-  transition: opacity .35s ease, visibility .35s ease, width .35s ease;
+  transition: background .35s ease, visibility .35s ease, width .35s ease;
   visibility: hidden;
   z-index: 100;
 }
 body .overlay.open {
-  opacity: .8;
+  background: rgba(24, 23, 22, 0.9);
   visibility: visible;
   width: 100%;
 }
