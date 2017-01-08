@@ -5,12 +5,18 @@
 @import "utilities/font-icons";
 @include sprites($spritesheet-sprites);
 
+html, body {
+    //overflow-y: hidden;
+    //height: calc(100vh + 60px);
+}
+
 body {
     background: $black;
     font-family : $principal-font;
     font-size : $font-size;
     //font-size: 5vw;
     color: $white;
+    position: relative;
     
     @include tablet {
         //font-size: 3vw
@@ -182,7 +188,7 @@ body {
         border: 1px solid;
         padding: 10px;
     }
-    .modal-active {
+    &.modal-active {
         overflow: hidden;
     }
 

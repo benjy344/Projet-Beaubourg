@@ -59,7 +59,7 @@ function loadLevel4() {
         })
 
         //Run Code
-        $('.runCode').click(function () {
+        $('.runCode').on('touch click', function () {
             runCodeLevel4();
             hideModal();
         });
@@ -83,6 +83,7 @@ function loadLevel4() {
 function runCodeLevel4() {
     // console.log('running code')
     // console.log($('.imgActive').data('pos'))
+    alert('ok')
     var code = codeMirror.getValue();
     eval(code)
     applyPosition();

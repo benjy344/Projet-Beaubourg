@@ -146,13 +146,13 @@ function hidePopup() {
 function constructTips(time, numberOftips, tips ) {
     var number = 0;
     timeOut = setTimeout( function () {
-      if (popinIsOpen === false) {
-         getATip(number, time, tips, numberOftips);
+        if (popinIsOpen === false) {
+            getATip(number, time, tips, numberOftips);
         } else {
             constructTips(time, numberOftips, tips );
         } 
     } , time);
-    
+
 }
 
 
@@ -270,9 +270,14 @@ function alertErr() {
 function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
     $('body').addClass('modal-active');
+    setTimeout(function() {
+        $('.content-global').hide();
+    }, 1000);
+
 }
 
 function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
+    $('.content-global').show();  
 }

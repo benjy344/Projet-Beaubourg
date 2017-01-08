@@ -54,7 +54,9 @@ function resetCodePixel(id, r, g, b) {
     codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
-    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
+    if (screen != 'sandbox') {
+        codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
+    }
 }
 
 function resetCheckboxes(r, g, b) {
@@ -306,8 +308,8 @@ function applyPosition() {
 
     $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
 
-    $('.imgActive').css('left', pos.x * 100 + 'px');
-    $('.imgActive').css('top', pos.y * 100 + 'px');
+    $('.imgActive').css('left', pos.x * 100 + '%');
+    $('.imgActive').css('top', pos.y * 100 + '%');
 }
 
 function resetCode() {

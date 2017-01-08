@@ -28,17 +28,17 @@
         .startContainer {
 
             position: absolute;
-            top: 100px;
-            left: 100px;
-            width: 100px;
-            height: 100px;
+            top: calc(100%/3);
+            left: calc(100%/3);
+            width: calc(100%/3);
+            height: calc(100%/3);
 
 
             .imageObject {
                 position: absolute;
                 background-image: url(../../app/assets/imageObject.svg);
-                width: 100px;
-                height: 100px;
+                width: 100%;
+                height: 100%;
                 background-size: contain;
 
                 .imgActive {
