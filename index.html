@@ -1,118 +1,123 @@
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>Cod'Art</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-	<script src="//localhost:35729/livereload.js"></script>
-	<link rel="stylesheet" type="text/css" href="dist/css/main.css">
-	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script> 
+    <head>
+        <meta charset="UTF-8">
+        <title>Cod'Art</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        
+        <meta name="theme-color" content="#008BFF">
 
-	<link rel="prefetch" href="dist/views/accueil.html">
-	<link rel="prefetch" href="dist/views/chooseDevMod.html">
-	<link rel="prefetch" href="dist/views/success.html">
-	<link rel="prefetch" href="dist/views/encyclo.html">
-	<link rel="prefetch" href="dist/views/levels/Level1.html">
-	<link rel="prefetch" href="dist/views/levels/Level2.html">
-	<link rel="prefetch" href="dist/views/levels/Level3.html">
-	<link rel="prefetch" href="dist/json/answers.json">
-	<link rel="prefetch" href="dist/content/content_fr.html">
-</head>
-<body>
-	<div class="loading">
-		<img src="dist/assets/loading.svg" alt="loading">
-	</div>
-	<div id="modal-container">
-		<div class="modal-background">
-			<div class="modal">
-				<div class="close">
-					<i class="icon icon-close"></i>
-				</div>
-				
-				<div class="modalContent">
+        <script src="//localhost:35729/livereload.js"></script>
+        <link rel="stylesheet" type="text/css" href="dist/css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet"> 
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script> 
 
-				</div>
+        <link rel="prefetch" href="dist/views/accueil.html">
+        <link rel="prefetch" href="dist/views/chooseDevMod.html">
+        <link rel="prefetch" href="dist/views/success.html">
+        <link rel="prefetch" href="dist/views/encyclo.html">
+        <link rel="prefetch" href="dist/views/levels/Level1.html">
+        <link rel="prefetch" href="dist/views/levels/Level2.html">
+        <link rel="prefetch" href="dist/views/levels/Level3.html">
+        <link rel="prefetch" href="dist/json/answers.json">
+        <link rel="prefetch" href="dist/content/content_fr.html">
+    </head>
+    <body>
+        <div class="loading">
+            <img src="dist/assets/loading.svg" alt="loading">
+        </div>
+        <div id="modal-container">
+            <div class="modal-background">
+                <div class="modal">
+                    <div class="close">
+                        <i class="icon icon-close"></i>
+                    </div>
 
-			</div>
-		</div>
-	</div>
+                    <div class="modalContent">
 
-	<div class="content-global">
-		<div class='background'></div>
-		<div id="menu">
-			<div class="button-burger">
-				<button class="hamburger hamburger--spin" type="button">
-					<span class="hamburger-box">
-						<span class="hamburger-inner"></span>
-					</span>
-				</button>
-			</div>
-			<div class="overlay" id="overlay">
-				<nav class="main-nav">
-					<ul>
-						<li><a href="#" class='haveChild' data-loading="chooseDevMod" >Niveaux</a></li>
-						<li><a href="#" class='haveChild' data-loading="accueil" >Activités</a></li>
-						<li><a href="#" class='haveChild' data-loading="success" >Succès</a></li>
-						<li><a href="#" class='haveChild' data-loading="encyclo" >Encyclopedie</a></li>
-					</ul>
-					<div class="child">
-						<i class="icon icon-return"></i>
-						<div class="child-content"></div>
-					</div>
-				</nav>
-			</div>
-		</div>
+                    </div>
 
-		<div class="help-button newTip" onclick="ShowPopupAide()">
-			<i class="icon icon-help"></i>
-		</div>
+                </div>
+            </div>
+        </div>
 
-		<main >
-			<div id="intro">
-				<figure class="logo">
-					<img src="dist/assets/logo.png" alt="Logo Cod'Art">
-				</figure>
+        <div class="content-global">
+            <div class='background'></div>
+            <div id="menu">
+                <div class="button-burger">
+                    <button class="hamburger hamburger--spin" type="button">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+                <div class="overlay" id="overlay">
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="#" class='haveChild' data-loading="chooseDevMod" >Niveaux</a></li>
+                            <li><a href="#" class='haveChild' data-loading="accueil" >Activités</a></li>
+                            <li><a href="#" class='haveChild' data-loading="success" >Succès</a></li>
+                            <li><a href="#" class='haveChild' data-loading="encyclo" >Encyclopedie</a></li>
+                        </ul>
+                        <div class="child">
+                            <i class="icon icon-return"></i>
+                            <div class="child-content"></div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
 
-				<div class="content-form">
-					<form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
-						<div class="form-group">
-							<label class="form-label" for="name">Username</label>
-							<input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
-						</div> 
-						<div >
-							<div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</main>
-	</div>
+            <div class="help-button newTip" onclick="ShowPopupAide()">
+                <i class="icon icon-help"></i>
+            </div>
 
-	<div class="popup hide">
-		<div class="overflow">
+            <main >
+                <div id="intro">
+                    <figure class="logo">
+                        <img src="dist/assets/logo.png" alt="Logo Cod'Art">
+                    </figure>
 
-			<div class="content-popup">
-			</div>
-			<div class="popup-icon">
-				<i class="icon icon-error"></i>
-			</div>
+                    <div class="content-form">
+                        <form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
+                            <div class="form-group">
+                                <label class="form-label" for="name">Username</label>
+                                <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadChooseDevMod();}" placeholder="Username" tabindex="1" required>
+                            </div> 
+                            <div >
+                                <div class="fleche btn-start-order" onclick="loadChooseDevMod()">Commencer l'experience</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
 
-			<div >
-				<div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
-			</div>
-		</div>
-	</div>
-	<div class="archive" style="display : none; ">
+        <div class="popup hide">
+            <div class="overflow">
 
-	</div>
-	<div class="popencyclo">
-		<div class="close">
-			<i class="icon icon-close"></i>
-		</div>
-		<h1></h1>
-		<div class="content"></div>
-	</div>
-	<div class='hoverlay hide'></div>
-	<script type="text/javascript" src="dist/js/built.js"></script>
-</body>
+                <div class="content-popup">
+                </div>
+                <div class="popup-icon">
+                    <i class="icon icon-error"></i>
+                </div>
+
+                <div >
+                    <div class="fleche js-fleche-popup" onclick="loadChooseDevMod()">c'est compris</div>
+                </div>
+            </div>
+        </div>
+        <div class="archive" style="display : none; ">
+
+        </div>
+        <div class="popencyclo">
+            <div class="close">
+                <i class="icon icon-close"></i>
+            </div>
+            <h1></h1>
+            <div class="content"></div>
+        </div>
+        <div class='hoverlay hide'></div>
+        <script type="text/javascript" src="dist/js/built.js"></script>
+    </body>
 </html>

@@ -40,7 +40,7 @@ function loadLevel3() {
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
         codeMirror.addKeyMap({
             Enter: function (cm) {
-                setSelection('number');
+                enterKeyMap();
             }
         });
 
@@ -100,42 +100,45 @@ function loadLevel3() {
             //verifPixelLevel3();
 
         })
-
-        //On focus, reset the cursor to the start and set selection
-        CodeMirror.on('focus', function(){
-            codeMirror.setCursor({line:0,ch:0});
-            setSelection('number');
-        });
     });
 }
 
 function runCodeLevel3() {
     //console.log('running code')
     var code = codeMirror.getValue();
-    eval(code)
+    
+    try {
+        eval(code)
 
-    var pixelBorder = eval($('.pixelActive').data('name'));
+        var pixelBorder = eval($('.pixelActive').data('name'));
 
-    $.each(pixelBorder, function(i, value) {
-        if (value < 0) {
-            pixelBorder[i] = 0;
-        }
-        if (value > 255) {
-            pixelBorder[i] = 255;
-        }
-    });
+        $.each(pixelBorder, function(i, value) {
+            if (typeof value == 'number') {
+                if (value < 0) {
+                    pixelBorder[i] = 0;
+                }
+                if (value > 255) {
+                    pixelBorder[i] = 255;
+                }
+            } else {
+                pixelBorder[i] = 0
+            }
+        });
 
-    $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
+        $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
 
-    resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
+        resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
 
-    resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
-    colorPixel();
-    //verifPixelLevel3();
+        resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
+        colorPixel();
+        
+    } catch(e) {
+        alert ('pls input only nu')
 
-    //pixelBorder = undefined;
+        var resetPixel = $('.pixelActive').data('rvb');
 
-
+        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+    }
 }
 
 

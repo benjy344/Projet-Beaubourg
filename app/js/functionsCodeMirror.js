@@ -144,6 +144,31 @@ function setSelection(varType) {
     //console.log(tokens[i])
 }
 
+function enterKeyMap() {
+    var setPos = true,
+        cm = codeMirror,
+        currentPos = cm.getCursor(),
+        line = currentPos.line,
+        linePos = line + 1,
+        chPos = cm.getLine(linePos).length,
+        lastChar = cm.getRange({line: linePos, ch: chPos-1}, {line: linePos, ch: chPos});
+
+    if (lastChar == ',') {
+        chPos -= 1;
+    } 
+    if (lastChar == '}') {
+        codeMirror.getInputField().blur();
+    } else {
+        cm.setCursor({line: linePos, ch: chPos})
+    }
+    //var token = cm.getLineTokens(linePos);
+    //    if (token.length < 2) {
+    //        codeMirror.getInputField().blur();
+    //    } else {
+    //        cm.setCursor({line: linePos, ch: chPos})
+    //    }
+}
+
 function reinitImg() {
     $('#frameWrapper .imageObject').each(function () {
         $(this).data('pos', {
@@ -154,7 +179,6 @@ function reinitImg() {
         $(this).attr('style', '');
     });
 }
-
 
 function addCode(btn) {
     var cmContent = codeMirror.getValue();
@@ -203,6 +227,7 @@ function moveUp() {
     $('.imgActive').data('pos', pos)
 }
 function moveDown() {
+    //console.log('GOOOOOIIING DOOOWN')
     var pos = $('.imgActive').data('pos'); 
     pos.y++;
     $('.imgActive').data('pos', pos)

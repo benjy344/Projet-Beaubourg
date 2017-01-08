@@ -5,9 +5,7 @@
 *
 *********************/
 function loadSandbox() {
-    //    showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
-    //    showpop4B = "Showpopup(jeu4b, showpop4C, '')";
-    //    Showpopup(jeu4a, showpop4B, '');
+    Showpopup(content['textsandbox'], hidePopup(), '');
 
     $('main').loadLevel('sandbox', function () {
 
@@ -78,28 +76,66 @@ function loadSandbox() {
 function runSandbox() {
 
     var code = codeMirror.getValue();
-    eval(code)
 
-    pixel = eval($('.pixelActive').data('name'));
+    try {
+        eval(code); 
 
-    $('.pixelActive').data('rvb', {
-        red: pixel.red, 
-        green: pixel.green, 
-        blue: pixel.blue
-    });
-    colorPixel();
+        pixel = eval($('.pixelActive').data('name'));
+
+        $.each(pixel, function(i, value) {
+            if (typeof value == 'number') {
+                if (value < 0) {
+                    pixel[i] = 0;
+                }
+                if (value > 255) {
+                    pixel[i] = 255;
+                }
+            } else {
+                pixel[i] = 0
+            }
+        });
 
 
-    var pos = $('.pixelActive').data('pos'); 
-    //pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x; {DEV}
-    //pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
-    pos.rot %= 360;
 
-    $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-    $('.pixelActive').css('left', pos.x * 100 + 'px');
-    $('.pixelActive').css('top', pos.y * 100 + 'px');
+        $('.pixelActive').data('rvb', {
+            red: pixel.red, 
+            green: pixel.green, 
+            blue: pixel.blue
+        });
+        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
 
-    hideModal();
+        colorPixel();
+
+        var pos = $('.pixelActive').data('pos'); 
+        //pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x; {DEV}
+        //pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
+        pos.rot %= 360;
+
+        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.pixelActive').css('left', pos.x * 100 + 'px');
+        $('.pixelActive').css('top', pos.y * 100 + 'px');
+
+        hideModal();
+
+
+    } catch (e) {
+
+        alert(e.message);
+
+        var resetPixel = $('.pixelActive').data('rvb');
+
+        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -31,17 +31,17 @@ function loadLevel2() {
             codeConfig.readOnly = 'nocursor';
             $('.dev').hide(); 
             var tips2 = {
-                0 : 'deb2 blabla1',
-                1 : 'deb2 blabla2',
-                2 : 'deb2 blabla3'
+                0 : content['jeu2astuce1'],
+                1 : content['jeu2astuce2'],
+                2 : content['jeu2astuce3']
             }
             constructTips(4000, 3, tips2); //{DEV} 
         } else {
             $('.notdev').hide();
             var tips2 = {
-                0 : 'dev2 blabla1',
-                1 : 'dev2 blabla2',
-                2 : 'dev2 blabla3'
+                0 : content['jeu2astuce1dev'],
+                1 : content['jeu2astuce2dev'],
+                2 : content['jeu2astuce3dev']
             }
             constructTips(4000, 3, tips2); //{DEV} 
         }
@@ -54,7 +54,7 @@ function loadLevel2() {
         //cm.addKeyMap(map: object, bottom: boolean) || extraKeys: Dans la config du CM
         codeMirror.addKeyMap({
             Enter: function (cm) {
-                setSelection('atom');
+                enterKeyMap();
             }
         });
 
@@ -110,32 +110,32 @@ function loadLevel2() {
             colorPixelRVB();
             //verifPixelLevel2();
         })
-
-        //On focus, reset the cursor to the start and set selection
-        codeMirror.on('focus', function () {
-            codeMirror.setCursor({line:0,ch:0});
-            setSelection('atom');
-        })
     })
 }
-
-
 
 function runCodeLevel2() {
     console.log('running code')
     var code = codeMirror.getValue();
-    eval(code)
-    pixel = eval($('.pixelActive').data('name'));
-    //console.log(pixel)                    
-    $('.pixelActive').data('rvb', {
-        red: pixel.red, 
-        green: pixel.green, 
-        blue: pixel.blue
-    });
-    resetCheckboxes(pixel.red, pixel.green, pixel.blue);
-    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
-    colorPixelRVB();
-    //verifPixelLevel2();
+
+    try {
+        eval(code)
+
+        pixel = eval($('.pixelActive').data('name'));
+        //console.log(pixel)                    
+        $('.pixelActive').data('rvb', {
+            red: pixel.red, 
+            green: pixel.green, 
+            blue: pixel.blue
+        });
+        resetCheckboxes(pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+        colorPixelRVB();
+        //verifPixelLevel2();
+    } catch(e) {
+        var resetPixel = $('.pixelActive').data('rvb');
+
+        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+    }
 }
 
 

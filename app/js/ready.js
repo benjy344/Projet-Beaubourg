@@ -81,8 +81,6 @@ $(document).ready(function() {
         event.stopPropagation();
     });
 
-
-
     /////////////////Formulaire
     // Test for placeholder support
     $.support.placeholder = (function(){
