@@ -50,7 +50,7 @@ function colorModel(r, g, b) {
 }
 
 function resetCodePixel(id, r, g, b) {
-    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}\n');
+    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n};\n');
     codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
@@ -151,18 +151,33 @@ function enterKeyMap() {
         cm = codeMirror,
         currentPos = cm.getCursor(),
         line = currentPos.line,
-        linePos = line + 1,
-        chPos = cm.getLine(linePos).length,
-        lastChar = cm.getRange({line: linePos, ch: chPos-1}, {line: linePos, ch: chPos});
+        lineCount = cm.lineCount();
 
-    if (lastChar == ',') {
-        chPos -= 1;
-    } 
-    if (lastChar == '}') {
-        codeMirror.getInputField().blur();
+    if (line+1 != lineCount) {
+        var linePos = line + 1,
+            chPos = cm.getLine(linePos).length,
+            lastChar = cm.getRange({line: linePos, ch: chPos-1}, {line: linePos, ch: chPos});
+
+        if (lastChar == ',') {
+            chPos -= 1;
+        } 
+        if (lastChar == ';') {
+            if (screen != 'sandbox') {
+                codeMirror.getInputField().blur();
+            } else {
+                cm.setCursor({line: 6, ch: 0})
+            }
+
+        } else {
+            cm.setCursor({line: linePos, ch: chPos})
+        }
     } else {
-        cm.setCursor({line: linePos, ch: chPos})
+        CodeMirror.commands.newlineAndIndent(cm)
     }
+    
+    
+
+
     //var token = cm.getLineTokens(linePos);
     //    if (token.length < 2) {
     //        codeMirror.getInputField().blur();
@@ -274,7 +289,7 @@ function move(direction, repeat) {
 } 
 function scale(sens) {
 
-    var size =   parseInt($('.imgActive').css('width'));
+    var size =   $('.imgActive').outerWidth();
 
     if (!sens) {
         sens = up;
@@ -282,11 +297,11 @@ function scale(sens) {
     switch(sens) {
         case up:
         case plus:
-            size += 25;
+            size *= 1.25;
             break;
         case down:
         case moins:
-            size -= 25;
+            size *= 0.75;
             break;
         default:
             console.log("error") //{DEV}   
