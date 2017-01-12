@@ -272,13 +272,18 @@ function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
     $('body').addClass('modal-active');
     setTimeout(function() {
-        $('.content-global').hide();
+        if ($('body').hasClass('modal-active')) {
+            $('.content-global').hide();
+        }
     }, 1000);
+    console.log('showing modale')
+
 
 }
 
 function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
-    $('.content-global').show();  
+    $('.content-global').show(); 
+    console.log('hidding modale')
 }
