@@ -112,8 +112,9 @@ function runSandbox() {
         pos.rot %= 360;
 
         $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixelActive').css('left', pos.x * 100 + 'px');
-        $('.pixelActive').css('top', pos.y * 100 + 'px');
+        var size = $('.pixelActive').outerWidth();
+        $('.pixelActive').css('left', pos.x * size + 'px');
+        $('.pixelActive').css('top', pos.y * size + 'px');
 
         hideModal();
 

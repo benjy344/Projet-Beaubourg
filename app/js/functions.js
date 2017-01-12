@@ -32,7 +32,7 @@ function loadChooseDevMod(){
     Showpopup(content['accueil'], 'hidePopup()', '');
     Username = $('input#name').val();
     $('#username').text(Username);
-    if (Username == 'test') { // {DEV}
+    if (Username == '') { // {DEV}
         testing = true;
     }
     $('main').load(views+'chooseDevMod.html', chooseMode);
