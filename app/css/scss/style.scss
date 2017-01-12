@@ -17,9 +17,14 @@ body {
     //font-size: 5vw;
     color: $white;
     position: relative;
+    p{
+          line-height: 1.5em;
+            font-size: 1.1em;  
+        }
     
     @include tablet {
-        //font-size: 3vw
+
+            
     }
     
     @include desktop {
@@ -367,6 +372,8 @@ body {
     main {
         min-width: 100%;
         min-height: 100%;
+        padding: 10px; 
+        box-sizing : border-box;
 
         #menu{
             .button-burger{

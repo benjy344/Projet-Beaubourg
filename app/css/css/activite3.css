@@ -10,8 +10,10 @@
 }
 #Level3 #frameWrapper {
   position: relative;
-  height: 400px;
-  width: 400px;
+  width: 100vw;
+  height: 100vw;
+  max-width: 400px;
+  max-height: 400px;
   transition: 5s ease;
   background-color: black;
   margin: auto;
@@ -23,7 +25,12 @@
   background-color: black;
 }
 #Level3 #frameWrapper .square:not(:nth-child(2)) {
-  border: solid white 15px;
+  border: solid white 4vw;
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  #Level3 #frameWrapper .square:not(:nth-child(2)) {
+    border: solid white 15px;
+  }
 }
 #Level3 #frameWrapper .square, #Level3 #frameWrapper .wrapperGrad, #Level3 #frameWrapper .center {
   position: absolute;

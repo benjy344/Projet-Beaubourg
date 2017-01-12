@@ -28,9 +28,22 @@ function loadLevel3() {
 
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide();  
+            $('.dev').hide(); 
+            var tips3 = {
+                0 : content['jeu3astuce1'],
+                1 : content['jeu3astuce2'],
+                2 : content['jeu3astuce3']
+            }
+            constructTips(42000, 3, tips3); 
         } else {
             $('.notdev').hide();
+            var tips3D = {
+                0 : content['jeu3astuce1dev'],
+                1 : content['jeu3astuce2dev'],
+                2 : content['jeu3astuce3dev']
+            }
+            constructTips(42000, 3, tips3D); 
+
         }
 
         //thisLvlAnswers = answers.lvl3;

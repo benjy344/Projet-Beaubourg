@@ -35,7 +35,7 @@ function loadLevel2() {
                 1 : content['jeu2astuce2'],
                 2 : content['jeu2astuce3']
             }
-            constructTips(4000, 3, tips2); //{DEV} 
+            constructTips(42000, 3, tips2); //{DEV} 
         } else {
             $('.notdev').hide();
             var tips2 = {
@@ -43,7 +43,7 @@ function loadLevel2() {
                 1 : content['jeu2astuce2dev'],
                 2 : content['jeu2astuce3dev']
             }
-            constructTips(4000, 3, tips2); //{DEV} 
+            constructTips(42000, 3, tips2); //{DEV} 
         }
 
 

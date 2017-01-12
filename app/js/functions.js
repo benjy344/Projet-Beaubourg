@@ -98,7 +98,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 *       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
 *       icon (string) la class de l'icon, par default sans class     
 **/
-function Showpopup(content, loadfonction, icon, isSuccess=false){
+function Showpopup(content, loadfonction, icon, title=null , isSuccess=false){
 
     if ($Popup) {
 
@@ -107,6 +107,7 @@ function Showpopup(content, loadfonction, icon, isSuccess=false){
         if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
         if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+' iconAnim') } else {$popup_icon.attr('class', '')};
         if(isSuccess) addSuccess(icon);
+        if(title) addEncyclo(title, content);
         $Popup.removeClass('hide');
         $hoverlay.removeClass('hide');
     };

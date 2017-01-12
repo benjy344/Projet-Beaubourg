@@ -9193,7 +9193,7 @@ function loadChooseDevMod(){
     Showpopup(content['accueil'], 'hidePopup()', '');
     Username = $('input#name').val();
     $('#username').text(Username);
-    if (Username == 'test') { // {DEV}
+    if (Username == '') { // {DEV}
         testing = true;
     }
     $('main').load(views+'chooseDevMod.html', chooseMode);
@@ -9259,7 +9259,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 *       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
 *       icon (string) la class de l'icon, par default sans class     
 **/
-function Showpopup(content, loadfonction, icon, isSuccess=false){
+function Showpopup(content, loadfonction, icon, title=null , isSuccess=false){
 
     if ($Popup) {
 
@@ -9268,6 +9268,7 @@ function Showpopup(content, loadfonction, icon, isSuccess=false){
         if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
         if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+' iconAnim') } else {$popup_icon.attr('class', '')};
         if(isSuccess) addSuccess(icon);
+        if(title) addEncyclo(title, content);
         $Popup.removeClass('hide');
         $hoverlay.removeClass('hide');
     };
@@ -9307,13 +9308,13 @@ function hidePopup() {
 function constructTips(time, numberOftips, tips ) {
     var number = 0;
     timeOut = setTimeout( function () {
-      if (popinIsOpen === false) {
-         getATip(number, time, tips, numberOftips);
+        if (popinIsOpen === false) {
+            getATip(number, time, tips, numberOftips);
         } else {
             constructTips(time, numberOftips, tips );
         } 
     } , time);
-    
+
 }
 
 
@@ -9431,11 +9432,16 @@ function alertErr() {
 function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
     $('body').addClass('modal-active');
+    setTimeout(function() {
+        $('.content-global').hide();
+    }, 1000);
+
 }
 
 function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
+    $('.content-global').show();  
 }; /*********************************************************/// add pixel
 function addPixel() {
     var pixel = $('<div class="pixel"></div>');
@@ -9492,7 +9498,9 @@ function resetCodePixel(id, r, g, b) {
     codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
-    codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
+    if (screen != 'sandbox') {
+        codeMirror.markText({line: 4, ch: 0}, {line: 5, ch: 0}, {readOnly: true, inclusiveLeft: true});
+    }
 }
 
 function resetCheckboxes(r, g, b) {
@@ -9582,6 +9590,31 @@ function setSelection(varType) {
     //console.log(tokens[i])
 }
 
+function enterKeyMap() {
+    var setPos = true,
+        cm = codeMirror,
+        currentPos = cm.getCursor(),
+        line = currentPos.line,
+        linePos = line + 1,
+        chPos = cm.getLine(linePos).length,
+        lastChar = cm.getRange({line: linePos, ch: chPos-1}, {line: linePos, ch: chPos});
+
+    if (lastChar == ',') {
+        chPos -= 1;
+    } 
+    if (lastChar == '}') {
+        codeMirror.getInputField().blur();
+    } else {
+        cm.setCursor({line: linePos, ch: chPos})
+    }
+    //var token = cm.getLineTokens(linePos);
+    //    if (token.length < 2) {
+    //        codeMirror.getInputField().blur();
+    //    } else {
+    //        cm.setCursor({line: linePos, ch: chPos})
+    //    }
+}
+
 function reinitImg() {
     $('#frameWrapper .imageObject').each(function () {
         $(this).data('pos', {
@@ -9592,7 +9625,6 @@ function reinitImg() {
         $(this).attr('style', '');
     });
 }
-
 
 function addCode(btn) {
     var cmContent = codeMirror.getValue();
@@ -9641,6 +9673,7 @@ function moveUp() {
     $('.imgActive').data('pos', pos)
 }
 function moveDown() {
+    //console.log('GOOOOOIIING DOOOWN')
     var pos = $('.imgActive').data('pos'); 
     pos.y++;
     $('.imgActive').data('pos', pos)
@@ -9719,8 +9752,8 @@ function applyPosition() {
 
     $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
 
-    $('.imgActive').css('left', pos.x * 100 + 'px');
-    $('.imgActive').css('top', pos.y * 100 + 'px');
+    $('.imgActive').css('left', pos.x * 100 + '%');
+    $('.imgActive').css('top', pos.y * 100 + '%');
 }
 
 function resetCode() {
@@ -10528,8 +10561,8 @@ function loadLevel1() {
     $('.hamburger').show();
     showpop1C = "Showpopup(content['jeu1c'], 'hidePopup()', '')";
     showpop1B = "Showpopup(content['jeu1b'], showpop1C, '')";
-    Showpopup(content['jeu1a'], showpop1B, '');
-
+    Showpopup(content['jeu1a'], showpop1B, '', "Présention de l\'oeuvre 1", false);
+    aleNumber = 0;
     $('main').loadLevel('level1', function(){
 
         if (devMod){
@@ -10544,21 +10577,20 @@ function loadLevel1() {
                 1 : content['jeu1astuce2dev'],
                 2 : content['jeu1astuce3dev']
             }
-            constructTips(2000, 3, tips1);
+            constructTips(42000, 3, tips1);
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
                     binaire = binaire+'0';
                 }
                 else { binaire = binaire+'1'; }
-                aleNumber = aleNumber+''+alea+''
+                aleNumber += ''+alea+'';
             }
             $('.aleNumber').html(aleNumber);
             //generation des cases du tableau
             for (var i = 0; i < 3; i++){
                 $('.tableau ul:first-child').clone().appendTo( ".tableau" );
             }
-
 
             var div = $('.tableau ul li div');
 
@@ -10572,21 +10604,22 @@ function loadLevel1() {
             var heightNumber =  12;
             min = Math.ceil(0);
             max = Math.floor(9);
-            var tips1 = {
+            var tips1D = {
                 0 : content['jeu1astuce1'],
                 1 : content['jeu1astuce2'],
                 2 : content['jeu1astuce3']
             }
-            constructTips(10000, 3, tips1); //{DEV}
+            constructTips(42000, 3, tips1D); //{DEV}
             for (var i = 0; i < heightNumber; i++){
                 var alea = Math.floor(Math.random() * (max - min +1)) + min;
                 if (alea % 2 == 0) {
                     binaire = binaire+'0';
                 }
                 else { binaire = binaire+'1'; }
-                aleNumber = aleNumber+''+alea+''
+                aleNumber += ''+alea+'';
             }
             $('.aleNumber').html(aleNumber);
+            $('.tableau ul').addClass('width-3');
             //generation des cases du tableau
             for (var i = 0; i < 2; i++){
                 $('.tableau ul:first-child').clone().appendTo( ".tableau" );
@@ -10660,19 +10693,19 @@ function loadLevel2() {
             codeConfig.readOnly = 'nocursor';
             $('.dev').hide(); 
             var tips2 = {
-                0 : 'deb2 blabla1',
-                1 : 'deb2 blabla2',
-                2 : 'deb2 blabla3'
+                0 : content['jeu2astuce1'],
+                1 : content['jeu2astuce2'],
+                2 : content['jeu2astuce3']
             }
-            constructTips(4000, 3, tips2); //{DEV} 
+            constructTips(42000, 3, tips2); //{DEV} 
         } else {
             $('.notdev').hide();
             var tips2 = {
-                0 : 'dev2 blabla1',
-                1 : 'dev2 blabla2',
-                2 : 'dev2 blabla3'
+                0 : content['jeu2astuce1dev'],
+                1 : content['jeu2astuce2dev'],
+                2 : content['jeu2astuce3dev']
             }
-            constructTips(4000, 3, tips2); //{DEV} 
+            constructTips(42000, 3, tips2); //{DEV} 
         }
 
 
@@ -10683,7 +10716,7 @@ function loadLevel2() {
         //cm.addKeyMap(map: object, bottom: boolean) || extraKeys: Dans la config du CM
         codeMirror.addKeyMap({
             Enter: function (cm) {
-                setSelection('atom');
+                enterKeyMap();
             }
         });
 
@@ -10739,32 +10772,32 @@ function loadLevel2() {
             colorPixelRVB();
             //verifPixelLevel2();
         })
-
-        //On focus, reset the cursor to the start and set selection
-        codeMirror.on('focus', function () {
-            codeMirror.setCursor({line:0,ch:0});
-            setSelection('atom');
-        })
     })
 }
-
-
 
 function runCodeLevel2() {
     console.log('running code')
     var code = codeMirror.getValue();
-    eval(code)
-    pixel = eval($('.pixelActive').data('name'));
-    //console.log(pixel)                    
-    $('.pixelActive').data('rvb', {
-        red: pixel.red, 
-        green: pixel.green, 
-        blue: pixel.blue
-    });
-    resetCheckboxes(pixel.red, pixel.green, pixel.blue);
-    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
-    colorPixelRVB();
-    //verifPixelLevel2();
+
+    try {
+        eval(code)
+
+        pixel = eval($('.pixelActive').data('name'));
+        //console.log(pixel)                    
+        $('.pixelActive').data('rvb', {
+            red: pixel.red, 
+            green: pixel.green, 
+            blue: pixel.blue
+        });
+        resetCheckboxes(pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+        colorPixelRVB();
+        //verifPixelLevel2();
+    } catch(e) {
+        var resetPixel = $('.pixelActive').data('rvb');
+
+        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+    }
 }
 
 
@@ -10833,9 +10866,22 @@ function loadLevel3() {
 
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide();  
+            $('.dev').hide(); 
+            var tips3 = {
+                0 : content['jeu3astuce1'],
+                1 : content['jeu3astuce2'],
+                2 : content['jeu3astuce3']
+            }
+            constructTips(42000, 3, tips3); 
         } else {
             $('.notdev').hide();
+            var tips3D = {
+                0 : content['jeu3astuce1dev'],
+                1 : content['jeu3astuce2dev'],
+                2 : content['jeu3astuce3dev']
+            }
+            constructTips(42000, 3, tips3D); 
+
         }
 
         //thisLvlAnswers = answers.lvl3;
@@ -10845,7 +10891,7 @@ function loadLevel3() {
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
         codeMirror.addKeyMap({
             Enter: function (cm) {
-                setSelection('number');
+                enterKeyMap();
             }
         });
 
@@ -10905,42 +10951,45 @@ function loadLevel3() {
             //verifPixelLevel3();
 
         })
-
-        //On focus, reset the cursor to the start and set selection
-        CodeMirror.on('focus', function(){
-            codeMirror.setCursor({line:0,ch:0});
-            setSelection('number');
-        });
     });
 }
 
 function runCodeLevel3() {
     //console.log('running code')
     var code = codeMirror.getValue();
-    eval(code)
+    
+    try {
+        eval(code)
 
-    var pixelBorder = eval($('.pixelActive').data('name'));
+        var pixelBorder = eval($('.pixelActive').data('name'));
 
-    $.each(pixelBorder, function(i, value) {
-        if (value < 0) {
-            pixelBorder[i] = 0;
-        }
-        if (value > 255) {
-            pixelBorder[i] = 255;
-        }
-    });
+        $.each(pixelBorder, function(i, value) {
+            if (typeof value == 'number') {
+                if (value < 0) {
+                    pixelBorder[i] = 0;
+                }
+                if (value > 255) {
+                    pixelBorder[i] = 255;
+                }
+            } else {
+                pixelBorder[i] = 0
+            }
+        });
 
-    $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
+        $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
 
-    resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
+        resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
 
-    resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
-    colorPixel();
-    //verifPixelLevel3();
+        resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
+        colorPixel();
+        
+    } catch(e) {
+        alert ('pls input only nu')
 
-    //pixelBorder = undefined;
+        var resetPixel = $('.pixelActive').data('rvb');
 
-
+        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+    }
 }
 
 
@@ -11031,9 +11080,22 @@ function loadLevel4() {
         //Initialisation des variables
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide();  
+            $('.dev').hide(); 
+
+            var tips4 = {
+                0 : content['jeu4astuce1'],
+                1 : content['jeu4astuce2'],
+                2 : content['jeu4astuce3']
+            }
+            constructTips(42000, 3, tips4); 
         } else {
             $('.notdev').hide();
+             var tips4D = {
+                0 : content['jeu4astuce1dev'],
+                1 : content['jeu4astuce2dev'],
+                2 : content['jeu4astuce3dev']
+            }
+            constructTips(42000, 3, tips4D); 
         }
 
         //thisLvlAnswers = answers.lvl4;
@@ -11064,7 +11126,7 @@ function loadLevel4() {
         })
 
         //Run Code
-        $('.runCode').click(function () {
+        $('.runCode').on('touch click', function () {
             runCodeLevel4();
             hideModal();
         });
@@ -11088,6 +11150,7 @@ function loadLevel4() {
 function runCodeLevel4() {
     // console.log('running code')
     // console.log($('.imgActive').data('pos'))
+    alert('ok')
     var code = codeMirror.getValue();
     eval(code)
     applyPosition();
@@ -11205,8 +11268,6 @@ $(document).ready(function() {
         else {devMod = true;} 
         event.stopPropagation();
     });
-
-
 
     /////////////////Formulaire
     // Test for placeholder support
@@ -11336,9 +11397,7 @@ function reinitSandbox() {
 *
 *********************/
 function loadSandbox() {
-    //    showpop4C = "Showpopup(jeu4c, 'hidePopup()', '')";
-    //    showpop4B = "Showpopup(jeu4b, showpop4C, '')";
-    //    Showpopup(jeu4a, showpop4B, '');
+    Showpopup(content['textsandbox'], hidePopup(), '');
 
     $('main').loadLevel('sandbox', function () {
 
@@ -11409,28 +11468,67 @@ function loadSandbox() {
 function runSandbox() {
 
     var code = codeMirror.getValue();
-    eval(code)
 
-    pixel = eval($('.pixelActive').data('name'));
+    try {
+        eval(code); 
 
-    $('.pixelActive').data('rvb', {
-        red: pixel.red, 
-        green: pixel.green, 
-        blue: pixel.blue
-    });
-    colorPixel();
+        pixel = eval($('.pixelActive').data('name'));
+
+        $.each(pixel, function(i, value) {
+            if (typeof value == 'number') {
+                if (value < 0) {
+                    pixel[i] = 0;
+                }
+                if (value > 255) {
+                    pixel[i] = 255;
+                }
+            } else {
+                pixel[i] = 0
+            }
+        });
 
 
-    var pos = $('.pixelActive').data('pos'); 
-    //pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x; {DEV}
-    //pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
-    pos.rot %= 360;
 
-    $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-    $('.pixelActive').css('left', pos.x * 100 + 'px');
-    $('.pixelActive').css('top', pos.y * 100 + 'px');
+        $('.pixelActive').data('rvb', {
+            red: pixel.red, 
+            green: pixel.green, 
+            blue: pixel.blue
+        });
+        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
 
-    hideModal();
+        colorPixel();
+
+        var pos = $('.pixelActive').data('pos'); 
+        //pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x; {DEV}
+        //pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
+        pos.rot %= 360;
+
+        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
+        var size = $('.pixelActive').outerWidth();
+        $('.pixelActive').css('left', pos.x * size + 'px');
+        $('.pixelActive').css('top', pos.y * size + 'px');
+
+        hideModal();
+
+
+    } catch (e) {
+
+        alert(e.message);
+
+        var resetPixel = $('.pixelActive').data('rvb');
+
+        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

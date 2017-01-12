@@ -26,9 +26,22 @@ function loadLevel4() {
         //Initialisation des variables
         if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide();  
+            $('.dev').hide(); 
+
+            var tips4 = {
+                0 : content['jeu4astuce1'],
+                1 : content['jeu4astuce2'],
+                2 : content['jeu4astuce3']
+            }
+            constructTips(42000, 3, tips4); 
         } else {
             $('.notdev').hide();
+             var tips4D = {
+                0 : content['jeu4astuce1dev'],
+                1 : content['jeu4astuce2dev'],
+                2 : content['jeu4astuce3dev']
+            }
+            constructTips(42000, 3, tips4D); 
         }
 
         //thisLvlAnswers = answers.lvl4;

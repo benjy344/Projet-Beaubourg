@@ -579,6 +579,7 @@ body {
   font-family: "Josefin Sans", sans-serif;
   font-size: 20.8px;
   color: #FBFBFB;
+  position: relative;
   /******************
   *
   *	   Menu
@@ -587,6 +588,10 @@ body {
   /*
   * Spin
   */
+}
+body p {
+  line-height: 1.5em;
+  font-size: 1.1em;
 }
 body .loading {
   z-index: 20000;
@@ -729,7 +734,7 @@ body .button-reload {
   border: 1px solid;
   padding: 10px;
 }
-body .modal-active {
+body.modal-active {
   overflow: hidden;
 }
 body #modal-container {
@@ -888,6 +893,8 @@ body .background {
 body main {
   min-width: 100%;
   min-height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 body main #menu .button-burger {
   display: block;

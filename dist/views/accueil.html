@@ -9,6 +9,7 @@
 </div>
 
 <script type="text/javascript">
+console.log(screen);
 	 $('#ChooseLevel li a ').on('click', function (e) {
         var toLoad = $(this).attr('data-load');
         if ($(this).hasClass('lock')) {e.preventDefault()} else {eval(toLoad);}
