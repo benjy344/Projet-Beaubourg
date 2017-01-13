@@ -5,6 +5,7 @@ Document.ready
 ********************/
 
 $(document).ready(function() {
+
     Username = $('input#name').val();
     $('.hamburger').hide();
 
@@ -41,23 +42,6 @@ $(document).ready(function() {
 
         $child_content.load(views+loader+'.html');
 
-        switch(loader) {
-            case 'chooseDevMod':
-                setTimeout(function(){
-                    if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');} 
-                }, 500)
-                break;
-            case 'accueil':
-
-                break;
-            case 'success':
-
-                break;
-            case 'encyclo':
-
-                break;
-        }
-
 
     });
     $('.main-nav .child i').on('click touch', function(event){
@@ -69,16 +53,6 @@ $(document).ready(function() {
         $parent.removeClass('childOpen');
         $child.removeClass('isOpen');
 
-    });
-
-    $('.main-nav .child ').on('click touch', function(event){
-        isdebMod = $('input#input1:checked').val();
-        $('#chooseDevMod .button-reload').show();
-        if (isdebMod == 'on') {
-            devMod = false;
-        }
-        else {devMod = true;} 
-        event.stopPropagation();
     });
 
     /////////////////Formulaire

@@ -56,13 +56,13 @@
         var unlock = $tabSuccess[i];
 
         $success.each(function () {
-        	console.log(unlock)
         	if ($(this).hasClass(unlock)) $(this).addClass('unlock');
         })
         
     }
 
-    $('.unlock').on('click touch', function() {
+    $('.unlock').on('click touch', function(e) {
+    	e.stopPropagation();
     	$leSucces = $(this);
     	$popinEncyclo.html($leSucces.clone()).addClass('open');
     });

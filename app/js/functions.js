@@ -5,10 +5,8 @@
 *********************/
 
 function reloadLevel() {
-    //console.log(level+' '+screen+' '+devMod);
     switch(screen) {
         case 'level1':
-            //console.log('jrfeiu')
             loadLevel1();
             break;
         case 'level2':
@@ -25,30 +23,16 @@ function reloadLevel() {
 
 /********************
 *
-*   Choix du niveau 
+*   Intro 
 *
 *********************/
-function loadChooseDevMod(){
-    Showpopup(content['accueil'], 'hidePopup()', '');
+function loadIntro(){
     Username = $('input#name').val();
     $('#username').text(Username);
     if (Username == '') { // {DEV}
         testing = true;
     }
-    $('main').load(views+'chooseDevMod.html', chooseMode);
-    $('#input1, #input2').off('touch click');
-}
-
-function chooseMode(){
-
-    $('#input1, #input2').on('touch click', function(e) {
-        isdebMod = $('input#input1:checked').val();
-        if (isdebMod == 'on') {
-            console.log('korf');
-            devMod = false;
-        }
-        else {devMod = true;} 
-    }); 
+    $('main').load(views+'intro.html');
 }
 
 /********************
@@ -161,9 +145,15 @@ function getATip(number, time, tips, total) {
     var intervale = 0;
     var t = 0;
     $('.help-button').show().addClass('newTip');
-    ConstructPopupAide(tips[number]);
+    isNewTip = true;
+    var $popup = $popin = new Popin({
+                content: tips[number],
+                type: 'help',
+                $open: $('.help-button')
+            });
     number++;
     if (number < total) {
+
         //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
         intervale = setInterval(function () {
             if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
@@ -184,33 +174,6 @@ function getATip(number, time, tips, total) {
 
 }
 
-function ConstructPopupAide(tip) {
-    if (tip) {
-        countip++;
-        $content_popup.html(''+tip+'');
-        $button.attr("onclick", 'closePopupAide()');
-        isNewTip = true;
-
-        addEncyclo('Aide n°'+countip+'', tip);
-    };
-}
-
-function ShowPopupAide() {
-    tipIsOpened = true;
-    popinIsOpen = true;
-    isNewTip = false;
-    $('.help-button').removeClass('newTip');
-    $Popup.removeClass('hide');
-    $hoverlay.removeClass('hide');
-}
-
-function closePopupAide() {
-    tipIsOpened = false;
-    popinIsOpen = false;
-    $Popup.addClass('hide');
-    $hoverlay.addClass('hide');
-}
-
 /*********************
 
 Implementation de l'encyclopedie
@@ -227,12 +190,33 @@ Implementation de l'encyclopedie
 
 function addEncyclo (name, content) {
 
-    // encyclo = $('.encyclo ul');
-    // archive = $('.archive');
     countEncyclo = $tabArchiveTitle.length;
     if (name && content) {
         $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
         $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
+    } 
+
+}
+/*********************
+
+Implementation de l'aide
+
+********************/
+
+// ici tout le contenu designé sera stoqué en tant que page dans l'aide
+// en param de la fonction => 
+/**
+* Nom de la page ( titre du li)
+* contenu textuel
+*
+*/
+
+function addHelp(name, content) {
+
+    countHelp = $tabHelpTitle.length;
+    if (name && content) {
+        $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
+        $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
     } 
 
 }
@@ -249,7 +233,7 @@ Implementation des success
 * class de l'icon du success
 *
 */
-function addSuccess (icon) {
+function addSuccess(icon) {
     countSuccess = $tabSuccess.length;
     if (icon) $tabSuccess.push(icon);
 }

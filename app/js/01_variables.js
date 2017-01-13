@@ -8,10 +8,10 @@ var dest = './dist/',
     level = './dist/views/levels/',
     views = './dist/views/',
     screen = 'index',
+    countLevel = 0,
 
     Username = "",
     testing = false,
-    devMod = false,
     aleNumber = '',
     binaire = '',
 
@@ -64,3 +64,5 @@ countip = 0;
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
 $tabSuccess = [];
+$tabHelpTitle = [];
+$tabHelpContent = [];

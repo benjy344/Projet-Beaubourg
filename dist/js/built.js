@@ -8,10 +8,10 @@ var dest = './dist/',
     level = './dist/views/levels/',
     views = './dist/views/',
     screen = 'index',
+    countLevel = 0,
 
     Username = "",
     testing = false,
-    devMod = false,
     aleNumber = '',
     binaire = '',
 
@@ -63,7 +63,9 @@ countip = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
-$tabSuccess = [];; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
+$tabSuccess = [];
+$tabHelpTitle = [];
+$tabHelpContent = [];; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
 // This is CodeMirror (http://codemirror.net), a code editor
@@ -9166,10 +9168,8 @@ return CodeMirror$1;
 *********************/
 
 function reloadLevel() {
-    //console.log(level+' '+screen+' '+devMod);
     switch(screen) {
         case 'level1':
-            //console.log('jrfeiu')
             loadLevel1();
             break;
         case 'level2':
@@ -9186,30 +9186,16 @@ function reloadLevel() {
 
 /********************
 *
-*   Choix du niveau 
+*   Intro 
 *
 *********************/
-function loadChooseDevMod(){
-    Showpopup(content['accueil'], 'hidePopup()', '');
+function loadIntro(){
     Username = $('input#name').val();
     $('#username').text(Username);
     if (Username == '') { // {DEV}
         testing = true;
     }
-    $('main').load(views+'chooseDevMod.html', chooseMode);
-    $('#input1, #input2').off('touch click');
-}
-
-function chooseMode(){
-
-    $('#input1, #input2').on('touch click', function(e) {
-        isdebMod = $('input#input1:checked').val();
-        if (isdebMod == 'on') {
-            console.log('korf');
-            devMod = false;
-        }
-        else {devMod = true;} 
-    }); 
+    $('main').load(views+'intro.html');
 }
 
 /********************
@@ -9322,9 +9308,15 @@ function getATip(number, time, tips, total) {
     var intervale = 0;
     var t = 0;
     $('.help-button').show().addClass('newTip');
-    ConstructPopupAide(tips[number]);
+    isNewTip = true;
+    var $popup = $popin = new Popin({
+                content: tips[number],
+                type: 'help',
+                $open: $('.help-button')
+            });
     number++;
     if (number < total) {
+
         //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
         intervale = setInterval(function () {
             if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
@@ -9345,33 +9337,6 @@ function getATip(number, time, tips, total) {
 
 }
 
-function ConstructPopupAide(tip) {
-    if (tip) {
-        countip++;
-        $content_popup.html(''+tip+'');
-        $button.attr("onclick", 'closePopupAide()');
-        isNewTip = true;
-
-        addEncyclo('Aide n°'+countip+'', tip);
-    };
-}
-
-function ShowPopupAide() {
-    tipIsOpened = true;
-    popinIsOpen = true;
-    isNewTip = false;
-    $('.help-button').removeClass('newTip');
-    $Popup.removeClass('hide');
-    $hoverlay.removeClass('hide');
-}
-
-function closePopupAide() {
-    tipIsOpened = false;
-    popinIsOpen = false;
-    $Popup.addClass('hide');
-    $hoverlay.addClass('hide');
-}
-
 /*********************
 
 Implementation de l'encyclopedie
@@ -9388,12 +9353,33 @@ Implementation de l'encyclopedie
 
 function addEncyclo (name, content) {
 
-    // encyclo = $('.encyclo ul');
-    // archive = $('.archive');
     countEncyclo = $tabArchiveTitle.length;
     if (name && content) {
         $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
         $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
+    } 
+
+}
+/*********************
+
+Implementation de l'aide
+
+********************/
+
+// ici tout le contenu designé sera stoqué en tant que page dans l'aide
+// en param de la fonction => 
+/**
+* Nom de la page ( titre du li)
+* contenu textuel
+*
+*/
+
+function addHelp(name, content) {
+
+    countHelp = $tabHelpTitle.length;
+    if (name && content) {
+        $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
+        $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
     } 
 
 }
@@ -9410,7 +9396,7 @@ Implementation des success
 * class de l'icon du success
 *
 */
-function addSuccess (icon) {
+function addSuccess(icon) {
     countSuccess = $tabSuccess.length;
     if (icon) $tabSuccess.push(icon);
 }
@@ -10579,79 +10565,43 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 *********************/
 function loadLevel1() {
     $('.hamburger').show();
+
+    countLevel = 1;
     showpop1C = "Showpopup(content['jeu1c'], 'hidePopup()', '')";
     showpop1B = "Showpopup(content['jeu1b'], showpop1C, '')";
-    Showpopup(content['jeu1a'], showpop1B, '', "Présention de l\'oeuvre 1", false);
+    //Showpopup(content['jeu1a'], showpop1B, '', "Présention de l\'oeuvre 1", false);
     aleNumber = 0;
     $('main').loadLevel('level1', function(){
 
-        if (devMod){
-
-
-            //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
-            var heightNumber =  16;
-            var min = Math.ceil(0);
-            var max = Math.floor(9);
-            var tips1 = {
-                0 : content['jeu1astuce1dev'],
-                1 : content['jeu1astuce2dev'],
-                2 : content['jeu1astuce3dev']
+        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
+        var heightNumber =  16;
+        var min = Math.ceil(0);
+        var max = Math.floor(9);
+        var tips1 = {
+            0 : content['jeu1astuce1dev'],
+            1 : content['jeu1astuce2dev'],
+            2 : content['jeu1astuce3dev']
+           }
+        constructTips(42000, 3, tips1);
+        for (var i = 0; i < heightNumber; i++){
+            var alea = Math.floor(Math.random() * (max - min +1)) + min;
+            if (alea % 2 == 0) {
+                binaire = binaire+'0';
             }
-            constructTips(42000, 3, tips1);
-            for (var i = 0; i < heightNumber; i++){
-                var alea = Math.floor(Math.random() * (max - min +1)) + min;
-                if (alea % 2 == 0) {
-                    binaire = binaire+'0';
-                }
-                else { binaire = binaire+'1'; }
-                aleNumber += ''+alea+'';
-            }
-            $('.aleNumber').html(aleNumber);
-            //generation des cases du tableau
-            for (var i = 0; i < 3; i++){
-                $('.tableau ul:first-child').clone().appendTo( ".tableau" );
-            }
-
-            var div = $('.tableau ul li div');
-
-            div.on('touch click', function(e) {
-                $(this).toggleClass('white');
-            });
-        } else {
-
-
-            //generation du nombre aléatoir a 12 chiffres
-            var heightNumber =  12;
-            min = Math.ceil(0);
-            max = Math.floor(9);
-            var tips1D = {
-                0 : content['jeu1astuce1'],
-                1 : content['jeu1astuce2'],
-                2 : content['jeu1astuce3']
-            }
-            constructTips(42000, 3, tips1D); //{DEV}
-            for (var i = 0; i < heightNumber; i++){
-                var alea = Math.floor(Math.random() * (max - min +1)) + min;
-                if (alea % 2 == 0) {
-                    binaire = binaire+'0';
-                }
-                else { binaire = binaire+'1'; }
-                aleNumber += ''+alea+'';
-            }
-            $('.aleNumber').html(aleNumber);
-            $('.tableau ul').addClass('width-3');
-            //generation des cases du tableau
-            for (var i = 0; i < 2; i++){
-                $('.tableau ul:first-child').clone().appendTo( ".tableau" );
-            }
-            var div = $('.tableau ul li div');
-
-
-            div.on('touch click', function(e) {
-                $(this).toggleClass('white');
-            });
+            else { binaire = binaire+'1'; }
+            aleNumber += ''+alea+'';
+        }
+        $('.aleNumber').html(aleNumber);
+        //generation des cases du tableau
+        for (var i = 0; i < 3; i++){
+            $('.tableau ul:first-child').clone().appendTo( ".tableau" );
         }
 
+        var div = $('.tableau ul li div');
+
+        div.on('touch click', function(e) {
+            $(this).toggleClass('white');
+        });
     });
 }
 
@@ -10675,9 +10625,17 @@ function submitLevel1() {
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
 
+        var $popinError = new Popin({
+            content: content['jeu1d'],
+            callback: 'loadLevel2()',
+            type: 'succes',
+            icon: 'succes1'
+        });
         Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
-    }else{Showpopup('Mmmmh, il semble y avoir une erreur...', 'hidePopup()', 'error');}
+    }else{var $popinError = new Popin({
+        content: content['erreur'],
+    });}
 }
 
 ; /*********************************************************//********************
@@ -10688,7 +10646,7 @@ function submitLevel1() {
 function loadLevel2() {
     showpop2C = "Showpopup(content['jeu2c'], 'hidePopup()', '')";
     showpop2B = "Showpopup(content['jeu2b'], showpop2C, '')";
-    Showpopup(content['jeu2a'], showpop2B, '');
+    //Showpopup(content['jeu2a'], showpop2B, '');
     //    $('main').load(level+'Level2.html', function(){
     $('main').loadLevel('level2', function() {
 
@@ -10707,29 +10665,17 @@ function loadLevel2() {
             }
         //Initialisation des variables
         var defaultValue = false;
-        //console.log(devMod)
 
-        if (!devMod) {
-            codeConfig.readOnly = 'nocursor';
-            $('.dev').hide(); 
-            var tips2 = {
-                0 : content['jeu2astuce1'],
-                1 : content['jeu2astuce2'],
-                2 : content['jeu2astuce3']
-            }
-            constructTips(42000, 3, tips2); //{DEV} 
-        } else {
-            $('.notdev').hide();
-            var tips2 = {
-                0 : content['jeu2astuce1dev'],
-                1 : content['jeu2astuce2dev'],
-                2 : content['jeu2astuce3dev']
-            }
-            constructTips(42000, 3, tips2); //{DEV} 
+        codeConfig.readOnly = 'nocursor';
+        var tips2 = {
+            0 : content['jeu2astuce1'],
+            1 : content['jeu2astuce2'],
+            2 : content['jeu2astuce3']
         }
+        constructTips(42000, 3, tips2); //{DEV} 
+       
 
 
-        //console.log(codeConfig.readOnly)
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -10796,7 +10742,6 @@ function loadLevel2() {
 }
 
 function runCodeLevel2() {
-    console.log('running code')
     var code = codeMirror.getValue();
 
     try {
@@ -10837,17 +10782,12 @@ function submitLevel2() {
             pixelName = $(pixels[i]).data('name'),
             correctRVB = thisLvlAnswers[pixelName].rvb;
 
-        console.log(rvb, correctRVB);
-
         if (JSON.stringify(rvb) == JSON.stringify(correctRVB)) {
             numCorrect++;
         } else {
             break;
         }
     }
-
-    console.log(numCorrect, pixels.length);
-
 
     if (numCorrect == pixels.length || testing) { //{}
         Showpopup('Bravo !', 'loadLevel3()', 'succes');
@@ -10884,26 +10824,14 @@ function loadLevel3() {
         //Initialisation des variables
         var defaultValue = 0;
 
-        if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide(); 
             var tips3 = {
                 0 : content['jeu3astuce1'],
                 1 : content['jeu3astuce2'],
                 2 : content['jeu3astuce3']
             }
             constructTips(42000, 3, tips3); 
-        } else {
-            $('.notdev').hide();
-            var tips3D = {
-                0 : content['jeu3astuce1dev'],
-                1 : content['jeu3astuce2dev'],
-                2 : content['jeu3astuce3dev']
-            }
-            constructTips(42000, 3, tips3D); 
-
-        }
-
+ 
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -10929,9 +10857,9 @@ function loadLevel3() {
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
                 resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
 
-                if (!devMod) {$('.notdev').show();}
+                $('.notdev').show();
             } else {
-                if (!devMod) {$('.notdev').hide();}
+               $('.notdev').hide();
             }
         })
 
@@ -11206,13 +11134,190 @@ function submitLevel4() {
         Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
     }
 }
-; /*********************************************************//*********************
+; /*********************************************************//*
+ * Popin is a module that fades in an element over #popin-overlay
+ *
+ * Args : object {
+ *   $popin, $open, $close, $overlay, $popinWrapper :                   jQuery element
+ *   closeButton :                                      true|false
+ *   onOpen, onOpened, onClose, onClosed, onResize :    callback function
+ *   type : popin|help\succes\encyclo
+ * }
+ *
+ */
+
+    // $popin = new Popin({
+                
+    //             content: 'blabla',
+    //             type: 'popin',
+    //             callback: 'loadIntro()'
+    //     });
+function Popin(options, override) {
+
+    // this.open = this.defaultOpen(content);
+    // this.close = this.defaultClose;
+    if (!override) this.init(options);
+
+}
+
+Popin.prototype = {
+
+    
+
+    init: function(options) {
+        this.$popin =      $(".js-popup");
+        this.$ContentPopup = $('.content-popup');
+        this.$open= undefined;
+        this.$overlay= $(".hoverlay");
+        this.type= 'popin';
+        this.content = '';
+        this.isSlider = false;
+
+        if (options) {
+            if (options.type) this.type = options.type;
+            if (options.content) this.content = options.content;
+            if (options.$open) this.$open = options.$open;            
+            if (options.callback) this.callback = options.callback;            
+            if (options.isSlider) this.isSlider = options.isSlider;
+            if (options.icon) this.icon = options.icon;
+        }
+        //console.log(_default)
+        //_default.$close = _default.$popin.find(".js-popin-close");
+        //$.extend(this, _default);
+
+        this.buildElements();
+        this.addEventListeners();
+        
+
+    },
+    /*
+     * Adds listeners for open / close 
+     */
+    addEventListeners: function() {
+        var _this = this;
+        if (this.$open) {
+            this.updateOpenTriggers( this.$open );
+        }else {
+            switch (_this.type) {
+                    case 'popin':
+                            _this.defaultOpen(); 
+                        break;
+                    case 'help':
+                        _this.defaultOpen();
+                        break;
+                    case 'succes':
+                        _this.defaultOpen();
+                        break;
+                    case 'encyclo':
+                        _this.encycloOpen(content);
+                        break;
+
+                }
+        }
+
+        if (this.$close) {
+
+            this.$close.off("click touch");
+            this.$close.on( "click touch", function(e) { $.proxy(_this.defaultClose, _this, e)(); });
+
+        }
+
+        this.$overlay.off('click touch').on("click touch", function(e) {$.proxy(_this.defaultClose, _this, e)();});
+
+        $(window).on("resize", $.proxy(this.resize, _this) );
+
+    },
+
+    updateOpenTriggers: function( $elements) {
+        if (this.$open) {
+            this.$open.off("click touch");
+        }
+        this.$open = $elements;
+        var _this = this;
+        this.$open.each(function() {
+           $(this).on( "click touch", function(e) { 
+                switch (_this.type) {
+                    case 'popin':
+                            _this.defaultOpen(); 
+                        break;
+                    case 'help':
+                             _this.defaultOpen(); 
+                        break;
+                    case 'succes':
+                             _this.defaultOpen(); 
+                        break;
+                    case 'encyclo':
+                        _this.encycloOpen(content);
+                        break;
+
+                }
+            });
+        });
+},
+
+    /*
+     * Builds the overlay and close button if necessary
+     */
+    buildElements: function() {
+
+        if (!this.$close ) {
+
+            this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
+            this.$popin.append(this.$close);
+
+        }
+        if (this.isSlider) {console.log('do slider')}
+
+    },
+
+    defaultOpen: function() {
+        popinIsOpen = true;
+
+        if (this.type === 'help') {
+            isNewTip = true ;
+            tipIsOpened = true;
+            if ($('.help-button').hasClass('newTip')) {
+                countip++;
+                var title = 'Niveau '+countLevel+' Aide n°'+countip;
+                addHelp(title, this.content);
+                if (countip % 3 === 0) countip = 0;
+                $('.help-button').removeClass('newTip');
+            }
+        }
+
+        if (this.type === 'succes') {
+            addSuccess(this.icon)
+        }
+
+
+        this.$ContentPopup.html(this.content);
+        this.$overlay.removeClass("hide");
+        this.$popin.removeClass("hide");
+    },
+
+    defaultClose: function(e) {
+        if (popinIsOpen) {
+            var _this = this;
+            popinIsOpen = false;
+            if (isNewTip) isNewTip=false;
+            if (tipIsOpened) tipIsOpened=false;
+            this.$ContentPopup.html('');
+            this.$overlay.addClass("hide");
+            this.$popin.addClass("hide");
+            if (this.callback) eval(this.callback);
+        }
+    }
+
+};
+
+/*module.exports = modules.Popin = Popin;*/; /*********************************************************//*********************
 
 Document.ready
 
 ********************/
 
 $(document).ready(function() {
+
     Username = $('input#name').val();
     $('.hamburger').hide();
 
@@ -11249,23 +11354,6 @@ $(document).ready(function() {
 
         $child_content.load(views+loader+'.html');
 
-        switch(loader) {
-            case 'chooseDevMod':
-                setTimeout(function(){
-                    if (devMod == false) {$('.main-nav .child #input1').prop('checked', 'checked');} else {$('.main-nav .child #input2').prop('checked', 'checked');} 
-                }, 500)
-                break;
-            case 'accueil':
-
-                break;
-            case 'success':
-
-                break;
-            case 'encyclo':
-
-                break;
-        }
-
 
     });
     $('.main-nav .child i').on('click touch', function(event){
@@ -11277,16 +11365,6 @@ $(document).ready(function() {
         $parent.removeClass('childOpen');
         $child.removeClass('isOpen');
 
-    });
-
-    $('.main-nav .child ').on('click touch', function(event){
-        isdebMod = $('input#input1:checked').val();
-        $('#chooseDevMod .button-reload').show();
-        if (isdebMod == 'on') {
-            devMod = false;
-        }
-        else {devMod = true;} 
-        event.stopPropagation();
     });
 
     /////////////////Formulaire

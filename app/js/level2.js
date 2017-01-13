@@ -6,7 +6,7 @@
 function loadLevel2() {
     showpop2C = "Showpopup(content['jeu2c'], 'hidePopup()', '')";
     showpop2B = "Showpopup(content['jeu2b'], showpop2C, '')";
-    Showpopup(content['jeu2a'], showpop2B, '');
+    //Showpopup(content['jeu2a'], showpop2B, '');
     //    $('main').load(level+'Level2.html', function(){
     $('main').loadLevel('level2', function() {
 
@@ -25,29 +25,17 @@ function loadLevel2() {
             }
         //Initialisation des variables
         var defaultValue = false;
-        //console.log(devMod)
 
-        if (!devMod) {
-            codeConfig.readOnly = 'nocursor';
-            $('.dev').hide(); 
-            var tips2 = {
-                0 : content['jeu2astuce1'],
-                1 : content['jeu2astuce2'],
-                2 : content['jeu2astuce3']
-            }
-            constructTips(42000, 3, tips2); //{DEV} 
-        } else {
-            $('.notdev').hide();
-            var tips2 = {
-                0 : content['jeu2astuce1dev'],
-                1 : content['jeu2astuce2dev'],
-                2 : content['jeu2astuce3dev']
-            }
-            constructTips(42000, 3, tips2); //{DEV} 
+        codeConfig.readOnly = 'nocursor';
+        var tips2 = {
+            0 : content['jeu2astuce1'],
+            1 : content['jeu2astuce2'],
+            2 : content['jeu2astuce3']
         }
+        constructTips(42000, 3, tips2); //{DEV} 
+       
 
 
-        //console.log(codeConfig.readOnly)
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -114,7 +102,6 @@ function loadLevel2() {
 }
 
 function runCodeLevel2() {
-    console.log('running code')
     var code = codeMirror.getValue();
 
     try {
@@ -155,17 +142,12 @@ function submitLevel2() {
             pixelName = $(pixels[i]).data('name'),
             correctRVB = thisLvlAnswers[pixelName].rvb;
 
-        console.log(rvb, correctRVB);
-
         if (JSON.stringify(rvb) == JSON.stringify(correctRVB)) {
             numCorrect++;
         } else {
             break;
         }
     }
-
-    console.log(numCorrect, pixels.length);
-
 
     if (numCorrect == pixels.length || testing) { //{}
         Showpopup('Bravo !', 'loadLevel3()', 'succes');

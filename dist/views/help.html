@@ -1,20 +1,20 @@
-<div class="encyclo">
+<div class="help">
 	<ul>
 	</ul>
 </div>
 <div class="ContentEncycloPop"></div>
 <script type="text/javascript">
 
-	for (var i = 0; i < $tabArchiveContent.length; i++) {
+	for (var i = 0; i < $tabHelpContent.length; i++) {
 					//console.log($tabArchiveContent[i]);
-                    $('.encyclo ul').prepend($tabArchiveTitle[i]);
-                    $('.archive').prepend($tabArchiveContent[i])
+                    $('.help ul').prepend($tabHelpTitle[i]);
+                    $('.archive').prepend($tabHelpContent[i])
                 }
 
-         $('.encyclo li').on('click touch', function (e) {
+         $('.help li').on('click touch', function (e) {
             e.stopPropagation();
-         	$popEncycloLink = $(this).attr('data-link');
-         	$laPopin = $('.archive').find('#'+$popEncycloLink);
+         	$popHelpLink = $(this).attr('data-link');
+         	$laPopin = $('.archive').find('#'+$popHelpLink);
          	$popinEncyclo = $('.popencyclo');
 
          	$popinEncyclo.html($laPopin).addClass('open');

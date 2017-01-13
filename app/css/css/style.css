@@ -696,6 +696,7 @@ body .fleche {
   width: 70px;
   position: absolute;
   right: 16%;
+  bottom: 0;
 }
 body .button-reload {
   display: none;

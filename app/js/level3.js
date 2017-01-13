@@ -26,26 +26,14 @@ function loadLevel3() {
         //Initialisation des variables
         var defaultValue = 0;
 
-        if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide(); 
             var tips3 = {
                 0 : content['jeu3astuce1'],
                 1 : content['jeu3astuce2'],
                 2 : content['jeu3astuce3']
             }
             constructTips(42000, 3, tips3); 
-        } else {
-            $('.notdev').hide();
-            var tips3D = {
-                0 : content['jeu3astuce1dev'],
-                1 : content['jeu3astuce2dev'],
-                2 : content['jeu3astuce3dev']
-            }
-            constructTips(42000, 3, tips3D); 
-
-        }
-
+ 
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -71,9 +59,9 @@ function loadLevel3() {
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
                 resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
 
-                if (!devMod) {$('.notdev').show();}
+                $('.notdev').show();
             } else {
-                if (!devMod) {$('.notdev').hide();}
+               $('.notdev').hide();
             }
         })
 
