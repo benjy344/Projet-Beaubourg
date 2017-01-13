@@ -9433,15 +9433,20 @@ function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
     $('body').addClass('modal-active');
     setTimeout(function() {
-        $('.content-global').hide();
+        if ($('body').hasClass('modal-active')) {
+            $('.content-global').hide();
+        }
     }, 1000);
+    console.log('showing modale')
+
 
 }
 
 function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
-    $('.content-global').show();  
+    $('.content-global').show(); 
+    console.log('hidding modale')
 }; /*********************************************************/// add pixel
 function addPixel() {
     var pixel = $('<div class="pixel"></div>');
@@ -9494,7 +9499,7 @@ function colorModel(r, g, b) {
 }
 
 function resetCodePixel(id, r, g, b) {
-    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n}\n');
+    codeMirror.setValue('var ' + id + ' = {\n\tred : ' + r + ',\n\tgreen : ' + g + ',\n\tblue : ' + b + '\n};\n');
     codeMirror.markText({line: 0, ch: 0}, {line: 1, ch: 7}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 2, ch: 0}, {line: 2, ch: 9}, {readOnly: true, inclusiveLeft: true});
     codeMirror.markText({line: 3, ch: 0}, {line: 3, ch: 8}, {readOnly: true, inclusiveLeft: true});
@@ -9595,18 +9600,33 @@ function enterKeyMap() {
         cm = codeMirror,
         currentPos = cm.getCursor(),
         line = currentPos.line,
-        linePos = line + 1,
-        chPos = cm.getLine(linePos).length,
-        lastChar = cm.getRange({line: linePos, ch: chPos-1}, {line: linePos, ch: chPos});
+        lineCount = cm.lineCount();
 
-    if (lastChar == ',') {
-        chPos -= 1;
-    } 
-    if (lastChar == '}') {
-        codeMirror.getInputField().blur();
+    if (line+1 != lineCount) {
+        var linePos = line + 1,
+            chPos = cm.getLine(linePos).length,
+            lastChar = cm.getRange({line: linePos, ch: chPos-1}, {line: linePos, ch: chPos});
+
+        if (lastChar == ',') {
+            chPos -= 1;
+        } 
+        if (lastChar == ';') {
+            if (screen != 'sandbox') {
+                codeMirror.getInputField().blur();
+            } else {
+                cm.setCursor({line: 6, ch: 0})
+            }
+
+        } else {
+            cm.setCursor({line: linePos, ch: chPos})
+        }
     } else {
-        cm.setCursor({line: linePos, ch: chPos})
+        CodeMirror.commands.newlineAndIndent(cm)
     }
+    
+    
+
+
     //var token = cm.getLineTokens(linePos);
     //    if (token.length < 2) {
     //        codeMirror.getInputField().blur();
@@ -9718,7 +9738,7 @@ function move(direction, repeat) {
 } 
 function scale(sens) {
 
-    var size =   parseInt($('.imgActive').css('width'));
+    var size =   $('.imgActive').outerWidth();
 
     if (!sens) {
         sens = up;
@@ -9726,11 +9746,11 @@ function scale(sens) {
     switch(sens) {
         case up:
         case plus:
-            size += 25;
+            size *= 1.25;
             break;
         case down:
         case moins:
-            size -= 25;
+            size *= 0.75;
             break;
         default:
             console.log("error") //{DEV}   
@@ -11416,6 +11436,11 @@ function loadSandbox() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+         codeMirror.addKeyMap({
+            Enter: function (cm) {
+                enterKeyMap();
+            }
+        });
 
 
         //        $('#frameWrapper .imageObject').each(function () {
@@ -11499,16 +11524,26 @@ function runSandbox() {
         colorPixel();
 
         var pos = $('.pixelActive').data('pos'); 
-        //pos.x = pos.x > 2 ? 2 : (pos.x < 0) ? 0 : pos.x; {DEV}
-        //pos.y = pos.y > 2 ? 2 : (pos.y < 0) ? 0 : pos.y;
+        var size = $('.pixelActive').outerWidth();
+        
+       hideModal();
+
+        console.log($('#sandboxWrapper').length);
+        var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
+        var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
+        console.log(xMax, yMax)
+        
+        pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
+        pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
+        
+        console.log(pos.x, pos.y);
 
         $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-        var size = $('.pixelActive').outerWidth();
         $('.pixelActive').css('left', pos.x * size + 'px');
         $('.pixelActive').css('top', pos.y * size + 'px');
 
-        hideModal();
+         
 
 
     } catch (e) {
