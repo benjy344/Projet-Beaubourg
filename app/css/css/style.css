@@ -498,8 +498,8 @@ The `sprites` mixin generates identical output to the CSS template
 */
 @font-face {
   font-family: "font-icons";
-  src: url("../../../../dist/assets/fonts/font-icons.eot");
-  src: url("../../../../dist/assets/fonts/font-icons.eot?#iefix") format("embedded-opentype"), url("../../../../dist/assets/fonts/font-icons.woff") format("woff"), url("../../../../dist/assets/fonts/font-icons.ttf") format("truetype"), url("../../../../dist/assets/fonts/font-icons.svg#icons") format("svg");
+  src: url("../assets/fonts/font-icons.eot");
+  src: url("../assets/fonts/font-icons.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/font-icons.woff") format("woff"), url("../assets/fonts/font-icons.ttf") format("truetype"), url("../assets/fonts/font-icons.svg#icons") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -526,49 +526,49 @@ The `sprites` mixin generates identical output to the CSS template
 }
 
 .icon-close {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: -377px -106px;
   width: 50px;
   height: 50px;
 }
 
 .icon-error {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: -377px 0px;
   width: 63px;
   height: 101px;
 }
 
 .icon-help {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: -377px -161px;
   width: 40px;
   height: 39px;
 }
 
 .icon-return {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: -377px -205px;
   width: 35px;
   height: 40px;
 }
 
 .icon-succes {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: 0px -241px;
   width: 86px;
   height: 98px;
 }
 
 .icon-succes1 {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: -186px 0px;
   width: 186px;
   height: 210px;
 }
 
 .icon-succes2 {
-  background-image: url(../../../../dist/assets/sprite-main.png);
+  background-image: url(../assets/sprite-main.png);
   background-position: 0px 0px;
   width: 181px;
   height: 236px;

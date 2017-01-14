@@ -43,6 +43,7 @@ module.exports = function(grunt) {
         dest: 'dist/assets/sprite-main.png',
         destCss: 'app/css/scss/utilities/_sprite-main.scss',
         cssFormat: 'scss',
+        imgPath: '../assets/sprite-main.png',
         cssVarMap: function (sprite) {
          sprite.name = 'icon-' + sprite.name;
        },
@@ -56,6 +57,7 @@ module.exports = function(grunt) {
       dest: 'dist/assets/fonts',
       destCss: 'app/css/scss/utilities/',
       options: {
+        relativeFontPath: '../assets/fonts/',
         stylesheet: 'scss',
         fontFilename: 'font-icons',
         types: 'eot,woff,ttf,svg',
@@ -115,7 +117,7 @@ module.exports = function(grunt) {
     // Observons…
     watch: {
       options: {
-          livereload: true, // Activons le livereload du navigateur
+          //livereload: true, // Activons le livereload du navigateur
         },
         src: {
           files: ['app/js/*.js', 'app/css/**/*.scss', 'app/views/**/*.html'], // Les fichiers à observer…
