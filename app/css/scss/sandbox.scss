@@ -4,9 +4,7 @@
         position: relative;
         height: 75%;
         background-color: white;
-
-
-
+        overflow: hidden;
 
         .pixel {
             background-color: red;
@@ -16,14 +14,43 @@
             width: 100px;
             border: solid 1px black;
             position: absolute;
-        }
 
+            &.pixelActive {
+                border: 4px solid #008BFF;
+            }
+
+        }
     }
 
+    .editPixel {
+
+        &.hidden {
+            display: none;
+        }
+    }
 
 }
 
 #modalContent {
+
+    .btn-position {
+
+        &.hidden {
+            display: none;
+        }
+    }
+
+    .btn-color {
+
+        &.hidden {
+            display: none;
+        }
+    }
+    
+    .CodeMirror.CodeMirror-wrap.only-color {
+        height: 175px;
+    }
+        
 
 }
 

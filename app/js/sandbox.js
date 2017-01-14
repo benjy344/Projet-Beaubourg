@@ -18,13 +18,14 @@ function loadSandbox() {
                 theme: "icecoder", 
                 lineWrapping: true, 
                 lineNumbers: true, 
-                autofocus: false
+                autofocus: false,
+                readOnly: 'nocursor'
                 //matchBrackets: true
             }
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-         codeMirror.addKeyMap({
+        codeMirror.addKeyMap({
             Enter: function (cm) {
                 enterKeyMap();
             }
@@ -43,37 +44,96 @@ function loadSandbox() {
 
         //Change Active Pixel
         $(document).on('touch click', '.pixel', function () {
-            $('.pixelActive').removeClass('pixelActive imgActive');
-            $(this).addClass('pixelActive imgActive');
 
-            var name = $(this).data('name');
-            var thisColors = $(this).data('rvb');
-            showModal();
-            resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
+            if ($(this).hasClass('pixelActive')) {
+                $('.pixelActive').removeClass('pixelActive imgActive');
+                $('.editPixel').addClass('hidden');
+            } else {
+                $('.pixelActive').removeClass('pixelActive imgActive');
+                $(this).addClass('pixelActive imgActive');
+                $('.editPixel').removeClass('hidden');
+            }
+
+            
+
+            
 
 
 
         })
 
-        //Run Code
-        //        $('.runCode').click(function () {
-        //            runCodeLevel4();
-        //            hideModal();
-        //        });
+        $('.changeColor').on('touch click', function() {
+            if($('.pixelActive').length > 0) {
 
-        //        $('.functions-btn .btn').click(function() {
-        //            console.log($(this))
-        //            addCode($(this));
-        //        })
+                $('.btn-position').addClass('hidden');
+                $('.btn-color').removeClass('hidden');
+                $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+
+                var name = $('.pixelActive').data('name');
+                var thisColors = $('.pixelActive').data('rvb');
+                resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
+                resetSliders(thisColors.red, thisColors.green, thisColors.blue);
+
+                showModal();
+            }
+        })
+
+        $('.changePosition').on('touch click', function() {
+            if($('.pixelActive').length > 0) {
+                $('.btn-color').addClass('hidden');
+                $('.btn-position').removeClass('hidden');
+                $('.CodeMirror.CodeMirror-wrap').removeClass('only-color');
+
+                resetCode();
+
+                showModal();                
+            }
+        })
 
         $('.reinitSandbox').click(reinitSandbox);
 
-        codeMirror.setValue('init');
-        //resetCode();
+
 
         $('.addPixel').click(addPixel);
 
-        $('.runCode').click(runSandbox);
+
+        $('input[type=range]').on("input", function(){
+
+            var name = $(this).attr('class');
+            var thisPixel = $('.pixelActive').data('rvb');
+
+            switch(name) {
+                case 'red':
+                    $(this).parent().css('background-color', 'rgb('+$(this).val()+', 0, 0)');
+                    break;
+                case 'green': 
+                    $(this).parent().css('background-color', 'rgb(0, '+$(this).val()+', 0)');
+                    break;
+                case 'blue':
+                    $(this).parent().css('background-color', 'rgb(0, 0, '+$(this).val()+')');
+                    break;
+                default:
+                    break;
+            }
+
+            thisPixel[name] = $(this).val();
+            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            colorPixel();
+        })
+
+        $('.runCode').click(function () {
+            hideModal();
+            runCodeLevel4();
+            
+        });
+
+        $('.functions-btn .btn').on('touch click', function() {
+            console.log($(this))
+            addCode($(this));
+        })
+
+        codeMirror.setValue('init');
+        resetCode();
 
     })
 }
@@ -113,25 +173,25 @@ function runSandbox() {
 
         var pos = $('.pixelActive').data('pos'); 
         var size = $('.pixelActive').outerWidth();
-        
-       hideModal();
+
+        hideModal();
 
         console.log($('#sandboxWrapper').length);
         var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
         var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
         console.log(xMax, yMax)
-        
+
         pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-        
+
         console.log(pos.x, pos.y);
 
         $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
         $('.pixelActive').css('left', pos.x * size + 'px');
         $('.pixelActive').css('top', pos.y * size + 'px');
 
-         
+
 
 
     } catch (e) {
@@ -155,3 +215,5 @@ function runSandbox() {
 
 
 }
+
+

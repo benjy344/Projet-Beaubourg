@@ -18,19 +18,19 @@ body {
     color: $white;
     position: relative;
     p{
-          line-height: 1.5em;
-            font-size: 1.1em;  
-        }
-    
+        line-height: 1.5em;
+        font-size: 1.1em;  
+    }
+
     @include tablet {
 
-            
+
     }
-    
+
     @include desktop {
         //font-size: 2vw
     }
-
+    
     .loading {
         z-index: 20000;
         position: fixed;
@@ -56,6 +56,27 @@ body {
         right: 10px;
     }
 
+    button.btn {
+        //        background: linear-gradient(90deg, rgb(63, 169, 245), rgb(122, 201, 67));
+        //        border: 1px solid white;
+        //        color: white;
+        //        font-weight: 200;
+        //        border-radius: 1em;
+        display:inline-block;
+        text-align:center;
+        padding:10px 15px;
+        margin:5px;
+        //        font-size:1.125em;
+        background-color:#efefef;
+        border-radius:3px;
+        box-shadow:0 1px 2px rgba(0,0,0,.3);
+        cursor:pointer;
+        &:hover {
+            color:white;
+            background:#009bd5;
+        }
+    }
+
     .help-button {
         margin: 20px;
         position: absolute;
@@ -63,108 +84,108 @@ body {
         top: 0;
         display: none;
 
-		&.newTip {
-			animation: iconAnim 2s infinite;
-		}
-	}
-	.successGalery {
-		display: flex; 
-		flex-wrap: wrap;
+        &.newTip {
+            animation: iconAnim 2s infinite;
+        }
+    }
+    .successGalery {
+        display: flex; 
+        flex-wrap: wrap;
 
-		.succes {
-			width: 33vw;
-		    height: 33vw;
-		    display: flex;
-		    justify-content: center;
-		    align-items: center; 
-			
-			p {
-				display: none;
-			}
-			&.unlock {
+        .succes {
+            width: 33vw;
+            height: 33vw;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
 
-				i.font-icon {
-					background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
-				    -webkit-background-clip: text;
-				    -webkit-text-fill-color: transparent;
-				    font-style: normal;
-				}
-			}
-			i.font-icon {
-				color : rgba(119, 119, 119, 1);
-				font-style: normal;
-			}
-		}
-	}
-	.popencyclo {
-		display: flex;
+            p {
+                display: none;
+            }
+            &.unlock {
+
+                i.font-icon {
+                    background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-style: normal;
+                }
+            }
+            i.font-icon {
+                color : rgba(119, 119, 119, 1);
+                font-style: normal;
+            }
+        }
+    }
+    .popencyclo {
+        display: flex;
         justify-content: center;
         align-items: center;
-		height: 100%;
-		width: 100%; 
-		background: $black;
-		position: fixed;
-		top: 0;
-		right: -100%;
-		transition : all 0.3s; 
-		
-		&.open {
-			right: 0;
-			transition : all 0.3s; 
-		}
+        height: 100%;
+        width: 100%; 
+        background: $black;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        transition : all 0.3s; 
+
+        &.open {
+            right: 0;
+            transition : all 0.3s; 
+        }
         .icon-close {
             position: absolute;
             right: 25px;
             left: 25px;
         }
         .succes {
-            
+
             &.unlock {
 
             }
         }
 
-	}
+    }
 
-	input[type="text"], input[type="password"], textarea, select, button { 
-		outline: none;
-	}
-	::-webkit-scrollbar {
-	  width: 3px;
-	  }
-	 
-	::-webkit-scrollbar-track {
-	    background-color: transparent;
-	    border-radius: 8px;
-	}
-	 
-	::-webkit-scrollbar-thumb {
-	    border-radius: 10px;
-	    background: $gradiant-scrollbar;
-	}
-	.fleche {
-		background: transparent;
-		color: transparent;
-		font-size : 0;
-		border : none;
-		background-image: url("../assets/fleche.svg");
-		background-repeat: no-repeat;
-		height: 70px;
-		width: 70px;
-		position: absolute;
-		right: 16%;
+    input[type="text"], input[type="password"], textarea, select, button { 
+        outline: none;
+    }
+    ::-webkit-scrollbar {
+        width: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+        border-radius: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: $gradiant-scrollbar;
+    }
+    .fleche {
+        background: transparent;
+        color: transparent;
+        font-size : 0;
+        border : none;
+        background-image: url("../assets/fleche.svg");
+        background-repeat: no-repeat;
+        height: 70px;
+        width: 70px;
+        position: absolute;
+        right: 16%;
         bottom: 0;
-	}
-	.button-reload {
-		display: none;
-		   margin-top: 70px;
-	    font-size: 0.75em;
-	    border: 1px solid;
-	    padding: 10px;
-	}
-	.modal-active {
-		overflow: hidden;
-	}
+    }
+    .button-reload {
+        display: none;
+        margin-top: 70px;
+        font-size: 0.75em;
+        border: 1px solid;
+        padding: 10px;
+    }
+    .modal-active {
+        overflow: hidden;
+    }
 
     ::-webkit-scrollbar-track {
         background-color: transparent;

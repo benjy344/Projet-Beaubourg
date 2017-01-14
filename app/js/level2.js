@@ -45,6 +45,7 @@ function loadLevel2() {
                 enterKeyMap();
             }
         });
+        $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
 
         $('#frameWrapper').children().each(function () {
             $(this).data('rvb', {

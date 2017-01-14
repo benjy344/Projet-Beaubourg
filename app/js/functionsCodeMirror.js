@@ -174,8 +174,8 @@ function enterKeyMap() {
     } else {
         CodeMirror.commands.newlineAndIndent(cm)
     }
-    
-    
+
+
 
 
     //var token = cm.getLineTokens(linePos);
@@ -250,7 +250,10 @@ function moveDown() {
     $('.imgActive').data('pos', pos)
 }
 function rotate(deg) {
-    if (!deg) {
+    
+    if (screen == 'sandbox' && !deg) {
+        deg = 22.5
+    } else if (!deg) {
         deg = 90;
     }  
     var pos = $('.imgActive').data('pos'); 
@@ -315,16 +318,40 @@ function scale(sens) {
 
 function applyPosition() {
     var pos = $('.imgActive').data('pos'); 
-    pos.x = pos.x > 1 ? 1 : (pos.x < -1) ? -1 : pos.x;
-    pos.y = pos.y > 1 ? 1 : (pos.y < -1) ? -1 : pos.y;
-    pos.rot %= 360;
+    
 
-    //console.log(pos.rot)
+    if (screen = 'sandbox') {
 
-    $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
+        var size = $('.imgActive').outerWidth();
 
-    $('.imgActive').css('left', pos.x * 100 + '%');
-    $('.imgActive').css('top', pos.y * 100 + '%');
+        var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
+        var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
+        console.log(xMax, yMax)
+
+        pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
+        pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
+        pos.rot %= 360;
+
+        console.log(pos.x, pos.y);
+
+        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.pixelActive').css('left', pos.x * size + 'px');
+        $('.pixelActive').css('top', pos.y * size + 'px');
+
+    } else {
+
+
+        pos.x = pos.x > 1 ? 1 : (pos.x < -1) ? -1 : pos.x;
+        pos.y = pos.y > 1 ? 1 : (pos.y < -1) ? -1 : pos.y;
+        pos.rot %= 360;
+
+        //console.log(pos.rot)
+
+        $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
+
+        $('.imgActive').css('left', pos.x * 100 + '%');
+        $('.imgActive').css('top', pos.y * 100 + '%');
+    }
 }
 
 function resetCode() {

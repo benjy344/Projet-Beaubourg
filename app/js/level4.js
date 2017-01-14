@@ -11,7 +11,8 @@ function loadLevel4() {
     $('main').loadLevel('level4', function () {
 
         var image = $('.imageObject');
-        image.on('touch click', showModal);
+        var holdTimeout = '';
+
 
         //CodeMirror
         var textArea = $('.codeMirror')[0],
@@ -20,13 +21,12 @@ function loadLevel4() {
                 theme: "icecoder", 
                 lineWrapping: true, 
                 lineNumbers: true, 
-                autofocus: false
+                autofocus: false,
+                readOnly: 'nocursor'
                 //matchBrackets: true
             }
         //Initialisation des variables
-        if (!devMod) {
             codeConfig.readOnly = 'nocursor';
-            $('.dev').hide(); 
 
             var tips4 = {
                 0 : content['jeu4astuce1'],
@@ -34,15 +34,7 @@ function loadLevel4() {
                 2 : content['jeu4astuce3']
             }
             constructTips(42000, 3, tips4); 
-        } else {
-            $('.notdev').hide();
-             var tips4D = {
-                0 : content['jeu4astuce1dev'],
-                1 : content['jeu4astuce2dev'],
-                2 : content['jeu4astuce3dev']
-            }
-            constructTips(42000, 3, tips4D); 
-        }
+        
 
         //thisLvlAnswers = answers.lvl4;
 
@@ -63,13 +55,49 @@ function loadLevel4() {
             }).data('name', 'img_'+$(this).index());
         });
 
+
+        //        $('.imageObject').bind('mousedown touchstart', function() {
+        //            console.log($(this))
+        //            var that = $(this)
+        //            holdTimeout = setTimeout(add.bind(null, that), 1000);
+        //        })
+        //        
+        //        $('.imageObject').bind('mouseup touchend', function() {
+        //            console.log($(this))
+        //            if ($(this).hasClass('hovered')) {
+        //                $(this).removeClass('hovered')
+        //            } else {
+        //                clearTimeout(holdTimeout);
+        //            }
+        //        })
+        //        
+        //        function add(that) {
+        //            console.log(that)
+        //            that.addClass('hovered');
+        //        }
+
+        $('.imageObject').bind('mousedown touchstart', function() {
+            $(this).addClass('hovered');
+        })
+
+        $('.imageObject').bind('mouseup touchend', function() {
+            if ($(this).hasClass('hovered')) {
+                $(this).removeClass('hovered')
+            }
+        })
+
+
         //Change Active Pixel
-        image.click(function () {
+        image.on('touch click', function () {
+            showModal();
             $('.imgActive').removeClass('imgActive');
             $(this).addClass('imgActive');
 
             resetCode();
-        })
+        });
+
+
+
 
         //Run Code
         $('.runCode').on('touch click', function () {
@@ -94,9 +122,9 @@ function loadLevel4() {
 
 
 function runCodeLevel4() {
-    // console.log('running code')
+     console.log('running code lvl4')
     // console.log($('.imgActive').data('pos'))
-    alert('ok')
+    //alert('ok')
     var code = codeMirror.getValue();
     eval(code)
     applyPosition();

@@ -6,6 +6,11 @@
 
     <button class="btn addPixel">Add pixel</button>
 
+    <div class="editPixel hidden">
+        <button class="btn changeColor">Change Color</button>
+        <button class="btn changePosition">Change Position</button>
+    </div>
+
     <button class="btn reinitSandbox">Reinitialiser</button>
 
     <div class="fleche btn-start-order" onclick="finish()">Valider la réponse</div>
@@ -16,14 +21,40 @@
 
     <textarea class="codeMirror"></textarea>
 
-    <div class="buttons">
+    <div class="buttons btn-position">
+
+        <div class="functions-btn">
+
+            <div class="top"><button class="btn addcode" data-function="up">moveUp()</button></div>
+            <div class="mid"><button class="btn addcode" data-function="left">moveLeft()</button></div>
+            <div class="mid"><button class="btn addcode" data-function="rotate">rotate()</button></div>
+            <div class="mid"><button class="btn addcode" data-function="right">moveRight()</button></div>
+            <div class="bot"><button class="btn addcode" data-function="down">moveDown()</button></div>
+
+        </div>
+
         <button class="btn runCode">RUN CODE</button>
     </div>
 
-    <div class="functions">
-        <p>
-            Liste des fonctions a utiliser
-        </p>
+    <div class="pixelModel btn-color">
+
+        <div class="buttons">
+
+            <div class="sliders">
+                <div class="rangeBg">
+                    <input type="range" value="0" max="255" min="0" step="15" class="red">
+                </div>
+
+                <div class="rangeBg">
+                    <input type="range" value="0" max="255" min="0" step="15" class="green">
+                </div>
+                <div class="rangeBg">
+                    <input type="range" value="0" max="255" min="0" step="15" class="blue">
+                </div>
+            </div>
+        </div>
 
     </div>
+
+
 </div>

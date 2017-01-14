@@ -44,6 +44,7 @@ function loadLevel3() {
                 enterKeyMap();
             }
         });
+        $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
 
 
         $('#frameWrapper').children().each(function(){            
