@@ -10574,7 +10574,7 @@ function loadLevel1() {
     $('main').loadLevel('level1', function(){
 
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
-        var heightNumber =  16;
+        var heightNumber =  15;
         var min = Math.ceil(0);
         var max = Math.floor(9);
         var tips1 = {
