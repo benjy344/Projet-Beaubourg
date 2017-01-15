@@ -1,5 +1,12 @@
+/*******************
+
+		Variables
+
+*******************/
 .table {
   display: block;
+  display: flex;
+  align-items: center;
   height: 100%;
 }
 
@@ -9,8 +16,9 @@
   position: relative;
   text-align: center;
   padding: 20px;
-  max-height: 80%;
+  max-height: 70%;
   overflow: auto;
+  width: 100%;
 }
 
 .table-block {
@@ -55,8 +63,30 @@
   top: 0;
 }
 
-.slide.previous, .slide.next {
+.slide:not(.current) {
   opacity: 0;
+}
+
+.js-close-popupEncyclo {
+  color: #fff;
+  background: transparent;
+  padding: 15px;
+  max-width: 240px;
+  margin: 0 auto;
+  border-left: 2px solid #7ac943;
+  border-right: 2px solid #3fa9f5;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 2px;
+  -moz-background-size: 100% 2px;
+  background-size: 100% 2px;
+  background-image: -webkit-linear-gradient(left, #7ac943 0%, #3fa9f5 100%), -webkit-linear-gradient(left, #7ac943 0%, #3fa9f5 100%);
+  background-image: -moz-linear-gradient(left, #7ac943 0%, #3fa9f5 100%), -moz-linear-gradient(left, #7ac943 0%, #3fa9f5 100%);
+  background-image: -o-linear-gradient(left, #7ac943 0%, #3fa9f5 100%), -o-linear-gradient(left, #7ac943 0%, #3fa9f5 100%);
+  background-image: linear-gradient(to right, #7ac943 0%, #3fa9f5 100%), linear-gradient(to right, #7ac943 0%, #3fa9f5 100%);
 }
 
 .dots {

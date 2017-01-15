@@ -5,11 +5,16 @@
 *
 *********************/
 function loadSandbox() {
-     var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['textsandbox']
-    });
+    if (!sandboxIsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['textsandbox'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    sandboxIsVisited = true;
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');

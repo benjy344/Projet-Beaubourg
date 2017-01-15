@@ -4,23 +4,48 @@
         <div class="slide">
             <div class="table table-block">
                 <div class="cell">
-                    <p>Bonjour <span id="username"></span> et bienvenu sur notre application ! <p>Afin de vous accompagner dans votre découverte du code informatique et de vous expliquer des notions sur le code informatique, nous avons mené une mission de “vulgarisation scientifique” du code informatique pour vous ! <br>Au fil des quelques jeux que nous vous avons préparé, vous allez découvrir des notions fondamentales sur la création d’une image
-                  mené une mission de “vulgarisation scientifique” du code informatique pour vous ! <br>Au fil des quelques jeux que nous vous avons préparé, vous allez découvrir des notions fondamentales sur la création d’une image numérique.</p> <p>Bonne chance et bon jeu !</p>
+                    <p>Bonjour <span id="username"></span> et bienvenu sur notre application ! <p>Afin de vous accompagner dans votre découverte du code informatique et de vous en expliquer ses notions, nous avons mené une mission de “vulgarisation scientifique” pour vous ! <br>Au fil de ces quelques jeux, vous allez découvrir des notions fondamentales sur la création d’une image numérique.</p> <p>Glissez vers la droite ou appuyez sur <i class="icon icon-next"></i> pour lire la suite</p>
                 </div>
             </div>
         </div>
         <div class="slide">
             <div class="table table-block">
                 <div class="cell">
-                    <p>Bonjour <span id="username"></span> et bienvenu sur notre application ! <p>Afin de vous accompagner dans votre découverte du code informatique et de vous expliquer des notions sur le code informatique, nous avons mené!</p>
+                    <p>Utilisez </br><div class="fleche demo">Commencer l'experience</div></br> pour valider un contenu.</p> 
                 </div>
             </div>
         </div>
         <div class="slide">
             <div class="table table-block">
                 <div class="cell">
-                    <p>Bonjour <span id="username"></span> </p>
-					<div class="fleche btn-start-order" onclick="loadLevel1()">Commencer l'experience</div>
+                    <p>Utilisez </p><div class="icon icon-menu"></div><p> pour acceder au menu.</p>
+                    <p>Ce dernier vous permettra d'acceder aux niveaux que vous aurez débloqués, à vos succès, à l'encyclopedie ainsi qu'aux aides.</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="table table-block">
+                <div class="cell">
+                    <p>L'icone </p><div class="icon icon-help"></div><p> vous permetra d'obtenir de l'aide si vous bloquez trop longtemps sur un mini-jeu.</p>
+                    <p>Les aides débloquées seront enregistrés automatiquent dans le menu "Aides".</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="table table-block">
+                <div class="cell">
+                    <p>Toutes les explications que nous vous fournissons peuvent être consultées dans le menu "Encyclopedie".</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="table table-block">
+                <div class="cell">
+                    <p>L'application renferme de nombreux succès, essayez de tous les débloquer !</p>
+                    <p>ils seront disponibles dans le menu "Succès" !</p>
+                    <p>Profitez bien de l'aventure, notre équipe sera présente pour vous accompager !</p>
+                    <p>Bonne chance !</p>
+                    <div class="fleche valid-into" onclick="loadLevel1()">Commencer l'experience</div>
                 </div>
             </div>
         </div>
@@ -28,6 +53,7 @@
 </section>
 	
 <script type="text/javascript">
+	$('#username').html(Username);
 	var $slider = new Slider();
 </script>
 </div>

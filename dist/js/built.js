@@ -65,7 +65,13 @@ $tabArchiveTitle = [];
 $tabArchiveContent = [];
 $tabSuccess = [];
 $tabHelpTitle = [];
-$tabHelpContent = [];; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
+$tabHelpContent = [];
+
+var level1IsVisited = false,
+    level2IsVisited = false,
+    level3IsVisited = false,
+    level4IsVisited = false,
+    sandboxIsVisited = false;; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
 // This is CodeMirror (http://codemirror.net), a code editor
@@ -9245,7 +9251,10 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 *       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
 *       icon (string) la class de l'icon, par default sans class     
 **/
-function Showpopup(content, loadfonction, icon, title=null , isSuccess=false){
+function Showpopup(content, loadfonction, icon, title, isSuccess){
+    
+    isSuccess = isSuccess || false;
+    title = title || null
 
     if ($Popup) {
 
@@ -10593,11 +10602,16 @@ function loadLevel1() {
     $('.hamburger').show();
 
     countLevel = 1;
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu1']
-    });
+    if (!level1IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu1'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level1IsVisited = true;
     aleNumber = "";
     $('main').loadLevel('level1', function(){
 
@@ -10673,15 +10687,16 @@ function submitLevel1() {
 *
 *********************/
 function loadLevel2() {
-    showpop2C = "Showpopup(content['jeu2c'], 'hidePopup()', '')";
-    showpop2B = "Showpopup(content['jeu2b'], showpop2C, '')";
-    //Showpopup(content['jeu2a'], showpop2B, '');
-    //    $('main').load(level+'Level2.html', function(){
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu2']
-    });
+    if (!level2IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu2'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level2IsVisited = true;
     $('main').loadLevel('level2', function() {
 
         var pixel = $('.pixel');
@@ -10844,11 +10859,16 @@ function submitLevel2() {
 *********************/
 function loadLevel3() {
     
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu3']
-    });
+    if (!level3IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu3'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level3IsVisited = true;
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');
@@ -11055,11 +11075,16 @@ function submitLevel3() {
 *
 *********************/
 function loadLevel4() {
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu4']
-    });
+    if (!level4IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu4'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level4IsVisited = true;
 
     $('main').loadLevel('level4', function () {
 
@@ -11261,9 +11286,6 @@ Popin.prototype = {
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
         }
-        //console.log(_default)
-        //_default.$close = _default.$popin.find(".js-popin-close");
-        //$.extend(this, _default);
 
         this.buildElements();
         this.addEventListeners();
@@ -11278,21 +11300,7 @@ Popin.prototype = {
         if (this.$open) {
             this.updateOpenTriggers( this.$open );
         }else {
-            switch (_this.type) {
-                    case 'popin':
-                            _this.defaultOpen(); 
-                        break;
-                    case 'help':
-                        _this.defaultOpen();
-                        break;
-                    case 'succes':
-                        _this.defaultOpen();
-                        break;
-                    case 'encyclo':
-                        _this.defaultOpen();
-                        break;
-
-                }
+           _this.defaultOpen(); 
         }
 
         if (this.$close) {
@@ -11314,21 +11322,7 @@ Popin.prototype = {
         var _this = this;
         this.$open.each(function() {
            $(this).on( "click touch", function(e) { 
-                switch (_this.type) {
-                    case 'popin':
-                            _this.defaultOpen(); 
-                        break;
-                    case 'help':
-                             _this.defaultOpen(); 
-                        break;
-                    case 'succes':
-                             _this.defaultOpen(); 
-                        break;
-                    case 'encyclo':
-                        _this.defaultOpen();
-                        break;
-
-                }
+                _this.defaultOpen(); 
             });
         });
 },
@@ -11337,13 +11331,15 @@ Popin.prototype = {
      * Builds the overlay and close button if necessary
      */
     buildElements: function() {
-
-        if (!this.$close ) {
-
+        if (this.isSlider ) {
+            this.$popin.find(".fleche").remove();
+        }
+        if (!this.$close && !this.isSlider ) {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
 
         }
+
 
     },
 
@@ -11374,6 +11370,8 @@ Popin.prototype = {
         this.$ContentPopup.html(this.content);
 
         if (this.isSlider) {
+                this.$close = $('.js-close-popupEncyclo');
+
                 $slider = new Slider();
             }
         this.$overlay.removeClass("hide");
@@ -11580,11 +11578,16 @@ function reinitSandbox() {
 *
 *********************/
 function loadSandbox() {
-     var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['textsandbox']
-    });
+    if (!sandboxIsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['textsandbox'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    sandboxIsVisited = true;
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');

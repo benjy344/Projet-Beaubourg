@@ -41,9 +41,6 @@ Popin.prototype = {
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
         }
-        //console.log(_default)
-        //_default.$close = _default.$popin.find(".js-popin-close");
-        //$.extend(this, _default);
 
         this.buildElements();
         this.addEventListeners();
@@ -58,21 +55,7 @@ Popin.prototype = {
         if (this.$open) {
             this.updateOpenTriggers( this.$open );
         }else {
-            switch (_this.type) {
-                    case 'popin':
-                            _this.defaultOpen(); 
-                        break;
-                    case 'help':
-                        _this.defaultOpen();
-                        break;
-                    case 'succes':
-                        _this.defaultOpen();
-                        break;
-                    case 'encyclo':
-                        _this.defaultOpen();
-                        break;
-
-                }
+           _this.defaultOpen(); 
         }
 
         if (this.$close) {
@@ -94,21 +77,7 @@ Popin.prototype = {
         var _this = this;
         this.$open.each(function() {
            $(this).on( "click touch", function(e) { 
-                switch (_this.type) {
-                    case 'popin':
-                            _this.defaultOpen(); 
-                        break;
-                    case 'help':
-                             _this.defaultOpen(); 
-                        break;
-                    case 'succes':
-                             _this.defaultOpen(); 
-                        break;
-                    case 'encyclo':
-                        _this.defaultOpen();
-                        break;
-
-                }
+                _this.defaultOpen(); 
             });
         });
 },
@@ -117,13 +86,15 @@ Popin.prototype = {
      * Builds the overlay and close button if necessary
      */
     buildElements: function() {
-
-        if (!this.$close ) {
-
+        if (this.isSlider ) {
+            this.$popin.find(".fleche").remove();
+        }
+        if (!this.$close && !this.isSlider ) {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
 
         }
+
 
     },
 
@@ -154,6 +125,8 @@ Popin.prototype = {
         this.$ContentPopup.html(this.content);
 
         if (this.isSlider) {
+                this.$close = $('.js-close-popupEncyclo');
+
                 $slider = new Slider();
             }
         this.$overlay.removeClass("hide");

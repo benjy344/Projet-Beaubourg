@@ -138,6 +138,9 @@ body {
             right: 25px;
             left: 25px;
         }
+        .js-close-popupEncyclo {
+            display: none;
+        }
         .succes {
             i {
                 color: #8F8F8F;
@@ -188,6 +191,15 @@ body {
         position: absolute;
         right: 16%;
         bottom: 0;
+
+        &.demo {
+            position: initial;
+            margin: auto;
+        }
+        &.valid-into {
+            position: relative;
+            left: 60%;
+        }
     }
     .button-reload {
         display: none;
@@ -378,10 +390,15 @@ body {
                 border-radius: 30px;
                 text-align: center;
             }
-            .popup-icon {
-                text-align: center;
+            
+            .font-icon {
+                background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-style: normal;
+                font-size: 6em;
+                animation: iconAnim 2s infinite;
             }
-
             .fleche {
                 position: relative;
                 left: 70%;

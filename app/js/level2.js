@@ -4,15 +4,16 @@
 *
 *********************/
 function loadLevel2() {
-    showpop2C = "Showpopup(content['jeu2c'], 'hidePopup()', '')";
-    showpop2B = "Showpopup(content['jeu2b'], showpop2C, '')";
-    //Showpopup(content['jeu2a'], showpop2B, '');
-    //    $('main').load(level+'Level2.html', function(){
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu2']
-    });
+    if (!level2IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu2'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level2IsVisited = true;
     $('main').loadLevel('level2', function() {
 
         var pixel = $('.pixel');

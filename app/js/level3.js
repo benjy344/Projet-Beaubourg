@@ -5,11 +5,16 @@
 *********************/
 function loadLevel3() {
     
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu3']
-    });
+    if (!level3IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu3'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level3IsVisited = true;
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');

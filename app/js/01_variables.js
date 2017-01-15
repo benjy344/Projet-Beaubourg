@@ -66,3 +66,9 @@ $tabArchiveContent = [];
 $tabSuccess = [];
 $tabHelpTitle = [];
 $tabHelpContent = [];
+
+var level1IsVisited = false,
+    level2IsVisited = false,
+    level3IsVisited = false,
+    level4IsVisited = false,
+    sandboxIsVisited = false;

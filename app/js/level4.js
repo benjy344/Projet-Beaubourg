@@ -4,11 +4,16 @@
 *
 *********************/
 function loadLevel4() {
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu4']
-    });
+    if (!level4IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu4'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level4IsVisited = true;
 
     $('main').loadLevel('level4', function () {
 

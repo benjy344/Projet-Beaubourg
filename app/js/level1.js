@@ -7,11 +7,16 @@ function loadLevel1() {
     $('.hamburger').show();
 
     countLevel = 1;
-    var $popinSlider = new Popin({
-        isSlider: true,
-        type: 'encyclo',
-        content: content['jeu1']
-    });
+    if (!level1IsVisited) {
+        var $popinSlider = new Popin({
+            isSlider: true,
+            type: 'encyclo',
+            content: content['jeu1'],
+            $close: $('.js-close-popupEncyclo')
+        });
+    }
+    
+    level1IsVisited = true;
     aleNumber = "";
     $('main').loadLevel('level1', function(){
 

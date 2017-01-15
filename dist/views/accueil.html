@@ -2,18 +2,34 @@
 	<ul>
 		<li><a href="#" data-load="loadIntro()">Introduction</a></li>
 		<li><a href="#" data-load="loadLevel1()">I . Le Pixel</a></li>
-		<li><a href="#" class="lock" data-load="loadLevel2()">II . La Couleur</a></li>
-		<li><a href="#" class="lock" data-load="loadLevel3()">III . La Couleur Aditive</a></li>
-		<li><a href="#" class="lock" data-load="loadLevel4()">IV . Le Positionnement</a></li>
-		<li><a href="#" class="lock" data-load="loadSandbox()">Sandbox</a></li>
+		<li><a href="#" class="lock load-level2" data-load="loadLevel2()">II . La Couleur</a></li>
+		<li><a href="#" class="lock load-level3" data-load="loadLevel3()">III . La Couleur Aditive</a></li>
+		<li><a href="#" class="lock load-level4" data-load="loadLevel4()">IV . Le Positionnement</a></li>
+		<li><a href="#" class="lock load-level5 " data-load="loadSandbox()">Sandbox</a></li>
 	</ul>
 </div>
 
 <script type="text/javascript">
-console.log(screen);
+
+	if (level2IsVisited) {
+		$('.load-level2').removeClass('lock');
+	}
+	if (level3IsVisited) {
+		$('.load-level3').removeClass('lock');
+	}
+	if (level4IsVisited) {
+		$('.load-level4').removeClass('lock');
+	}
+	if (sandboxIsVisited) {
+		$('.load-level5').removeClass('lock');
+	}
 	 $('#ChooseLevel li a ').on('click', function (e) {
         var toLoad = $(this).attr('data-load');
         if ($(this).hasClass('lock')) {e.preventDefault()} else {eval(toLoad);}
+        $('.hamburger').toggleClass('is-active');
+        $('#overlay').toggleClass('open');
+        $('.main-nav>ul').removeClass('childOpen');
+        $('.main-nav .child').removeClass('isOpen');
     })
 
 </script>
