@@ -163,7 +163,7 @@ function submitLevel4() {
         });
     } else {
         var $popinError = new Popin({
-            content: content['error']
+            content: content['erreur']
         });
     }
 }
