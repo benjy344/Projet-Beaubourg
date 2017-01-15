@@ -21,21 +21,51 @@
 
 // Icons
 
-.font-icon-arrow:before {
+.font-icon-success1:before {
      font-family: "font-icons";
      content:"\f101";
 }
 
 
-.font-icon-pint:before {
+.font-icon-success2:before {
      font-family: "font-icons";
      content:"\f102";
 }
 
 
-.font-icon-succes:before {
+.font-icon-success3:before {
      font-family: "font-icons";
      content:"\f103";
+}
+
+
+.font-icon-success4:before {
+     font-family: "font-icons";
+     content:"\f104";
+}
+
+
+.font-icon-success5:before {
+     font-family: "font-icons";
+     content:"\f105";
+}
+
+
+.font-icon-success6:before {
+     font-family: "font-icons";
+     content:"\f106";
+}
+
+
+.font-icon-success7:before {
+     font-family: "font-icons";
+     content:"\f107";
+}
+
+
+.font-icon-success8:before {
+     font-family: "font-icons";
+     content:"\f108";
 }
 
 
@@ -43,24 +73,59 @@
 
 
 
- @if  ($icon == "arrow") {
+ @if  ($icon == "success1") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\f101";
 }
 
 
-@else if ($icon == "pint") {
+@else if ($icon == "success2") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\f102";
 }
 
 
-@else if ($icon == "succes") {
+@else if ($icon == "success3") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\f103";
+}
+
+
+@else if ($icon == "success4") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f104";
+}
+
+
+@else if ($icon == "success5") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f105";
+}
+
+
+@else if ($icon == "success6") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f106";
+}
+
+
+@else if ($icon == "success7") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f107";
+}
+
+
+@else if ($icon == "success8") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\f108";
 }
 
 }

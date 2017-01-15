@@ -188,12 +188,11 @@ Implementation de l'encyclopedie
 *
 */
 
-function addEncyclo (name, content) {
-
+function addEncyclo(name, content) {
     countEncyclo = $tabArchiveTitle.length;
     if (name && content) {
         $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
-        $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
+        $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
     } 
 
 }

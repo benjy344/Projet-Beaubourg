@@ -10,6 +10,11 @@ function loadLevel1() {
     showpop1C = "Showpopup(content['jeu1c'], 'hidePopup()', '')";
     showpop1B = "Showpopup(content['jeu1b'], showpop1C, '')";
     //Showpopup(content['jeu1a'], showpop1B, '', "Présention de l\'oeuvre 1", false);
+    var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['jeu1']
+    });
     aleNumber = 0;
     $('main').loadLevel('level1', function(){
 
@@ -22,7 +27,7 @@ function loadLevel1() {
             1 : content['jeu1astuce2dev'],
             2 : content['jeu1astuce3dev']
            }
-        constructTips(42000, 3, tips1);
+        constructTips(4000, 3, tips1);
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
             if (alea % 2 == 0) {
@@ -71,7 +76,7 @@ function submitLevel1() {
             type: 'succes',
             icon: 'succes1'
         });
-        Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
+        //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
     }else{var $popinError = new Popin({
         content: content['erreur'],

@@ -19,60 +19,16 @@
   width: 100%;
   letter-spacing: 10;
 }
-#Level2 .tableau {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-#Level2 .tableau ul {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  width: 100vw;
-  height: calc(100vw / 7);
-  padding: 0;
-  margin: 0;
-}
-#Level2 .tableau ul:first-child {
-  margin-top: 40px;
-}
-#Level2 .tableau ul li {
-  list-style: none;
-  width: calc( 100% / 7);
-  height: calc(100%);
-}
-#Level2 .tableau ul li .pixel {
-  height: 100%;
-  width: 100%;
-  background-color: #FFF;
-}
 #Level2 #kiteII, #Level2 #frameWrapper {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  height: calc( (100vw/7)*2 );
-  width: 100vw;
-}
-#Level2 #frameWrapper {
-  /*padding: 1em;*/
-}
-#Level2 .pixelModel {
-  width: 90px;
-  height: 90px;
-  background-color: black;
-}
-#Level2 #kiteII {
-  display: none;
+  height: calc( ((100vw - 20px)/7)*2 );
+  width: 100%;
 }
 #Level2 #kiteII .pixel, #Level2 #frameWrapper .pixel {
   box-sizing: border-box;
-  height: calc(100vw / 7 );
+  height: calc((100vw - 20px)/ 7);
   border: solid 1px black;
 }
 #Level2 #frameWrapper .pixel {
@@ -107,6 +63,8 @@
 
 #modalContent.level2 .checkboxes {
   display: flex;
+  max-width: 300px;
+  max-height: 300px;
   height: calc(100vw/2);
   width: calc(100vw/2);
 }

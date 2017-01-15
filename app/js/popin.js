@@ -16,12 +16,8 @@
     //             type: 'popin',
     //             callback: 'loadIntro()'
     //     });
-function Popin(options, override) {
-
-    // this.open = this.defaultOpen(content);
-    // this.close = this.defaultClose;
-    if (!override) this.init(options);
-
+function Popin(options) {
+    this.init(options);
 }
 
 Popin.prototype = {
@@ -73,7 +69,7 @@ Popin.prototype = {
                         _this.defaultOpen();
                         break;
                     case 'encyclo':
-                        _this.encycloOpen(content);
+                        _this.defaultOpen();
                         break;
 
                 }
@@ -87,8 +83,6 @@ Popin.prototype = {
         }
 
         this.$overlay.off('click touch').on("click touch", function(e) {$.proxy(_this.defaultClose, _this, e)();});
-
-        $(window).on("resize", $.proxy(this.resize, _this) );
 
     },
 
@@ -111,7 +105,7 @@ Popin.prototype = {
                              _this.defaultOpen(); 
                         break;
                     case 'encyclo':
-                        _this.encycloOpen(content);
+                        _this.defaultOpen();
                         break;
 
                 }
@@ -130,7 +124,6 @@ Popin.prototype = {
             this.$popin.append(this.$close);
 
         }
-        if (this.isSlider) {console.log('do slider')}
 
     },
 
@@ -152,9 +145,17 @@ Popin.prototype = {
         if (this.type === 'succes') {
             addSuccess(this.icon)
         }
+        if (this.type === 'encyclo') {
+            var title = 'Niveau '+countLevel;
+            addEncyclo(title, this.content);
+        }
 
 
         this.$ContentPopup.html(this.content);
+
+        if (this.isSlider) {
+                $slider = new Slider();
+            }
         this.$overlay.removeClass("hide");
         this.$popin.removeClass("hide");
     },

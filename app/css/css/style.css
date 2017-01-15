@@ -510,68 +510,79 @@ The `sprites` mixin generates identical output to the CSS template
   -webkit-font-smoothing: antialiased;
 }
 
-.font-icon-arrow:before {
+.font-icon-success1:before {
   font-family: "font-icons";
   content: "\f101";
 }
 
-.font-icon-pint:before {
+.font-icon-success2:before {
   font-family: "font-icons";
   content: "\f102";
 }
 
-.font-icon-succes:before {
+.font-icon-success3:before {
   font-family: "font-icons";
   content: "\f103";
 }
 
+.font-icon-success4:before {
+  font-family: "font-icons";
+  content: "\f104";
+}
+
+.font-icon-success5:before {
+  font-family: "font-icons";
+  content: "\f105";
+}
+
+.font-icon-success6:before {
+  font-family: "font-icons";
+  content: "\f106";
+}
+
+.font-icon-success7:before {
+  font-family: "font-icons";
+  content: "\f107";
+}
+
+.font-icon-success8:before {
+  font-family: "font-icons";
+  content: "\f108";
+}
+
 .icon-close {
   background-image: url(../assets/sprite-main.png);
-  background-position: -377px -106px;
+  background-position: -68px 0px;
   width: 50px;
   height: 50px;
 }
 
 .icon-error {
   background-image: url(../assets/sprite-main.png);
-  background-position: -377px 0px;
+  background-position: 0px 0px;
   width: 63px;
   height: 101px;
 }
 
 .icon-help {
   background-image: url(../assets/sprite-main.png);
-  background-position: -377px -161px;
+  background-position: -68px -55px;
   width: 40px;
   height: 39px;
 }
 
-.icon-return {
+.icon-next {
   background-image: url(../assets/sprite-main.png);
-  background-position: -377px -205px;
+  background-position: -123px 0px;
   width: 35px;
   height: 40px;
 }
 
-.icon-succes {
+.icon-return {
   background-image: url(../assets/sprite-main.png);
-  background-position: 0px -241px;
-  width: 86px;
-  height: 98px;
-}
-
-.icon-succes1 {
-  background-image: url(../assets/sprite-main.png);
-  background-position: -186px 0px;
-  width: 186px;
-  height: 210px;
-}
-
-.icon-succes2 {
-  background-image: url(../assets/sprite-main.png);
-  background-position: 0px 0px;
-  width: 181px;
-  height: 236px;
+  background-position: -123px -45px;
+  width: 35px;
+  height: 40px;
 }
 
 body {
@@ -615,6 +626,20 @@ body .close {
   z-index: 1000;
   top: 5px;
   right: 10px;
+}
+body button.btn {
+  display: inline-block;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 5px;
+  background-color: #efefef;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+body button.btn:hover {
+  color: white;
+  background: #009bd5;
 }
 body .help-button {
   margin: 20px;
@@ -670,6 +695,20 @@ body .popencyclo .icon-close {
   position: absolute;
   right: 25px;
   left: 25px;
+}
+body .popencyclo .succes i {
+  color: #8F8F8F;
+  font-style: normal;
+  font-size: 8em;
+  text-align: center;
+}
+body .popencyclo .succes p {
+  text-align: center;
+}
+body .popencyclo .succes.unlock i {
+  background: linear-gradient(#3fa9f5, #7ac943);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 body input[type="text"], body input[type="password"], body textarea, body select, body button {
   outline: none;
@@ -1181,8 +1220,10 @@ body .overlay nav .child {
   display: inline-block;
   overflow: auto;
 }
-body .overlay nav .child i {
+body .overlay nav .child i.icon-return {
   margin-left: 10px;
+  position: fixed;
+  top: -100px;
 }
 body .overlay nav .child > * {
   display: none;

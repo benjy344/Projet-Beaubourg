@@ -139,9 +139,22 @@ body {
             left: 25px;
         }
         .succes {
-
+            i {
+                color: #8F8F8F;
+                font-style: normal;
+                font-size: 8em;
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
             &.unlock {
+                i {
+                     background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
 
+                }
             }
         }
 
@@ -733,8 +746,10 @@ body {
                 display: inline-block;
                 overflow: auto;
 
-                i {
+                i.icon-return {
                     margin-left: 10px;
+                    position: fixed;
+                    top: -100px;
                 }
 
                 &>* {

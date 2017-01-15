@@ -10,17 +10,17 @@
                     $('.help ul').prepend($tabHelpTitle[i]);
                     $('.archive').prepend($tabHelpContent[i])
                 }
-
+        $popinEncyclo = $('.popencyclo');
          $('.help li').on('click touch', function (e) {
             e.stopPropagation();
          	$popHelpLink = $(this).attr('data-link');
          	$laPopin = $('.archive').find('#'+$popHelpLink);
-         	$popinEncyclo = $('.popencyclo');
+         	
 
-         	$popinEncyclo.html($laPopin).addClass('open');
+         	$popinEncyclo.html($laPopin.clone()).addClass('open');
          });
 
-         $('.popinClose').on('click touch', function () {
+         $($popinEncyclo).on('click touch', function () {
          	$popinEncyclo.removeClass('open');
          })
 </script>
