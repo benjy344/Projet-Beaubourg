@@ -1,13 +1,3 @@
-#Level4 .consigne p {
-  text-align: center;
-  padding-top: 100px;
-}
-#Level4 .consigne span {
-  text-align: center;
-  display: block;
-  width: 100%;
-  letter-spacing: 10;
-}
 #Level4 #frameWrapper {
   position: relative;
   height: 300px;
@@ -42,18 +32,33 @@
   transition-delay: 1s;
 }
 
-#modalContent .functions-btn {
+#modalContent .buttons {
+  white-space: nowrap;
+  font-size: 0.75em;
+  margin-top: 1em;
+}
+#modalContent .buttons .functions-btn {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   text-align: center;
 }
-#modalContent .functions-btn div {
+#modalContent .buttons .functions-btn div {
   flex-basis: 100%;
-  margin: 10px 0;
+  margin: 0.35em 0;
 }
-#modalContent .functions-btn div.mid {
+#modalContent .buttons .functions-btn div.mid {
   flex-basis: calc(100%/3);
+}
+#modalContent .buttons button.btn {
+  padding: 0.5em;
+  margin: 0;
+}
+#modalContent .buttons button.btn.runCode {
+  width: 100%;
+}
+#modalContent .CodeMirror.CodeMirror-wrap {
+  height: 50%;
 }
 
 /*# sourceMappingURL=activite4.css.map */

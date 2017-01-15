@@ -4,9 +4,11 @@
 *
 *********************/
 function loadLevel4() {
-    showpop4C = "Showpopup(content['jeu4c'], 'hidePopup()', '')";
-    showpop4B = "Showpopup(content['jeu4b'], showpop4C, '')";
-    Showpopup(content['jeu4a'], showpop4B, '');
+    var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['jeu4']
+    });
 
     $('main').loadLevel('level4', function () {
 
@@ -153,10 +155,15 @@ function submitLevel4() {
         });
     })
     if (isCorrect == 9 || testing) { //{TEST}
-        console.log('WIN');
-        Showpopup('Bravo !', 'loadSandbox()', 'succes');
+        var $popinError = new Popin({
+            content: content['felicitation'],
+            callback: 'loadSandbox()',
+            type: 'succes',
+            icon: 'succes4'
+        });
     } else {
-        //console.log('T\'es nul');
-        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+        var $popinError = new Popin({
+            content: content['error']
+        });
     }
 }

@@ -9754,7 +9754,7 @@ function applyPosition() {
     var pos = $('.imgActive').data('pos'); 
     
 
-    if (screen = 'sandbox') {
+    if (screen == 'sandbox') {
 
         var size = $('.imgActive').outerWidth();
 
@@ -10593,19 +10593,16 @@ function loadLevel1() {
     $('.hamburger').show();
 
     countLevel = 1;
-    showpop1C = "Showpopup(content['jeu1c'], 'hidePopup()', '')";
-    showpop1B = "Showpopup(content['jeu1b'], showpop1C, '')";
-    //Showpopup(content['jeu1a'], showpop1B, '', "Présention de l\'oeuvre 1", false);
     var $popinSlider = new Popin({
         isSlider: true,
         type: 'encyclo',
         content: content['jeu1']
     });
-    aleNumber = 0;
+    aleNumber = "";
     $('main').loadLevel('level1', function(){
 
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
-        var heightNumber =  15;
+        var heightNumber =  16;
         var min = Math.ceil(0);
         var max = Math.floor(9);
         var tips1 = {
@@ -10654,6 +10651,7 @@ function submitLevel1() {
             chaineTableau = chaineTableau + '0';
         }
     });
+
     if (chaineTableau == binaire || testing) { //{TEST} Always True
 
         var $popinError = new Popin({
@@ -10679,6 +10677,11 @@ function loadLevel2() {
     showpop2B = "Showpopup(content['jeu2b'], showpop2C, '')";
     //Showpopup(content['jeu2a'], showpop2B, '');
     //    $('main').load(level+'Level2.html', function(){
+    var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['jeu2']
+    });
     $('main').loadLevel('level2', function() {
 
         var pixel = $('.pixel');
@@ -10822,10 +10825,16 @@ function submitLevel2() {
     }
 
     if (numCorrect == pixels.length || testing) { //{}
-        Showpopup('Bravo !', 'loadLevel3()', 'succes');
+        var $popinError = new Popin({
+            content: content['jeu2d'],
+            callback: 'loadLevel3()',
+            type: 'succes',
+            icon: 'succes2'
+        });
     } else {
-        //console.log('T\'es nul');
-        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+       var $popinError = new Popin({
+            content: content['error']
+        });
     }
 
 }; /*********************************************************//********************
@@ -10834,10 +10843,12 @@ function submitLevel2() {
 *
 *********************/
 function loadLevel3() {
-    showpop3C = "Showpopup(content['jeu3c'], 'hidePopup()', '')";
-    showpop3B = "Showpopup(content['jeu3b'], showpop3C, '')";
-    Showpopup(content['jeu3a'], showpop3B, '');
-
+    
+    var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['jeu3']
+    });
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');
@@ -11025,11 +11036,16 @@ function submitLevel3() {
     }
 
     if (numCorrect == squares.length || testing) { //{TEST}
-        //console.log('WIN');
-        Showpopup('Bravo !', 'loadLevel4()', 'succes');
+        var $popinError = new Popin({
+            content: content['jeu3d'],
+            callback: 'loadLevel4()',
+            type: 'succes',
+            icon: 'succes3'
+        });
     } else {
-        //console.log('T\'es nul');
-        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+        var $popinError = new Popin({
+            content: content['error']
+        });
     }
 
 }
@@ -11039,9 +11055,11 @@ function submitLevel3() {
 *
 *********************/
 function loadLevel4() {
-    showpop4C = "Showpopup(content['jeu4c'], 'hidePopup()', '')";
-    showpop4B = "Showpopup(content['jeu4b'], showpop4C, '')";
-    Showpopup(content['jeu4a'], showpop4B, '');
+    var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['jeu4']
+    });
 
     $('main').loadLevel('level4', function () {
 
@@ -11188,11 +11206,16 @@ function submitLevel4() {
         });
     })
     if (isCorrect == 9 || testing) { //{TEST}
-        console.log('WIN');
-        Showpopup('Bravo !', 'loadSandbox()', 'succes');
+        var $popinError = new Popin({
+            content: content['felicitation'],
+            callback: 'loadSandbox()',
+            type: 'succes',
+            icon: 'succes4'
+        });
     } else {
-        //console.log('T\'es nul');
-        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+        var $popinError = new Popin({
+            content: content['error']
+        });
     }
 }
 ; /*********************************************************//*
@@ -11557,8 +11580,11 @@ function reinitSandbox() {
 *
 *********************/
 function loadSandbox() {
-    Showpopup(content['textsandbox'], hidePopup(), '');
-
+     var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['textsandbox']
+    });
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');
@@ -11776,7 +11802,6 @@ function runSandbox() {
 Slider.prototype = {
 
 	init: function() {
-		console.log(this)
 		// swipe min
       +function(){function t(t,i){var n=this;n.data={},n.node=$(t),n.options=i,n.node.on("mousedown",function(t){n.start(t,{x:t.clientX,y:t.clientY})}),n.node.on("mousemove",function(t){n.move(t,{x:t.clientX,y:t.clientY})}),$(window).on("mouseup",function(t){n.end(t)}),n.node.on("touchstart",function(t){n.start(t,{x:t.originalEvent.touches[0].clientX,y:t.originalEvent.touches[0].clientY})}),n.node.on("touchmove",function(t){n.move(t,{x:t.originalEvent.touches[0].clientX,y:t.originalEvent.touches[0].clientY})}),$(window).on("touchend",function(t){n.end(t)})}t.prototype={constructor:t,swipeStart:!1,swiping:!1,data:null,node:null,start:function(t,i){this.swipeStart=!0,this.data.start=i},move:function(t,i){this.swipeStart&&this.data.start&&(this.data.current=i,this.data.delta={x:this.data.start.x-this.data.current.x,y:this.data.start.y-this.data.current.y},this.data.currentTime=Date.now(),this.swiping||(this.data.startTime=Date.now(),this.node.trigger("swipestart",this.data)),this.swiping=!0,this.node.trigger("swipe",this.data),this.options.doNotScroll instanceof Function&&this.options.doNotScroll.call(this)&&t.preventDefault())},end:function(){this.data.delta&&"number"==typeof this.data.delta.x&&"number"==typeof this.data.delta.y&&(this.data.currentTime=Date.now(),this.node.trigger("swipeend",this.data)),this.swipeStart=!1,this.swiping=!1,this.data={}}},$.fn.swipe=function(i){return this.each(function(){$(this).data("swipe")instanceof t||$(this).data("swipe",new t(this,i))})}}();
        // slider max
@@ -11784,9 +11809,7 @@ Slider.prototype = {
 
 	},
 	deleted: function() {
-		console.log(this);
 		delete this;
 		$('.dots').remove();
-		console.log(this);
 	}
 };

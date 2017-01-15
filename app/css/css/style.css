@@ -779,7 +779,6 @@ body.modal-active {
 }
 body #modal-container {
   position: fixed;
-  display: table;
   height: 100%;
   width: 100%;
   top: 0;
@@ -847,6 +846,16 @@ body .content-global .button {
 body .content-global .button:hover {
   color: white;
   background: #009bd5;
+}
+body .content-global .consigne p {
+  text-align: center;
+  padding-top: 1.5em;
+}
+body .content-global .consigne span {
+  text-align: center;
+  display: block;
+  width: 100%;
+  letter-spacing: 10;
 }
 body .popup {
   position: fixed;

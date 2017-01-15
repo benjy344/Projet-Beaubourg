@@ -5,7 +5,6 @@ function Slider($delete) {
 Slider.prototype = {
 
 	init: function() {
-		console.log(this)
 		// swipe min
       +function(){function t(t,i){var n=this;n.data={},n.node=$(t),n.options=i,n.node.on("mousedown",function(t){n.start(t,{x:t.clientX,y:t.clientY})}),n.node.on("mousemove",function(t){n.move(t,{x:t.clientX,y:t.clientY})}),$(window).on("mouseup",function(t){n.end(t)}),n.node.on("touchstart",function(t){n.start(t,{x:t.originalEvent.touches[0].clientX,y:t.originalEvent.touches[0].clientY})}),n.node.on("touchmove",function(t){n.move(t,{x:t.originalEvent.touches[0].clientX,y:t.originalEvent.touches[0].clientY})}),$(window).on("touchend",function(t){n.end(t)})}t.prototype={constructor:t,swipeStart:!1,swiping:!1,data:null,node:null,start:function(t,i){this.swipeStart=!0,this.data.start=i},move:function(t,i){this.swipeStart&&this.data.start&&(this.data.current=i,this.data.delta={x:this.data.start.x-this.data.current.x,y:this.data.start.y-this.data.current.y},this.data.currentTime=Date.now(),this.swiping||(this.data.startTime=Date.now(),this.node.trigger("swipestart",this.data)),this.swiping=!0,this.node.trigger("swipe",this.data),this.options.doNotScroll instanceof Function&&this.options.doNotScroll.call(this)&&t.preventDefault())},end:function(){this.data.delta&&"number"==typeof this.data.delta.x&&"number"==typeof this.data.delta.y&&(this.data.currentTime=Date.now(),this.node.trigger("swipeend",this.data)),this.swipeStart=!1,this.swiping=!1,this.data={}}},$.fn.swipe=function(i){return this.each(function(){$(this).data("swipe")instanceof t||$(this).data("swipe",new t(this,i))})}}();
        // slider max
@@ -13,9 +12,7 @@ Slider.prototype = {
 
 	},
 	deleted: function() {
-		console.log(this);
 		delete this;
 		$('.dots').remove();
-		console.log(this);
 	}
 };

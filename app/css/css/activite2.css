@@ -3,22 +3,6 @@
 		Variables
 
 *******************/
-#modal-container .pixel {
-  height: 150px;
-  width: 150px;
-  background-color: #FFF;
-}
-
-#Level2 .consigne p {
-  text-align: center;
-  padding-top: 100px;
-}
-#Level2 .consigne span {
-  text-align: center;
-  display: block;
-  width: 100%;
-  letter-spacing: 10;
-}
 #Level2 #kiteII, #Level2 #frameWrapper {
   display: flex;
   flex-direction: column;

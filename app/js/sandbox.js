@@ -5,8 +5,11 @@
 *
 *********************/
 function loadSandbox() {
-    Showpopup(content['textsandbox'], hidePopup(), '');
-
+     var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['textsandbox']
+    });
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');

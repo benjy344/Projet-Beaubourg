@@ -4,10 +4,12 @@
 *
 *********************/
 function loadLevel3() {
-    showpop3C = "Showpopup(content['jeu3c'], 'hidePopup()', '')";
-    showpop3B = "Showpopup(content['jeu3b'], showpop3C, '')";
-    Showpopup(content['jeu3a'], showpop3B, '');
-
+    
+    var $popinSlider = new Popin({
+        isSlider: true,
+        type: 'encyclo',
+        content: content['jeu3']
+    });
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');
@@ -195,11 +197,16 @@ function submitLevel3() {
     }
 
     if (numCorrect == squares.length || testing) { //{TEST}
-        //console.log('WIN');
-        Showpopup('Bravo !', 'loadLevel4()', 'succes');
+        var $popinError = new Popin({
+            content: content['jeu3d'],
+            callback: 'loadLevel4()',
+            type: 'succes',
+            icon: 'succes3'
+        });
     } else {
-        //console.log('T\'es nul');
-        Showpopup('Mmmmh, il semble y avoir une erreur', 'hidePopup()', 'error');
+        var $popinError = new Popin({
+            content: content['error']
+        });
     }
 
 }
