@@ -7,7 +7,7 @@
         height: calc(100vw - 20px);
         max-width: 400px;
         max-height: 400px;
-        transition: 5s ease;
+        //transition: 5s ease;
         background-color: black;
         margin: auto;
 
@@ -28,7 +28,7 @@
             }
 
             @include desktop {
-                //font-size: 2vw
+                border: solid white 15px;
             }
 
         }

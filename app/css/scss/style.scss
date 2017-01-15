@@ -359,7 +359,7 @@ body {
         }
 
         &.hide {
-            visibility: 0;
+            visibility: hidden;
             opacity: 0;
             right: -200vw;
             transition: all 0.5s;
@@ -407,7 +407,7 @@ body {
     }
 
     .background {
-        background-image: url("../assets/background.jpg");
+        //background-image: url("../assets/background.jpg");
         height: 100%;
         width: 100%;
         opacity: 0.5;

@@ -82,7 +82,10 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 *       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
 *       icon (string) la class de l'icon, par default sans class     
 **/
-function Showpopup(content, loadfonction, icon, title=null , isSuccess=false){
+function Showpopup(content, loadfonction, icon, title, isSuccess){
+    
+    isSuccess = isSuccess || false;
+    title = title || null
 
     if ($Popup) {
 
