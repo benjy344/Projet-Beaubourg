@@ -1,29 +1,5 @@
 @import "utilities/variables";
-
-#modal-container {
-    .pixel {
-        height: 150px;
-        width: 150px;
-        background-color: #FFF;
-    }
-}
-
 #Level2 {
-    .consigne {
-
-        p { 
-            text-align: center;
-            padding-top : 100px;
-        }
-        span {
-            text-align: center;
-            display: block;
-            width: 100%;
-            letter-spacing: 10;
-        }
-    }
-
-
     #kiteII, #frameWrapper {
         display: flex;
         flex-direction: column;

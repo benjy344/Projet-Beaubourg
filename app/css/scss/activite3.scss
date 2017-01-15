@@ -1,20 +1,6 @@
 @import "mixin/mixins";
 
 #Level3 {
-    .consigne {
-
-        p { 
-            text-align: center;
-            padding-top : 100px;
-        }
-        span {
-            text-align: center;
-            display: block;
-            width: 100%;
-            letter-spacing: 10;
-        }
-    }
-
     #frameWrapper {
         position: relative;
         width: 100%;
@@ -138,7 +124,7 @@
         height: 100px;
         position: relative;
         background-color: black;
-        height: calc(100% - 300px);
+        height: calc(100% - 175px);
         display: flex;
         justify-content: center;
         align-items: center;

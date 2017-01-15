@@ -1,18 +1,4 @@
 #Level4 {
-    .consigne {
-
-        p { 
-            text-align: center;
-            padding-top : 100px;
-        }
-        span {
-            text-align: center;
-            display: block;
-            width: 100%;
-            letter-spacing: 10;
-        }
-    }
-
     #frameWrapper {
         position: relative;
         height: 300px;
@@ -57,21 +43,43 @@
 }
 
 #modalContent {
-    .functions-btn {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
+    .buttons {
+        white-space: nowrap;
+        font-size: 0.75em;
+        margin-top: 1em;
+
+        .functions-btn {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
 
 
-        div {
-            flex-basis: 100%;
-            margin: 10px 0;
+            div {
+                flex-basis: 100%;
+                margin: 0.35em 0;
 
-            &.mid {
-                flex-basis: calc(100%/3);
+                &.mid {
+                    flex-basis: calc(100%/3);
+                }
+
+
             }
         }
+
+        button.btn {
+            padding: 0.5em;
+            margin: 0;
+            
+            &.runCode {
+                width: 100%;
+            }
+        }
+        
+    }
+    
+    .CodeMirror.CodeMirror-wrap {
+            height: 50%;
     }
 }
 

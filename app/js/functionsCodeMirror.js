@@ -320,7 +320,7 @@ function applyPosition() {
     var pos = $('.imgActive').data('pos'); 
     
 
-    if (screen = 'sandbox') {
+    if (screen == 'sandbox') {
 
         var size = $('.imgActive').outerWidth();
 

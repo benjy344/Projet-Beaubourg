@@ -30,7 +30,7 @@ body {
     @include desktop {
         //font-size: 2vw
     }
-    
+
     .loading {
         z-index: 20000;
         position: fixed;
@@ -234,7 +234,7 @@ body {
 
     #modal-container {
         position:fixed;
-        display:table;
+        //display:table;
         height:100%;
         width:100%;
         top:0;
@@ -309,7 +309,21 @@ body {
                 color:white;
                 background:#009bd5;
             }
-        } 
+        }
+
+        .consigne {
+
+            p { 
+                text-align: center;
+                padding-top : 1.5em;
+            }
+            span {
+                text-align: center;
+                display: block;
+                width: 100%;
+                letter-spacing: 10;
+            }
+        }
     }
 
 
