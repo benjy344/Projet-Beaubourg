@@ -4,7 +4,7 @@
 </div>
 <div class="ContentEncycloPop"></div>
 <script type="text/javascript">
-
+    
 	for (var i = 0; i < $tabArchiveContent.length; i++) {
 					console.log($tabArchiveContent[i]);
                     $('.encyclo ul').prepend($tabArchiveTitle[i]);
@@ -18,10 +18,11 @@
          	
 
          	$popinEncyclo.html($laPopin.clone()).addClass('open');
-            var $slider = new Slider();
+            $slider = new Slider();
          });
 
          $($popinEncyclo).on('click touch', function () {
          	$popinEncyclo.removeClass('open');
+            $slider = new Slider(true);
          })
 </script>
