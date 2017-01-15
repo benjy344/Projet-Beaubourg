@@ -9197,11 +9197,13 @@ function reloadLevel() {
 *********************/
 function loadIntro(){
     Username = $('input#name').val();
-    $('#username').text(Username);
-    if (Username == '') { // {DEV}
+    if (Username == '' || Username =='FX') { // {DEV}
         testing = true;
     }
-    $('main').load(views+'intro.html');
+    $('main').load(views+'intro.html', function() {
+    $('#username').text(Username);
+        
+    });
 }
 
 /********************

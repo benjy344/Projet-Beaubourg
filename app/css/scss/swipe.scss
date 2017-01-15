@@ -33,9 +33,11 @@
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
-	width: 100%
+	width: 100%;
 }
-
+#intro .slider {
+	background: rgba(32, 33, 34, 0.8);
+}
 .slide {
 	height: 100%;
 	left: 0;

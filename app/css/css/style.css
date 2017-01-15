@@ -952,6 +952,7 @@ body .hoverlay.hide {
   transition: all 0.5s;
 }
 body .background {
+  background-image: url("../assets/background.jpg");
   height: 100%;
   width: 100%;
   opacity: 0.5;
@@ -960,6 +961,11 @@ body .background {
   right: 0;
   z-index: -1;
   background-size: cover;
+}
+@media (min-width: 768px) {
+  body .background {
+    background-image: url("../assets/background4K.jpg");
+  }
 }
 body main {
   min-width: 100%;
@@ -1280,6 +1286,9 @@ body .overlay nav .child .child-content #chooseDevMod .fleche {
 }
 body .overlay nav .child .child-content #ChooseLevel a {
   font-size: 0.75em;
+}
+body .overlay nav .child .child-content #ChooseLevel a.lock {
+  color: grey;
 }
 body .iconAnim {
   animation: iconAnim 3s infinite;
