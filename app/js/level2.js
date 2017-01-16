@@ -4,6 +4,8 @@
 *
 *********************/
 function loadLevel2() {
+    countLevel = 2;
+    console.log(countLevel)
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,

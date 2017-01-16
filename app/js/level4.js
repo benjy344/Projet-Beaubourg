@@ -4,6 +4,7 @@
 *
 *********************/
 function loadLevel4() {
+    countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,

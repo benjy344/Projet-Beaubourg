@@ -9245,45 +9245,6 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 *
 *********************/
 
-/**
-* showpopup
-* function de création des popups
-* Params : 
-*       content (string) contenu text de la popup 
-*       loadfunction (string) la function à charger au click sur la fleche, par defaut hidePopup()
-*       icon (string) la class de l'icon, par default sans class     
-**/
-function Showpopup(content, loadfonction, icon, title, isSuccess){
-    
-    isSuccess = isSuccess || false;
-    title = title || null
-
-    if ($Popup) {
-
-        popinIsOpen = true;
-        $content_popup.html(''+content+'');
-        if (loadfonction) {$button.attr("onclick", ''+loadfonction+'');} else {$button.attr("onclick", 'hidePopup()');}
-        if(icon) {$popup_icon.attr('class', 'icon icon-'+icon+' iconAnim') } else {$popup_icon.attr('class', '')};
-        if(isSuccess) addSuccess(icon);
-        if(title) addEncyclo(title, content);
-        $Popup.removeClass('hide');
-        $hoverlay.removeClass('hide');
-    };
-}
-
-
-/**
-* hidePopup
-* function de clean des popups
-**/
-function hidePopup() {
-    popinIsOpen = false;
-    $content_popup.html('');
-    $button.attr("onclick", '');
-    $popup_icon.attr('class', '');
-    $Popup.addClass('hide');
-    $hoverlay.addClass('hide');
-}
 
 
 /*********************
@@ -9389,7 +9350,7 @@ function addHelp(name, content) {
     countHelp = $tabHelpTitle.length;
     if (name && content) {
         $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
-        $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'"><div class="icon icon-close popinClose"></div>'+content+'</div>');
+        $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');
     } 
 
 }
@@ -10689,6 +10650,8 @@ function submitLevel1() {
 *
 *********************/
 function loadLevel2() {
+    countLevel = 2;
+    console.log(countLevel)
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
@@ -10860,7 +10823,7 @@ function submitLevel2() {
 *
 *********************/
 function loadLevel3() {
-    
+    countLevel = 3;
     if (!level3IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
@@ -11077,6 +11040,7 @@ function submitLevel3() {
 *
 *********************/
 function loadLevel4() {
+    countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
@@ -11580,6 +11544,7 @@ function reinitSandbox() {
 *
 *********************/
 function loadSandbox() {
+    countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,

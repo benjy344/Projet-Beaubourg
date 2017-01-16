@@ -5,6 +5,7 @@
 *
 *********************/
 function loadSandbox() {
+    countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,

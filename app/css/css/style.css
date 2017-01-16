@@ -684,6 +684,7 @@ body .successGalery .succes i.font-icon {
 }
 body .popencyclo {
   display: flex;
+  z-index: 2000;
   justify-content: center;
   align-items: center;
   height: 100%;
