@@ -41,6 +41,7 @@ function loadLevel4() {
                 1 : content['jeu4astuce2'],
                 2 : content['jeu4astuce3']
             }
+            console.log(tips4)
             constructTips(42000, 3, tips4); 
         
 

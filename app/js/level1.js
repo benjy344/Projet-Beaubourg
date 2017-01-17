@@ -5,7 +5,6 @@
 *********************/
 function loadLevel1() {
     $('.hamburger').show();
-
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -36,7 +35,14 @@ function loadLevel1() {
                 binaire = binaire+'0';
             }
             else { binaire = binaire+'1'; }
-            aleNumber += ''+alea+'';
+            //console.log( i % 4 )
+            if (i != 0) {
+                if (i % 4 === 0) { aleNumber += '-'+alea+'';} else {aleNumber += ''+alea+'';}
+                // statement
+            } else {
+                aleNumber += ''+alea+'';
+            }
+            
         }
         $('.aleNumber').html(aleNumber);
         //generation des cases du tableau

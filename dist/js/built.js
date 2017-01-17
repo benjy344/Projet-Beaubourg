@@ -71,7 +71,10 @@ var level1IsVisited = false,
     level2IsVisited = false,
     level3IsVisited = false,
     level4IsVisited = false,
-    sandboxIsVisited = false;; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
+    sandboxIsVisited = false;
+
+var intervale = 0,
+    t = 0;; /*********************************************************/// CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
 // This is CodeMirror (http://codemirror.net), a code editor
@@ -9276,37 +9279,47 @@ function constructTips(time, numberOftips, tips ) {
 }
 
 
-function getATip(number, time, tips, total) {
-    var intervale = 0;
-    var t = 0;
-    $('.help-button').show().addClass('newTip');
-    isNewTip = true;
-    var $popup = $popin = new Popin({
-                content: tips[number],
-                type: 'help',
-                $open: $('.help-button')
-            });
-    number++;
-    if (number < total) {
-
-        //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-        intervale = setInterval(function () {
-            if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
-                clearTimeout(t);
-                t = 0;
-            } else {
-                t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-                clearInterval(intervale);
-            }
-        }, 1000);
-
-    } else {
+function getATip(number, time, tips, total, finish=false) {
+    if (finish) {
+        
         clearTimeout(t);
         t = 0;
         clearInterval(intervale);
         intervale = 0;
-    }
+        console.log('kill')
+        console.log(t)
+        console.log(intervale)
+    } else {
+        intervale = 0;
+        t = 0;
+        $('.help-button').show().addClass('newTip');
+        isNewTip = true;
+        var $popup = $popin = new Popin({
+                    content: tips[number],
+                    type: 'help',
+                    $open: $('.help-button')
+                });
+        number++;
+        if (number < total) {
 
+            //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+            intervale = setInterval(function () {
+                if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+                    clearTimeout(t);
+                    t = 0;
+                } else {
+                    t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+                    clearInterval(intervale);
+                }
+            }, 1000);
+
+        } else {
+            clearTimeout(t);
+            t = 0;
+            clearInterval(intervale);
+            intervale = 0;
+        }
+    }
 }
 
 /*********************
@@ -10563,7 +10576,6 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 *********************/
 function loadLevel1() {
     $('.hamburger').show();
-
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -10594,7 +10606,14 @@ function loadLevel1() {
                 binaire = binaire+'0';
             }
             else { binaire = binaire+'1'; }
-            aleNumber += ''+alea+'';
+            //console.log( i % 4 )
+            if (i != 0) {
+                if (i % 4 === 0) { aleNumber += '-'+alea+'';} else {aleNumber += ''+alea+'';}
+                // statement
+            } else {
+                aleNumber += ''+alea+'';
+            }
+            
         }
         $('.aleNumber').html(aleNumber);
         //generation des cases du tableau
@@ -10650,8 +10669,8 @@ function submitLevel1() {
 *
 *********************/
 function loadLevel2() {
+    getATip("", "", "", "", true);
     countLevel = 2;
-    console.log(countLevel)
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
@@ -11077,6 +11096,7 @@ function loadLevel4() {
                 1 : content['jeu4astuce2'],
                 2 : content['jeu4astuce3']
             }
+            console.log(tips4)
             constructTips(42000, 3, tips4); 
         
 

@@ -72,3 +72,6 @@ var level1IsVisited = false,
     level3IsVisited = false,
     level4IsVisited = false,
     sandboxIsVisited = false;
+
+var intervale = 0,
+    t = 0;
