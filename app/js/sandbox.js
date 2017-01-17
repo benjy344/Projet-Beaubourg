@@ -8,10 +8,8 @@ function loadSandbox() {
     countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
-            isSlider: true,
             type: 'encyclo',
             content: content['textsandbox'],
-            $close: $('.js-close-popupEncyclo')
         });
     }
     

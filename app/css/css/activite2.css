@@ -3,6 +3,9 @@
 		Variables
 
 *******************/
+#Level2 {
+  margin-top: 35%;
+}
 #Level2 #kiteII, #Level2 #frameWrapper {
   display: flex;
   flex-direction: column;

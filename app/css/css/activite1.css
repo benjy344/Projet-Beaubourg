@@ -3,6 +3,9 @@
 		Variables
 
 *******************/
+#Level1 {
+  margin-top: 35%;
+}
 #Level1 .consigne span {
   text-align: center;
   display: block;
