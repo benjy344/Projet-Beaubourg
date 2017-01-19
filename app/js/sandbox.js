@@ -130,9 +130,10 @@ function loadSandbox() {
 
         $('.runCode').click(function () {
             hideModal();
-            runCodeLevel4();
-            
+            runCodeLevel4();  
         });
+        
+        $('.applyColor').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
             console.log($(this))

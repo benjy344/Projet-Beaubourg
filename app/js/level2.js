@@ -76,6 +76,8 @@ function loadLevel2() {
         $('.runCode').click(function () {
             runCodeLevel2();
         });
+        
+        $('.applyColor').on('touch click', hideModal)
 
         //Change input
         $('.checkboxes input:checkbox').change(function () {

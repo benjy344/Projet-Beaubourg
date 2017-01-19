@@ -78,6 +78,7 @@ function loadLevel3() {
             runCodeLevel3();
         });
 
+        $('.applyColor').on('touch click', hideModal)
 
 
         //Change input

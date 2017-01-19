@@ -56,7 +56,7 @@ body {
         right: 10px;
     }
 
-    button.btn {
+    .btn {
         //        background: linear-gradient(90deg, rgb(63, 169, 245), rgb(122, 201, 67));
         //        border: 1px solid white;
         //        color: white;
@@ -71,6 +71,29 @@ body {
         border-radius:3px;
         box-shadow:0 1px 2px rgba(0,0,0,.3);
         cursor:pointer;
+
+        border: 0px;
+        color: #fff;
+        background: transparent;;
+        padding: 15px;
+        max-width: 240px;
+        margin: 0 auto;
+        border-left: 2px solid $green;
+        border-right: 2px solid $bleu;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        background-position: 0 0, 0 100% ;
+        background-repeat: no-repeat;
+        -webkit-background-size: 100% 2px;
+        -moz-background-size: 100% 2px;
+        background-size: 100% 2px;
+        background-image: -webkit-linear-gradient(left, $green 0%, $bleu 100%), -webkit-linear-gradient(left, $green 0%, $bleu 100%);
+        background-image: -moz-linear-gradient(left, $green 0%, $bleu 100%), -moz-linear-gradient(left, $green 0%, $bleu 100%);
+        background-image: -o-linear-gradient(left, $green 0%, $bleu 100%), -o-linear-gradient(left, $green 0%, $bleu 100%);
+        background-image: linear-gradient(to right, $green 0%, $bleu 100%), linear-gradient(to right, $green 0%, $bleu 100%);
+
+
         &:hover {
             color:white;
             background:#009bd5;
@@ -391,7 +414,7 @@ body {
                 border-radius: 30px;
                 text-align: center;
             }
-            
+
             .font-icon {
                 background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
                 -webkit-background-clip: text;

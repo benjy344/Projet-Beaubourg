@@ -82,8 +82,13 @@
     }
 
     .buttons {
-        display: flex;
-        justify-content : center; 
+//        display: flex;
+//        justify-content : center; 
+
+        .applyColor {
+            width: 100%;
+            background-color: $black
+        }
     }
 }
 
