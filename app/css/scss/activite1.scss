@@ -1,7 +1,6 @@
 @import "utilities/variables";
 
 #Level1 {
-	margin-top: 35%;
 	
 	.consigne {
 		span {
@@ -9,6 +8,13 @@
 			display: block;
 			width: 100%;
 			letter-spacing: 10;
+			font-size: 0;
+
+			.numberCase {
+				display: inline-block;
+				font-size: 1rem;
+				width: calc(100%/4);
+			}
 		}
 	}
 	.tableau{

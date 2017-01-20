@@ -3,14 +3,17 @@
 		Variables
 
 *******************/
-#Level1 {
-  margin-top: 35%;
-}
 #Level1 .consigne span {
   text-align: center;
   display: block;
   width: 100%;
   letter-spacing: 10;
+  font-size: 0;
+}
+#Level1 .consigne span .numberCase {
+  display: inline-block;
+  font-size: 1rem;
+  width: calc(100%/4);
 }
 #Level1 .tableau {
   display: -ms-flexbox;

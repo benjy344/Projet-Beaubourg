@@ -634,7 +634,7 @@ body .close {
   top: 5px;
   right: 10px;
 }
-body button.btn {
+body .btn {
   display: inline-block;
   text-align: center;
   padding: 10px 15px;
@@ -643,8 +643,28 @@ body button.btn {
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  border: 0px;
+  color: #fff;
+  background: transparent;
+  padding: 15px;
+  max-width: 240px;
+  margin: 0 auto;
+  border-left: 2px solid #7ac943;
+  border-right: 2px solid #3fa9f5;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 2px;
+  -moz-background-size: 100% 2px;
+  background-size: 100% 2px;
+  background-image: -webkit-linear-gradient(left, #7ac943 0%, #3fa9f5 100%), -webkit-linear-gradient(left, #7ac943 0%, #3fa9f5 100%);
+  background-image: -moz-linear-gradient(left, #7ac943 0%, #3fa9f5 100%), -moz-linear-gradient(left, #7ac943 0%, #3fa9f5 100%);
+  background-image: -o-linear-gradient(left, #7ac943 0%, #3fa9f5 100%), -o-linear-gradient(left, #7ac943 0%, #3fa9f5 100%);
+  background-image: linear-gradient(to right, #7ac943 0%, #3fa9f5 100%), linear-gradient(to right, #7ac943 0%, #3fa9f5 100%);
 }
-body button.btn:hover {
+body .btn:hover {
   color: white;
   background: #009bd5;
 }
@@ -868,7 +888,7 @@ body .content-global .button:hover {
 }
 body .content-global .consigne p {
   text-align: center;
-  padding-top: 1.5em;
+  margin-top: 0;
 }
 body .content-global .consigne span {
   text-align: center;
@@ -971,6 +991,15 @@ body .background {
 body main {
   min-width: 100%;
   min-height: 100%;
+}
+body main.flex {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+body main .levelContent {
+  width: 100%;
+  max-width: 100%;
   padding: 10px;
   box-sizing: border-box;
 }

@@ -1,6 +1,5 @@
 @import "utilities/variables";
 #Level2 {
-    margin-top: 35%;
     
     #kiteII, #frameWrapper {
         display: flex;
@@ -9,8 +8,6 @@
         height: calc( ((100vw - 20px)/7)*2 );
         width: 100%;
     }
-
-
 
     #kiteII .pixel, #frameWrapper .pixel {
         box-sizing: border-box;

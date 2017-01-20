@@ -351,7 +351,7 @@ body {
 
             p { 
                 text-align: center;
-                padding-top : 1.5em;
+                margin-top: 0;
             }
             span {
                 text-align: center;
@@ -467,8 +467,19 @@ body {
     main {
         min-width: 100%;
         min-height: 100%;
-        padding: 10px; 
-        box-sizing : border-box;
+        &.flex {
+            box-sizing : border-box;
+            display: flex;
+            align-items : center;
+        }
+        
+
+        .levelContent {
+            width: 100%;
+            max-width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
 
         #menu{
             .button-burger{

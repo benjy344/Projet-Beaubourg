@@ -3,9 +3,6 @@
 		Variables
 
 *******************/
-#Level2 {
-  margin-top: 35%;
-}
 #Level2 #kiteII, #Level2 #frameWrapper {
   display: flex;
   flex-direction: column;
@@ -68,9 +65,9 @@
   justify-content: center;
   border: 2px solid white;
 }
-#modalContent.level2 .buttons {
-  display: flex;
-  justify-content: center;
+#modalContent.level2 .buttons .applyColor {
+  width: 100%;
+  background-color: #242322;
 }
 
 /*# sourceMappingURL=activite2.css.map */

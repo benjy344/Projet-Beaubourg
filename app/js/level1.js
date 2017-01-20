@@ -4,6 +4,7 @@
 *
 *********************/
 function loadLevel1() {
+    $('main').addClass('flex');
     $('.hamburger').show();
     countLevel = 1;
     if (!level1IsVisited) {
@@ -37,10 +38,9 @@ function loadLevel1() {
             else { binaire = binaire+'1'; }
             //console.log( i % 4 )
             if (i != 0) {
-                if (i % 4 === 0) { aleNumber += '-'+alea+'';} else {aleNumber += ''+alea+'';}
-                // statement
+                if (i % 4 === 0) { aleNumber += '</span><span class="numberCase">'+alea+'';} else {aleNumber += ''+alea+'';}
             } else {
-                aleNumber += ''+alea+'';
+                aleNumber += '<span class="numberCase">'+alea+'';
             }
             
         }

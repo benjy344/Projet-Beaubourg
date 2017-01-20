@@ -3,8 +3,8 @@
   height: 300px;
   width: 300px;
   background-color: white;
-  width: 100vw;
-  height: 100vw;
+  width: 100%;
+  height: calc(100vw - 20px);
   max-width: 400px;
   max-height: 400px;
   margin: auto;
@@ -18,7 +18,7 @@
 }
 #Level4 #frameWrapper .startContainer .imageObject {
   position: absolute;
-  background-image: url(../../app/assets/imageObject.svg);
+  background-image: url(../../dist/assets/imageObject.svg);
   width: 100%;
   height: 100%;
   background-size: contain;
