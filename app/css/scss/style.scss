@@ -2,6 +2,7 @@
 @import "utilities/variables";
 @import "mixin/mixins";
 @import "utilities/sprite-main";
+@import "utilities/font";
 @import "utilities/font-icons";
 @include sprites($spritesheet-sprites);
 

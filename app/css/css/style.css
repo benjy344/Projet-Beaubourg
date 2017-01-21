@@ -497,6 +497,12 @@ The `sprites` mixin generates identical output to the CSS template
 @include sprites($spritesheet-sprites);
 */
 @font-face {
+  font-family: 'Josefin Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Josefin Sans"), local("JosefinSans"), url("../assets/fonts/jossefin-sans.woff") format("woff");
+}
+@font-face {
   font-family: "font-icons";
   src: url("../assets/fonts/font-icons.eot");
   src: url("../assets/fonts/font-icons.eot?#iefix") format("embedded-opentype"), url("../assets/fonts/font-icons.woff") format("woff"), url("../assets/fonts/font-icons.ttf") format("truetype"), url("../assets/fonts/font-icons.svg#icons") format("svg");

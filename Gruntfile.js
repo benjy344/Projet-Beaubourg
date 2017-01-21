@@ -17,10 +17,10 @@ module.exports = function(grunt) {
     },
     concat: {
       options: {
-        separator: '; /*********************************************************/', // permet d'ajouter un point-virgule entre chaque fichier concaténé.
+        separator: ';\n /*********************************************************/\n', // permet d'ajouter un point-virgule entre chaque fichier concaténé.
       },
       dist: {
-        src: ['app/js/*.js'], // la source
+        src: ['app/js/libs/*.js','app/js/*.js'], // la source
         dest: 'dist/js/built.js' // la destination finale
       }
     },

@@ -149,7 +149,6 @@ Slider.prototype = {
                                 	
 
                                 if (_$current.is(':first-child') && t.sign === -1) {
-                                	console.log('first')
                                 	t.setCurrentSlide(0);
                                 } else if(_$current.is(':nth-child('+total_child+')') && t.sign === 1) {
                                 	t.setCurrentSlide(total_child-1);                           
@@ -163,7 +162,6 @@ Slider.prototype = {
                             y: Math.abs(100 * this.swipeData.delta.y / this.wrapper[0].offsetHeight)
                         }, this.sign = this.swipeData.delta.x < 0 ? -1 : 1, !(this.delta.x <= this.notSwipePercent)) {
                         this.wrapper.find(".slide").removeClass("animating");
-                        //console.log($('.current').is(':first-child'))
                         var e = -this.sign * this.delta.x,
                             t = this.getPreviousSlide(),
                             i = this.getCurrentSlide(),
@@ -204,8 +202,7 @@ Slider.prototype = {
                             d = r < t.currentSlideIndex,
                             l = t.wrapper.data("swipe").swiping ? t.sign > 0 : !n && d || a,
                             o = t.wrapper.data("swipe").swiping ? t.delta.x > t.backlashPercent : !0;
-                        //t.getCurrentSlide().addClass("animating"); 
-                        //t[l ? o ? "getPreviousSlide" : "getNextSlide" : o ? "getNextSlide" : "getPreviousSlide"]().addClass("animating")
+                        t.getCurrentSlide().addClass("animating"),t[l ? o ? "getPreviousSlide" : "getNextSlide" : o ? "getNextSlide" : "getPreviousSlide"]().addClass("animating")
                     }
                     clearTimeout(t.timer);
                     var c = t.getSlideTime();
