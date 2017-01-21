@@ -36,6 +36,8 @@ var up = 'up',
     plus = 'up',
     moins = 'down';
 
+var which = 'left';
+
 $.getJSON('dist/json/answers.json', function(data) {
     answers = data;
 });
@@ -83,3 +85,5 @@ var level1IsVisited = false,
 
 var intervale = 0,
     t = 0;
+
+var which = 'left';

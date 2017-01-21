@@ -91,77 +91,57 @@
     },
     "level3" : {
         "left" :{
-            "purple" : {
-                "red": [75, 105],
-                "green": [75, 105],
-                "blue": [120, 150]
-            },
-            "violet" : {
+            "bleu_acier" : {
                 "red": [60, 90], 
                 "green": [90, 120], 
                 "blue": [135, 165]
             },
-            "magenta" : {
+            "azur" : {
                 "red": [0, 30], 
                 "green": [105, 135], 
                 "blue": [180, 210]
             },
-            "pink" : {
+            "vert_sauge" : {
                 "red": [105, 135], 
                 "green": [135, 165], 
                 "blue": [105, 135]
             },
-            "orange" : {
+            "jaune_banane" : {
                 "red": [165, 195], 
                 "green": [150, 180], 
                 "blue": [30, 60]
             },
-            "yellow" : {
+            "ocre_jaune" : {
                 "red": [225, 255], 
                 "green": [195, 225], 
                 "blue": [0, 30]
-            },
-            "lime" : {
-                "red": [240, 255], 
-                "green": [210, 230], 
-                "blue": [0, 15]
             }
         },
         "right" :{        
-            "purple" : {
-                "red": [75, 105],
-                "green": [75, 105],
-                "blue": [120, 150]
-            },
-            "violet" : {
+            "rouge_velour" : {
                 "red": [150, 180], 
                 "green": [45, 75], 
                 "blue": [75, 105]
             },
-            "magenta" : {
+            "rouge_coquelicot" : {
                 "red": [175, 205], 
                 "green": [15, 45], 
                 "blue": [15, 45]
             },
-            "pink" : {
+            "orange_carotte" : {
                 "red": [210, 240], 
                 "green": [75, 105], 
                 "blue": [0, 30]
             },
-            "orange" : {
+            "orange_venitien" : {
                 "red": [225, 255], 
                 "green": [150, 180], 
                 "blue": [0, 30]
             },
-            "yellow" : {
+            "safran" : {
                 "red": [225, 255], 
                 "green": [180, 210], 
                 "blue": [0, 30]
-            },
-            "lime" : {
-                "red": [240, 255], 
-                "green": [210, 230], 
-                "blue": [0, 15]
             }
         }
     },

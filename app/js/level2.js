@@ -11,7 +11,7 @@ function loadLevel2() {
             isSlider: true,
             type: 'encyclo',
             content: content['jeu2'],
-            $close: $('.js-close-popupEncyclo')
+            $close: $('.js-close-popup-encyclo')
         });
     }
     var tips2 = {

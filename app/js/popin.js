@@ -125,7 +125,7 @@ Popin.prototype = {
         this.$ContentPopup.html(this.content);
 
         if (this.isSlider) {
-                this.$close = $('.js-close-popupEncyclo');
+                this.$close = $('.js-close-popup-encyclo');
 
                 $slider = new Slider();
             }

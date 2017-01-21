@@ -224,9 +224,6 @@ function alertErr() {
 }
 
 
-
-
-
 // Modal gestion
 function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
@@ -236,9 +233,6 @@ function showModal() {
             $('.content-global').hide();
         }
     }, 1000);
-    console.log('showing modale')
-
-
 }
 
 function hideModal() {

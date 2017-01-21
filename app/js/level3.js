@@ -10,15 +10,14 @@ function loadLevel3() {
             isSlider: true,
             type: 'encyclo',
             content: content['jeu3'],
-            $close: $('.js-close-popupEncyclo')
+            $close: $('.js-close-popup-encyclo')
         });
     }
-    
+
     level3IsVisited = true;
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');
-        pixel.on('touch click', showModal) //{DEV}
 
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
@@ -33,14 +32,14 @@ function loadLevel3() {
         //Initialisation des variables
         var defaultValue = 0;
 
-            codeConfig.readOnly = 'nocursor';
-            var tips3 = {
-                0 : content['jeu3astuce1'],
-                1 : content['jeu3astuce2'],
-                2 : content['jeu3astuce3']
-            }
-            constructTips(42000, 3, tips3); 
- 
+        codeConfig.readOnly = 'nocursor';
+        var tips3 = {
+            0 : content['jeu3astuce1'],
+            1 : content['jeu3astuce2'],
+            2 : content['jeu3astuce3']
+        }
+        constructTips(42000, 3, tips3); 
+
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -53,33 +52,45 @@ function loadLevel3() {
         });
         $('.cm-s-icecoder').addClass('only-color');
 
-
-        $('.js-framewrapper').children().each(function(){            
-            $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', $(this).attr('data-name'));
-        });
-
-        //Change Active Pixel
-        pixel.click(function() {
-            $('.pixel-active').removeClass('pixel-active');
-            $(this).addClass('pixel-active');
-            var thisColors = $(this).data('rvb');
-            if ($('.pixel-active').length != 0) {
-                resetSliders(thisColors.red, thisColors.green, thisColors.blue);
-                resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
-
-                $('.notdev').show();
-            } else {
-               $('.notdev').hide();
-            }
-        })
-
         //Run Code
         $('.js-run-code').click(function(){
             runCodeLevel3();
         });
+       
+
+        //Change Active Pixel
+        pixel.on('touch click', function() {
+            if (!$(this).hasClass('.correct')) {
+                $('.pixel-active').removeClass('pixel-active');
+                $(this).addClass('pixel-active');
+                var thisColors = $(this).data('rvb');
+                console.log(thisColors)
+                resetSliders(thisColors.red, thisColors.green, thisColors.blue);
+                resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+                showModal();
+            }
+        })
 
         $('.apply-color').on('touch click', hideModal)
-
+        
+        
+        $('input[name="chooseFrameLvl3"]').on('change', function() {
+            which = $('input[name="chooseFrameLvl3"]:checked').val();
+            //console.log(which)
+        })
+        
+       $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
+           
+           var varNames = [];
+           $(content['jeu3variables_'+which]).map(function() {
+               varNames.push($(this).text())
+           })
+           //console.log(varNames)
+           
+            $('.js-framewrapper').children().each(function(){            
+            $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]);
+        });
+       })
 
         //Change input
         $('input[type=range]').on("input", function(){
@@ -108,7 +119,6 @@ function loadLevel3() {
 
         $('input[type=range]').on("change", function(){
             //verifPixelLevel3();
-
         })
     });
 }
@@ -116,7 +126,7 @@ function loadLevel3() {
 function runCodeLevel3() {
     //console.log('running code')
     var code = codeMirror.getValue();
-    
+
     try {
         eval(code)
 
@@ -141,7 +151,7 @@ function runCodeLevel3() {
 
         resetCodePixel($('.pixel-active').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
         colorPixel();
-        
+
     } catch(e) {
         alert ('pls input only nu')
 
@@ -159,17 +169,14 @@ function runCodeLevel3() {
 *********************/
 
 function submitLevel3() {
-
-    var numCorrect = 0;
-    var which = 'left';
-    var squares = $('.square');
-
-    var i = 0;
-
-    while (i < squares.length-1) {
+    
+    
+    
+    $.each($('.square').not('correct'), function(i) {
+        
         //console.log(i);
-        var rvb = $(squares[i]).data('rvb');
-        var pixelName = $(squares[i]).data('name'),
+        var rvb = $(this).data('rvb'),
+            pixelName = $(this).data('name'),
             correctRvb = thisLvlAnswers[which][pixelName],
             isCorrect = true;
 
@@ -187,22 +194,15 @@ function submitLevel3() {
 
         //console.log(isCorrect);
         if (isCorrect) {
-            numCorrect++;
-            i++;
+           $(this).removeClass('incorrect')
+           $(this).addClass('correct')
         } else {
-            if (which == 'left') {
-                numCorrect = 0;
-                i = 0;
-                which = 'right';
-                console.log('should reset i')
-            } else {
-                break;
-            }
+           $(this).addClass('incorrect')
         }
         //console.log(i);
-    }
+    });
 
-    if (numCorrect == squares.length || testing) { //{TEST}
+    if ($('.correct').length == $('.square').length || testing) { //{TEST}
         var $popinError = new Popin({
             content: content['jeu3d'],
             callback: 'loadLevel4()',
