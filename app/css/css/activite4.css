@@ -1,4 +1,4 @@
-#Level4 #frameWrapper {
+#level4 .framewrapper {
   position: relative;
   height: 300px;
   width: 300px;
@@ -9,55 +9,65 @@
   max-height: 400px;
   margin: auto;
 }
-#Level4 #frameWrapper .startContainer {
+#level4 .framewrapper .start-container {
   position: absolute;
   top: calc(100%/3);
   left: calc(100%/3);
   width: calc(100%/3);
   height: calc(100%/3);
 }
-#Level4 #frameWrapper .startContainer .imageObject {
+#level4 .framewrapper .start-container .image-object {
   position: absolute;
   background-image: url(../../dist/assets/imageObject.svg);
   width: 100%;
   height: 100%;
   background-size: contain;
+  -webkit-transition: 1s ease transform;
   transition: 1s ease transform;
 }
-#Level4 #frameWrapper .startContainer .imageObject .imgActive {
+#level4 .framewrapper .start-container .image-object .img-active {
   border: #008bff solid 2px;
 }
-#Level4 #frameWrapper .startContainer .imageObject.hovered {
+#level4 .framewrapper .start-container .image-object.hovered {
+  -webkit-transform: scale(0.75);
   transform: scale(0.75);
+  -webkit-transition-delay: 1s;
   transition-delay: 1s;
 }
 
-#modalContent .buttons {
+#modal-content .buttons {
   white-space: nowrap;
   font-size: 0.75em;
   margin-top: 1em;
 }
-#modalContent .buttons .functions-btn {
+#modal-content .buttons .functions-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   text-align: center;
 }
-#modalContent .buttons .functions-btn div {
+#modal-content .buttons .functions-btn div {
+  -ms-flex-preferred-size: 100%;
   flex-basis: 100%;
   margin: 0.35em 0;
 }
-#modalContent .buttons .functions-btn div.mid {
+#modal-content .buttons .functions-btn div.mid {
+  -ms-flex-preferred-size: calc(100%/3);
   flex-basis: calc(100%/3);
 }
-#modalContent .buttons button.btn {
+#modal-content .buttons button.btn {
   padding: 0.5em;
   margin: 0;
 }
-#modalContent .buttons button.btn.runCode {
+#modal-content .buttons button.btn.runCode {
   width: 100%;
 }
-#modalContent .CodeMirror.CodeMirror-wrap {
+#modal-content .cm-s-icecoder {
   height: 50%;
 }
 

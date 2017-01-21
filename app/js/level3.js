@@ -21,8 +21,8 @@ function loadLevel3() {
         pixel.on('touch click', showModal) //{DEV}
 
         //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
                 mode: "text/javascript",
                 theme: "icecoder",
                 lineWrapping: true,
@@ -51,21 +51,21 @@ function loadLevel3() {
                 enterKeyMap();
             }
         });
-        $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+        $('.cm-s-icecoder').addClass('only-color');
 
 
-        $('#frameWrapper').children().each(function(){            
+        $('.js-framewrapper').children().each(function(){            
             $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', $(this).attr('data-name'));
         });
 
         //Change Active Pixel
         pixel.click(function() {
-            $('.pixelActive').removeClass('pixelActive');
-            $(this).addClass('pixelActive');
+            $('.pixel-active').removeClass('pixel-active');
+            $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
-            if ($('.pixelActive').length != 0) {
+            if ($('.pixel-active').length != 0) {
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
-                resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+                resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
 
                 $('.notdev').show();
             } else {
@@ -74,18 +74,18 @@ function loadLevel3() {
         })
 
         //Run Code
-        $('.runCode').click(function(){
+        $('.js-run-code').click(function(){
             runCodeLevel3();
         });
 
-        $('.applyColor').on('touch click', hideModal)
+        $('.apply-color').on('touch click', hideModal)
 
 
         //Change input
         $('input[type=range]').on("input", function(){
 
             var name = $(this).attr('class');
-            var thisPixel = $('.pixelActive').data('rvb');
+            var thisPixel = $('.pixel-active').data('rvb');
 
             switch(name) {
                 case 'red':
@@ -102,7 +102,7 @@ function loadLevel3() {
             }
 
             thisPixel[name] = $(this).val();
-            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixel();
         })
 
@@ -120,7 +120,7 @@ function runCodeLevel3() {
     try {
         eval(code)
 
-        var pixelBorder = eval($('.pixelActive').data('name'));
+        var pixelBorder = eval($('.pixel-active').data('name'));
 
         $.each(pixelBorder, function(i, value) {
             if (typeof value == 'number') {
@@ -135,19 +135,19 @@ function runCodeLevel3() {
             }
         });
 
-        $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
+        $('.pixel-active').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
 
         resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
 
-        resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
         colorPixel();
         
     } catch(e) {
         alert ('pls input only nu')
 
-        var resetPixel = $('.pixelActive').data('rvb');
+        var resetPixel = $('.pixel-active').data('rvb');
 
-        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
     }
 }
 

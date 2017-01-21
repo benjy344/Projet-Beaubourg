@@ -18,21 +18,21 @@ function loadLevel4() {
 
     $('main').loadLevel('level4', function () {
 
-        var image = $('.imageObject');
+        var image = $('.js-image-object');
         var holdTimeout = '';
 
 
         //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false,
-                readOnly: 'nocursor'
-                //matchBrackets: true
-            }
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
+            mode: "text/javascript",
+            theme: "icecoder", 
+            lineWrapping: true, 
+            lineNumbers: true, 
+            autofocus: false,
+            readOnly: 'nocursor'
+            //matchBrackets: true
+        }
         //Initialisation des variables
             codeConfig.readOnly = 'nocursor';
 
@@ -56,7 +56,7 @@ function loadLevel4() {
         //            }
         //        });
 
-        $('#frameWrapper .imageObject').each(function () {
+        image.each(function () {
             $(this).data('pos', {
                 x: 0,
                 y: 0,
@@ -85,11 +85,11 @@ function loadLevel4() {
         //            that.addClass('hovered');
         //        }
 
-        $('.imageObject').bind('mousedown touchstart', function() {
+        image.bind('mousedown touchstart', function() {
             $(this).addClass('hovered');
         })
 
-        $('.imageObject').bind('mouseup touchend', function() {
+        image.bind('mouseup touchend', function() {
             if ($(this).hasClass('hovered')) {
                 $(this).removeClass('hovered')
             }
@@ -99,8 +99,8 @@ function loadLevel4() {
         //Change Active Pixel
         image.on('touch click', function () {
             showModal();
-            $('.imgActive').removeClass('imgActive');
-            $(this).addClass('imgActive');
+            $('.img-active').removeClass('img-active');
+            $(this).addClass('img-active');
 
             resetCode();
         });
@@ -109,7 +109,7 @@ function loadLevel4() {
 
 
         //Run Code
-        $('.runCode').on('touch click', function () {
+        $('.js-run-code').on('touch click', function () {
             runCodeLevel4();
             hideModal();
         });
@@ -119,7 +119,7 @@ function loadLevel4() {
             addCode($(this));
         })
 
-        $('.reinitImg').click(reinitImg);
+        $('.reinit-img').click(reinitImg);
 
         codeMirror.setValue('init');
         //resetCode();
@@ -151,7 +151,7 @@ function runCodeLevel4() {
 function submitLevel4() {
     //Validate
     var isCorrect = 0;
-    $.each($('.imageObject'), function(i) {
+    $.each($('.js-image-object'), function(i) {
         var pos = $(this).data('pos');
         $.each(thisLvlAnswers, function(i, value) {
             if (JSON.stringify(pos) == JSON.stringify(value)) {

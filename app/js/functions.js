@@ -54,12 +54,13 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
     var file = level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
-        modal = '#modalContent';
+        modal = '#modal-content';
 
     thisLvlAnswers = answers[levelToLoad];
     //console.log(thisLvlAnswers);
 
-    this.load(file + ' ' + lvl, function() {    
+    this.load(file + ' ' + lvl, function() {  
+    console.log( file + ' ' + modal)  
         $('.modalContent').load(file + ' ' + modal, function() {
 
             callback();
@@ -107,7 +108,7 @@ function constructTips(time, numberOftips, tips ) {
 }
 
 
-function getATip(number, time, tips, total, finish=false) {
+function getATip(number, time, tips, total, finish) {
     if (finish) {
         
         clearTimeout(t);
@@ -215,8 +216,8 @@ function addSuccess(icon) {
 
 
 function alertErr() {
-    var pixel = $('.pixelActive').data('rvb');
-    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue)
+    var pixel = $('.pixel-active').data('rvb');
+    resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue)
     codeMirror.getInputField().blur();
     //codeMirror.focus();
     alert('ERROR');
@@ -244,5 +245,4 @@ function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
     $('.content-global').show(); 
-    console.log('hidding modale')
 }

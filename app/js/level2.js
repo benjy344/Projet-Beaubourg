@@ -14,33 +14,32 @@ function loadLevel2() {
             $close: $('.js-close-popupEncyclo')
         });
     }
-    
-    level2IsVisited = true;
-    $('main').loadLevel('level2', function() {
-
-        var pixel = $('.pixel');
-        pixel.on('touch click', showModal) //{DEV}
-
-        //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false
-                //matchBrackets: true
-            }
-        //Initialisation des variables
-        var defaultValue = false;
-
-        codeConfig.readOnly = 'nocursor';
-        var tips2 = {
+    var tips2 = {
             0 : content['jeu2astuce1'],
             1 : content['jeu2astuce2'],
             2 : content['jeu2astuce3']
         }
         constructTips(42000, 3, tips2); //{DEV} 
+    level2IsVisited = true;
+    $('main').loadLevel('level2', function() {
+        var pixel = $('.js-pixel');
+        pixel.on('touch click', showModal) //{DEV}
+
+        //CodeMirror
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
+            mode: "text/javascript",
+            theme: "icecoder", 
+            lineWrapping: true, 
+            lineNumbers: true, 
+            autofocus: false
+            //matchBrackets: true
+        };
+        //Initialisation des variables
+        var defaultValue = false;
+
+        codeConfig.readOnly = 'nocursor';
+        
        
 
 
@@ -53,9 +52,9 @@ function loadLevel2() {
                 enterKeyMap();
             }
         });
-        $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+        $('.cm-s-icecoder').addClass('only-color');
 
-        $('#frameWrapper').children().each(function () {
+        $('.js-framewrapper').children().each(function () {
             $(this).data('rvb', {
                 red: defaultValue,
                 green: defaultValue,
@@ -64,25 +63,25 @@ function loadLevel2() {
         });
 
         //Change Active Pixel
-        $('#frameWrapper .pixel').click(function () {
-            $('.pixelActive').removeClass('pixelActive');
-            $(this).addClass('pixelActive');
+        $('.js-framewrapper .js-pixel').click(function () {
+            $('.pixel-active').removeClass('pixel-active');
+            $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
             resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
-            resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
         })
 
         //Run Code
-        $('.runCode').click(function () {
+        $('.js-run-code').click(function () {
             runCodeLevel2();
         });
         
-        $('.applyColor').on('touch click', hideModal)
+        $('.js-apply-color').on('touch click', hideModal)
 
         //Change input
         $('.checkboxes input:checkbox').change(function () {
             var name = $(this).attr('class');
-            var thisPixel = $('.pixelActive').data('rvb');
+            var thisPixel = $('.pixel-active').data('rvb');
             var val;
             if ($(this).is(':checked')) {
                 thisPixel[name] = true;
@@ -105,11 +104,17 @@ function loadLevel2() {
                 default:
                     break;
             }
-            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixelRVB();
             //verifPixelLevel2();
         })
     })
+}
+
+function afterLoadLevel2() {
+    console.log('coucou')
+
+        
 }
 
 function runCodeLevel2() {
@@ -118,21 +123,21 @@ function runCodeLevel2() {
     try {
         eval(code)
 
-        pixel = eval($('.pixelActive').data('name'));
+        pixel = eval($('.pixel-active').data('name'));
         //console.log(pixel)                    
-        $('.pixelActive').data('rvb', {
+        $('.pixel-active').data('rvb', {
             red: pixel.red, 
             green: pixel.green, 
             blue: pixel.blue
         });
         resetCheckboxes(pixel.red, pixel.green, pixel.blue);
-        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue);
         colorPixelRVB();
         //verifPixelLevel2();
     } catch(e) {
-        var resetPixel = $('.pixelActive').data('rvb');
+        var resetPixel = $('.pixel-active').data('rvb');
 
-        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
     }
 }
 
@@ -146,7 +151,7 @@ function runCodeLevel2() {
 
 function submitLevel2() {
     var numCorrect = 0;
-    var pixels = $('.pixel');
+    var pixels = $('.js-pixel');
 
     for (i=0; i < pixels.length; i++) {
         var rvb = $(pixels[i]).data('rvb'),

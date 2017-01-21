@@ -1,6 +1,6 @@
 // add pixel
 function addPixel() {
-    var pixel = $('<div class="pixel"></div>');
+    var pixel = $('<div class="pixel js-pixel"></div>');
 
     pixel.data('rvb', {
         red: 0, 
@@ -14,12 +14,12 @@ function addPixel() {
     })
         .data('name', 'pixel_'+$(this).index());
 
-    $('#sandboxWrapper').append(pixel);
+    $('.js-sandboxwrapper').append(pixel);
 }
 
 function colorPixelRVB() {
     //console.log(pixel)
-    var pixel = $('.pixelActive').data('rvb')
+    var pixel = $('.pixel-active').data('rvb')
     var red = 0,
         green = 0,
         blue = 0;
@@ -32,21 +32,21 @@ function colorPixelRVB() {
     if (pixel.blue) {
         blue = 255;
     }
-    $('.pixelActive').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
+    $('.pixel-active').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 
     colorModel(red, green, blue);
 }
 
 function colorPixel() {    
-    var pixel = $('.pixelActive').data('rvb')
+    var pixel = $('.pixel-active').data('rvb')
 
-    $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
+    $('.pixel-active').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
 
     colorModel(pixel.red, pixel.green, pixel.blue);
 }
 
 function colorModel(r, g, b) {
-    $('.pixelModel').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
+    $('.pixel-model').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
 }
 
 function resetCodePixel(id, r, g, b) {
@@ -187,7 +187,7 @@ function enterKeyMap() {
 }
 
 function reinitImg() {
-    $('#frameWrapper .imageObject').each(function () {
+    $('.js-framewrapper .js-image-object').each(function () {
         $(this).data('pos', {
             x: 0,
             y: 0,
@@ -229,25 +229,25 @@ function addCode(btn) {
 }
 
 function moveLeft() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.x--;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function moveRight() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.x++;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function moveUp() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.y--;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function moveDown() {
     //console.log('GOOOOOIIING DOOOWN')
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.y++;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function rotate(deg) {
     
@@ -256,9 +256,9 @@ function rotate(deg) {
     } else if (!deg) {
         deg = 90;
     }  
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.rot = pos.rot + deg;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function move(direction, repeat) {
     if (repeat && typeof repeat == 'number') {
@@ -292,7 +292,7 @@ function move(direction, repeat) {
 } 
 function scale(sens) {
 
-    var size =   $('.imgActive').outerWidth();
+    var size =   $('.img-active').outerWidth();
 
     if (!sens) {
         sens = up;
@@ -312,17 +312,17 @@ function scale(sens) {
     }
 
     size += 'px';
-    $('.imgActive').css('width', size);
-    $('.imgActive').css('height', size);
+    $('.img-active').css('width', size);
+    $('.img-active').css('height', size);
 }
 
 function applyPosition() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     
 
     if (screen == 'sandbox') {
 
-        var size = $('.imgActive').outerWidth();
+        var size = $('.img-active').outerWidth();
 
         var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
         var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
@@ -334,9 +334,9 @@ function applyPosition() {
 
         console.log(pos.x, pos.y);
 
-        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixelActive').css('left', pos.x * size + 'px');
-        $('.pixelActive').css('top', pos.y * size + 'px');
+        $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.pixel-active').css('left', pos.x * size + 'px');
+        $('.pixel-active').css('top', pos.y * size + 'px');
 
     } else {
 
@@ -347,10 +347,10 @@ function applyPosition() {
 
         //console.log(pos.rot)
 
-        $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.img-active').css('transform', 'rotate('+pos.rot+'deg)');
 
-        $('.imgActive').css('left', pos.x * 100 + '%');
-        $('.imgActive').css('top', pos.y * 100 + '%');
+        $('.img-active').css('left', pos.x * 100 + '%');
+        $('.img-active').css('top', pos.y * 100 + '%');
     }
 }
 

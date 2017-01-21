@@ -1,62 +1,64 @@
-<div id="sandbox" class="levelContent">
+<div id="sandbox" class="level-content">
 
-    <div id="sandboxWrapper">
+    <div id="sandboxWrapper" class='sandboxwrapper js-sandboxwrapper'>
 
     </div>
 
-    <button class="btn addPixel">Add pixel</button>
+    <button class="btn add-pixel js-add-pixel">Add pixel</button>
 
-    <div class="editPixel hidden">
-        <button class="btn changeColor">Change Color</button>
-        <button class="btn changePosition">Change Position</button>
+    <div class="edit-pixel js-edit-pixel hidden">
+        <button class="btn change-color js-change-color">Change Color</button>
+        <button class="btn change-position js-change-position">Change Position</button>
     </div>
 
-    <button class="btn reinitSandbox">Reinitialiser</button>
+    <button class="btn reinit-sandbox js-reinit-sandbox">Reinitialiser</button>
 
     <div class="fleche btn-start-order" onclick="finish()">Valider la réponse</div>
 </div>
 
 
-<div id="modalContent" class="sandbox">
+<div id="modal-content" class="sandbox">
 
-    <textarea class="codeMirror"></textarea>
+    <textarea class="code-mirror js-code-mirror"></textarea>
 
     <div class="buttons btn-position">
 
         <div class="functions-btn">
 
-            <div class="top"><button class="btn addcode" data-function="up">moveUp()</button></div>
-            <div class="mid"><button class="btn addcode" data-function="left">moveLeft()</button></div>
-            <div class="mid"><button class="btn addcode" data-function="rotate">rotate()</button></div>
-            <div class="mid"><button class="btn addcode" data-function="right">moveRight()</button></div>
-            <div class="bot"><button class="btn addcode" data-function="down">moveDown()</button></div>
+            <div class="top"><button class="btn addcode js-addcode" data-function="up">moveUp()</button></div>
+            <div class="mid"><button class="btn addcode js-addcode" data-function="left">moveLeft()</button></div>
+            <div class="mid"><button class="btn addcode js-addcode" data-function="rotate">rotate()</button></div>
+            <div class="mid"><button class="btn addcode js-addcode" data-function="right">moveRight()</button></div>
+            <div class="bot"><button class="btn addcode js-addcode" data-function="down">moveDown()</button></div>
 
         </div>
 
-        <button class="btn runCode">RUN CODE</button>
+        <button class="btn run-code js-run-code">RUN CODE</button>
     </div>
 
-    <div class="pixelModel btn-color">
+    <div class="pixel-model btn-color">
 
         <div class="buttons">
 
             <div class="sliders">
-                <div class="rangeBg">
+                <div class="range-bg">
                     <input type="range" value="0" max="255" min="0" step="15" class="red">
                 </div>
 
-                <div class="rangeBg">
+                <div class="range-bg">
                     <input type="range" value="0" max="255" min="0" step="15" class="green">
                 </div>
-                <div class="rangeBg">
+                <div class="range-bg">
                     <input type="range" value="0" max="255" min="0" step="15" class="blue">
                 </div>
             </div>
-            <button class="btn applyColor">Appliquer</button>
+            <button class="btn apply-color js-apply-color">Appliquer</button>
 
         </div>
 
     </div>
 
-
+    <script type="text/javascript">
+        textArea = $('.js-code-mirror')[0];
+    </script>
 </div>

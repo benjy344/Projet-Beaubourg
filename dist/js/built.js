@@ -53,13 +53,21 @@ $.get("dist/content/content_fr.html", function(data) {
     })
 });
 
+var textArea = $('.codeMirror')[0],
+            codeConfig = {
+                mode: "text/javascript",
+                theme: "icecoder", 
+                lineWrapping: true, 
+                lineNumbers: true, 
+                autofocus: false
+                //matchBrackets: true
+            };
 
-
-$Popup = $('.popup');
-$content_popup = $('.popup .content-popup');
+$Popup = $('.js-popup');
+$content_popup = $Popup.find('.js-content-popup');
 $button = $('.js-fleche-popup');
-$hoverlay = $('.hoverlay');
-$popup_icon = $('.popup-icon i');
+$hoverlay = $('.js-overlay');
+//$popup_icon = $('.popup-icon i');
 
 popinIsOpen = false;
 tipIsOpened = false;
@@ -9236,12 +9244,13 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
     var file = level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
-        modal = '#modalContent';
+        modal = '#modal-content';
 
     thisLvlAnswers = answers[levelToLoad];
     //console.log(thisLvlAnswers);
 
-    this.load(file + ' ' + lvl, function() {    
+    this.load(file + ' ' + lvl, function() {  
+    console.log( file + ' ' + modal)  
         $('.modalContent').load(file + ' ' + modal, function() {
 
             callback();
@@ -9289,7 +9298,7 @@ function constructTips(time, numberOftips, tips ) {
 }
 
 
-function getATip(number, time, tips, total, finish=false) {
+function getATip(number, time, tips, total, finish) {
     if (finish) {
         
         clearTimeout(t);
@@ -9397,8 +9406,8 @@ function addSuccess(icon) {
 
 
 function alertErr() {
-    var pixel = $('.pixelActive').data('rvb');
-    resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue)
+    var pixel = $('.pixel-active').data('rvb');
+    resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue)
     codeMirror.getInputField().blur();
     //codeMirror.focus();
     alert('ERROR');
@@ -9426,12 +9435,11 @@ function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
     $('.content-global').show(); 
-    console.log('hidding modale')
 };
  /*********************************************************/
 // add pixel
 function addPixel() {
-    var pixel = $('<div class="pixel"></div>');
+    var pixel = $('<div class="pixel js-pixel"></div>');
 
     pixel.data('rvb', {
         red: 0, 
@@ -9445,12 +9453,12 @@ function addPixel() {
     })
         .data('name', 'pixel_'+$(this).index());
 
-    $('#sandboxWrapper').append(pixel);
+    $('.js-sandboxwrapper').append(pixel);
 }
 
 function colorPixelRVB() {
     //console.log(pixel)
-    var pixel = $('.pixelActive').data('rvb')
+    var pixel = $('.pixel-active').data('rvb')
     var red = 0,
         green = 0,
         blue = 0;
@@ -9463,21 +9471,21 @@ function colorPixelRVB() {
     if (pixel.blue) {
         blue = 255;
     }
-    $('.pixelActive').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
+    $('.pixel-active').css('background-color', 'rgb(' + red + ', ' + green + ', ' + blue + ')');
 
     colorModel(red, green, blue);
 }
 
 function colorPixel() {    
-    var pixel = $('.pixelActive').data('rvb')
+    var pixel = $('.pixel-active').data('rvb')
 
-    $('.pixelActive').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
+    $('.pixel-active').css('background-color', 'rgb(' + pixel.red + ', ' + pixel.green + ', ' + pixel.blue + ')');
 
     colorModel(pixel.red, pixel.green, pixel.blue);
 }
 
 function colorModel(r, g, b) {
-    $('.pixelModel').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
+    $('.pixel-model').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
 }
 
 function resetCodePixel(id, r, g, b) {
@@ -9618,7 +9626,7 @@ function enterKeyMap() {
 }
 
 function reinitImg() {
-    $('#frameWrapper .imageObject').each(function () {
+    $('.js-framewrapper .js-image-object').each(function () {
         $(this).data('pos', {
             x: 0,
             y: 0,
@@ -9660,25 +9668,25 @@ function addCode(btn) {
 }
 
 function moveLeft() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.x--;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function moveRight() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.x++;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function moveUp() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.y--;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function moveDown() {
     //console.log('GOOOOOIIING DOOOWN')
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.y++;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function rotate(deg) {
     
@@ -9687,9 +9695,9 @@ function rotate(deg) {
     } else if (!deg) {
         deg = 90;
     }  
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     pos.rot = pos.rot + deg;
-    $('.imgActive').data('pos', pos)
+    $('.img-active').data('pos', pos)
 }
 function move(direction, repeat) {
     if (repeat && typeof repeat == 'number') {
@@ -9723,7 +9731,7 @@ function move(direction, repeat) {
 } 
 function scale(sens) {
 
-    var size =   $('.imgActive').outerWidth();
+    var size =   $('.img-active').outerWidth();
 
     if (!sens) {
         sens = up;
@@ -9743,17 +9751,17 @@ function scale(sens) {
     }
 
     size += 'px';
-    $('.imgActive').css('width', size);
-    $('.imgActive').css('height', size);
+    $('.img-active').css('width', size);
+    $('.img-active').css('height', size);
 }
 
 function applyPosition() {
-    var pos = $('.imgActive').data('pos'); 
+    var pos = $('.img-active').data('pos'); 
     
 
     if (screen == 'sandbox') {
 
-        var size = $('.imgActive').outerWidth();
+        var size = $('.img-active').outerWidth();
 
         var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
         var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
@@ -9765,9 +9773,9 @@ function applyPosition() {
 
         console.log(pos.x, pos.y);
 
-        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixelActive').css('left', pos.x * size + 'px');
-        $('.pixelActive').css('top', pos.y * size + 'px');
+        $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.pixel-active').css('left', pos.x * size + 'px');
+        $('.pixel-active').css('top', pos.y * size + 'px');
 
     } else {
 
@@ -9778,10 +9786,10 @@ function applyPosition() {
 
         //console.log(pos.rot)
 
-        $('.imgActive').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.img-active').css('transform', 'rotate('+pos.rot+'deg)');
 
-        $('.imgActive').css('left', pos.x * 100 + '%');
-        $('.imgActive').css('top', pos.y * 100 + '%');
+        $('.img-active').css('left', pos.x * 100 + '%');
+        $('.img-active').css('top', pos.y * 100 + '%');
     }
 }
 
@@ -10592,7 +10600,7 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 *********************/
 function loadLevel1() {
     $('main').addClass('flex');
-    $('.hamburger').show();
+    $('.js-hamburger').show();
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -10604,9 +10612,8 @@ function loadLevel1() {
     }
     
     level1IsVisited = true;
-    aleNumber = "";
+    alenumber = "";
     $('main').loadLevel('level1', function(){
-
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
         var heightNumber =  16;
         var min = Math.ceil(0);
@@ -10625,18 +10632,16 @@ function loadLevel1() {
             else { binaire = binaire+'1'; }
             //console.log( i % 4 )
             if (i != 0) {
-                if (i % 4 === 0) { aleNumber += '</span><span class="numberCase">'+alea+'';} else {aleNumber += ''+alea+'';}
+                if (i % 4 === 0) { alenumber += '</span><span class="numbercase">'+alea+'';} else {alenumber += ''+alea+'';}
             } else {
-                aleNumber += '<span class="numberCase">'+alea+'';
+                alenumber += '<span class="numbercase">'+alea+'';
             }
             
+            
         }
-        $('.aleNumber').html(aleNumber);
-        //generation des cases du tableau
-        for (var i = 0; i < 3; i++){
-            $('.tableau ul:first-child').clone().appendTo( ".tableau" );
-        }
-
+        alenumber += '</span>';
+        $('.js-alenumber').html(alenumber);
+        
         var div = $('.tableau ul li div');
 
         div.on('touch click', function(e) {
@@ -10697,33 +10702,32 @@ function loadLevel2() {
             $close: $('.js-close-popupEncyclo')
         });
     }
-    
-    level2IsVisited = true;
-    $('main').loadLevel('level2', function() {
-
-        var pixel = $('.pixel');
-        pixel.on('touch click', showModal) //{DEV}
-
-        //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false
-                //matchBrackets: true
-            }
-        //Initialisation des variables
-        var defaultValue = false;
-
-        codeConfig.readOnly = 'nocursor';
-        var tips2 = {
+    var tips2 = {
             0 : content['jeu2astuce1'],
             1 : content['jeu2astuce2'],
             2 : content['jeu2astuce3']
         }
         constructTips(42000, 3, tips2); //{DEV} 
+    level2IsVisited = true;
+    $('main').loadLevel('level2', function() {
+        var pixel = $('.js-pixel');
+        pixel.on('touch click', showModal) //{DEV}
+
+        //CodeMirror
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
+            mode: "text/javascript",
+            theme: "icecoder", 
+            lineWrapping: true, 
+            lineNumbers: true, 
+            autofocus: false
+            //matchBrackets: true
+        };
+        //Initialisation des variables
+        var defaultValue = false;
+
+        codeConfig.readOnly = 'nocursor';
+        
        
 
 
@@ -10736,9 +10740,9 @@ function loadLevel2() {
                 enterKeyMap();
             }
         });
-        $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+        $('.cm-s-icecoder').addClass('only-color');
 
-        $('#frameWrapper').children().each(function () {
+        $('.js-framewrapper').children().each(function () {
             $(this).data('rvb', {
                 red: defaultValue,
                 green: defaultValue,
@@ -10747,25 +10751,25 @@ function loadLevel2() {
         });
 
         //Change Active Pixel
-        $('#frameWrapper .pixel').click(function () {
-            $('.pixelActive').removeClass('pixelActive');
-            $(this).addClass('pixelActive');
+        $('.js-framewrapper .js-pixel').click(function () {
+            $('.pixel-active').removeClass('pixel-active');
+            $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
             resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
-            resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
         })
 
         //Run Code
-        $('.runCode').click(function () {
+        $('.js-run-code').click(function () {
             runCodeLevel2();
         });
         
-        $('.applyColor').on('touch click', hideModal)
+        $('.js-apply-color').on('touch click', hideModal)
 
         //Change input
         $('.checkboxes input:checkbox').change(function () {
             var name = $(this).attr('class');
-            var thisPixel = $('.pixelActive').data('rvb');
+            var thisPixel = $('.pixel-active').data('rvb');
             var val;
             if ($(this).is(':checked')) {
                 thisPixel[name] = true;
@@ -10788,11 +10792,17 @@ function loadLevel2() {
                 default:
                     break;
             }
-            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixelRVB();
             //verifPixelLevel2();
         })
     })
+}
+
+function afterLoadLevel2() {
+    console.log('coucou')
+
+        
 }
 
 function runCodeLevel2() {
@@ -10801,21 +10811,21 @@ function runCodeLevel2() {
     try {
         eval(code)
 
-        pixel = eval($('.pixelActive').data('name'));
+        pixel = eval($('.pixel-active').data('name'));
         //console.log(pixel)                    
-        $('.pixelActive').data('rvb', {
+        $('.pixel-active').data('rvb', {
             red: pixel.red, 
             green: pixel.green, 
             blue: pixel.blue
         });
         resetCheckboxes(pixel.red, pixel.green, pixel.blue);
-        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue);
         colorPixelRVB();
         //verifPixelLevel2();
     } catch(e) {
-        var resetPixel = $('.pixelActive').data('rvb');
+        var resetPixel = $('.pixel-active').data('rvb');
 
-        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
     }
 }
 
@@ -10829,7 +10839,7 @@ function runCodeLevel2() {
 
 function submitLevel2() {
     var numCorrect = 0;
-    var pixels = $('.pixel');
+    var pixels = $('.js-pixel');
 
     for (i=0; i < pixels.length; i++) {
         var rvb = $(pixels[i]).data('rvb'),
@@ -10881,8 +10891,8 @@ function loadLevel3() {
         pixel.on('touch click', showModal) //{DEV}
 
         //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
                 mode: "text/javascript",
                 theme: "icecoder",
                 lineWrapping: true,
@@ -10911,21 +10921,21 @@ function loadLevel3() {
                 enterKeyMap();
             }
         });
-        $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+        $('.cm-s-icecoder').addClass('only-color');
 
 
-        $('#frameWrapper').children().each(function(){            
+        $('.js-framewrapper').children().each(function(){            
             $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', $(this).attr('data-name'));
         });
 
         //Change Active Pixel
         pixel.click(function() {
-            $('.pixelActive').removeClass('pixelActive');
-            $(this).addClass('pixelActive');
+            $('.pixel-active').removeClass('pixel-active');
+            $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
-            if ($('.pixelActive').length != 0) {
+            if ($('.pixel-active').length != 0) {
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
-                resetCodePixel($('.pixelActive').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+                resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
 
                 $('.notdev').show();
             } else {
@@ -10934,18 +10944,18 @@ function loadLevel3() {
         })
 
         //Run Code
-        $('.runCode').click(function(){
+        $('.js-run-code').click(function(){
             runCodeLevel3();
         });
 
-        $('.applyColor').on('touch click', hideModal)
+        $('.apply-color').on('touch click', hideModal)
 
 
         //Change input
         $('input[type=range]').on("input", function(){
 
             var name = $(this).attr('class');
-            var thisPixel = $('.pixelActive').data('rvb');
+            var thisPixel = $('.pixel-active').data('rvb');
 
             switch(name) {
                 case 'red':
@@ -10962,7 +10972,7 @@ function loadLevel3() {
             }
 
             thisPixel[name] = $(this).val();
-            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixel();
         })
 
@@ -10980,7 +10990,7 @@ function runCodeLevel3() {
     try {
         eval(code)
 
-        var pixelBorder = eval($('.pixelActive').data('name'));
+        var pixelBorder = eval($('.pixel-active').data('name'));
 
         $.each(pixelBorder, function(i, value) {
             if (typeof value == 'number') {
@@ -10995,19 +11005,19 @@ function runCodeLevel3() {
             }
         });
 
-        $('.pixelActive').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
+        $('.pixel-active').data('rvb', {red: pixelBorder.red, green: pixelBorder.green, blue: pixelBorder.blue});
 
         resetSliders(pixelBorder.red, pixelBorder.green, pixelBorder.blue);
 
-        resetCodePixel($('.pixelActive').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixelBorder.red, pixelBorder.green, pixelBorder.blue);
         colorPixel();
         
     } catch(e) {
         alert ('pls input only nu')
 
-        var resetPixel = $('.pixelActive').data('rvb');
+        var resetPixel = $('.pixel-active').data('rvb');
 
-        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
     }
 }
 
@@ -11098,21 +11108,21 @@ function loadLevel4() {
 
     $('main').loadLevel('level4', function () {
 
-        var image = $('.imageObject');
+        var image = $('.js-image-object');
         var holdTimeout = '';
 
 
         //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false,
-                readOnly: 'nocursor'
-                //matchBrackets: true
-            }
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
+            mode: "text/javascript",
+            theme: "icecoder", 
+            lineWrapping: true, 
+            lineNumbers: true, 
+            autofocus: false,
+            readOnly: 'nocursor'
+            //matchBrackets: true
+        }
         //Initialisation des variables
             codeConfig.readOnly = 'nocursor';
 
@@ -11136,7 +11146,7 @@ function loadLevel4() {
         //            }
         //        });
 
-        $('#frameWrapper .imageObject').each(function () {
+        image.each(function () {
             $(this).data('pos', {
                 x: 0,
                 y: 0,
@@ -11165,11 +11175,11 @@ function loadLevel4() {
         //            that.addClass('hovered');
         //        }
 
-        $('.imageObject').bind('mousedown touchstart', function() {
+        image.bind('mousedown touchstart', function() {
             $(this).addClass('hovered');
         })
 
-        $('.imageObject').bind('mouseup touchend', function() {
+        image.bind('mouseup touchend', function() {
             if ($(this).hasClass('hovered')) {
                 $(this).removeClass('hovered')
             }
@@ -11179,8 +11189,8 @@ function loadLevel4() {
         //Change Active Pixel
         image.on('touch click', function () {
             showModal();
-            $('.imgActive').removeClass('imgActive');
-            $(this).addClass('imgActive');
+            $('.img-active').removeClass('img-active');
+            $(this).addClass('img-active');
 
             resetCode();
         });
@@ -11189,7 +11199,7 @@ function loadLevel4() {
 
 
         //Run Code
-        $('.runCode').on('touch click', function () {
+        $('.js-run-code').on('touch click', function () {
             runCodeLevel4();
             hideModal();
         });
@@ -11199,7 +11209,7 @@ function loadLevel4() {
             addCode($(this));
         })
 
-        $('.reinitImg').click(reinitImg);
+        $('.reinit-img').click(reinitImg);
 
         codeMirror.setValue('init');
         //resetCode();
@@ -11231,7 +11241,7 @@ function runCodeLevel4() {
 function submitLevel4() {
     //Validate
     var isCorrect = 0;
-    $.each($('.imageObject'), function(i) {
+    $.each($('.js-image-object'), function(i) {
         var pos = $(this).data('pos');
         $.each(thisLvlAnswers, function(i, value) {
             if (JSON.stringify(pos) == JSON.stringify(value)) {
@@ -11611,16 +11621,16 @@ function loadSandbox() {
         //var image = $('.imageObject');
 
         //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false,
-                readOnly: 'nocursor'
-                //matchBrackets: true
-            }
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
+            mode: "text/javascript",
+            theme: "icecoder", 
+            lineWrapping: true, 
+            lineNumbers: true, 
+            autofocus: false,
+            readOnly: 'nocursor'
+            //matchBrackets: true
+        }
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -11642,34 +11652,29 @@ function loadSandbox() {
 
 
         //Change Active Pixel
-        $(document).on('touch click', '.pixel', function () {
+        $(document).on('touch click', '.js-pixel', function () {
 
-            if ($(this).hasClass('pixelActive')) {
-                $('.pixelActive').removeClass('pixelActive imgActive');
-                $('.editPixel').addClass('hidden');
+            if ($(this).hasClass('pixel-active')) {
+                $('.pixel-active').removeClass('pixel-active img-active');
+                $('.js-edit-pixel').addClass('hidden');
             } else {
-                $('.pixelActive').removeClass('pixelActive imgActive');
-                $(this).addClass('pixelActive imgActive');
-                $('.editPixel').removeClass('hidden');
+                $('.pixel-active').removeClass('pixel-active img-active');
+                $(this).addClass('pixel-active img-active');
+                $('.js-edit-pixel').removeClass('hidden');
             }
-
-            
-
-            
-
 
 
         })
 
-        $('.changeColor').on('touch click', function() {
-            if($('.pixelActive').length > 0) {
+        $('.js-change-color').on('touch click', function() {
+            if($('.pixel-active').length > 0) {
 
                 $('.btn-position').addClass('hidden');
                 $('.btn-color').removeClass('hidden');
-                $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+                $('.cm-s-icecoder').addClass('only-color');
 
-                var name = $('.pixelActive').data('name');
-                var thisColors = $('.pixelActive').data('rvb');
+                var name = $('.pixel-active').data('name');
+                var thisColors = $('.pixel-active').data('rvb');
                 resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
 
@@ -11677,11 +11682,11 @@ function loadSandbox() {
             }
         })
 
-        $('.changePosition').on('touch click', function() {
-            if($('.pixelActive').length > 0) {
+        $('.js-change-position').on('touch click', function() {
+            if($('.pixel-active').length > 0) {
                 $('.btn-color').addClass('hidden');
                 $('.btn-position').removeClass('hidden');
-                $('.CodeMirror.CodeMirror-wrap').removeClass('only-color');
+                $('.cm-s-icecoder').removeClass('only-color');
 
                 resetCode();
 
@@ -11689,17 +11694,17 @@ function loadSandbox() {
             }
         })
 
-        $('.reinitSandbox').click(reinitSandbox);
+        $('.js-reinit-sandbox').click(reinitSandbox);
 
 
 
-        $('.addPixel').click(addPixel);
+        $('.js-add-pixel').click(addPixel);
 
 
         $('input[type=range]').on("input", function(){
 
             var name = $(this).attr('class');
-            var thisPixel = $('.pixelActive').data('rvb');
+            var thisPixel = $('.pixel-active').data('rvb');
 
             switch(name) {
                 case 'red':
@@ -11716,16 +11721,16 @@ function loadSandbox() {
             }
 
             thisPixel[name] = $(this).val();
-            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixel();
         })
 
-        $('.runCode').click(function () {
+        $('.js-run-code').click(function () {
             hideModal();
             runCodeLevel4();  
         });
         
-        $('.applyColor').on('touch click', hideModal)
+        $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
             console.log($(this))
@@ -11745,7 +11750,7 @@ function runSandbox() {
     try {
         eval(code); 
 
-        pixel = eval($('.pixelActive').data('name'));
+        pixel = eval($('.pixel-active').data('name'));
 
         $.each(pixel, function(i, value) {
             if (typeof value == 'number') {
@@ -11762,34 +11767,34 @@ function runSandbox() {
 
 
 
-        $('.pixelActive').data('rvb', {
+        $('.pixel-active').data('rvb', {
             red: pixel.red, 
             green: pixel.green, 
             blue: pixel.blue
         });
-        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue);
 
         colorPixel();
 
-        var pos = $('.pixelActive').data('pos'); 
-        var size = $('.pixelActive').outerWidth();
+        var pos = $('.pixel-active').data('pos'); 
+        var size = $('.pixel-active').outerWidth();
 
         hideModal();
 
-        console.log($('#sandboxWrapper').length);
-        var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
-        var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
-        console.log(xMax, yMax)
+        //console.log($('.js-sandboxwrapper').length);
+        var xMax = Math.ceil($('.js-sandboxwrapper').width() / size) - 1;
+        var yMax = Math.ceil($('.js-sandboxwrapper').height() / size) - 1;
+        //console.log(xMax, yMax)
 
         pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
 
-        console.log(pos.x, pos.y);
+        //console.log(pos.x, pos.y);
 
-        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixelActive').css('left', pos.x * size + 'px');
-        $('.pixelActive').css('top', pos.y * size + 'px');
+        $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.pixel-active').css('left', pos.x * size + 'px');
+        $('.pixel-active').css('top', pos.y * size + 'px');
 
 
 
@@ -11798,9 +11803,9 @@ function runSandbox() {
 
         alert(e.message);
 
-        var resetPixel = $('.pixelActive').data('rvb');
+        var resetPixel = $('.pixel-active').data('rvb');
 
-        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
 
     }
 

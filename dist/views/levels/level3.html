@@ -1,10 +1,10 @@
-<div id="Level3" class="levelContent">
+<div id="level3" class="level-content">
     <div class="consigne">
         <p>Reproduisez tableau de Morellet</p>
     </div>
 
-    <div id="frameWrapper">
-        <div class="wrapperGrad"></div>
+    <div id="frameWrapper" class='framewrapper js-framewrapper'>
+        <div class="wrapper-grad"></div>
         <div class="square" data-name="purple"></div>
         <div class="square" data-name="violet"></div>
         <div class="square" data-name="magenta"></div>
@@ -18,32 +18,35 @@
     <div class="fleche btn-start-order" onclick="submitLevel3()">Valider la réponse</div>
 </div>
 
-<div id="modalContent" class="level3">
+<div id="modal-content" class="level3">
 
-    <textarea class="codeMirror"></textarea>
+    <textarea class="code-mirror js-code-mirror"></textarea>
 
-    <div class="pixelModel">
+    <div class="pixel-model">
         <div class="center">
 
             <div class="buttons">
 
                 <div class="sliders notdev">
-                    <div class="rangeBg">
+                    <div class="range-bg">
                         <input type="range" value="0" max="255" min="0" step="15" class="red">
                     </div>
 
-                    <div class="rangeBg">
+                    <div class="range-bg">
                         <input type="range" value="0" max="255" min="0" step="15" class="green">
                     </div>
-                    <div class="rangeBg">
+                    <div class="range-bg">
                         <input type="range" value="0" max="255" min="0" step="15" class="blue">
                     </div>
                 </div>
                 
-                <button class="btn applyColor">Appliquer</button>
+                <button class="btn apply-color">Appliquer</button>
             </div>
 
         </div>
     </div>
-
+    <script type="text/javascript">
+        textArea = $('.js-code-mirror')[0];
+        console.log(textArea)
+    </script>
 </div>

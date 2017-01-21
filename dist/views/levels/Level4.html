@@ -1,31 +1,31 @@
-<div id="Level4" class="levelContent">
+<div id="level4" class="level-content">
     <div class="consigne">
         <p>Reproduisez tableau de Morellet</p>
     </div>
 
-    <div id="frameWrapper">
-        <div class="startContainer">
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
-            <div class="imageObject"></div>
+    <div id="frameWrapper" class='framewrapper js-framewrapper'>
+        <div class="start-container">
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
+            <div class="image-object js-image-object"></div>
         </div>
     </div>
 
-    <button class="btn reinitImg">Reinitialiser</button>
+    <button class="btn reinit-img">Reinitialiser</button>
 
     <div class="fleche btn-start-order" onclick="submitLevel4()">Valider la réponse</div>
 </div>
 
 
-<div id="modalContent" class="level4">
+<div id="modal-content" class="level4">
 
-    <textarea class="codeMirror"></textarea>
+    <textarea class="code-mirror js-code-mirror"></textarea>
 
     <div class="buttons">
 
@@ -39,6 +39,9 @@
 
         </div>
 
-        <button class="btn runCode">RUN CODE</button>
+        <button class="btn run-code js-run-code">RUN CODE</button>
     </div>
+    <script type="text/javascript">
+        textArea = $('.js-code-mirror')[0];
+    </script>
 </div>

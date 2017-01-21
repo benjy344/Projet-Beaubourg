@@ -47,13 +47,21 @@ $.get("dist/content/content_fr.html", function(data) {
     })
 });
 
+var textArea = $('.codeMirror')[0],
+            codeConfig = {
+                mode: "text/javascript",
+                theme: "icecoder", 
+                lineWrapping: true, 
+                lineNumbers: true, 
+                autofocus: false
+                //matchBrackets: true
+            };
 
-
-$Popup = $('.popup');
-$content_popup = $('.popup .content-popup');
+$Popup = $('.js-popup');
+$content_popup = $Popup.find('.js-content-popup');
 $button = $('.js-fleche-popup');
-$hoverlay = $('.hoverlay');
-$popup_icon = $('.popup-icon i');
+$hoverlay = $('.js-overlay');
+//$popup_icon = $('.popup-icon i');
 
 popinIsOpen = false;
 tipIsOpened = false;

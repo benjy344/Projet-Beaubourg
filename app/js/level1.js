@@ -5,7 +5,7 @@
 *********************/
 function loadLevel1() {
     $('main').addClass('flex');
-    $('.hamburger').show();
+    $('.js-hamburger').show();
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -17,9 +17,8 @@ function loadLevel1() {
     }
     
     level1IsVisited = true;
-    aleNumber = "";
+    alenumber = "";
     $('main').loadLevel('level1', function(){
-
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
         var heightNumber =  16;
         var min = Math.ceil(0);
@@ -38,18 +37,16 @@ function loadLevel1() {
             else { binaire = binaire+'1'; }
             //console.log( i % 4 )
             if (i != 0) {
-                if (i % 4 === 0) { aleNumber += '</span><span class="numberCase">'+alea+'';} else {aleNumber += ''+alea+'';}
+                if (i % 4 === 0) { alenumber += '</span><span class="numbercase">'+alea+'';} else {alenumber += ''+alea+'';}
             } else {
-                aleNumber += '<span class="numberCase">'+alea+'';
+                alenumber += '<span class="numbercase">'+alea+'';
             }
             
+            
         }
-        $('.aleNumber').html(aleNumber);
-        //generation des cases du tableau
-        for (var i = 0; i < 3; i++){
-            $('.tableau ul:first-child').clone().appendTo( ".tableau" );
-        }
-
+        alenumber += '</span>';
+        $('.js-alenumber').html(alenumber);
+        
         var div = $('.tableau ul li div');
 
         div.on('touch click', function(e) {

@@ -1,61 +1,41 @@
 @import "utilities/variables";
-#Level2 {
-    
-    #kiteII, #frameWrapper {
+#level2 {
+
+    .framewrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            height: 100%;
         height: calc( ((100vw - 20px)/7)*2 );
         width: 100%;
-    }
 
-    #kiteII .pixel, #frameWrapper .pixel {
-        box-sizing: border-box;
-        height: calc((100vw - 20px)/ 7);;
-        border: solid 1px black;
-    }
-
-    #frameWrapper .pixel {
-        background-color: black;
-        transition: background ease 0.5s;
-        border: solid 1px white;
-    }
-
-    #kiteII .blue {
-        background-color: blue;
-    }
-
-    #kiteII .red {
-        background-color: red;
-    }
-
-    #kiteII .yellow {
-        background-color: yellow;
-    }
-
-    #kiteII .green {
-        background-color: green;
-    }
-
-    #kiteII .white {
-        background-color: white;
-    }
-
-    #kiteII .black {
-        background-color: black;
-    }
-
-    #kiteII .pixel.large, #frameWrapper .pixel.large {
-        height: 100%;
-    }
-
-    #frameWrapper .pixelActive {
-        border: #008bff solid 2px;
+        .pixel {
+            box-sizing: border-box;
+            height: calc((100vw - 20px)/ 7);;
+            background-color: black;
+            -webkit-transition: background ease 0.5s;
+            transition: background ease 0.5s;
+            border: solid 1px white;
+        }
+        .pixel-active {
+            border: #008bff solid 2px;
+        }
+        .large {
+            height: 100%;
+        }
     }
 }
 
-#modalContent.level2 {
+#modal-content.level2 {
     .checkboxes {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
         max-width: 300px;
         max-height: 300px;
@@ -72,17 +52,23 @@
     .checkBg {
         background-color: black;
         width: calc(100%/3);
-        align-items: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        justify-content: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
         border: 2px solid white;
     }
 
     .buttons {
-//        display: flex;
-//        justify-content : center; 
+/*        display: flex;*/
+/*        justify-content : center; */
 
-        .applyColor {
+        .apply-color {
             width: 100%;
             background-color: $black
         }

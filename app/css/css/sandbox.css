@@ -1,10 +1,10 @@
-#sandbox #sandboxWrapper {
+#sandbox .sandboxwrapper {
   position: relative;
   height: 70%;
   background-color: white;
   overflow: hidden;
 }
-#sandbox #sandboxWrapper .pixel {
+#sandbox .sandboxwrapper .pixel {
   background-color: red;
   box-sizing: border-box;
   height: 100px;
@@ -12,20 +12,20 @@
   border: solid 1px black;
   position: absolute;
 }
-#sandbox #sandboxWrapper .pixel.pixelActive {
+#sandbox .sandboxwrapper .pixel.pixel-active {
   border: 4px solid #008BFF;
 }
-#sandbox .editPixel.hidden {
+#sandbox .edit-pixel.hidden {
   display: none;
 }
 
-#modalContent .btn-position.hidden {
+#modal-content .btn-position.hidden {
   display: none;
 }
-#modalContent .btn-color.hidden {
+#modal-content .btn-color.hidden {
   display: none;
 }
-#modalContent .CodeMirror.CodeMirror-wrap.only-color {
+#modal-content .cm-s-icecoder.only-color {
   height: 175px;
 }
 

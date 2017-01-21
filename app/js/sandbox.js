@@ -19,16 +19,16 @@ function loadSandbox() {
         //var image = $('.imageObject');
 
         //CodeMirror
-        var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false,
-                readOnly: 'nocursor'
-                //matchBrackets: true
-            }
+        textArea = $('.js-code-mirror')[0];
+        codeConfig = {
+            mode: "text/javascript",
+            theme: "icecoder", 
+            lineWrapping: true, 
+            lineNumbers: true, 
+            autofocus: false,
+            readOnly: 'nocursor'
+            //matchBrackets: true
+        }
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
@@ -50,34 +50,29 @@ function loadSandbox() {
 
 
         //Change Active Pixel
-        $(document).on('touch click', '.pixel', function () {
+        $(document).on('touch click', '.js-pixel', function () {
 
-            if ($(this).hasClass('pixelActive')) {
-                $('.pixelActive').removeClass('pixelActive imgActive');
-                $('.editPixel').addClass('hidden');
+            if ($(this).hasClass('pixel-active')) {
+                $('.pixel-active').removeClass('pixel-active img-active');
+                $('.js-edit-pixel').addClass('hidden');
             } else {
-                $('.pixelActive').removeClass('pixelActive imgActive');
-                $(this).addClass('pixelActive imgActive');
-                $('.editPixel').removeClass('hidden');
+                $('.pixel-active').removeClass('pixel-active img-active');
+                $(this).addClass('pixel-active img-active');
+                $('.js-edit-pixel').removeClass('hidden');
             }
-
-            
-
-            
-
 
 
         })
 
-        $('.changeColor').on('touch click', function() {
-            if($('.pixelActive').length > 0) {
+        $('.js-change-color').on('touch click', function() {
+            if($('.pixel-active').length > 0) {
 
                 $('.btn-position').addClass('hidden');
                 $('.btn-color').removeClass('hidden');
-                $('.CodeMirror.CodeMirror-wrap').addClass('only-color');
+                $('.cm-s-icecoder').addClass('only-color');
 
-                var name = $('.pixelActive').data('name');
-                var thisColors = $('.pixelActive').data('rvb');
+                var name = $('.pixel-active').data('name');
+                var thisColors = $('.pixel-active').data('rvb');
                 resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
 
@@ -85,11 +80,11 @@ function loadSandbox() {
             }
         })
 
-        $('.changePosition').on('touch click', function() {
-            if($('.pixelActive').length > 0) {
+        $('.js-change-position').on('touch click', function() {
+            if($('.pixel-active').length > 0) {
                 $('.btn-color').addClass('hidden');
                 $('.btn-position').removeClass('hidden');
-                $('.CodeMirror.CodeMirror-wrap').removeClass('only-color');
+                $('.cm-s-icecoder').removeClass('only-color');
 
                 resetCode();
 
@@ -97,17 +92,17 @@ function loadSandbox() {
             }
         })
 
-        $('.reinitSandbox').click(reinitSandbox);
+        $('.js-reinit-sandbox').click(reinitSandbox);
 
 
 
-        $('.addPixel').click(addPixel);
+        $('.js-add-pixel').click(addPixel);
 
 
         $('input[type=range]').on("input", function(){
 
             var name = $(this).attr('class');
-            var thisPixel = $('.pixelActive').data('rvb');
+            var thisPixel = $('.pixel-active').data('rvb');
 
             switch(name) {
                 case 'red':
@@ -124,16 +119,16 @@ function loadSandbox() {
             }
 
             thisPixel[name] = $(this).val();
-            resetCodePixel($('.pixelActive').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
+            resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixel();
         })
 
-        $('.runCode').click(function () {
+        $('.js-run-code').click(function () {
             hideModal();
             runCodeLevel4();  
         });
         
-        $('.applyColor').on('touch click', hideModal)
+        $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
             console.log($(this))
@@ -153,7 +148,7 @@ function runSandbox() {
     try {
         eval(code); 
 
-        pixel = eval($('.pixelActive').data('name'));
+        pixel = eval($('.pixel-active').data('name'));
 
         $.each(pixel, function(i, value) {
             if (typeof value == 'number') {
@@ -170,34 +165,34 @@ function runSandbox() {
 
 
 
-        $('.pixelActive').data('rvb', {
+        $('.pixel-active').data('rvb', {
             red: pixel.red, 
             green: pixel.green, 
             blue: pixel.blue
         });
-        resetCodePixel($('.pixelActive').data('name'), pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue);
 
         colorPixel();
 
-        var pos = $('.pixelActive').data('pos'); 
-        var size = $('.pixelActive').outerWidth();
+        var pos = $('.pixel-active').data('pos'); 
+        var size = $('.pixel-active').outerWidth();
 
         hideModal();
 
-        console.log($('#sandboxWrapper').length);
-        var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
-        var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
-        console.log(xMax, yMax)
+        //console.log($('.js-sandboxwrapper').length);
+        var xMax = Math.ceil($('.js-sandboxwrapper').width() / size) - 1;
+        var yMax = Math.ceil($('.js-sandboxwrapper').height() / size) - 1;
+        //console.log(xMax, yMax)
 
         pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
 
-        console.log(pos.x, pos.y);
+        //console.log(pos.x, pos.y);
 
-        $('.pixelActive').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixelActive').css('left', pos.x * size + 'px');
-        $('.pixelActive').css('top', pos.y * size + 'px');
+        $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
+        $('.pixel-active').css('left', pos.x * size + 'px');
+        $('.pixel-active').css('top', pos.y * size + 'px');
 
 
 
@@ -206,9 +201,9 @@ function runSandbox() {
 
         alert(e.message);
 
-        var resetPixel = $('.pixelActive').data('rvb');
+        var resetPixel = $('.pixel-active').data('rvb');
 
-        resetCodePixel($('.pixelActive').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
 
     }
 
