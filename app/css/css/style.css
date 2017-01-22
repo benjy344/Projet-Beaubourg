@@ -651,6 +651,9 @@ body .close {
   top: 5px;
   right: 10px;
 }
+body .pixel, body .btn, body .close, body .help-button, body button, body .fleche, body .icon-return {
+  cursor: pointer;
+}
 body .btn {
   /*        background: linear-gradient(90deg, rgb(63, 169, 245), rgb(122, 201, 67));*/
   /*        border: 1px solid white;*/

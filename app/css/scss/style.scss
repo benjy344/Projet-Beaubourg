@@ -56,7 +56,9 @@ body {
         top: 5px;
         right: 10px;
     }
-
+    .pixel, .btn, .close, .help-button, button, .fleche, .icon-return {
+        cursor: pointer;
+    }
     .btn {
         /*        background: linear-gradient(90deg, rgb(63, 169, 245), rgb(122, 201, 67));*/
         /*        border: 1px solid white;*/
@@ -745,7 +747,7 @@ body {
     /*
     * Spin
     */
-
+    
     .hamburger--spin.is-active .hamburger-inner, .hamburger--spin.is-active .hamburger-inner::before, .hamburger--spin.is-active .hamburger-inner::after {
         background-color: $white;
     }

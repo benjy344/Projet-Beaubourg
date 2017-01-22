@@ -187,6 +187,36 @@
   -moz-appearance: slider-vertical;
   appearance: slider-vertical;
   -webkit-appearance: slider-vertical;
+  /*
+    Active state
+  */
+}
+#modal-content .pixel-model .buttons .sliders .range-bg input::-webkit-slider-thumb {
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.36);
+  border-radius: 6px;
+  /* Is base64 the way to go ? */
+  /* I don't imagine simulating vertical stripes w/ gradients */
+  background: #242322;
+  box-shadow: inset 0 1px white;
+}
+#modal-content .pixel-model .buttons .sliders .range-bg input::-moz-range-thumb {
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.36);
+  border-radius: 6px;
+  background: url("http://db.tt/q5LHtPKx") center center no-repeat #e5e9e8;
+  background: #242322;
+  box-shadow: inset 0 1px white;
+}
+#modal-content .pixel-model .buttons .sliders .range-bg input:active::-webkit-slider-thumb {
+  border: 4px solid #0940fd;
+  box-shadow: 0 0 0 2px #6fb5f1;
+}
+#modal-content .pixel-model .buttons .sliders .range-bg input input[type=range]:active::-moz-range-thumb {
+  border: 1px solid #0940fd;
+  box-shadow: 0 0 0 2px #6fb5f1;
 }
 #modal-content .pixel-model .buttons .apply-color {
   width: 100%;

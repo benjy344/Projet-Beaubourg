@@ -31,8 +31,8 @@
 #level4 .framewrapper .start-container .image-object.hovered {
   -webkit-transform: scale(0.75);
   transform: scale(0.75);
-  -webkit-transition-delay: 1s;
-  transition-delay: 1s;
+  -webkit-transition-delay: 0.5s;
+  transition-delay: 0.5s;
 }
 
 #modal-content .buttons {
@@ -64,7 +64,7 @@
   padding: 0.5em;
   margin: 0;
 }
-#modal-content .buttons button.btn.runCode {
+#modal-content .buttons button.btn.run-code {
   width: 100%;
 }
 #modal-content .cm-s-icecoder {

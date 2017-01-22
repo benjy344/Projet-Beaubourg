@@ -48,11 +48,28 @@
 #level1 .tableau ul li div {
   width: 100%;
   height: 100%;
-  background-color: #242322;
-  color: #FBFBFB;
+  background-color: #FBFBFB;
+  color: #242322;
   position: relative;
 }
 #level1 .tableau ul li div::after {
+  content: '1';
+  display: block;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+  color: #242322;
+  position: absolute;
+  text-align: center;
+  padding-top: calc(50% - 1rem);
+  box-sizing: border-box;
+}
+#level1 .tableau ul li div.black {
+  color: #FBFBFB;
+  background-color: #242322;
+}
+#level1 .tableau ul li div.black::after {
   content: '0';
   display: block;
   height: 100%;
@@ -60,24 +77,6 @@
   top: 0;
   right: 0;
   color: #FBFBFB;
-  position: absolute;
-  text-align: center;
-  padding-top: calc(50% - 1rem);
-  box-sizing: border-box;
-}
-#level1 .tableau ul li div.white {
-  content: '1';
-  color: #242322;
-  background-color: #FBFBFB;
-}
-#level1 .tableau ul li div.white::after {
-  content: '1';
-  display: block;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  right: 0;
-  color: #242322;
   position: absolute;
   text-align: center;
   padding-top: calc(50% - 1rem);

@@ -19,6 +19,7 @@ function loadLevel1() {
     level1IsVisited = true;
     alenumber = "";
     $('main').loadLevel('level1', function(){
+        console.log('yo')
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
         var heightNumber =  16;
         var min = Math.ceil(0);
@@ -28,6 +29,7 @@ function loadLevel1() {
             1 : content['jeu1astuce2dev'],
             2 : content['jeu1astuce3dev']
            }
+           console.log(tips1)
         constructTips(4000, 3, tips1);
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
@@ -50,7 +52,8 @@ function loadLevel1() {
         var div = $('.tableau ul li div');
 
         div.on('touch click', function(e) {
-            $(this).toggleClass('white');
+            console.log('check')
+            $(this).toggleClass('black');
         });
     });
 }
