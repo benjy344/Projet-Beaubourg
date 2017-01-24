@@ -9254,7 +9254,6 @@ $.fn.loadLevel = function(levelToLoad, callback) {
     //console.log(thisLvlAnswers);
 
     this.load(file + ' ' + lvl, function() {  
-    console.log( file + ' ' + lvl)  
         $('.modal-content').load(file + ' ' + modal, function() {
 
             callback();
@@ -9290,7 +9289,6 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 * }
 **/
 function constructTips(time, numberOftips, tips ) {
-    console.log('constructTips')
     var number = 0;
     timeOut = setTimeout( function () {
         if (popinIsOpen === false) {
@@ -10613,7 +10611,6 @@ function loadLevel1() {
     level1IsVisited = true;
     alenumber = "";
     $('main').loadLevel('level1', function(){
-        console.log('yo')
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
         var heightNumber =  16;
         var min = Math.ceil(0);
@@ -10623,7 +10620,6 @@ function loadLevel1() {
             1 : content['jeu1astuce2dev'],
             2 : content['jeu1astuce3dev']
            }
-           console.log(tips1)
         constructTips(4000, 3, tips1);
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
@@ -10640,13 +10636,13 @@ function loadLevel1() {
             
             
         }
+
         alenumber += '</span>';
         $('.js-alenumber').html(alenumber);
         
         var div = $('.tableau ul li div');
 
         div.on('touch click', function(e) {
-            console.log('check')
             $(this).toggleClass('black');
         });
     });
@@ -10663,14 +10659,15 @@ function submitLevel1() {
     var div = $('.tableau ul li div');
 
     $(div).each(function() {
-        if($( this ).hasClass( "white" )){
-            chaineTableau = chaineTableau + '1';
-        }
-        else{
+        if($( this ).hasClass( "black" )){
             chaineTableau = chaineTableau + '0';
         }
+        else{
+            chaineTableau = chaineTableau + '1';
+        }
     });
-
+    console.log('binaire : '+binaire)
+    console.log('chaineTableau : '+chaineTableau)
     if (chaineTableau == binaire || testing) { //{TEST} Always True
 
         var $popinError = new Popin({

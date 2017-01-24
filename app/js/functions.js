@@ -60,7 +60,6 @@ $.fn.loadLevel = function(levelToLoad, callback) {
     //console.log(thisLvlAnswers);
 
     this.load(file + ' ' + lvl, function() {  
-    console.log( file + ' ' + lvl)  
         $('.modal-content').load(file + ' ' + modal, function() {
 
             callback();
@@ -96,7 +95,6 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 * }
 **/
 function constructTips(time, numberOftips, tips ) {
-    console.log('constructTips')
     var number = 0;
     timeOut = setTimeout( function () {
         if (popinIsOpen === false) {
