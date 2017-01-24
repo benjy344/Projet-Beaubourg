@@ -22,7 +22,22 @@
         }
     }
 
+    .sandbox-btn-general {
+        width: 100%;
+
+        .btn {
+            max-width: 50%;
+        }
+    }
+
+
     .edit-pixel {
+
+        width: 100%;
+
+        .btn {
+            max-width: 50%;
+        }
 
         &.hidden {
             display: none;
@@ -46,11 +61,11 @@
             display: none;
         }
     }
-    
+
     .cm-s-icecoder.only-color {
         height: 175px;
     }
-        
+
 
 }
 
