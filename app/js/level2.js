@@ -4,7 +4,6 @@
 *
 *********************/
 function loadLevel2() {
-    getATip("", "", "", "", true);
     countLevel = 2;
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
@@ -14,12 +13,16 @@ function loadLevel2() {
             $close: $('.js-close-popup-encyclo')
         });
     }
-    var tips2 = {
+    tipsLevel2 = {
             0 : content['jeu2astuce1'],
             1 : content['jeu2astuce2'],
             2 : content['jeu2astuce3']
         }
-        constructTips(42000, 3, tips2); //{DEV} 
+    Tip2 = new Tip({
+            'tips' : tipsLevel2,
+            'duration' : 4000,
+            'level': 2
+        })    
     level2IsVisited = true;
     $('main').loadLevel('level2', function() {
         var pixel = $('.js-pixel');

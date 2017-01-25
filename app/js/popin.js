@@ -26,7 +26,7 @@ Popin.prototype = {
 
     init: function(options) {
         this.$popin =      $(".js-popup");
-        this.$ContentPopup = $('.content-popup');
+        this.$ContentPopup = $('.js-content-popup');
         this.$open= undefined;
         this.$overlay= $(".hoverlay");
         this.type= 'popin';
@@ -41,7 +41,7 @@ Popin.prototype = {
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
         }
-
+        
         this.buildElements();
         this.addEventListeners();
         
@@ -86,16 +86,14 @@ Popin.prototype = {
      * Builds the overlay and close button if necessary
      */
     buildElements: function() {
-        if (this.isSlider ) {
-            this.$popin.find(".fleche").remove();
-        }
-        if (!this.$close && !this.isSlider ) {
+        this.$ContentPopup.html(this.content);
+        this.$popin.find('.js-fleche-popup').remove();
+        if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
+            this.$close = this.$ContentPopup.find('.js-close-popup-encyclo');
+        } else {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
-
-        }
-
-
+        }            
     },
 
     defaultOpen: function() {
@@ -113,22 +111,15 @@ Popin.prototype = {
             }
         }
 
-        if (this.type === 'succes') {
-            addSuccess(this.icon)
-        }
+        if (this.type === 'succes') addSuccess(this.icon)
+        
         if (this.type === 'encyclo') {
             var title = 'Niveau '+countLevel;
             addEncyclo(title, this.content);
-        }
+        } 
 
+        if (this.isSlider) $slider = new Slider()
 
-        this.$ContentPopup.html(this.content);
-
-        if (this.isSlider) {
-                this.$close = $('.js-close-popup-encyclo');
-
-                $slider = new Slider();
-            }
         this.$overlay.removeClass("hide");
         this.$popin.removeClass("hide");
     },
