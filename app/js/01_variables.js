@@ -83,6 +83,18 @@ var level1IsVisited = false,
     level4IsVisited = false,
     sandboxIsVisited = false;
 
+var Tip1,
+    tipsLevel1,
+    Tip2,
+    tipsLevel2,
+    Tip3,
+    tipsLevel3,
+    Tip4,
+    tipsLevel4,
+    Tip5,
+    tipsLevel5;
+
+
 var intervale = 0,
     t = 0;
 

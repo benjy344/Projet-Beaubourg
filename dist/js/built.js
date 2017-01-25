@@ -89,6 +89,18 @@ var level1IsVisited = false,
     level4IsVisited = false,
     sandboxIsVisited = false;
 
+var Tip1,
+    tipsLevel1,
+    Tip2,
+    tipsLevel2,
+    Tip3,
+    tipsLevel3,
+    Tip4,
+    tipsLevel4,
+    Tip5,
+    tipsLevel5;
+
+
 var intervale = 0,
     t = 0;
 
@@ -9432,6 +9444,32 @@ function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
     $('.content-global').show(); 
+}
+
+//**********************************************************************
+// function waitfor - Wait until a condition is met
+//        
+// Needed parameters:
+//    test: function that returns a value
+//    expectedValue: the value of the test function we are waiting for
+//    msec: delay between the calls to test
+//    callback: function to execute when the condition is met
+// Parameters for debugging:
+//    count: used to count the loops
+//    source: a string to specify an ID, a message, etc
+//**********************************************************************
+function waitforPopinIsOpen( expectedValue, msec, count, source, callback) {
+    // Check if condition met. If not, re-check later (msec).
+    if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
+        count++;
+        setTimeout(function() {
+            waitforPopinIsOpen( expectedValue, msec, count, source, callback);
+        }, msec);
+        return;
+    }
+    // Condition finally met. callback() can be executed.
+    console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
+    callback();
 };
  /*********************************************************/
 // add pixel
@@ -10599,6 +10637,7 @@ function loadLevel1() {
     $('main').addClass('flex');
     $('.js-hamburger').show();
     countLevel = 1;
+    var toto = 'toto';
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
@@ -10615,12 +10654,18 @@ function loadLevel1() {
         var heightNumber =  16;
         var min = Math.ceil(0);
         var max = Math.floor(9);
-        var tips1 = {
+        tipsLevel1 = {
             0 : content['jeu1astuce1dev'],
             1 : content['jeu1astuce2dev'],
             2 : content['jeu1astuce3dev']
            }
-        constructTips(4000, 3, tips1);
+        //var tips1 = []
+        Tip1 = new Tip({
+            'tips' : tipsLevel1,
+            'duration' : 4000,
+            'level': 1
+        })
+        //constructTips(4000, 3, tips1);
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
             if (alea % 2 == 0) {
@@ -10676,6 +10721,7 @@ function submitLevel1() {
             type: 'succes',
             icon: 'succes1'
         });
+        Tip1.destroy();
         //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
     }else{var $popinError = new Popin({
@@ -10691,7 +10737,6 @@ function submitLevel1() {
 *
 *********************/
 function loadLevel2() {
-    getATip("", "", "", "", true);
     countLevel = 2;
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
@@ -10701,12 +10746,16 @@ function loadLevel2() {
             $close: $('.js-close-popup-encyclo')
         });
     }
-    var tips2 = {
+    tipsLevel2 = {
             0 : content['jeu2astuce1'],
             1 : content['jeu2astuce2'],
             2 : content['jeu2astuce3']
         }
-        constructTips(42000, 3, tips2); //{DEV} 
+    Tip2 = new Tip({
+            'tips' : tipsLevel2,
+            'duration' : 4000,
+            'level': 2
+        })    
     level2IsVisited = true;
     $('main').loadLevel('level2', function() {
         var pixel = $('.js-pixel');
@@ -11293,7 +11342,7 @@ Popin.prototype = {
 
     init: function(options) {
         this.$popin =      $(".js-popup");
-        this.$ContentPopup = $('.content-popup');
+        this.$ContentPopup = $('.js-content-popup');
         this.$open= undefined;
         this.$overlay= $(".hoverlay");
         this.type= 'popin';
@@ -11308,7 +11357,7 @@ Popin.prototype = {
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
         }
-
+        
         this.buildElements();
         this.addEventListeners();
         
@@ -11353,16 +11402,14 @@ Popin.prototype = {
      * Builds the overlay and close button if necessary
      */
     buildElements: function() {
-        if (this.isSlider ) {
-            this.$popin.find(".fleche").remove();
-        }
-        if (!this.$close && !this.isSlider ) {
+        this.$ContentPopup.html(this.content);
+        this.$popin.find('.js-fleche-popup').remove();
+        if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
+            this.$close = this.$ContentPopup.find('.js-close-popup-encyclo');
+        } else {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
-
-        }
-
-
+        }            
     },
 
     defaultOpen: function() {
@@ -11380,22 +11427,15 @@ Popin.prototype = {
             }
         }
 
-        if (this.type === 'succes') {
-            addSuccess(this.icon)
-        }
+        if (this.type === 'succes') addSuccess(this.icon)
+        
         if (this.type === 'encyclo') {
             var title = 'Niveau '+countLevel;
             addEncyclo(title, this.content);
-        }
+        } 
 
+        if (this.isSlider) $slider = new Slider()
 
-        this.$ContentPopup.html(this.content);
-
-        if (this.isSlider) {
-                this.$close = $('.js-close-popup-encyclo');
-
-                $slider = new Slider();
-            }
         this.$overlay.removeClass("hide");
         this.$popin.removeClass("hide");
     },
@@ -11610,7 +11650,7 @@ function loadSandbox() {
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
             type: 'encyclo',
-            content: content['textsandbox'],
+            content: content['textsandbox']
         });
     }
     
@@ -11822,6 +11862,110 @@ function runSandbox() {
 
 
 ;
+ /*********************************************************/
+/*
+ * Tip is a module that constructs in an element and put it in the menu
+ *
+ * Args : object {
+ *   $popin, $open, $close, $overlay, $popinWrapper :                   jQuery element
+ *   closeButton :                                      true|false
+ *   onOpen, onOpened, onClose, onClosed, onResize :    callback function
+ *   type : popin|help\succes\encyclo
+ * }
+ *
+ */
+
+    // $popin = new Tip({
+                
+    //             content: 'blabla',
+    //             type: 'popin',
+    //             callback: 'loadIntro()'
+    //     });
+function Tip(options) {
+    //console.log(options.stop)
+    if (options.stop) { this.stop(options)} else {this.init(options);}
+}
+
+Tip.prototype = {
+
+    
+
+    init: function(options) {
+        this.duration = 42000;
+        this.tips = "";
+        this.number0fTips = 0;
+        this.count = 0;
+        this.$open = $('.help-button');
+        this.setTimeOut = 0;
+        this.level = 1;
+        this.waitFor = 0;
+        
+
+        if (options) {
+            if (options.tips) {
+                this.tips = options.tips;
+                this.number0fTips = Object.keys(this.tips).length;
+            }
+            if (options.duration) this.duration = options.duration;
+            if (options.$open) this.$open = options.$open;
+            if (options.level) this.level = options.level;
+        }
+        this.canIconstruct(this.tips[this.count]);
+    },
+   
+    canIconstruct: function(tip) {
+        $this = this;
+        ////console.log($this.canIconstruct())
+        if (this.level === countLevel ) {
+
+        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', function() {
+               $this.setTimeOut = setTimeout(function () {
+                   $this.constructTip(tip)
+               }, $this.duration)
+            });
+            
+        } else {this.stop()}
+            
+    },
+
+    constructTip : function (tip) {
+        //console.log('constructTip')
+        $this = this;
+        if (this.level === countLevel ) {
+        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', function() {
+                $this.count++;
+                $this.$open.show().addClass('newTip');
+                isNewTip = true;
+                var $popup = $popin = new Popin({
+                            content: tip,
+                            type: 'help',
+                            $open: $this.$open
+                        });
+                if($this.count<$this.number0fTips) {/*console.log('iteration ' + $this.count);*/$this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+                });
+        } else {this.stop()}
+        
+    },
+
+    stop : function (options) {
+        $this = this;
+        //console.log('stop');
+        clearTimeout($this.setTimeOut);
+        $this.setTimeOut = 0;
+        $this.waitFor = 0;
+    },
+    destroy: function() {
+        // Delete the variable that references the instance of the constructor.
+        //console.log(Tip1)
+        delete window.Tip1;
+        window.Tip1.setTimeOut = 0;
+        window.Tip1 = undefined;
+        //console.log(Tip1)
+      }
+
+};
+
+/*module.exports = modules.Popin = Popin;*/;
  /*********************************************************/
 function Slider($delete) {
     if ($delete) {
