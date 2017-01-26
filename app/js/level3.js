@@ -81,6 +81,8 @@ function loadLevel3() {
         
        $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
            
+           $('input[name="chooseFrameLvl3"]').off();
+           
            var varNames = [];
            $(content['jeu3variables_'+which]).map(function() {
                varNames.push($(this).text())

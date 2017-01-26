@@ -7,7 +7,7 @@
         overflow: hidden;
 
         .pixel {
-            background-color: red;
+            background-color: black;
 
             box-sizing: border-box;
             height: 100px;
@@ -24,9 +24,13 @@
 
     .sandbox-btn-general {
         width: 100%;
+        margin: 0.5em 0;
+        display: flex;
+
 
         .btn {
             max-width: 50%;
+            background-color: #242322;
         }
     }
 
@@ -34,9 +38,12 @@
     .edit-pixel {
 
         width: 100%;
+        display: flex;
 
         .btn {
             max-width: 50%;
+            background-color: #242322;
+
         }
 
         &.hidden {
@@ -65,8 +72,7 @@
     .cm-s-icecoder.only-color {
         height: 175px;
     }
-
-
+    
 }
 
 
