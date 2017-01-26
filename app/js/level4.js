@@ -9,8 +9,7 @@ function loadLevel4() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu4'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu4']
         });
     }
     
@@ -36,13 +35,17 @@ function loadLevel4() {
         //Initialisation des variables
             codeConfig.readOnly = 'nocursor';
 
-            var tips4 = {
+            tipsLevel4 = {
                 0 : content['jeu4astuce1'],
                 1 : content['jeu4astuce2'],
                 2 : content['jeu4astuce3']
-            }
-            console.log(tips4)
-            constructTips(42000, 3, tips4); 
+               }
+            //var tips1 = []
+            Tip4 = new Tip({
+                'tips' : tipsLevel4,
+                'duration' : 42000,
+                'level': 4
+            })
         
 
         //thisLvlAnswers = answers.lvl4;
@@ -168,6 +171,7 @@ function submitLevel4() {
             type: 'succes',
             icon: 'succes4'
         });
+        Tip4.destroy('Tip4');
     } else {
         var $popinError = new Popin({
             content: content['erreur']

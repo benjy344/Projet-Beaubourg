@@ -10637,13 +10637,11 @@ function loadLevel1() {
     $('main').addClass('flex');
     $('.js-hamburger').show();
     countLevel = 1;
-    var toto = 'toto';
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu1'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu1']
         });
     }
     
@@ -10655,9 +10653,9 @@ function loadLevel1() {
         var min = Math.ceil(0);
         var max = Math.floor(9);
         tipsLevel1 = {
-            0 : content['jeu1astuce1dev'],
-            1 : content['jeu1astuce2dev'],
-            2 : content['jeu1astuce3dev']
+            0 : content['jeu1astuce1'],
+            1 : content['jeu1astuce2'],
+            2 : content['jeu1astuce3']
            }
         //var tips1 = []
         Tip1 = new Tip({
@@ -10711,8 +10709,6 @@ function submitLevel1() {
             chaineTableau = chaineTableau + '1';
         }
     });
-    console.log('binaire : '+binaire)
-    console.log('chaineTableau : '+chaineTableau)
     if (chaineTableau == binaire || testing) { //{TEST} Always True
 
         var $popinError = new Popin({
@@ -10721,7 +10717,7 @@ function submitLevel1() {
             type: 'succes',
             icon: 'succes1'
         });
-        Tip1.destroy();
+        Tip1.destroy('Tip1');
         //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
     }else{var $popinError = new Popin({
@@ -10742,8 +10738,7 @@ function loadLevel2() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu2'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu2']
         });
     }
     tipsLevel2 = {
@@ -10908,6 +10903,7 @@ function submitLevel2() {
             type: 'succes',
             icon: 'succes2'
         });
+        Tip2.destroy('Tip2');
     } else {
        var $popinError = new Popin({
             content: content['erreur']
@@ -10927,8 +10923,7 @@ function loadLevel3() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu3'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu3']
         });
     }
 
@@ -10951,13 +10946,17 @@ function loadLevel3() {
         var defaultValue = 0;
 
         codeConfig.readOnly = 'nocursor';
-        var tips3 = {
+        tipsLevel3 = {
             0 : content['jeu3astuce1'],
             1 : content['jeu3astuce2'],
             2 : content['jeu3astuce3']
-        }
-        constructTips(42000, 3, tips3); 
-
+           }
+        //var tips1 = []
+        Tip3 = new Tip({
+            'tips' : tipsLevel3,
+            'duration' : 30000,
+            'level': 3
+        })
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -10998,6 +10997,8 @@ function loadLevel3() {
         })
         
        $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
+           
+           $('input[name="chooseFrameLvl3"]').off();
            
            var varNames = [];
            $(content['jeu3variables_'+which]).map(function() {
@@ -11127,6 +11128,7 @@ function submitLevel3() {
             type: 'succes',
             icon: 'succes3'
         });
+        Tip3.destroy('Tip3');
     } else {
         var $popinError = new Popin({
             content: content['erreur']
@@ -11147,8 +11149,7 @@ function loadLevel4() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu4'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu4']
         });
     }
     
@@ -11174,13 +11175,17 @@ function loadLevel4() {
         //Initialisation des variables
             codeConfig.readOnly = 'nocursor';
 
-            var tips4 = {
+            tipsLevel4 = {
                 0 : content['jeu4astuce1'],
                 1 : content['jeu4astuce2'],
                 2 : content['jeu4astuce3']
-            }
-            console.log(tips4)
-            constructTips(42000, 3, tips4); 
+               }
+            //var tips1 = []
+            Tip4 = new Tip({
+                'tips' : tipsLevel4,
+                'duration' : 42000,
+                'level': 4
+            })
         
 
         //thisLvlAnswers = answers.lvl4;
@@ -11306,6 +11311,7 @@ function submitLevel4() {
             type: 'succes',
             icon: 'succes4'
         });
+        Tip4.destroy('Tip4');
     } else {
         var $popinError = new Popin({
             content: content['erreur']
@@ -11955,15 +11961,40 @@ Tip.prototype = {
         $this.setTimeOut = 0;
         $this.waitFor = 0;
     },
-    destroy: function() {
+    destroy: function(tip) {
         // Delete the variable that references the instance of the constructor.
         //console.log(Tip1)
-        console.log(window.Tip1.setTimeOut)
-        clearTimeout(window.Tip1.setTimeOut);
-        window.Tip1.setTimeOut = 0;
-        console.log(window.Tip1.setTimeOut)
-        window.Tip1 = undefined;
-        delete window.Tip1;
+        switch (tip) {
+            case 'Tip1':
+                    clearTimeout(window.Tip1.setTimeOut);
+                    window.Tip1.setTimeOut = 0;
+                    console.log('tip1 '+window.Tip1.setTimeOut)
+                    window.Tip1 = undefined;
+                    delete window.Tip1;
+                break;
+                case 'Tip2':
+                    clearTimeout(window.Tip2.setTimeOut);
+                    window.Tip2.setTimeOut = 0;
+                    console.log('tip2 '+window.Tip2.setTimeOut)
+                    window.Tip2 = undefined;
+                    delete window.Tip2;
+                break;
+                case 'Tip3':
+                    clearTimeout(window.Tip3.setTimeOut);
+                    window.Tip3.setTimeOut = 0;
+                    console.log('tip3 '+window.Tip3.setTimeOut)
+                    window.Tip3 = undefined;
+                    delete window.Tip3;
+                break;
+                case 'Tip4':
+                    clearTimeout(window.Tip4.setTimeOut);
+                    window.Tip4.setTimeOut = 0;
+                    console.log('tip4 '+window.Tip4.setTimeOut)
+                    window.Tip4 = undefined;
+                    delete window.Tip4;
+                break;
+        }
+        
         
         //console.log(Tip1)
       }
@@ -12167,8 +12198,8 @@ Slider.prototype = {
                     t.currentSlideIndex = t.getSlideIndex(e);
                     $button = $('.dots button');  
                     if(t.currentSlideIndex == i) {
-                    	$button.hide();
-                    } else {$button.show();}
+                    	$button.addClass('hidden');
+                    } else {$button.removeClass('hidden');}
                     var s = t.wrapper.find(".slide").removeClass("previous").removeClass("current").removeClass("next").removeClass("animating");
                     if (s.css("opacity", ""), t.wrapper.hasClass("swipe-mode") && s.css("transform", "").css("-webkit-transform", ""), t.getCurrentSlide().addClass("current"), t.getPreviousSlide().addClass("previous"), t.getNextSlide().addClass("next"), "number" == typeof r) {
                         var n = 0 === r && t.currentSlideIndex === i,

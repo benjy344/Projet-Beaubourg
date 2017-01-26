@@ -558,44 +558,72 @@ The `sprites` mixin generates identical output to the CSS template
 
 .icon-close {
   background-image: url(../assets/sprite-main.png);
-  background-position: -159px 0px;
+  background-position: -410px -106px;
   width: 50px;
   height: 50px;
 }
 
 .icon-error {
   background-image: url(../assets/sprite-main.png);
-  background-position: 0px 0px;
+  background-position: -410px 0px;
   width: 63px;
   height: 101px;
 }
 
 .icon-help {
   background-image: url(../assets/sprite-main.png);
-  background-position: -159px -55px;
+  background-position: -410px -161px;
   width: 40px;
   height: 39px;
 }
 
 .icon-menu {
   background-image: url(../assets/sprite-main.png);
-  background-position: -68px 0px;
+  background-position: 0px -358px;
   width: 86px;
   height: 70px;
 }
 
 .icon-next {
   background-image: url(../assets/sprite-main.png);
-  background-position: 0px -106px;
+  background-position: -410px -205px;
   width: 35px;
   height: 40px;
 }
 
 .icon-return {
   background-image: url(../assets/sprite-main.png);
-  background-position: -40px -106px;
+  background-position: -410px -250px;
   width: 35px;
   height: 40px;
+}
+
+.icon-tableau3 {
+  background-image: url(../assets/sprite-main.png);
+  background-position: -155px -203px;
+  width: 200px;
+  height: 103px;
+}
+
+.icon-tableau4 {
+  background-image: url(../assets/sprite-main.png);
+  background-position: 0px 0px;
+  width: 200px;
+  height: 198px;
+}
+
+.icon-tuto1 {
+  background-image: url(../assets/sprite-main.png);
+  background-position: 0px -203px;
+  width: 150px;
+  height: 150px;
+}
+
+.icon-tuto2 {
+  background-image: url(../assets/sprite-main.png);
+  background-position: -205px 0px;
+  width: 200px;
+  height: 183px;
 }
 
 html, body {
@@ -752,6 +780,9 @@ body .popencyclo {
   right: -100%;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+body .popencyclo .encycloPop {
+  margin: 10px;
 }
 body .popencyclo.open {
   right: 0;
@@ -1013,10 +1044,40 @@ body .popup .overflow .font-icon {
   font-size: 6em;
   -webkit-animation: iconAnim 2s infinite;
   animation: iconAnim 2s infinite;
+  margin-top: 25px;
+}
+body .popup .overflow .font-icon:before {
+  background: -webkit-linear-gradient(#3fa9f5, #7ac943);
+  background: linear-gradient(#3fa9f5, #7ac943);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 body .popup .overflow .fleche {
   position: relative;
   left: 70%;
+}
+body .popup #chooseFrameLvl3 {
+  display: flex;
+  align-content: space-around;
+  margin: 40px 25px;
+}
+body .popup #chooseFrameLvl3 div.btn {
+  height: 60px;
+  width: 100px;
+  display: inline-block;
+  padding: 0;
+}
+body .popup #chooseFrameLvl3 div.btn input {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+body .popup #chooseFrameLvl3 div.btn input:checked {
+  background: #009bd5;
+}
+body .popup #chooseFrameLvl3 div.btn label {
+  position: relative;
+  top: 5px;
 }
 body .hoverlay {
   background: rgba(24, 23, 22, 0.5);

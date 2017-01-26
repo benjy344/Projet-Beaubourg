@@ -193,8 +193,8 @@ Slider.prototype = {
                     t.currentSlideIndex = t.getSlideIndex(e);
                     $button = $('.dots button');  
                     if(t.currentSlideIndex == i) {
-                    	$button.hide();
-                    } else {$button.show();}
+                    	$button.addClass('hidden');
+                    } else {$button.removeClass('hidden');}
                     var s = t.wrapper.find(".slide").removeClass("previous").removeClass("current").removeClass("next").removeClass("animating");
                     if (s.css("opacity", ""), t.wrapper.hasClass("swipe-mode") && s.css("transform", "").css("-webkit-transform", ""), t.getCurrentSlide().addClass("current"), t.getPreviousSlide().addClass("previous"), t.getNextSlide().addClass("next"), "number" == typeof r) {
                         var n = 0 === r && t.currentSlideIndex === i,

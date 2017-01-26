@@ -9,8 +9,7 @@ function loadLevel2() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu2'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu2']
         });
     }
     tipsLevel2 = {
@@ -175,6 +174,7 @@ function submitLevel2() {
             type: 'succes',
             icon: 'succes2'
         });
+        Tip2.destroy('Tip2');
     } else {
        var $popinError = new Popin({
             content: content['erreur']

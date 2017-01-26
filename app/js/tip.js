@@ -91,15 +91,40 @@ Tip.prototype = {
         $this.setTimeOut = 0;
         $this.waitFor = 0;
     },
-    destroy: function() {
+    destroy: function(tip) {
         // Delete the variable that references the instance of the constructor.
         //console.log(Tip1)
-        console.log(window.Tip1.setTimeOut)
-        clearTimeout(window.Tip1.setTimeOut);
-        window.Tip1.setTimeOut = 0;
-        console.log(window.Tip1.setTimeOut)
-        window.Tip1 = undefined;
-        delete window.Tip1;
+        switch (tip) {
+            case 'Tip1':
+                    clearTimeout(window.Tip1.setTimeOut);
+                    window.Tip1.setTimeOut = 0;
+                    console.log('tip1 '+window.Tip1.setTimeOut)
+                    window.Tip1 = undefined;
+                    delete window.Tip1;
+                break;
+                case 'Tip2':
+                    clearTimeout(window.Tip2.setTimeOut);
+                    window.Tip2.setTimeOut = 0;
+                    console.log('tip2 '+window.Tip2.setTimeOut)
+                    window.Tip2 = undefined;
+                    delete window.Tip2;
+                break;
+                case 'Tip3':
+                    clearTimeout(window.Tip3.setTimeOut);
+                    window.Tip3.setTimeOut = 0;
+                    console.log('tip3 '+window.Tip3.setTimeOut)
+                    window.Tip3 = undefined;
+                    delete window.Tip3;
+                break;
+                case 'Tip4':
+                    clearTimeout(window.Tip4.setTimeOut);
+                    window.Tip4.setTimeOut = 0;
+                    console.log('tip4 '+window.Tip4.setTimeOut)
+                    window.Tip4 = undefined;
+                    delete window.Tip4;
+                break;
+        }
+        
         
         //console.log(Tip1)
       }

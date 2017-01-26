@@ -7,13 +7,11 @@ function loadLevel1() {
     $('main').addClass('flex');
     $('.js-hamburger').show();
     countLevel = 1;
-    var toto = 'toto';
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu1'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu1']
         });
     }
     
@@ -25,9 +23,9 @@ function loadLevel1() {
         var min = Math.ceil(0);
         var max = Math.floor(9);
         tipsLevel1 = {
-            0 : content['jeu1astuce1dev'],
-            1 : content['jeu1astuce2dev'],
-            2 : content['jeu1astuce3dev']
+            0 : content['jeu1astuce1'],
+            1 : content['jeu1astuce2'],
+            2 : content['jeu1astuce3']
            }
         //var tips1 = []
         Tip1 = new Tip({
@@ -81,8 +79,6 @@ function submitLevel1() {
             chaineTableau = chaineTableau + '1';
         }
     });
-    console.log('binaire : '+binaire)
-    console.log('chaineTableau : '+chaineTableau)
     if (chaineTableau == binaire || testing) { //{TEST} Always True
 
         var $popinError = new Popin({
@@ -91,7 +87,7 @@ function submitLevel1() {
             type: 'succes',
             icon: 'succes1'
         });
-        Tip1.destroy();
+        Tip1.destroy('Tip1');
         //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
     }else{var $popinError = new Popin({

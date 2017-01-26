@@ -9,8 +9,7 @@ function loadLevel3() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu3'],
-            $close: $('.js-close-popup-encyclo')
+            content: content['jeu3']
         });
     }
 
@@ -33,13 +32,17 @@ function loadLevel3() {
         var defaultValue = 0;
 
         codeConfig.readOnly = 'nocursor';
-        var tips3 = {
+        tipsLevel3 = {
             0 : content['jeu3astuce1'],
             1 : content['jeu3astuce2'],
             2 : content['jeu3astuce3']
-        }
-        constructTips(42000, 3, tips3); 
-
+           }
+        //var tips1 = []
+        Tip3 = new Tip({
+            'tips' : tipsLevel3,
+            'duration' : 30000,
+            'level': 3
+        })
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -211,6 +214,7 @@ function submitLevel3() {
             type: 'succes',
             icon: 'succes3'
         });
+        Tip3.destroy('Tip3');
     } else {
         var $popinError = new Popin({
             content: content['erreur']

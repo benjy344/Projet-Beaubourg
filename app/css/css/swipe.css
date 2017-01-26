@@ -32,6 +32,10 @@
   width: 100%;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .slider {
   height: 100%;
   left: 0;

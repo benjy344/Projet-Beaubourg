@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 #sandbox .sandboxwrapper .pixel {
-  background-color: red;
+  background-color: black;
   box-sizing: border-box;
   height: 100px;
   width: 100px;
@@ -17,15 +17,20 @@
 }
 #sandbox .sandbox-btn-general {
   width: 100%;
+  margin: 0.5em 0;
+  display: flex;
 }
 #sandbox .sandbox-btn-general .btn {
   max-width: 50%;
+  background-color: #242322;
 }
 #sandbox .edit-pixel {
   width: 100%;
+  display: flex;
 }
 #sandbox .edit-pixel .btn {
   max-width: 50%;
+  background-color: #242322;
 }
 #sandbox .edit-pixel.hidden {
   display: none;

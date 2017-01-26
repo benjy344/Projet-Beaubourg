@@ -460,6 +460,14 @@ body {
                 font-size: 6em;
                 -webkit-animation: iconAnim 2s infinite;
                 animation: iconAnim 2s infinite;
+                margin-top: 25px;
+                
+                &:before {
+                    background: -webkit-linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
+                    background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
             }
             .fleche {
                 position: relative;
