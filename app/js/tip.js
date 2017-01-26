@@ -59,7 +59,7 @@ Tip.prototype = {
                }, $this.duration)
             });
             
-        } else {this.stop()}
+        } else {this.destroy()}
             
     },
 
@@ -71,14 +71,16 @@ Tip.prototype = {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
+                title = 'Aide n°'+$this.count;
                 var $popup = $popin = new Popin({
                             content: tip,
                             type: 'help',
+                            helpTitle: title,
                             $open: $this.$open
                         });
                 if($this.count<$this.number0fTips) {/*console.log('iteration ' + $this.count);*/$this.canIconstruct($this.tips[$this.count])} else {$this.stop};
                 });
-        } else {this.stop()}
+        } else {this.destroy()}
         
     },
 
@@ -92,9 +94,13 @@ Tip.prototype = {
     destroy: function() {
         // Delete the variable that references the instance of the constructor.
         //console.log(Tip1)
-        delete window.Tip1;
+        console.log(window.Tip1.setTimeOut)
+        clearTimeout(window.Tip1.setTimeOut);
         window.Tip1.setTimeOut = 0;
+        console.log(window.Tip1.setTimeOut)
         window.Tip1 = undefined;
+        delete window.Tip1;
+        
         //console.log(Tip1)
       }
 

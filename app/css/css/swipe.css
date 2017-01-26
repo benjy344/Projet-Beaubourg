@@ -19,8 +19,9 @@
   float: none;
   position: relative;
   text-align: center;
-  padding: 20px;
-  max-height: 70%;
+  top: -20px;
+  padding: 0 20px;
+  max-height: 75%;
   overflow: auto;
   width: 100%;
 }

@@ -40,6 +40,7 @@ Popin.prototype = {
             if (options.callback) this.callback = options.callback;            
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
+            if (options.helpTitle) this.helpTitle = options.helpTitle;
         }
         
         this.buildElements();
@@ -103,10 +104,8 @@ Popin.prototype = {
             isNewTip = true ;
             tipIsOpened = true;
             if ($('.help-button').hasClass('newTip')) {
-                countip++;
-                var title = 'Niveau '+countLevel+' Aide n°'+countip;
+                var title = 'Niveau '+countLevel+' '+this.helpTitle;
                 addHelp(title, this.content);
-                if (countip % 3 === 0) countip = 0;
                 $('.help-button').removeClass('newTip');
             }
         }

@@ -15,6 +15,18 @@
 #sandbox .sandboxwrapper .pixel.pixel-active {
   border: 4px solid #008BFF;
 }
+#sandbox .sandbox-btn-general {
+  width: 100%;
+}
+#sandbox .sandbox-btn-general .btn {
+  max-width: 50%;
+}
+#sandbox .edit-pixel {
+  width: 100%;
+}
+#sandbox .edit-pixel .btn {
+  max-width: 50%;
+}
 #sandbox .edit-pixel.hidden {
   display: none;
 }

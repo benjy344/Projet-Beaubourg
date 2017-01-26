@@ -11356,6 +11356,7 @@ Popin.prototype = {
             if (options.callback) this.callback = options.callback;            
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
+            if (options.helpTitle) this.helpTitle = options.helpTitle;
         }
         
         this.buildElements();
@@ -11419,10 +11420,8 @@ Popin.prototype = {
             isNewTip = true ;
             tipIsOpened = true;
             if ($('.help-button').hasClass('newTip')) {
-                countip++;
-                var title = 'Niveau '+countLevel+' Aide n°'+countip;
+                var title = 'Niveau '+countLevel+' '+this.helpTitle;
                 addHelp(title, this.content);
-                if (countip % 3 === 0) countip = 0;
                 $('.help-button').removeClass('newTip');
             }
         }
@@ -11924,7 +11923,7 @@ Tip.prototype = {
                }, $this.duration)
             });
             
-        } else {this.stop()}
+        } else {this.destroy()}
             
     },
 
@@ -11936,14 +11935,16 @@ Tip.prototype = {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
+                title = 'Aide n°'+$this.count;
                 var $popup = $popin = new Popin({
                             content: tip,
                             type: 'help',
+                            helpTitle: title,
                             $open: $this.$open
                         });
                 if($this.count<$this.number0fTips) {/*console.log('iteration ' + $this.count);*/$this.canIconstruct($this.tips[$this.count])} else {$this.stop};
                 });
-        } else {this.stop()}
+        } else {this.destroy()}
         
     },
 
@@ -11957,9 +11958,13 @@ Tip.prototype = {
     destroy: function() {
         // Delete the variable that references the instance of the constructor.
         //console.log(Tip1)
-        delete window.Tip1;
+        console.log(window.Tip1.setTimeOut)
+        clearTimeout(window.Tip1.setTimeOut);
         window.Tip1.setTimeOut = 0;
+        console.log(window.Tip1.setTimeOut)
         window.Tip1 = undefined;
+        delete window.Tip1;
+        
         //console.log(Tip1)
       }
 
