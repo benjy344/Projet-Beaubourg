@@ -11445,7 +11445,7 @@ Popin.prototype = {
             popinIsOpen = false;
             if (isNewTip) isNewTip=false;
             if (tipIsOpened) tipIsOpened=false;
-            this.$ContentPopup.html('');
+            //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");
             if (this.callback) eval(this.callback);
