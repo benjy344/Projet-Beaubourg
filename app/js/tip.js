@@ -76,6 +76,7 @@ Tip.prototype = {
                             content: tip,
                             type: 'help',
                             helpTitle: title,
+                            $popin: $('.js-popup-tip'),
                             $open: $this.$open
                         });
                 if($this.count<$this.number0fTips) {/*console.log('iteration ' + $this.count);*/$this.canIconstruct($this.tips[$this.count])} else {$this.stop};
