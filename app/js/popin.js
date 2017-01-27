@@ -26,15 +26,15 @@ Popin.prototype = {
 
     init: function(options) {
         this.$popin =      $(".js-popup");
-        this.$ContentPopup = $('.js-content-popup');
         this.$open= undefined;
-        this.$overlay= $(".hoverlay");
+        this.$overlay= $(".js-overlay");
         this.type= 'popin';
         this.content = '';
         this.isSlider = false;
 
         if (options) {
             if (options.type) this.type = options.type;
+            if (options.$popin) this.$popin = options.$popin;
             if (options.content) this.content = options.content;
             if (options.$open) this.$open = options.$open;            
             if (options.callback) this.callback = options.callback;            
@@ -87,6 +87,8 @@ Popin.prototype = {
      * Builds the overlay and close button if necessary
      */
     buildElements: function() {
+        this.$ContentPopup = this.$popin.find('.js-content-popup');
+        if(this.type === "help") this.$overlay = $(".js-overlay-tips");
         this.$ContentPopup.html(this.content);
         this.$popin.find('.js-fleche-popup').remove();
         if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
@@ -94,7 +96,8 @@ Popin.prototype = {
         } else {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
-        }            
+        }  
+        console.log(this.$ContentPopup)          
     },
 
     defaultOpen: function() {
