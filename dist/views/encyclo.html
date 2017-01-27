@@ -11,17 +11,20 @@
                     $('.archive').prepend($tabArchiveContent[i])
                 }
         $popinEncyclo = $('.popencyclo');
+        //$popinEncyclo.html('<div class="close"><i class="icon icon-close"></i> </div><div class="content"></div>')
+        $popinEncycloContent = $popinEncyclo.find('.content');
          $('.encyclo li').on('click touch', function (e) {
             e.stopPropagation();
          	$popEncycloLink = $(this).attr('data-link');
          	$laPopin = $('.archive').find('#'+$popEncycloLink);
          	
 
-         	$popinEncyclo.html($laPopin.clone()).addClass('open');
+         	$popinEncycloContent.html($laPopin.clone());
+            $popinEncyclo.addClass('open');
             $slider = new Slider();
          });
 
-         $($popinEncyclo).on('click touch', function () {
+         $($popinEncyclo.find('.close')).on('click touch', function () {
          	$popinEncyclo.removeClass('open');
             $slider = new Slider(true);
          })

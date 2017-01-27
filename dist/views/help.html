@@ -11,16 +11,18 @@
                     $('.archive').prepend($tabHelpContent[i])
                 }
         $popinEncyclo = $('.popencyclo');
+        $popinEncycloContent = $popinEncyclo.find('.content');
          $('.help li').on('click touch', function (e) {
             e.stopPropagation();
          	$popHelpLink = $(this).attr('data-link');
          	$laPopin = $('.archive').find('#'+$popHelpLink);
          	
 
-         	$popinEncyclo.html($laPopin.clone()).addClass('open');
+            $popinEncycloContent.html($laPopin.clone());
+            $popinEncyclo.addClass('open')
          });
 
-         $($popinEncyclo).on('click touch', function () {
+         $($popinEncyclo.find('.close')).on('click touch', function () {
          	$popinEncyclo.removeClass('open');
          })
 </script>

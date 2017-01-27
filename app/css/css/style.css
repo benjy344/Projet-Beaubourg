@@ -722,6 +722,7 @@ body .help-button {
   left: 0;
   top: 0;
   display: none;
+  z-index: 8;
 }
 body .help-button.newTip {
   -webkit-animation: iconAnim 2s infinite;
@@ -783,6 +784,7 @@ body .popencyclo {
 }
 body .popencyclo .encycloPop {
   margin: 10px;
+  text-align: center;
 }
 body .popencyclo.open {
   right: 0;
@@ -791,8 +793,6 @@ body .popencyclo.open {
 }
 body .popencyclo .icon-close {
   position: absolute;
-  right: 25px;
-  left: 25px;
 }
 body .popencyclo .js-close-popup-encyclo {
   display: none;
@@ -1074,6 +1074,7 @@ body .popup #chooseFrameLvl3 div.btn input {
 }
 body .popup #chooseFrameLvl3 div.btn input:checked {
   background: #009bd5;
+  background: red;
 }
 body .popup #chooseFrameLvl3 div.btn label {
   position: relative;
@@ -1115,10 +1116,12 @@ body .background {
 body main {
   min-width: 100%;
   min-height: 100%;
+  padding-bottom: 70px;
+  box-sizing: border-box;
+  position: relative;
 }
 body main.flex {
   padding: 70px 10px;
-  box-sizing: border-box;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

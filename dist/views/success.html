@@ -36,6 +36,7 @@
 <script type="text/javascript">
 	$success = $('.successGalery .succes');
 	$popinEncyclo = $('.popencyclo');
+	$popinEncycloContent = $popinEncyclo.find('.content');
 	for (var i = 0; i < $tabSuccess.length; i++) {
         var unlock = $tabSuccess[i];
 
@@ -48,12 +49,13 @@
     $('.succes').on('click touch', function(e) {
     	e.stopPropagation();
     	$leSucces = $(this);
-    	$popinEncyclo.html($leSucces.clone()).addClass('open');
+    	$popinEncycloContent.html($leSucces.clone()).addClass('open');
+    	$popinEncyclo.addClass('open');
     });
 
-    $popinEncyclo.on('click', function () {
-    	$(this).removeClass('open');
-        $('.succes').off();
+    ($popinEncyclo.find('.close')).on('click touch', function () {
+    	$($popinEncyclo).removeClass('open');
+        //$('.succes').off();
     });
 
 

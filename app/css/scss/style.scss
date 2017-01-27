@@ -103,6 +103,7 @@ body {
         left: 0;
         top: 0;
         display: none;
+        z-index: 8;
 
         &.newTip {
             -webkit-animation: iconAnim 2s infinite;
@@ -170,6 +171,7 @@ body {
 
         .encycloPop {
             margin: 10px;
+            text-align: center;
         }
 
         &.open {
@@ -179,8 +181,6 @@ body {
         }
         .icon-close {
             position: absolute;
-            right: 25px;
-            left: 25px;
         }
         .js-close-popup-encyclo {
             display: none;
