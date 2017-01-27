@@ -461,7 +461,7 @@ body {
                 -webkit-animation: iconAnim 2s infinite;
                 animation: iconAnim 2s infinite;
                 margin-top: 25px;
-                
+
                 &:before {
                     background: -webkit-linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
                     background: linear-gradient(rgba(63, 169, 245, 1), rgba(122, 201, 67, 1));
@@ -492,6 +492,7 @@ body {
 
                     &:checked {
                         background: #009bd5;
+                        background: red;
                     }
                 }
 
@@ -545,11 +546,12 @@ body {
     main {
         min-width: 100%;
         min-height: 100%;
-
+        padding-bottom: 70px;
+        box-sizing : border-box;
+        position: relative;
 
         &.flex {
             padding: 70px 10px;
-            box-sizing : border-box;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
