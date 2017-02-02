@@ -121,10 +121,21 @@ $icon-tuto2-total-width: 473px;
 $icon-tuto2-total-height: 428px;
 $icon-tuto2-image: '../assets/sprite-main.png';
 $icon-tuto2: (205px, 0px, -205px, 0px, 200px, 183px, 473px, 428px, '../assets/sprite-main.png', 'icon-tuto2', );
+$icon-upem-name: 'icon-upem';
+$icon-upem-x: 155px;
+$icon-upem-y: 311px;
+$icon-upem-offset-x: -155px;
+$icon-upem-offset-y: -311px;
+$icon-upem-width: 91px;
+$icon-upem-height: 35px;
+$icon-upem-total-width: 473px;
+$icon-upem-total-height: 428px;
+$icon-upem-image: '../assets/sprite-main.png';
+$icon-upem: (155px, 311px, -155px, -311px, 91px, 35px, 473px, 428px, '../assets/sprite-main.png', 'icon-upem', );
 $spritesheet-width: 473px;
 $spritesheet-height: 428px;
 $spritesheet-image: '../assets/sprite-main.png';
-$spritesheet-sprites: ($icon-close, $icon-error, $icon-help, $icon-menu, $icon-next, $icon-return, $icon-tableau3, $icon-tableau4, $icon-tuto1, $icon-tuto2, );
+$spritesheet-sprites: ($icon-close, $icon-error, $icon-help, $icon-menu, $icon-next, $icon-return, $icon-tableau3, $icon-tableau4, $icon-tuto1, $icon-tuto2, $icon-upem, );
 $spritesheet: (473px, 428px, '../assets/sprite-main.png', $spritesheet-sprites, );
 
 /*

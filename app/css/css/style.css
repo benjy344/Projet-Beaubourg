@@ -516,44 +516,49 @@ The `sprites` mixin generates identical output to the CSS template
   -webkit-font-smoothing: antialiased;
 }
 
+.font-icon-info:before {
+  font-family: "font-icons";
+  content: "\e101";
+}
+
 .font-icon-success1:before {
   font-family: "font-icons";
-  content: "\f101";
+  content: "\e102";
 }
 
 .font-icon-success2:before {
   font-family: "font-icons";
-  content: "\f102";
+  content: "\e103";
 }
 
 .font-icon-success3:before {
   font-family: "font-icons";
-  content: "\f103";
+  content: "\e104";
 }
 
 .font-icon-success4:before {
   font-family: "font-icons";
-  content: "\f104";
+  content: "\e105";
 }
 
 .font-icon-success5:before {
   font-family: "font-icons";
-  content: "\f105";
+  content: "\e106";
 }
 
 .font-icon-success6:before {
   font-family: "font-icons";
-  content: "\f106";
+  content: "\e107";
 }
 
 .font-icon-success7:before {
   font-family: "font-icons";
-  content: "\f107";
+  content: "\e108";
 }
 
 .font-icon-success8:before {
   font-family: "font-icons";
-  content: "\f108";
+  content: "\e109";
 }
 
 .icon-close {
@@ -626,6 +631,13 @@ The `sprites` mixin generates identical output to the CSS template
   height: 183px;
 }
 
+.icon-upem {
+  background-image: url(../assets/sprite-main.png);
+  background-position: -155px -311px;
+  width: 91px;
+  height: 35px;
+}
+
 html, body {
   /*overflow-y: hidden;*/
   /*height: calc(100vh + 60px);*/
@@ -650,6 +662,11 @@ body {
 body p {
   line-height: 1.5em;
   font-size: 1.1em;
+}
+body .font-icon-info {
+  position: absolute;
+  top: 5px;
+  font-size: 2em;
 }
 @media (min-width: 768px) {
   body {
@@ -1096,6 +1113,14 @@ body .hoverlay.hide {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
+body .partener {
+  position: absolute;
+  padding: 20px 0;
+  bottom: 0;
+}
+body .partener div {
+  opacity: 0.7;
+}
 body .background {
   background-image: url("../assets/background.jpg");
   height: 100%;
@@ -1106,6 +1131,9 @@ body .background {
   right: 0;
   z-index: -1;
   background-size: cover;
+}
+body .background.none {
+  background: url("../assets/backgroundBlack.jpg");
 }
 @media (min-width: 768px) {
   body .background {

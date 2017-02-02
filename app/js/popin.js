@@ -5,7 +5,7 @@
  *   $popin, $open, $close, $overlay, $popinWrapper :                   jQuery element
  *   closeButton :                                      true|false
  *   onOpen, onOpened, onClose, onClosed, onResize :    callback function
- *   type : popin|help\succes\encyclo
+ *   type : popin | help | succes | encyclo | info
  * }
  *
  */
@@ -25,12 +25,12 @@ Popin.prototype = {
     
 
     init: function(options) {
-        this.$popin =      $(".js-popup");
-        this.$open= undefined;
-        this.$overlay= $(".js-overlay");
-        this.type= 'popin';
-        this.content = '';
-        this.isSlider = false;
+        this.$popin   =   $(".js-popup");
+        this.$open    =   undefined;
+        this.$overlay =   $(".js-overlay");
+        this.type     =   'popin';
+        this.content  =   '';
+        this.isSlider =   false;
 
         if (options) {
             if (options.type) this.type = options.type;
@@ -41,6 +41,7 @@ Popin.prototype = {
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
             if (options.helpTitle) this.helpTitle = options.helpTitle;
+            if (options.title) this.title = options.title;
         }
         
         this.buildElements();
@@ -89,6 +90,7 @@ Popin.prototype = {
     buildElements: function() {
         this.$ContentPopup = this.$popin.find('.js-content-popup');
         if(this.type === "help") this.$overlay = $(".js-overlay-tips");
+        if(this.type === "info") this.$overlay = $(".js-overlay-info");
         this.$ContentPopup.html(this.content);
         this.$popin.find('.js-fleche-popup').remove();
         if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
@@ -97,7 +99,6 @@ Popin.prototype = {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
         }  
-        console.log(this.$ContentPopup)          
     },
 
     defaultOpen: function() {
@@ -116,7 +117,11 @@ Popin.prototype = {
         if (this.type === 'succes') addSuccess(this.icon)
         
         if (this.type === 'encyclo') {
-            var title = 'Niveau '+countLevel;
+            if(this.title) {var title = this.title }else {var title = 'Niveau '+countLevel};
+            addEncyclo(title, this.content);
+        }
+        if (this.type === 'info') {
+            if(this.title) {var title = this.title };
             addEncyclo(title, this.content);
         } 
 

@@ -5,6 +5,7 @@
 *********************/
 function loadLevel1() {
     $('main').addClass('flex');
+    $('.background').addClass('none');
     $('.js-hamburger').show();
     countLevel = 1;
     if (!level1IsVisited) {

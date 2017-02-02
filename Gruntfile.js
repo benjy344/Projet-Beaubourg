@@ -62,6 +62,7 @@ module.exports = function(grunt) {
         fontFilename: 'font-icons',
         types: 'eot,woff,ttf,svg',
         template: 'app/css/scss/mixin/_webfont-mixin.css',
+        startCodepoint: 0xE101,
         templateOptions: {
           fontBaseName: 'font-icons',
           baseClass: 'font-icon',

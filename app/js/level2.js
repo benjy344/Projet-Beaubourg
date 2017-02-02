@@ -21,9 +21,19 @@ function loadLevel2() {
             'tips' : tipsLevel2,
             'duration' : 4000,
             'level': 2
-        })    
+        })
+
     level2IsVisited = true;
     $('main').loadLevel('level2', function() {
+
+        var info = new Popin({
+            type: 'info',
+            title: 'Info 1',
+            content: content['accueil'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        })
+
         var pixel = $('.js-pixel');
         pixel.on('touch click', showModal) //{DEV}
 

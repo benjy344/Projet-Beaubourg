@@ -86,6 +86,9 @@
                                 <label class="form-label" for="name">Username</label>
                                 <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadIntro();}" placeholder="Username" tabindex="1" required>
                             </div> 
+                            <div class="partener">
+                                <div class="icon icon-upem"></div>
+                            </div>
                             <div >
                                 <div class="fleche btn-start-order" onclick="loadIntro()">Commencer l'experience</div>
                             </div>
@@ -118,8 +121,16 @@
                 </div>                
             </div>
         </div>
+        <div class="popup popup-info js-popup-info hide">
+            <div class="overflow">
+
+                <div class="js-content-popup content-popup">
+                </div>                
+            </div>
+        </div>
         <div class='js-overlay hoverlay hide'></div>
         <div class='js-overlay-tips hoverlay hide'></div>
+        <div class='js-overlay-info hoverlay hide'></div>
         <script type="text/javascript" src="./dist/js/built.js"></script>
     </body>
 </html>

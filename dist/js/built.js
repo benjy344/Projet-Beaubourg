@@ -9458,15 +9458,21 @@ function hideModal() {
 //    count: used to count the loops
 //    source: a string to specify an ID, a message, etc
 //**********************************************************************
-function waitforPopinIsOpen( expectedValue, msec, count, source, callback) {
+function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback) {
     // Check if condition met. If not, re-check later (msec).
-    if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
-        count++;
-        setTimeout(function() {
-            waitforPopinIsOpen( expectedValue, msec, count, source, callback);
-        }, msec);
+    if (countLevel === level) {
+       if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
+            count++;
+            setTimeout(function() {
+                waitforPopinIsOpen( expectedValue, msec, count, source, level, callback);
+            }, msec);
+            return;
+        } 
+    }else {
+        console.log('return')
         return;
     }
+    
     // Condition finally met. callback() can be executed.
     console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
@@ -10635,6 +10641,7 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 *********************/
 function loadLevel1() {
     $('main').addClass('flex');
+    $('.background').addClass('none');
     $('.js-hamburger').show();
     countLevel = 1;
     if (!level1IsVisited) {
@@ -10750,9 +10757,19 @@ function loadLevel2() {
             'tips' : tipsLevel2,
             'duration' : 4000,
             'level': 2
-        })    
+        })
+
     level2IsVisited = true;
     $('main').loadLevel('level2', function() {
+
+        var info = new Popin({
+            type: 'info',
+            title: 'Info 1',
+            content: content['accueil'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        })
+
         var pixel = $('.js-pixel');
         pixel.on('touch click', showModal) //{DEV}
 
@@ -11327,7 +11344,7 @@ function submitLevel4() {
  *   $popin, $open, $close, $overlay, $popinWrapper :                   jQuery element
  *   closeButton :                                      true|false
  *   onOpen, onOpened, onClose, onClosed, onResize :    callback function
- *   type : popin|help\succes\encyclo
+ *   type : popin | help | succes | encyclo | info
  * }
  *
  */
@@ -11347,12 +11364,12 @@ Popin.prototype = {
     
 
     init: function(options) {
-        this.$popin =      $(".js-popup");
-        this.$open= undefined;
-        this.$overlay= $(".js-overlay");
-        this.type= 'popin';
-        this.content = '';
-        this.isSlider = false;
+        this.$popin   =   $(".js-popup");
+        this.$open    =   undefined;
+        this.$overlay =   $(".js-overlay");
+        this.type     =   'popin';
+        this.content  =   '';
+        this.isSlider =   false;
 
         if (options) {
             if (options.type) this.type = options.type;
@@ -11363,6 +11380,7 @@ Popin.prototype = {
             if (options.isSlider) this.isSlider = options.isSlider;
             if (options.icon) this.icon = options.icon;
             if (options.helpTitle) this.helpTitle = options.helpTitle;
+            if (options.title) this.title = options.title;
         }
         
         this.buildElements();
@@ -11411,6 +11429,7 @@ Popin.prototype = {
     buildElements: function() {
         this.$ContentPopup = this.$popin.find('.js-content-popup');
         if(this.type === "help") this.$overlay = $(".js-overlay-tips");
+        if(this.type === "info") this.$overlay = $(".js-overlay-info");
         this.$ContentPopup.html(this.content);
         this.$popin.find('.js-fleche-popup').remove();
         if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
@@ -11419,7 +11438,6 @@ Popin.prototype = {
             this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
             this.$popin.append(this.$close);
         }  
-        console.log(this.$ContentPopup)          
     },
 
     defaultOpen: function() {
@@ -11438,7 +11456,11 @@ Popin.prototype = {
         if (this.type === 'succes') addSuccess(this.icon)
         
         if (this.type === 'encyclo') {
-            var title = 'Niveau '+countLevel;
+            if(this.title) {var title = this.title }else {var title = 'Niveau '+countLevel};
+            addEncyclo(title, this.content);
+        }
+        if (this.type === 'info') {
+            if(this.title) {var title = this.title };
             addEncyclo(title, this.content);
         } 
 
@@ -11925,9 +11947,10 @@ Tip.prototype = {
         $this = this;
         ////console.log($this.canIconstruct())
         if (this.level === countLevel ) {
-
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', function() {
+            console.log('canIconstruct')
+        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
                $this.setTimeOut = setTimeout(function () {
+                    console.log('lunch constructTip')
                    $this.constructTip(tip)
                }, $this.duration)
             });
@@ -11940,11 +11963,12 @@ Tip.prototype = {
         //console.log('constructTip')
         $this = this;
         if (this.level === countLevel ) {
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', function() {
+        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
                 title = 'Aide n°'+$this.count;
+                console.log(title)
                 var $popup = $popin = new Popin({
                             content: tip,
                             type: 'help',
@@ -11952,7 +11976,7 @@ Tip.prototype = {
                             $popin: $('.js-popup-tip'),
                             $open: $this.$open
                         });
-                if($this.count<$this.number0fTips) {/*console.log('iteration ' + $this.count);*/$this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+                if($this.count<$this.number0fTips) {console.log('iteration ' + $this.count); $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
                 });
         } else {this.destroy()}
         

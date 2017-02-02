@@ -52,9 +52,10 @@ Tip.prototype = {
         $this = this;
         ////console.log($this.canIconstruct())
         if (this.level === countLevel ) {
-
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', function() {
+            console.log('canIconstruct')
+        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
                $this.setTimeOut = setTimeout(function () {
+                    console.log('lunch constructTip')
                    $this.constructTip(tip)
                }, $this.duration)
             });
@@ -67,11 +68,12 @@ Tip.prototype = {
         //console.log('constructTip')
         $this = this;
         if (this.level === countLevel ) {
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', function() {
+        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
                 title = 'Aide n°'+$this.count;
+                console.log(title)
                 var $popup = $popin = new Popin({
                             content: tip,
                             type: 'help',
@@ -79,7 +81,7 @@ Tip.prototype = {
                             $popin: $('.js-popup-tip'),
                             $open: $this.$open
                         });
-                if($this.count<$this.number0fTips) {/*console.log('iteration ' + $this.count);*/$this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+                if($this.count<$this.number0fTips) {console.log('iteration ' + $this.count); $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
                 });
         } else {this.destroy()}
         

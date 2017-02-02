@@ -252,15 +252,21 @@ function hideModal() {
 //    count: used to count the loops
 //    source: a string to specify an ID, a message, etc
 //**********************************************************************
-function waitforPopinIsOpen( expectedValue, msec, count, source, callback) {
+function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback) {
     // Check if condition met. If not, re-check later (msec).
-    if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
-        count++;
-        setTimeout(function() {
-            waitforPopinIsOpen( expectedValue, msec, count, source, callback);
-        }, msec);
+    if (countLevel === level) {
+       if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
+            count++;
+            setTimeout(function() {
+                waitforPopinIsOpen( expectedValue, msec, count, source, level, callback);
+            }, msec);
+            return;
+        } 
+    }else {
+        console.log('return')
         return;
     }
+    
     // Condition finally met. callback() can be executed.
     console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
