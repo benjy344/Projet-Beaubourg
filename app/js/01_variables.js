@@ -76,6 +76,7 @@ $tabArchiveContent = [];
 $tabSuccess = [];
 $tabHelpTitle = [];
 $tabHelpContent = [];
+encycloNameTab = [];
 
 var level1IsVisited = false,
     level2IsVisited = false,

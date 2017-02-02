@@ -82,6 +82,7 @@ $tabArchiveContent = [];
 $tabSuccess = [];
 $tabHelpTitle = [];
 $tabHelpContent = [];
+encycloNameTab = [];
 
 var level1IsVisited = false,
     level2IsVisited = false,
@@ -9300,61 +9301,61 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 *   2 : 'blabla'
 * }
 **/
-function constructTips(time, numberOftips, tips ) {
-    var number = 0;
-    timeOut = setTimeout( function () {
-        if (popinIsOpen === false) {
-            getATip(number, time, tips, numberOftips);
-        } else {
-            constructTips(time, numberOftips, tips );
-        } 
-    } , time);
+// function constructTips(time, numberOftips, tips ) {
+//     var number = 0;
+//     timeOut = setTimeout( function () {
+//         if (popinIsOpen === false) {
+//             getATip(number, time, tips, numberOftips);
+//         } else {
+//             constructTips(time, numberOftips, tips );
+//         } 
+//     } , time);
 
-}
+// }
 
 
-function getATip(number, time, tips, total, finish) {
-    if (finish) {
+// function getATip(number, time, tips, total, finish) {
+//     if (finish) {
         
-        clearTimeout(t);
-        t = 0;
-        clearInterval(intervale);
-        intervale = 0;
-        console.log('kill')
-        console.log(t)
-        console.log(intervale)
-    } else {
-        intervale = 0;
-        t = 0;
-        $('.help-button').show().addClass('newTip');
-        isNewTip = true;
-        var $popup = $popin = new Popin({
-                    content: tips[number],
-                    type: 'help',
-                    $open: $('.help-button')
-                });
-        number++;
-        if (number < total) {
+//         clearTimeout(t);
+//         t = 0;
+//         clearInterval(intervale);
+//         intervale = 0;
+//         console.log('kill')
+//         console.log(t)
+//         console.log(intervale)
+//     } else {
+//         intervale = 0;
+//         t = 0;
+//         $('.help-button').show().addClass('newTip');
+//         isNewTip = true;
+//         var $popup = $popin = new Popin({
+//                     content: tips[number],
+//                     type: 'help',
+//                     $open: $('.help-button')
+//                 });
+//         number++;
+//         if (number < total) {
 
-            //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-            intervale = setInterval(function () {
-                if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
-                    clearTimeout(t);
-                    t = 0;
-                } else {
-                    t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-                    clearInterval(intervale);
-                }
-            }, 1000);
+//             //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+//             intervale = setInterval(function () {
+//                 if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
+//                     clearTimeout(t);
+//                     t = 0;
+//                 } else {
+//                     t = setTimeout( function(){getATip(number, time, tips, total)} , time);
+//                     clearInterval(intervale);
+//                 }
+//             }, 1000);
 
-        } else {
-            clearTimeout(t);
-            t = 0;
-            clearInterval(intervale);
-            intervale = 0;
-        }
-    }
-}
+//         } else {
+//             clearTimeout(t);
+//             t = 0;
+//             clearInterval(intervale);
+//             intervale = 0;
+//         }
+//     }
+// }
 
 /*********************
 
@@ -9371,12 +9372,22 @@ Implementation de l'encyclopedie
 */
 
 function addEncyclo(name, content) {
-    countEncyclo = $tabArchiveTitle.length;
-    if (name && content) {
-        $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
-        $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
-    } 
-
+    var exist = false;
+    for (var i = 0; i < encycloNameTab.length; i++) {
+        if (encycloNameTab[i] === name) {
+            exist = true;
+        }
+    }
+    if (!exist) {
+        encycloNameTab.push(name);
+        countEncyclo = encycloNameTab.length;
+        if (name && content) {
+            $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
+            $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
+        } 
+    } else {
+        return;
+    }
 }
 /*********************
 
@@ -9469,12 +9480,11 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
             return;
         } 
     }else {
-        console.log('return')
         return;
     }
     
     // Condition finally met. callback() can be executed.
-    console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
+    //console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
 };
  /*********************************************************/
@@ -11474,8 +11484,10 @@ Popin.prototype = {
         if (popinIsOpen) {
             var _this = this;
             popinIsOpen = false;
-            if (isNewTip) isNewTip=false;
-            if (tipIsOpened) tipIsOpened=false;
+            if (this.type === "help") {
+                if (isNewTip) isNewTip=false;
+                if (tipIsOpened) tipIsOpened=false;
+            }
             //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");

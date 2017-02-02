@@ -135,8 +135,10 @@ Popin.prototype = {
         if (popinIsOpen) {
             var _this = this;
             popinIsOpen = false;
-            if (isNewTip) isNewTip=false;
-            if (tipIsOpened) tipIsOpened=false;
+            if (this.type === "help") {
+                if (isNewTip) isNewTip=false;
+                if (tipIsOpened) tipIsOpened=false;
+            }
             //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");
