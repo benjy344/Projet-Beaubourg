@@ -11,6 +11,20 @@ function loadLevel4() {
             type: 'encyclo',
             content: content['jeu4']
         });
+        addHelp('Niveau 3 Aide n°1', content['jeu3astuce1']);
+        addHelp('Niveau 3 Aide n°2', content['jeu3astuce2']);
+        addHelp('Niveau 3 Aide n°3', content['jeu3astuce3']); 
+
+        tipsLevel4 = {
+                0 : content['jeu4astuce1'],
+                1 : content['jeu4astuce2'],
+                2 : content['jeu4astuce3']
+               }
+        Tip4 = new Tip({
+            'tips' : tipsLevel4,
+            'duration' : 42000,
+            'level': 4
+        })
     }
     
     level4IsVisited = true;
@@ -35,17 +49,7 @@ function loadLevel4() {
         //Initialisation des variables
             codeConfig.readOnly = 'nocursor';
 
-            tipsLevel4 = {
-                0 : content['jeu4astuce1'],
-                1 : content['jeu4astuce2'],
-                2 : content['jeu4astuce3']
-               }
-            //var tips1 = []
-            Tip4 = new Tip({
-                'tips' : tipsLevel4,
-                'duration' : 42000,
-                'level': 4
-            })
+            
         
 
         //thisLvlAnswers = answers.lvl4;

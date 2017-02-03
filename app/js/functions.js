@@ -197,12 +197,22 @@ Implementation de l'aide
 */
 
 function addHelp(name, content) {
-
-    countHelp = $tabHelpTitle.length;
-    if (name && content) {
-        $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
-        $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');
-    } 
+    var exist = false;
+    for (var i = 0; i < helpNameTab.length; i++) {
+        if (helpNameTab[i] === name) {
+            exist = true;
+        }
+    }
+    if (!exist) {
+        helpNameTab.push(name);
+        countHelp = $tabHelpTitle.length;
+        if (name && content) {
+            $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
+            $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');
+        } 
+    } else {
+        return;
+    }
 
 }
 

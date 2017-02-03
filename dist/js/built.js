@@ -83,6 +83,7 @@ $tabSuccess = [];
 $tabHelpTitle = [];
 $tabHelpContent = [];
 encycloNameTab = [];
+helpNameTab = [];
 
 var level1IsVisited = false,
     level2IsVisited = false,
@@ -9404,12 +9405,22 @@ Implementation de l'aide
 */
 
 function addHelp(name, content) {
-
-    countHelp = $tabHelpTitle.length;
-    if (name && content) {
-        $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
-        $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');
-    } 
+    var exist = false;
+    for (var i = 0; i < helpNameTab.length; i++) {
+        if (helpNameTab[i] === name) {
+            exist = true;
+        }
+    }
+    if (!exist) {
+        helpNameTab.push(name);
+        countHelp = $tabHelpTitle.length;
+        if (name && content) {
+            $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
+            $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');
+        } 
+    } else {
+        return;
+    }
 
 }
 
@@ -10660,15 +10671,7 @@ function loadLevel1() {
             type: 'encyclo',
             content: content['jeu1']
         });
-    }
-    
-    level1IsVisited = true;
-    alenumber = "";
-    $('main').loadLevel('level1', function(){
-        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
-        var heightNumber =  16;
-        var min = Math.ceil(0);
-        var max = Math.floor(9);
+
         tipsLevel1 = {
             0 : content['jeu1astuce1'],
             1 : content['jeu1astuce2'],
@@ -10680,7 +10683,16 @@ function loadLevel1() {
             'duration' : 4000,
             'level': 1
         })
-        //constructTips(4000, 3, tips1);
+    }
+    
+    level1IsVisited = true;
+    alenumber = "";
+    $('main').loadLevel('level1', function(){
+        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
+        var heightNumber =  16;
+        var min = Math.ceil(0);
+        var max = Math.floor(9);
+        
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
             if (alea % 2 == 0) {
@@ -10757,17 +10769,22 @@ function loadLevel2() {
             type: 'encyclo',
             content: content['jeu2']
         });
-    }
-    tipsLevel2 = {
+        addHelp('Niveau 1 Aide n°1', content['jeu1astuce1']);
+        addHelp('Niveau 1 Aide n°2', content['jeu1astuce2']);
+        addHelp('Niveau 1 Aide n°3', content['jeu1astuce3']);   
+
+        tipsLevel2 = {
             0 : content['jeu2astuce1'],
             1 : content['jeu2astuce2'],
             2 : content['jeu2astuce3']
         }
-    Tip2 = new Tip({
-            'tips' : tipsLevel2,
-            'duration' : 4000,
-            'level': 2
-        })
+        Tip2 = new Tip({
+                'tips' : tipsLevel2,
+                'duration' : 4000,
+                'level': 2
+            }) 
+    }
+    
 
     level2IsVisited = true;
     $('main').loadLevel('level2', function() {
@@ -10952,6 +10969,20 @@ function loadLevel3() {
             type: 'encyclo',
             content: content['jeu3']
         });
+        addHelp('Niveau 2 Aide n°1', content['jeu2astuce1']);
+        addHelp('Niveau 2 Aide n°2', content['jeu2astuce2']);
+        addHelp('Niveau 2 Aide n°3', content['jeu2astuce3']); 
+        tipsLevel3 = {
+            0 : content['jeu3astuce1'],
+            1 : content['jeu3astuce2'],
+            2 : content['jeu3astuce3']
+           }
+        //var tips1 = []
+        Tip3 = new Tip({
+            'tips' : tipsLevel3,
+            'duration' : 30000,
+            'level': 3
+        })
     }
 
     level3IsVisited = true;
@@ -10973,17 +11004,7 @@ function loadLevel3() {
         var defaultValue = 0;
 
         codeConfig.readOnly = 'nocursor';
-        tipsLevel3 = {
-            0 : content['jeu3astuce1'],
-            1 : content['jeu3astuce2'],
-            2 : content['jeu3astuce3']
-           }
-        //var tips1 = []
-        Tip3 = new Tip({
-            'tips' : tipsLevel3,
-            'duration' : 30000,
-            'level': 3
-        })
+        
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -11178,6 +11199,20 @@ function loadLevel4() {
             type: 'encyclo',
             content: content['jeu4']
         });
+        addHelp('Niveau 3 Aide n°1', content['jeu3astuce1']);
+        addHelp('Niveau 3 Aide n°2', content['jeu3astuce2']);
+        addHelp('Niveau 3 Aide n°3', content['jeu3astuce3']); 
+
+        tipsLevel4 = {
+                0 : content['jeu4astuce1'],
+                1 : content['jeu4astuce2'],
+                2 : content['jeu4astuce3']
+               }
+        Tip4 = new Tip({
+            'tips' : tipsLevel4,
+            'duration' : 42000,
+            'level': 4
+        })
     }
     
     level4IsVisited = true;
@@ -11202,17 +11237,7 @@ function loadLevel4() {
         //Initialisation des variables
             codeConfig.readOnly = 'nocursor';
 
-            tipsLevel4 = {
-                0 : content['jeu4astuce1'],
-                1 : content['jeu4astuce2'],
-                2 : content['jeu4astuce3']
-               }
-            //var tips1 = []
-            Tip4 = new Tip({
-                'tips' : tipsLevel4,
-                'duration' : 42000,
-                'level': 4
-            })
+            
         
 
         //thisLvlAnswers = answers.lvl4;
@@ -11694,6 +11719,10 @@ function loadSandbox() {
             type: 'encyclo',
             content: content['textsandbox']
         });
+
+        addHelp('Niveau 4 Aide n°1', content['jeu4astuce1']);
+        addHelp('Niveau 4 Aide n°2', content['jeu4astuce2']);
+        addHelp('Niveau 4 Aide n°3', content['jeu4astuce3']); 
     }
     
     sandboxIsVisited = true;

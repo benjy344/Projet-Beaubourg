@@ -11,17 +11,22 @@ function loadLevel2() {
             type: 'encyclo',
             content: content['jeu2']
         });
-    }
-    tipsLevel2 = {
+        addHelp('Niveau 1 Aide n°1', content['jeu1astuce1']);
+        addHelp('Niveau 1 Aide n°2', content['jeu1astuce2']);
+        addHelp('Niveau 1 Aide n°3', content['jeu1astuce3']);   
+
+        tipsLevel2 = {
             0 : content['jeu2astuce1'],
             1 : content['jeu2astuce2'],
             2 : content['jeu2astuce3']
         }
-    Tip2 = new Tip({
-            'tips' : tipsLevel2,
-            'duration' : 4000,
-            'level': 2
-        })
+        Tip2 = new Tip({
+                'tips' : tipsLevel2,
+                'duration' : 4000,
+                'level': 2
+            }) 
+    }
+    
 
     level2IsVisited = true;
     $('main').loadLevel('level2', function() {

@@ -11,6 +11,10 @@ function loadSandbox() {
             type: 'encyclo',
             content: content['textsandbox']
         });
+
+        addHelp('Niveau 4 Aide n°1', content['jeu4astuce1']);
+        addHelp('Niveau 4 Aide n°2', content['jeu4astuce2']);
+        addHelp('Niveau 4 Aide n°3', content['jeu4astuce3']); 
     }
     
     sandboxIsVisited = true;

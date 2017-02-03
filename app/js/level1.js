@@ -14,15 +14,7 @@ function loadLevel1() {
             type: 'encyclo',
             content: content['jeu1']
         });
-    }
-    
-    level1IsVisited = true;
-    alenumber = "";
-    $('main').loadLevel('level1', function(){
-        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
-        var heightNumber =  16;
-        var min = Math.ceil(0);
-        var max = Math.floor(9);
+
         tipsLevel1 = {
             0 : content['jeu1astuce1'],
             1 : content['jeu1astuce2'],
@@ -34,7 +26,16 @@ function loadLevel1() {
             'duration' : 4000,
             'level': 1
         })
-        //constructTips(4000, 3, tips1);
+    }
+    
+    level1IsVisited = true;
+    alenumber = "";
+    $('main').loadLevel('level1', function(){
+        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
+        var heightNumber =  16;
+        var min = Math.ceil(0);
+        var max = Math.floor(9);
+        
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
             if (alea % 2 == 0) {

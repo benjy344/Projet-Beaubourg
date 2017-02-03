@@ -11,6 +11,20 @@ function loadLevel3() {
             type: 'encyclo',
             content: content['jeu3']
         });
+        addHelp('Niveau 2 Aide n°1', content['jeu2astuce1']);
+        addHelp('Niveau 2 Aide n°2', content['jeu2astuce2']);
+        addHelp('Niveau 2 Aide n°3', content['jeu2astuce3']); 
+        tipsLevel3 = {
+            0 : content['jeu3astuce1'],
+            1 : content['jeu3astuce2'],
+            2 : content['jeu3astuce3']
+           }
+        //var tips1 = []
+        Tip3 = new Tip({
+            'tips' : tipsLevel3,
+            'duration' : 30000,
+            'level': 3
+        })
     }
 
     level3IsVisited = true;
@@ -32,17 +46,7 @@ function loadLevel3() {
         var defaultValue = 0;
 
         codeConfig.readOnly = 'nocursor';
-        tipsLevel3 = {
-            0 : content['jeu3astuce1'],
-            1 : content['jeu3astuce2'],
-            2 : content['jeu3astuce3']
-           }
-        //var tips1 = []
-        Tip3 = new Tip({
-            'tips' : tipsLevel3,
-            'duration' : 30000,
-            'level': 3
-        })
+        
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
