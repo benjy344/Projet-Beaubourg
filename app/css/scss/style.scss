@@ -59,6 +59,41 @@ body {
         z-index: 1000;
         top: 5px;
         right: 10px;
+
+        span {
+            display: block;
+            top: 50%;
+            margin-top: -2px; 
+            width: 40px;
+            height: 4px;
+            background-color: $white;
+            border-radius: 4px;
+            position: absolute;
+            -webkit-transition-property: -webkit-transform;
+            transition-property: -webkit-transform;
+            transition-property: transform;
+            transition-property: transform, -webkit-transform;
+            -webkit-transform: rotate(225deg);
+            transform: rotate(225deg);
+
+            &::after{
+                content: "";
+                display: block;
+                bottom: -10px;
+                width: 40px;
+                height: 4px;
+                background-color: $white;
+                border-radius: 4px;
+                position: absolute;
+                -webkit-transition-property: -webkit-transform;
+                transition-property: -webkit-transform;
+                transition-property: transform;
+                transition-property: transform, -webkit-transform; 
+                bottom: 0;
+                -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+            }
+        }
     }
     .pixel, .btn, .close, .help-button, button, .fleche, .icon-return {
         cursor: pointer;
