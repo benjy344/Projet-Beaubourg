@@ -11734,7 +11734,8 @@ function loadSandbox() {
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
             type: 'encyclo',
-            content: content['textsandbox']
+            content: content['textsandbox'], 
+            title: 'Sandbox'
         });
 
         addHelp('Niveau 4 Aide n°1', content['jeu4astuce1']);

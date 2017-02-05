@@ -731,6 +731,13 @@ body .close span::after {
 }
 body .pixel, body .btn, body .close, body .help-button, body button, body .fleche, body .icon-return {
   cursor: pointer;
+  outline: none;
+}
+body *:active {
+  outline: 0;
+}
+body button:focus {
+  outline: none;
 }
 body .btn {
   /*        background: linear-gradient(90deg, rgb(63, 169, 245), rgb(122, 201, 67));*/
@@ -1461,9 +1468,7 @@ body .overlay.open li:nth-of-type(4) {
 body .overlay nav {
   position: relative;
   height: 80%;
-  top: 50%;
-  -webkit-transform: translateY(-40%);
-  transform: translateY(-40%);
+  margin-top: 20vh;
   font-size: 2em;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
@@ -1531,7 +1536,7 @@ body .overlay nav .child {
 body .overlay nav .child i.icon-return {
   margin-left: 10px;
   position: fixed;
-  top: -100px;
+  top: 20px;
 }
 body .overlay nav .child > * {
   display: none;

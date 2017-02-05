@@ -97,6 +97,13 @@ body {
     }
     .pixel, .btn, .close, .help-button, button, .fleche, .icon-return {
         cursor: pointer;
+        outline: none;
+    }
+    *:active {
+        outline: 0;
+    }
+    button:focus {
+        outline: none;
     }
     .btn {
         /*        background: linear-gradient(90deg, rgb(63, 169, 245), rgb(122, 201, 67));*/
@@ -925,9 +932,10 @@ body {
         nav {
             position: relative;
             height: 80%;
-            top: 50%;
-            -webkit-transform: translateY(-40%);
-            transform: translateY(-40%);
+            // top: 50%;
+            // -webkit-transform: translateY(-40%);
+            // transform: translateY(-40%);
+            margin-top: 20vh;
             font-size: 2em;
             font-family: $principal-font;
             font-weight: 400;
@@ -1002,7 +1010,7 @@ body {
                 i.icon-return {
                     margin-left: 10px;
                     position: fixed;
-                    top: -100px;
+                    top: 20px;
                 }
 
                 &>* {
