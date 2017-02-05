@@ -62,7 +62,9 @@
   color: #242322;
   position: absolute;
   text-align: center;
-  padding-top: calc(50% - 1rem);
+  /*padding-top: calc(50% - 1rem);*/
+  -webkit-transform: translateY(25%);
+  transform: translateY(25%);
   box-sizing: border-box;
 }
 #level1 .tableau ul li div.black {
@@ -79,7 +81,8 @@
   color: #FBFBFB;
   position: absolute;
   text-align: center;
-  padding-top: calc(50% - 1rem);
+  -webkit-transform: translateY(25%);
+  transform: translateY(25%);
   box-sizing: border-box;
 }
 

@@ -201,12 +201,21 @@
   background: #242322;
   box-shadow: inset 0 1px white;
 }
+#modal-content .pixel-model .buttons .sliders .range-bg input::slider-thumb {
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid rgba(0, 0, 0, 0.36);
+  border-radius: 6px;
+  /* Is base64 the way to go ? */
+  /* I don't imagine simulating vertical stripes w/ gradients */
+  background: #242322;
+  box-shadow: inset 0 1px white;
+}
 #modal-content .pixel-model .buttons .sliders .range-bg input::-moz-range-thumb {
   height: 3rem;
   width: 3rem;
   border: 1px solid rgba(0, 0, 0, 0.36);
   border-radius: 6px;
-  background: url("http://db.tt/q5LHtPKx") center center no-repeat #e5e9e8;
   background: #242322;
   box-shadow: inset 0 1px white;
 }

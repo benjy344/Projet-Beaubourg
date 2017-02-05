@@ -65,7 +65,8 @@
 						color: $black;
 						position: absolute;
 						text-align: center;
-						padding-top: calc(50% - 1rem);
+						-webkit-transform: translateY(25%);
+						        transform: translateY(25%);
 						box-sizing: border-box;
 					}
 
@@ -83,7 +84,8 @@
 							color: $white;
 							position: absolute;
 							text-align: center;
-							padding-top: calc(50% - 1rem);
+							-webkit-transform: translateY(25%);
+						        transform: translateY(25%);
 							box-sizing: border-box;
 						}
 					}
