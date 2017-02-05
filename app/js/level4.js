@@ -169,13 +169,17 @@ function submitLevel4() {
         });
     })
     if (isCorrect == 9 || testing) { //{TEST}
-        var $popinError = new Popin({
-            content: content['felicitation'],
-            callback: 'loadSandbox()',
-            type: 'succes',
-            icon: 'succes4'
-        });
-        Tip4.destroy('Tip4');
+        if (!sandboxIsVisited) {
+            var $popinError = new Popin({
+                content: content['felicitation'],
+                callback: 'loadSandbox()',
+                type: 'succes',
+                icon: 'succes4'
+            });
+            Tip4.destroy('Tip4');
+        } else {
+            loadSandbox();
+        }
     } else {
         var $popinError = new Popin({
             content: content['erreur']

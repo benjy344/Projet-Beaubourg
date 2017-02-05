@@ -212,13 +212,18 @@ function submitLevel3() {
     });
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
-        var $popinError = new Popin({
-            content: content['jeu3d'],
-            callback: 'loadLevel4()',
-            type: 'succes',
-            icon: 'succes3'
-        });
-        Tip3.destroy('Tip3');
+        if (!level4IsVisited) {
+            var $popinError = new Popin({
+                content: content['jeu3d'],
+                callback: 'loadLevel4()',
+                type: 'succes',
+                icon: 'succes3'
+            });
+            Tip3.destroy('Tip3');
+        } else {
+            loadLevel4();
+        }
+
     } else {
         var $popinError = new Popin({
             content: content['erreur']

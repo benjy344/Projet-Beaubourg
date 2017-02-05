@@ -10739,14 +10739,18 @@ function submitLevel1() {
         }
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
-
-        var $popinError = new Popin({
-            content: content['jeu1d'],
-            callback: 'loadLevel2()',
-            type: 'succes',
-            icon: 'succes1'
-        });
-        Tip1.destroy('Tip1');
+        if (!level2IsVisited) {
+            var $popinError = new Popin({
+                content: content['jeu1d'],
+                callback: 'loadLevel2()',
+                type: 'succes',
+                icon: 'succes1'
+            });
+            Tip1.destroy('Tip1');
+        } else {
+            loadLevel2();
+        }
+        
         //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
     }else{var $popinError = new Popin({
@@ -10941,13 +10945,17 @@ function submitLevel2() {
     }
 
     if (numCorrect == pixels.length || testing) { //{}
-        var $popinError = new Popin({
-            content: content['jeu2d'],
-            callback: 'loadLevel3()',
-            type: 'succes',
-            icon: 'succes2'
-        });
-        Tip2.destroy('Tip2');
+        if (!level3IsVisited) {
+            var $popinError = new Popin({
+                content: content['jeu2d'],
+                callback: 'loadLevel3()',
+                type: 'succes',
+                icon: 'succes2'
+            });
+            Tip2.destroy('Tip2');
+        } else {
+            loadLevel3();
+        }
     } else {
        var $popinError = new Popin({
             content: content['erreur']
@@ -11170,13 +11178,18 @@ function submitLevel3() {
     });
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
-        var $popinError = new Popin({
-            content: content['jeu3d'],
-            callback: 'loadLevel4()',
-            type: 'succes',
-            icon: 'succes3'
-        });
-        Tip3.destroy('Tip3');
+        if (!level4IsVisited) {
+            var $popinError = new Popin({
+                content: content['jeu3d'],
+                callback: 'loadLevel4()',
+                type: 'succes',
+                icon: 'succes3'
+            });
+            Tip3.destroy('Tip3');
+        } else {
+            loadLevel4();
+        }
+
     } else {
         var $popinError = new Popin({
             content: content['erreur']
@@ -11357,13 +11370,17 @@ function submitLevel4() {
         });
     })
     if (isCorrect == 9 || testing) { //{TEST}
-        var $popinError = new Popin({
-            content: content['felicitation'],
-            callback: 'loadSandbox()',
-            type: 'succes',
-            icon: 'succes4'
-        });
-        Tip4.destroy('Tip4');
+        if (!sandboxIsVisited) {
+            var $popinError = new Popin({
+                content: content['felicitation'],
+                callback: 'loadSandbox()',
+                type: 'succes',
+                icon: 'succes4'
+            });
+            Tip4.destroy('Tip4');
+        } else {
+            loadSandbox();
+        }
     } else {
         var $popinError = new Popin({
             content: content['erreur']

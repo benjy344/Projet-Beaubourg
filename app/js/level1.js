@@ -82,14 +82,18 @@ function submitLevel1() {
         }
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
-
-        var $popinError = new Popin({
-            content: content['jeu1d'],
-            callback: 'loadLevel2()',
-            type: 'succes',
-            icon: 'succes1'
-        });
-        Tip1.destroy('Tip1');
+        if (!level2IsVisited) {
+            var $popinError = new Popin({
+                content: content['jeu1d'],
+                callback: 'loadLevel2()',
+                type: 'succes',
+                icon: 'succes1'
+            });
+            Tip1.destroy('Tip1');
+        } else {
+            loadLevel2();
+        }
+        
         //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
 
     }else{var $popinError = new Popin({

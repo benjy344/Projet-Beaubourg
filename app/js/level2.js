@@ -183,13 +183,17 @@ function submitLevel2() {
     }
 
     if (numCorrect == pixels.length || testing) { //{}
-        var $popinError = new Popin({
-            content: content['jeu2d'],
-            callback: 'loadLevel3()',
-            type: 'succes',
-            icon: 'succes2'
-        });
-        Tip2.destroy('Tip2');
+        if (!level3IsVisited) {
+            var $popinError = new Popin({
+                content: content['jeu2d'],
+                callback: 'loadLevel3()',
+                type: 'succes',
+                icon: 'succes2'
+            });
+            Tip2.destroy('Tip2');
+        } else {
+            loadLevel3();
+        }
     } else {
        var $popinError = new Popin({
             content: content['erreur']
