@@ -1557,6 +1557,10 @@ body .iconAnim {
   -webkit-animation: iconAnim 3s infinite;
   animation: iconAnim 3s infinite;
 }
+body .wiggle {
+  -webkit-animation: wiggle 0.3s infinite;
+  animation: wiggle 0.3s infinite;
+}
 
 /******************
 *
@@ -1717,6 +1721,14 @@ body .iconAnim {
   100% {
     -webkit-transform: translateY(150px);
     transform: translateY(150px);
+  }
+}
+@keyframes wiggle {
+  0%, 100% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
   }
 }
 

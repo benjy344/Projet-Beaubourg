@@ -24,11 +24,21 @@
 	}
 	 $('#ChooseLevel li a ').on('click', function (e) {
         var toLoad = $(this).attr('data-load');
-        if ($(this).hasClass('lock')) {e.preventDefault()} else {eval(toLoad);}
-        $('.hamburger').toggleClass('is-active');
-        $('#overlay').toggleClass('open');
-        $('.main-nav>ul').removeClass('childOpen');
-        $('.main-nav .child').removeClass('isOpen');
+        if ($(this).hasClass('lock')) {
+        	e.preventDefault(); 
+        	e.stopImmediatePropagation();
+        	$(this).addClass("wiggle")
+        	$(this).delay(600).queue(function() {  // Wait for 1 second.
+	            $(this).removeClass("wiggle").dequeue();
+	        });
+        } 
+        else {eval(toLoad);
+			$('.hamburger').removeClass('is-active');
+			$('#overlay').removeClass('open');
+			$('.main-nav>ul').removeClass('childOpen');
+			$('.main-nav .child').removeClass('isOpen');
+        }
+        
     })
 
 </script>

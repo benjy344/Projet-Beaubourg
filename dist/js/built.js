@@ -11552,7 +11552,7 @@ $(document).ready(function() {
     Username = $('input#name').val();
     $('.hamburger').hide();
 
-    $('.hamburger, #overlay').on('touch click', function() {
+    $('.hamburger').on('touch click', function() {
         $('.hamburger').toggleClass('is-active');
         $('#overlay').toggleClass('open');
         $('.main-nav>ul').removeClass('childOpen');
