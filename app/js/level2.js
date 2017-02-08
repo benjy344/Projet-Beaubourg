@@ -29,6 +29,8 @@ function loadLevel2() {
     
 
     level2IsVisited = true;
+    arrayCookieUser.level2IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level2', function() {
 
         var info = new Popin({

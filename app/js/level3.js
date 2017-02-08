@@ -28,6 +28,8 @@ function loadLevel3() {
     }
 
     level3IsVisited = true;
+    arrayCookieUser.level3IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');

@@ -28,7 +28,8 @@ function loadLevel4() {
     }
     
     level4IsVisited = true;
-
+    arrayCookieUser.level4IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level4', function () {
 
         var image = $('.js-image-object');

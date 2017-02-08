@@ -24,6 +24,14 @@ var dest = './dist/',
 
     content = {};
 
+var arrayCookieUser = {
+    level1IsVisited: false,
+    level2IsVisited: false,
+    level3IsVisited: false,
+    level4IsVisited: false,
+    sandboxIsVisited: false,
+    $tabSuccess : 0
+};
 
 var up = 'up',
     haut = 'up',
@@ -101,3 +109,6 @@ var intervale = 0,
     t = 0;
 
 var which = 'left';
+
+
+

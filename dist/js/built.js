@@ -30,6 +30,14 @@ var dest = './dist/',
 
     content = {};
 
+var arrayCookieUser = {
+    level1IsVisited: false,
+    level2IsVisited: false,
+    level3IsVisited: false,
+    level4IsVisited: false,
+    sandboxIsVisited: false,
+    $tabSuccess : 0
+};
 
 var up = 'up',
     haut = 'up',
@@ -106,7 +114,11 @@ var Tip1,
 var intervale = 0,
     t = 0;
 
-var which = 'left';;
+var which = 'left';
+
+
+
+;
  /*********************************************************/
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -9239,11 +9251,78 @@ function loadIntro(){
     if (Username == '' || Username =='FX') { // {DEV}
         testing = true;
     }
-    $('main').load(views+'intro.html', function() {
-    $('#username').text(Username);
-        
-    });
+    isUserExiste(Username);
 }
+
+
+function isUserExiste (username) {
+    if(readCookie(username)){
+        //console.log(readCookie(username))
+        arrayCookieUser = readCookie(username);
+        $('main').load(views+'intro.html', function() {
+            $tabSuccess = arrayCookieUser.$tabSuccess;
+            level1IsVisited = arrayCookieUser.level1IsVisited,
+            level2IsVisited = arrayCookieUser.level2IsVisited,
+            level3IsVisited = arrayCookieUser.level3IsVisited,
+            level4IsVisited = arrayCookieUser.level4IsVisited,
+            sandboxIsVisited = arrayCookieUser.sandboxIsVisited;
+            $('#username').text(Username);     
+        });
+    } else {
+        createCookie(username, arrayCookieUser, 20);
+        $('main').load(views+'intro.html', function() {
+            $('#username').text(Username);     
+        });
+    }
+}
+
+
+
+
+/**********************************
+*
+*             COOKIES
+*
+*********************************/
+
+function createCookie(name, tabvalue, duration) {
+// Le nombre de duration est spécifié
+value = decodeURIComponent( $.param( tabvalue ) );
+if (duration) {
+    var date = new Date();
+                // Converti le nombre de jour en millisecondes
+                date.setTime(date.getTime()+(duration*24*60*60*1000));
+                var expire = "; expire="+date.toGMTString();
+            }
+        // Aucune valeur de duration spécifiée
+        else var expire = "";
+        document.cookie = name+"="+value+expire+"; path=/";
+    }
+function readCookie(name) {
+// Ajoute le signe égale virgule au name
+    // pour la recherche
+    var name2 = name + "=";
+    // Array contenant tous les cookies
+    var arrCookies = document.cookie.split(';');
+    // Cherche l'array pour le cookie en question
+    for(var i=0;i < arrCookies.length;i++) {
+        var a = arrCookies[i];
+        // Si c'est un espace, enlever
+        while (a.charAt(0)==' ') {
+          a = a.substring(1,a.length);
+        }
+        if (a.indexOf(name2) == 0) {
+          return $.parseParams("?"+a.substring(name2.length,a.length));
+        }
+    }
+    // Aucun cookie trouvé
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+
 
 /********************
 *
@@ -9438,7 +9517,11 @@ Implementation des success
 */
 function addSuccess(icon) {
     countSuccess = $tabSuccess.length;
-    if (icon) $tabSuccess.push(icon);
+    if (icon) {
+        $tabSuccess.push(icon);
+        arrayCookieUser.$tabSuccess = $tabSuccess;
+        createCookie(Username, arrayCookieUser, 20);
+    }
 }
 
 
@@ -9497,7 +9580,109 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
     // Condition finally met. callback() can be executed.
     //console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
-};
+}
+
+
+
+
+// Add an URL parser to JQuery that returns an object
+// This function is meant to be used with an URL like the window.location
+// Use: $.parseParams('http://mysite.com/?var=string') or $.parseParams() to parse the window.location
+// Simple variable:  ?var=abc                        returns {var: "abc"}
+// Simple object:    ?var.length=2&var.scope=123     returns {var: {length: "2", scope: "123"}}
+// Simple array:     ?var[]=0&var[]=9                returns {var: ["0", "9"]}
+// Array with index: ?var[0]=0&var[1]=9              returns {var: ["0", "9"]}
+// Nested objects:   ?my.var.is.here=5               returns {my: {var: {is: {here: "5"}}}}
+// All together:     ?var=a&my.var[]=b&my.cookie=no  returns {var: "a", my: {var: ["b"], cookie: "no"}}
+// You just cant have an object in an array, e.g. ?var[1].test=abc DOES NOT WORK
+(function ($) {
+    //
+    var re = /([^&=]+)=?([^&]*)/g;
+    var decode = function (str) {
+        return decodeURIComponent(str.replace(/\+/g, ' '));
+    };
+    $.parseParams = function (query) {
+
+        // recursive function to construct the result object
+        function createElement(params, key, value) {
+            key = key + '';
+
+            // if the key is a property
+            if (key.indexOf('.') !== -1) {
+                // extract the first part with the name of the object
+                var list = key.split('.');
+
+                // the rest of the key
+                var new_key = key.split(/\.(.+)?/)[1];
+
+                // create the object if it doesnt exist
+                if (!params[list[0]]) params[list[0]] = {};
+
+                // if the key is not empty, create it in the object
+                if (new_key !== '') {
+                    createElement(params[list[0]], new_key, value);
+                } else console.warn('parseParams :: empty property in key "' + key + '"');
+            } else
+            // if the key is an array    
+            if (key.indexOf('[') !== -1) {
+                // extract the array name
+                var list = key.split('[');
+                key = list[0];
+
+                // extract the index of the array
+                var list = list[1].split(']');
+                var index = list[0]
+
+                // if index is empty, just push the value at the end of the array
+                if (index == '') {
+                    if (!params) params = {};
+                    if (!params[key] || !$.isArray(params[key])) params[key] = [];
+                    params[key].push(value);
+                } else
+                // add the value at the index (must be an integer)
+                {
+                    if (!params) params = {};
+                    if (!params[key] || !$.isArray(params[key])) params[key] = [];
+                    params[key][parseInt(index)] = value;
+                }
+            } else
+            // just normal key
+            {
+                if (!params) params = {};
+                params[key] = value;
+            }
+        }
+
+        // be sure the query is a string
+        query = query + '';
+        
+        if (query === '') query = window.location + '';
+        
+        var params = {}, e;
+        if (query) {
+            // remove # from end of query
+            if (query.indexOf('#') !== -1) {
+                query = query.substr(0, query.indexOf('#'));
+            }
+
+            // remove ? at the begining of the query
+            if (query.indexOf('?') !== -1) {
+                query = query.substr(query.indexOf('?') + 1, query.length);
+            } else return {};
+            
+            // empty parameters
+            if (query == '') return {};
+            
+            // execute a createElement on every key and value
+            while (e = re.exec(query)) {
+                var key = decode(e[1]);
+                var value = decode(e[2]);
+                createElement(params, key, value);
+            }
+        }
+        return params;
+    };
+})(jQuery);;
  /*********************************************************/
 // add pixel
 function addPixel() {
@@ -10686,6 +10871,8 @@ function loadLevel1() {
     }
     
     level1IsVisited = true;
+    arrayCookieUser.level1IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     alenumber = "";
     $('main').loadLevel('level1', function(){
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
@@ -10801,6 +10988,8 @@ function loadLevel2() {
     
 
     level2IsVisited = true;
+    arrayCookieUser.level2IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level2', function() {
 
         var info = new Popin({
@@ -11014,6 +11203,8 @@ function loadLevel3() {
     }
 
     level3IsVisited = true;
+    arrayCookieUser.level3IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level3', function () {
 
         var pixel = $('.square');
@@ -11259,7 +11450,8 @@ function loadLevel4() {
     }
     
     level4IsVisited = true;
-
+    arrayCookieUser.level4IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level4', function () {
 
         var image = $('.js-image-object');
@@ -11781,6 +11973,8 @@ function loadSandbox() {
     }
     
     sandboxIsVisited = true;
+    arrayCookieUser.sandboxIsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');

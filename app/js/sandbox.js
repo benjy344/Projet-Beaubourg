@@ -19,6 +19,8 @@ function loadSandbox() {
     }
     
     sandboxIsVisited = true;
+    arrayCookieUser.sandboxIsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('sandbox', function () {
 
         //var image = $('.imageObject');

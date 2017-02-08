@@ -29,6 +29,8 @@ function loadLevel1() {
     }
     
     level1IsVisited = true;
+    arrayCookieUser.level1IsVisited = true;
+    createCookie(Username, arrayCookieUser, 20);
     alenumber = "";
     $('main').loadLevel('level1', function(){
         //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
