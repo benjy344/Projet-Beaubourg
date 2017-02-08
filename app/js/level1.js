@@ -83,12 +83,13 @@ function submitLevel1() {
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
         if (!level2IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu1d'],
-                callback: 'loadLevel2()',
-                type: 'succes',
-                icon: 'succes1'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau1'],
+                type: 'encyclo',
+                callback: 'popinSucces()',
+                title: 'Première oeuvre'
             });
+            
             Tip1.destroy('Tip1');
         } else {
             loadLevel2();
@@ -101,3 +102,12 @@ function submitLevel1() {
     });}
 }
 
+function popinSucces() {
+    var $popinError = new Popin({
+                content: content['jeu1d'],
+                callback: 'loadLevel2()',
+                type: 'succes',
+                icon: 'succes1'
+            });
+    return;
+}

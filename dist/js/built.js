@@ -10740,12 +10740,13 @@ function submitLevel1() {
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
         if (!level2IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu1d'],
-                callback: 'loadLevel2()',
-                type: 'succes',
-                icon: 'succes1'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau1'],
+                type: 'encyclo',
+                callback: 'popinSucces()',
+                title: 'Première oeuvre'
             });
+            
             Tip1.destroy('Tip1');
         } else {
             loadLevel2();
@@ -10758,6 +10759,15 @@ function submitLevel1() {
     });}
 }
 
+function popinSucces() {
+    var $popinError = new Popin({
+                content: content['jeu1d'],
+                callback: 'loadLevel2()',
+                type: 'succes',
+                icon: 'succes1'
+            });
+    return;
+}
 ;
  /*********************************************************/
 /********************
@@ -10946,12 +10956,13 @@ function submitLevel2() {
 
     if (numCorrect == pixels.length || testing) { //{}
         if (!level3IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu2d'],
-                callback: 'loadLevel3()',
-                type: 'succes',
-                icon: 'succes2'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau2'],
+                type: 'encyclo',
+                callback: 'popinSucces2()',
+                title: 'Deuxième oeuvre'
             });
+            
             Tip2.destroy('Tip2');
         } else {
             loadLevel3();
@@ -10962,6 +10973,15 @@ function submitLevel2() {
         });
     }
 
+}
+
+function popinSucces2() {
+    var $popinError = new Popin({
+                content: content['jeu2d'],
+                callback: 'loadLevel3()',
+                type: 'succes',
+                icon: 'succes2'
+            });
 };
  /*********************************************************/
 /********************
@@ -11179,12 +11199,13 @@ function submitLevel3() {
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu3d'],
-                callback: 'loadLevel4()',
-                type: 'succes',
-                icon: 'succes3'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau3'],
+                type: 'encyclo',
+                callback: 'popinSucces3()',
+                title: 'Troisième oeuvre'
             });
+            
             Tip3.destroy('Tip3');
         } else {
             loadLevel4();
@@ -11196,6 +11217,15 @@ function submitLevel3() {
         });
     }
 
+}
+
+function popinSucces3 () {
+    var $popinError = new Popin({
+                content: content['jeu3d'],
+                callback: 'loadLevel4()',
+                type: 'succes',
+                icon: 'succes3'
+            });
 }
 ;
  /*********************************************************/
@@ -11371,11 +11401,11 @@ function submitLevel4() {
     })
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
-            var $popinError = new Popin({
-                content: content['felicitation'],
-                callback: 'loadSandbox()',
-                type: 'succes',
-                icon: 'succes4'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau4'],
+                type: 'encyclo',
+                callback: 'popinSucces4()',
+                title: 'Dernière oeuvre'
             });
             Tip4.destroy('Tip4');
         } else {
@@ -11387,7 +11417,14 @@ function submitLevel4() {
         });
     }
 }
-;
+function popinSucces4 () {
+    var $popinError = new Popin({
+                content: content['felicitation'],
+                callback: 'loadSandbox()',
+                type: 'succes',
+                icon: 'succes4'
+            });
+};
  /*********************************************************/
 /*
  * Popin is a module that fades in an element over #popin-overlay

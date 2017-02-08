@@ -213,12 +213,13 @@ function submitLevel3() {
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu3d'],
-                callback: 'loadLevel4()',
-                type: 'succes',
-                icon: 'succes3'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau3'],
+                type: 'encyclo',
+                callback: 'popinSucces3()',
+                title: 'Troisième oeuvre'
             });
+            
             Tip3.destroy('Tip3');
         } else {
             loadLevel4();
@@ -230,4 +231,13 @@ function submitLevel3() {
         });
     }
 
+}
+
+function popinSucces3 () {
+    var $popinError = new Popin({
+                content: content['jeu3d'],
+                callback: 'loadLevel4()',
+                type: 'succes',
+                icon: 'succes3'
+            });
 }

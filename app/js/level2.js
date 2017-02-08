@@ -184,12 +184,13 @@ function submitLevel2() {
 
     if (numCorrect == pixels.length || testing) { //{}
         if (!level3IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu2d'],
-                callback: 'loadLevel3()',
-                type: 'succes',
-                icon: 'succes2'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau2'],
+                type: 'encyclo',
+                callback: 'popinSucces2()',
+                title: 'Deuxième oeuvre'
             });
+            
             Tip2.destroy('Tip2');
         } else {
             loadLevel3();
@@ -200,4 +201,13 @@ function submitLevel2() {
         });
     }
 
+}
+
+function popinSucces2() {
+    var $popinError = new Popin({
+                content: content['jeu2d'],
+                callback: 'loadLevel3()',
+                type: 'succes',
+                icon: 'succes2'
+            });
 }

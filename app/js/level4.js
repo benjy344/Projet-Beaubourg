@@ -170,11 +170,11 @@ function submitLevel4() {
     })
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
-            var $popinError = new Popin({
-                content: content['felicitation'],
-                callback: 'loadSandbox()',
-                type: 'succes',
-                icon: 'succes4'
+            var $popinTableau = new Popin({
+                content: content['explication-tableau4'],
+                type: 'encyclo',
+                callback: 'popinSucces4()',
+                title: 'Dernière oeuvre'
             });
             Tip4.destroy('Tip4');
         } else {
@@ -185,4 +185,12 @@ function submitLevel4() {
             content: content['erreur']
         });
     }
+}
+function popinSucces4 () {
+    var $popinError = new Popin({
+                content: content['felicitation'],
+                callback: 'loadSandbox()',
+                type: 'succes',
+                icon: 'succes4'
+            });
 }
