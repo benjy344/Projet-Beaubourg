@@ -171,11 +171,11 @@ function submitLevel4() {
     })
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu4'],
-                type: 'encyclo',
-                callback: 'popinSucces4()',
-                title: 'Dernière oeuvre'
+            var $popinError = new Popin({
+                content: content['felicitation'],
+                callback: 'popinTable4()',
+                type: 'succes',
+                icon: 'succes4'
             });
             Tip4.destroy('Tip4');
         } else {
@@ -187,11 +187,12 @@ function submitLevel4() {
         });
     }
 }
-function popinSucces4 () {
-    var $popinError = new Popin({
-                content: content['felicitation'],
+function popinTable4 () {
+    
+    var $popinTableau = new Popin({
+                content: content['encyclo2jeu4'],
+                type: 'encyclo',
                 callback: 'loadSandbox()',
-                type: 'succes',
-                icon: 'succes4'
+                title: 'Dernière oeuvre'
             });
 }

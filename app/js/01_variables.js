@@ -30,7 +30,7 @@ var arrayCookieUser = {
     level3IsVisited: false,
     level4IsVisited: false,
     sandboxIsVisited: false,
-    $tabSuccess : 0,
+    $tabSuccess : [],
     $countHelp : 0,
     $countip : 0,
     $countEncyclo : 0

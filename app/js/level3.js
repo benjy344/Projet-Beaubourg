@@ -215,11 +215,11 @@ function submitLevel3() {
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu3'],
-                type: 'encyclo',
-                callback: 'popinSucces3()',
-                title: 'Troisième oeuvre'
+            var $popinError = new Popin({
+                content: content['jeu3d'],
+                callback: 'popinTable3()',
+                type: 'succes',
+                icon: 'succes3'
             });
             
             Tip3.destroy('Tip3');
@@ -235,11 +235,12 @@ function submitLevel3() {
 
 }
 
-function popinSucces3 () {
-    var $popinError = new Popin({
-                content: content['jeu3d'],
+function popinTable3 () {
+    
+    var $popinTableau = new Popin({
+                content: content['encyclo2jeu3'],
+                type: 'encyclo',
                 callback: 'loadLevel4()',
-                type: 'succes',
-                icon: 'succes3'
+                title: 'Troisième oeuvre'
             });
 }

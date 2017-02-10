@@ -54,8 +54,12 @@ function isUserExiste (username) {
 
 
 function initRealoadSession() {
-    $tabSuccess = eval(arrayCookieUser.$tabSuccess);
-    console.log($tabSuccess)
+    if (eval(arrayCookieUser.$tabSuccess)!= 0) {
+       $tabSuccess = eval(arrayCookieUser.$tabSuccess);
+    } else {
+        $tabSuccess = [];
+    }
+    console.log(eval(arrayCookieUser.$tabSuccess), arrayCookieUser.$tabSuccess, $tabSuccess)
     level1IsVisited = eval(arrayCookieUser.level1IsVisited),
     level2IsVisited = eval(arrayCookieUser.level2IsVisited),
     level3IsVisited = eval(arrayCookieUser.level3IsVisited),

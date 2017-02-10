@@ -26,6 +26,39 @@ function loadLevel1() {
             'duration' : 4000,
             'level': 1
         })
+    } else {
+        if (arrayCookieUser.$countHelp <=3) {
+            switch (arrayCookieUser.$countHelp) {
+                case 0:
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                       }
+                    break;
+                case 1:
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                       }
+                    break;
+                case 2:
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                       }
+                    break;
+            }
+            
+            //var tips1 = []
+            Tip1 = new Tip({
+                'tips' : tipsLevel1,
+                'duration' : 4000,
+                'level': 1
+            })
+        }
     }
     
     level1IsVisited = true;
@@ -85,14 +118,14 @@ function submitLevel1() {
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
         if (!level2IsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu1'],
-                type: 'encyclo',
-                callback: 'popinSucces()',
-                title: 'Première oeuvre'
+            var $popinError = new Popin({
+                content: content['jeu1d'],
+                type: 'succes',
+                callback: 'popinTable()',
+                icon: 'succes1'
             });
             
-            Tip1.destroy('Tip1');
+           if(Tip1){ Tip1.destroy('Tip1');}
         } else {
             loadLevel2();
         }
@@ -102,12 +135,12 @@ function submitLevel1() {
     });}
 }
 
-function popinSucces() {
-    var $popinError = new Popin({
-                content: content['jeu1d'],
+function popinTable() {
+    var $popinTableau = new Popin({
+                content: content['encyclo2jeu1'],
+                type: 'encyclo',
                 callback: 'loadLevel2()',
-                type: 'succes',
-                icon: 'succes1'
+                title: 'Première oeuvre'
             });
     return;
 }

@@ -36,7 +36,7 @@ var arrayCookieUser = {
     level3IsVisited: false,
     level4IsVisited: false,
     sandboxIsVisited: false,
-    $tabSuccess : 0,
+    $tabSuccess : [],
     $countHelp : 0,
     $countip : 0,
     $countEncyclo : 0
@@ -9278,8 +9278,12 @@ function isUserExiste (username) {
 
 
 function initRealoadSession() {
-    $tabSuccess = eval(arrayCookieUser.$tabSuccess);
-    console.log($tabSuccess)
+    if (eval(arrayCookieUser.$tabSuccess)!= 0) {
+       $tabSuccess = eval(arrayCookieUser.$tabSuccess);
+    } else {
+        $tabSuccess = [];
+    }
+    console.log(eval(arrayCookieUser.$tabSuccess), arrayCookieUser.$tabSuccess, $tabSuccess)
     level1IsVisited = eval(arrayCookieUser.level1IsVisited),
     level2IsVisited = eval(arrayCookieUser.level2IsVisited),
     level3IsVisited = eval(arrayCookieUser.level3IsVisited),
@@ -10915,6 +10919,39 @@ function loadLevel1() {
             'duration' : 4000,
             'level': 1
         })
+    } else {
+        if (arrayCookieUser.$countHelp <=3) {
+            switch (arrayCookieUser.$countHelp) {
+                case 0:
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                       }
+                    break;
+                case 1:
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                       }
+                    break;
+                case 2:
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                       }
+                    break;
+            }
+            
+            //var tips1 = []
+            Tip1 = new Tip({
+                'tips' : tipsLevel1,
+                'duration' : 4000,
+                'level': 1
+            })
+        }
     }
     
     level1IsVisited = true;
@@ -10974,14 +11011,14 @@ function submitLevel1() {
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
         if (!level2IsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu1'],
-                type: 'encyclo',
-                callback: 'popinSucces()',
-                title: 'Première oeuvre'
+            var $popinError = new Popin({
+                content: content['jeu1d'],
+                type: 'succes',
+                callback: 'popinTable()',
+                icon: 'succes1'
             });
             
-            Tip1.destroy('Tip1');
+           if(Tip1){ Tip1.destroy('Tip1');}
         } else {
             loadLevel2();
         }
@@ -10991,12 +11028,12 @@ function submitLevel1() {
     });}
 }
 
-function popinSucces() {
-    var $popinError = new Popin({
-                content: content['jeu1d'],
+function popinTable() {
+    var $popinTableau = new Popin({
+                content: content['encyclo2jeu1'],
+                type: 'encyclo',
                 callback: 'loadLevel2()',
-                type: 'succes',
-                icon: 'succes1'
+                title: 'Première oeuvre'
             });
     return;
 }
@@ -11190,12 +11227,13 @@ function submitLevel2() {
 
     if (numCorrect == pixels.length || testing) { //{}
         if (!level3IsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu2'],
-                type: 'encyclo',
-                callback: 'popinSucces2()',
-                title: 'Deuxième oeuvre'
+            var $popinError = new Popin({
+                content: content['jeu2d'],
+                callback: 'popintable2()',
+                type: 'succes',
+                icon: 'succes2'
             });
+           
             
             Tip2.destroy('Tip2');
         } else {
@@ -11209,12 +11247,12 @@ function submitLevel2() {
 
 }
 
-function popinSucces2() {
-    var $popinError = new Popin({
-                content: content['jeu2d'],
+function popintable2() {
+     var $popinTableau = new Popin({
+                content: content['encyclo2jeu2'],
+                type: 'encyclo',
                 callback: 'loadLevel3()',
-                type: 'succes',
-                icon: 'succes2'
+                title: 'Deuxième oeuvre'
             });
 };
  /*********************************************************/
@@ -11435,11 +11473,11 @@ function submitLevel3() {
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu3'],
-                type: 'encyclo',
-                callback: 'popinSucces3()',
-                title: 'Troisième oeuvre'
+            var $popinError = new Popin({
+                content: content['jeu3d'],
+                callback: 'popinTable3()',
+                type: 'succes',
+                icon: 'succes3'
             });
             
             Tip3.destroy('Tip3');
@@ -11455,12 +11493,13 @@ function submitLevel3() {
 
 }
 
-function popinSucces3 () {
-    var $popinError = new Popin({
-                content: content['jeu3d'],
+function popinTable3 () {
+    
+    var $popinTableau = new Popin({
+                content: content['encyclo2jeu3'],
+                type: 'encyclo',
                 callback: 'loadLevel4()',
-                type: 'succes',
-                icon: 'succes3'
+                title: 'Troisième oeuvre'
             });
 }
 ;
@@ -11638,11 +11677,11 @@ function submitLevel4() {
     })
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
-            var $popinTableau = new Popin({
-                content: content['encyclo2jeu4'],
-                type: 'encyclo',
-                callback: 'popinSucces4()',
-                title: 'Dernière oeuvre'
+            var $popinError = new Popin({
+                content: content['felicitation'],
+                callback: 'popinTable4()',
+                type: 'succes',
+                icon: 'succes4'
             });
             Tip4.destroy('Tip4');
         } else {
@@ -11654,12 +11693,13 @@ function submitLevel4() {
         });
     }
 }
-function popinSucces4 () {
-    var $popinError = new Popin({
-                content: content['felicitation'],
+function popinTable4 () {
+    
+    var $popinTableau = new Popin({
+                content: content['encyclo2jeu4'],
+                type: 'encyclo',
                 callback: 'loadSandbox()',
-                type: 'succes',
-                icon: 'succes4'
+                title: 'Dernière oeuvre'
             });
 };
  /*********************************************************/
