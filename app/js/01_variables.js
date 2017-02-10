@@ -30,7 +30,10 @@ var arrayCookieUser = {
     level3IsVisited: false,
     level4IsVisited: false,
     sandboxIsVisited: false,
-    $tabSuccess : 0
+    $tabSuccess : 0,
+    $countHelp : 0,
+    $countip : 0,
+    $countEncyclo : 0
 };
 
 var up = 'up',
@@ -93,7 +96,8 @@ var level1IsVisited = false,
     level4IsVisited = false,
     sandboxIsVisited = false;
 
-var Tip1,
+var $countHelp = 0,
+    Tip1,
     tipsLevel1,
     Tip2,
     tipsLevel2,

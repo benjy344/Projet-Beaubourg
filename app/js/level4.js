@@ -9,7 +9,7 @@ function loadLevel4() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu4']
+            content: content['encyclo1jeu4']
         });
         addHelp('Niveau 3 Aide n°1', content['jeu3astuce1']);
         addHelp('Niveau 3 Aide n°2', content['jeu3astuce2']);
@@ -172,7 +172,7 @@ function submitLevel4() {
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau4'],
+                content: content['encyclo2jeu4'],
                 type: 'encyclo',
                 callback: 'popinSucces4()',
                 title: 'Dernière oeuvre'

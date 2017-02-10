@@ -9,7 +9,7 @@ function loadLevel3() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu3']
+            content: content['encyclo1jeu3']
         });
         addHelp('Niveau 2 Aide n°1', content['jeu2astuce1']);
         addHelp('Niveau 2 Aide n°2', content['jeu2astuce2']);
@@ -216,7 +216,7 @@ function submitLevel3() {
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau3'],
+                content: content['encyclo2jeu3'],
                 type: 'encyclo',
                 callback: 'popinSucces3()',
                 title: 'Troisième oeuvre'

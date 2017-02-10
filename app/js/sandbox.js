@@ -9,7 +9,7 @@ function loadSandbox() {
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
             type: 'encyclo',
-            content: content['textsandbox'], 
+            content: content['encyclo1jeu5'], 
             title: 'Sandbox'
         });
 

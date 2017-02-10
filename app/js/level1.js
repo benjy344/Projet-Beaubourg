@@ -12,7 +12,7 @@ function loadLevel1() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu1']
+            content: content['encyclo1jeu1']
         });
 
         tipsLevel1 = {
@@ -86,7 +86,7 @@ function submitLevel1() {
     if (chaineTableau == binaire || testing) { //{TEST} Always True
         if (!level2IsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau1'],
+                content: content['encyclo2jeu1'],
                 type: 'encyclo',
                 callback: 'popinSucces()',
                 title: 'Première oeuvre'
@@ -97,8 +97,6 @@ function submitLevel1() {
             loadLevel2();
         }
         
-        //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
-
     }else{var $popinError = new Popin({
         content: content['erreur'],
     });}

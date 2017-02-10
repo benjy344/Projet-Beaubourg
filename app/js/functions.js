@@ -40,12 +40,7 @@ function isUserExiste (username) {
         //console.log(readCookie(username))
         arrayCookieUser = readCookie(username);
         $('main').load(views+'intro.html', function() {
-            $tabSuccess = arrayCookieUser.$tabSuccess;
-            level1IsVisited = arrayCookieUser.level1IsVisited,
-            level2IsVisited = arrayCookieUser.level2IsVisited,
-            level3IsVisited = arrayCookieUser.level3IsVisited,
-            level4IsVisited = arrayCookieUser.level4IsVisited,
-            sandboxIsVisited = arrayCookieUser.sandboxIsVisited;
+            initRealoadSession();
             $('#username').text(Username);     
         });
     } else {
@@ -58,7 +53,51 @@ function isUserExiste (username) {
 
 
 
+function initRealoadSession() {
+    $tabSuccess = eval(arrayCookieUser.$tabSuccess);
+    console.log($tabSuccess)
+    level1IsVisited = eval(arrayCookieUser.level1IsVisited),
+    level2IsVisited = eval(arrayCookieUser.level2IsVisited),
+    level3IsVisited = eval(arrayCookieUser.level3IsVisited),
+    level4IsVisited = eval(arrayCookieUser.level4IsVisited),
+    sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
+    var countHelp = arrayCookieUser.$countHelp;
+    var countEncyclo = arrayCookieUser.$countEncyclo;
+    var number = 1; 
+    var levelForHelp = 1; 
+    var numberForEncyclo = 1; 
+    var levelForEncyclo = 1; 
 
+    for (var i = 0; i < countHelp; i++) {
+
+        var title = 'Niveau '+levelForHelp+' Aide n°'+number;
+        var thecontent = 'jeu'+levelForHelp+'astuce'+number;
+        addHelp(title, content[thecontent]);
+        if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
+    }
+    for (var i = 0; i < countEncyclo; i++) {
+        if ((numberForEncyclo % 2) == 0){
+            switch ((i+1)) {
+                case 1:
+                    var title = 'Première oeuvre';
+                    break;
+                case 2:
+                    var title = 'Deuxième oeuvre';
+                    break;
+                case 3:
+                    var title = 'Troisième oeuvre';
+                    break;
+                case 4:
+                    var title = 'Quatrième oeuvre';
+                    break;    
+            }
+        }else{ var title = 'Niveau '+levelForEncyclo;}
+        var thecontent = 'encyclo'+numberForEncyclo+'jeu'+levelForEncyclo;
+        addEncyclo(title, content[thecontent]);
+        if ((numberForEncyclo % 2) == 0) {levelForEncyclo++; numberForEncyclo = 1;} else {numberForEncyclo++; }
+    }
+
+}
 /**********************************
 *
 *             COOKIES
@@ -241,6 +280,8 @@ function addEncyclo(name, content) {
     if (!exist) {
         encycloNameTab.push(name);
         countEncyclo = encycloNameTab.length;
+        arrayCookieUser.$countEncyclo = countEncyclo;
+        createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
             $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
             $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
@@ -273,6 +314,8 @@ function addHelp(name, content) {
     if (!exist) {
         helpNameTab.push(name);
         countHelp = $tabHelpTitle.length;
+        arrayCookieUser.$countHelp = countHelp+1;
+        createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
             $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
             $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');

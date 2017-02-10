@@ -110,6 +110,7 @@ Popin.prototype = {
             if ($('.help-button').hasClass('newTip')) {
                 var title = 'Niveau '+countLevel+' '+this.helpTitle;
                 addHelp(title, this.content);
+                $countHelp++;
                 $('.help-button').removeClass('newTip');
             }
         }

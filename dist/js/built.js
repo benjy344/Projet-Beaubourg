@@ -36,7 +36,10 @@ var arrayCookieUser = {
     level3IsVisited: false,
     level4IsVisited: false,
     sandboxIsVisited: false,
-    $tabSuccess : 0
+    $tabSuccess : 0,
+    $countHelp : 0,
+    $countip : 0,
+    $countEncyclo : 0
 };
 
 var up = 'up',
@@ -99,7 +102,8 @@ var level1IsVisited = false,
     level4IsVisited = false,
     sandboxIsVisited = false;
 
-var Tip1,
+var $countHelp = 0,
+    Tip1,
     tipsLevel1,
     Tip2,
     tipsLevel2,
@@ -9260,12 +9264,7 @@ function isUserExiste (username) {
         //console.log(readCookie(username))
         arrayCookieUser = readCookie(username);
         $('main').load(views+'intro.html', function() {
-            $tabSuccess = arrayCookieUser.$tabSuccess;
-            level1IsVisited = arrayCookieUser.level1IsVisited,
-            level2IsVisited = arrayCookieUser.level2IsVisited,
-            level3IsVisited = arrayCookieUser.level3IsVisited,
-            level4IsVisited = arrayCookieUser.level4IsVisited,
-            sandboxIsVisited = arrayCookieUser.sandboxIsVisited;
+            initRealoadSession();
             $('#username').text(Username);     
         });
     } else {
@@ -9278,7 +9277,51 @@ function isUserExiste (username) {
 
 
 
+function initRealoadSession() {
+    $tabSuccess = eval(arrayCookieUser.$tabSuccess);
+    console.log($tabSuccess)
+    level1IsVisited = eval(arrayCookieUser.level1IsVisited),
+    level2IsVisited = eval(arrayCookieUser.level2IsVisited),
+    level3IsVisited = eval(arrayCookieUser.level3IsVisited),
+    level4IsVisited = eval(arrayCookieUser.level4IsVisited),
+    sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
+    var countHelp = arrayCookieUser.$countHelp;
+    var countEncyclo = arrayCookieUser.$countEncyclo;
+    var number = 1; 
+    var levelForHelp = 1; 
+    var numberForEncyclo = 1; 
+    var levelForEncyclo = 1; 
 
+    for (var i = 0; i < countHelp; i++) {
+
+        var title = 'Niveau '+levelForHelp+' Aide n°'+number;
+        var thecontent = 'jeu'+levelForHelp+'astuce'+number;
+        addHelp(title, content[thecontent]);
+        if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
+    }
+    for (var i = 0; i < countEncyclo; i++) {
+        if ((numberForEncyclo % 2) == 0){
+            switch ((i+1)) {
+                case 1:
+                    var title = 'Première oeuvre';
+                    break;
+                case 2:
+                    var title = 'Deuxième oeuvre';
+                    break;
+                case 3:
+                    var title = 'Troisième oeuvre';
+                    break;
+                case 4:
+                    var title = 'Quatrième oeuvre';
+                    break;    
+            }
+        }else{ var title = 'Niveau '+levelForEncyclo;}
+        var thecontent = 'encyclo'+numberForEncyclo+'jeu'+levelForEncyclo;
+        addEncyclo(title, content[thecontent]);
+        if ((numberForEncyclo % 2) == 0) {levelForEncyclo++; numberForEncyclo = 1;} else {numberForEncyclo++; }
+    }
+
+}
 /**********************************
 *
 *             COOKIES
@@ -9461,6 +9504,8 @@ function addEncyclo(name, content) {
     if (!exist) {
         encycloNameTab.push(name);
         countEncyclo = encycloNameTab.length;
+        arrayCookieUser.$countEncyclo = countEncyclo;
+        createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
             $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
             $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
@@ -9493,6 +9538,8 @@ function addHelp(name, content) {
     if (!exist) {
         helpNameTab.push(name);
         countHelp = $tabHelpTitle.length;
+        arrayCookieUser.$countHelp = countHelp+1;
+        createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
             $tabHelpTitle.push('<li data-link="content-'+countHelp+'">'+name+'</li>');
             $tabHelpContent.push('<div id="content-'+countHelp+'" class="encycloPop " data-link="help-'+countHelp+'">'+content+'</div>');
@@ -10854,7 +10901,7 @@ function loadLevel1() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu1']
+            content: content['encyclo1jeu1']
         });
 
         tipsLevel1 = {
@@ -10928,7 +10975,7 @@ function submitLevel1() {
     if (chaineTableau == binaire || testing) { //{TEST} Always True
         if (!level2IsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau1'],
+                content: content['encyclo2jeu1'],
                 type: 'encyclo',
                 callback: 'popinSucces()',
                 title: 'Première oeuvre'
@@ -10939,8 +10986,6 @@ function submitLevel1() {
             loadLevel2();
         }
         
-        //Showpopup(content['jeu1d'], 'loadLevel2()', 'succes1', true);
-
     }else{var $popinError = new Popin({
         content: content['erreur'],
     });}
@@ -10968,7 +11013,7 @@ function loadLevel2() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu2']
+            content: content['encyclo1jeu2']
         });
         addHelp('Niveau 1 Aide n°1', content['jeu1astuce1']);
         addHelp('Niveau 1 Aide n°2', content['jeu1astuce2']);
@@ -11146,7 +11191,7 @@ function submitLevel2() {
     if (numCorrect == pixels.length || testing) { //{}
         if (!level3IsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau2'],
+                content: content['encyclo2jeu2'],
                 type: 'encyclo',
                 callback: 'popinSucces2()',
                 title: 'Deuxième oeuvre'
@@ -11184,7 +11229,7 @@ function loadLevel3() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu3']
+            content: content['encyclo1jeu3']
         });
         addHelp('Niveau 2 Aide n°1', content['jeu2astuce1']);
         addHelp('Niveau 2 Aide n°2', content['jeu2astuce2']);
@@ -11391,7 +11436,7 @@ function submitLevel3() {
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau3'],
+                content: content['encyclo2jeu3'],
                 type: 'encyclo',
                 callback: 'popinSucces3()',
                 title: 'Troisième oeuvre'
@@ -11431,7 +11476,7 @@ function loadLevel4() {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
-            content: content['jeu4']
+            content: content['encyclo1jeu4']
         });
         addHelp('Niveau 3 Aide n°1', content['jeu3astuce1']);
         addHelp('Niveau 3 Aide n°2', content['jeu3astuce2']);
@@ -11594,7 +11639,7 @@ function submitLevel4() {
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
             var $popinTableau = new Popin({
-                content: content['explication-tableau4'],
+                content: content['encyclo2jeu4'],
                 type: 'encyclo',
                 callback: 'popinSucces4()',
                 title: 'Dernière oeuvre'
@@ -11730,6 +11775,7 @@ Popin.prototype = {
             if ($('.help-button').hasClass('newTip')) {
                 var title = 'Niveau '+countLevel+' '+this.helpTitle;
                 addHelp(title, this.content);
+                $countHelp++;
                 $('.help-button').removeClass('newTip');
             }
         }
@@ -11963,7 +12009,7 @@ function loadSandbox() {
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
             type: 'encyclo',
-            content: content['textsandbox'], 
+            content: content['encyclo1jeu5'], 
             title: 'Sandbox'
         });
 
@@ -12237,10 +12283,8 @@ Tip.prototype = {
         $this = this;
         ////console.log($this.canIconstruct())
         if (this.level === countLevel ) {
-            console.log('canIconstruct')
         $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
                $this.setTimeOut = setTimeout(function () {
-                    console.log('lunch constructTip')
                    $this.constructTip(tip)
                }, $this.duration)
             });
@@ -12258,7 +12302,6 @@ Tip.prototype = {
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
                 title = 'Aide n°'+$this.count;
-                console.log(title)
                 var $popup = $popin = new Popin({
                             content: tip,
                             type: 'help',
@@ -12266,7 +12309,7 @@ Tip.prototype = {
                             $popin: $('.js-popup-tip'),
                             $open: $this.$open
                         });
-                if($this.count<$this.number0fTips) {console.log('iteration ' + $this.count); $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+                if($this.count<$this.number0fTips) { $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
                 });
         } else {this.destroy()}
         
