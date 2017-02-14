@@ -10,9 +10,9 @@ function addPixel() {
         .data('pos', {
         x: 0,
         y: 0,
-        rot: 0
-    })
-        .data('name', 'pixel_'+$(this).index());
+        rot: 0,
+        scale: 4,
+    }).data('name', 'pixel_'+$(this).index());
 
     $('.js-sandboxwrapper').append(pixel);
 }
@@ -219,6 +219,12 @@ function addCode(btn) {
         case 'rotate':
             comment = '//Touner de 90 degrés dans le sens horaire';
             break;
+        case 'scaleUp':
+            comment = '//Augmenter la taille'
+            break;
+        case 'scaleDown':
+            comment = '//Diminuer la taille'
+            break;
         default:
             break;
     }
@@ -250,7 +256,7 @@ function moveDown() {
     $('.img-active').data('pos', pos)
 }
 function rotate(deg) {
-    
+
     if (screen == 'sandbox' && !deg) {
         deg = 22.5
     } else if (!deg) {
@@ -290,53 +296,42 @@ function move(direction, repeat) {
         }
     }
 } 
-function scale(sens) {
-
-    var size =   $('.img-active').outerWidth();
-
-    if (!sens) {
-        sens = up;
-    }
-    switch(sens) {
-        case up:
-        case plus:
-            size *= 1.25;
-            break;
-        case down:
-        case moins:
-            size *= 0.75;
-            break;
-        default:
-            console.log("error") //{DEV}   
-            break;
-    }
-
-    size += 'px';
-    $('.img-active').css('width', size);
-    $('.img-active').css('height', size);
+function scaleUp() {
+    var pos = $('.img-active').data('pos'); 
+    pos.scale--;
+    if (pos.scale < 2) {size = 2}
+    $('.img-active').data('pos', pos)
+}
+function scaleDown() {
+    var pos = $('.img-active').data('pos'); 
+    pos.scale++;
+    if (pos.scale > 8) {size = 8}
+    $('.img-active').data('pos', pos)
 }
 
 function applyPosition() {
     var pos = $('.img-active').data('pos'); 
-    
 
     if (screen == 'sandbox') {
 
-        var size = $('.img-active').outerWidth();
+        var scale = $('.img-active').data('pos', pos);
+        scale = pos.scale;
+        size = 100/scale;
+        var sizepx = size + '%'
+        console.log(size)
 
-        var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
-        var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
-        console.log(xMax, yMax)
-
-        pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
-        pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
+        var posMax = scale - 1;
+        console.log(posMax, posMax);
+        pos.x = pos.x > posMax ? posMax : (pos.x < 0) ? 0 : pos.x;
+        pos.y = pos.y > posMax ? posMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-
         console.log(pos.x, pos.y);
 
+        $('.img-active').css('width', sizepx);
+        $('.img-active').css('height', sizepx);
         $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixel-active').css('left', pos.x * size + 'px');
-        $('.pixel-active').css('top', pos.y * size + 'px');
+        $('.pixel-active').css('left', pos.x * size + '%');
+        $('.pixel-active').css('top', pos.y * size + '%');
 
     } else {
 

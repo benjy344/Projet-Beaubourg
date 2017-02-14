@@ -56,9 +56,9 @@
         }
     }
     .reinit-img {
-        margin-top: 1em;
-        min-width: 100%;
+        margin-top: 2em;
         background-color: #242322;
+        font-size: 0.7em;
     }
 
 }
@@ -87,6 +87,10 @@
                 margin: 0.35em 0;
 
                 &.mid {
+                    -ms-flex-preferred-size: calc(100%/3);
+                    flex-basis: calc(100%/3);
+                }
+                &.top {
                     -ms-flex-preferred-size: calc(100%/3);
                     flex-basis: calc(100%/3);
                 }

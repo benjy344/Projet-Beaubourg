@@ -143,6 +143,7 @@ function runCodeLevel4() {
     // console.log($('.imgActive').data('pos'))
     //alert('ok')
     var code = codeMirror.getValue();
+    var oldPos = $('.img-active').data('pos'); 
     eval(code)
     applyPosition();
     resetCode();

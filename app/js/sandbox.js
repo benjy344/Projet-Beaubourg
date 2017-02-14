@@ -213,17 +213,4 @@ function runSandbox() {
         resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
 
     }
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
