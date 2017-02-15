@@ -354,10 +354,19 @@ function resetCode() {
 }
 
 function resetSliders(r, g, b) {
-    $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
-    $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
-    $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
+    $('input.red').prop('disabled', '').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
+    $('input.green').prop('disabled', '').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
+    $('input.blue').prop('disabled', '').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
 
     colorModel(r, g, b)
+}
+
+function disableSliders(validated) {
+    $.each(validated, function(color, disabled) {
+        console.log(color, disabled)
+        if (disabled) {
+            $('input.'+color).prop('disabled', 'disabled');
+        }
+    });
 }
 
