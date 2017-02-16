@@ -698,10 +698,10 @@ body .level-portal {
   right: 0;
   opacity: 0;
   visibility: hidden;
-  -webkit-transform: scale(0.8);
-  transform: scale(0.8);
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  -webkit-transform: scale(0.5);
+  transform: scale(0.5);
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
   -webkit-transition-delay: 0.6s;
   transition-delay: 0.6s;
   background: -webkit-linear-gradient(206deg, #7cf998, #14375a);
@@ -712,8 +712,8 @@ body .level-portal.show {
   -webkit-transform: scale(1);
   transform: scale(1);
   opacity: 1;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
   visibility: visible;
 }
 body .level-portal h1 {
