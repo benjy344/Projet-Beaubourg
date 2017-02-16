@@ -10090,11 +10090,20 @@ function resetCode() {
 }
 
 function resetSliders(r, g, b) {
-    $('input.red').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
-    $('input.green').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
-    $('input.blue').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
+    $('input.red').prop('disabled', '').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
+    $('input.green').prop('disabled', '').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
+    $('input.blue').prop('disabled', '').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
 
     colorModel(r, g, b)
+}
+
+function disableSliders(validated) {
+    $.each(validated, function(color, disabled) {
+        console.log(color, disabled)
+        if (disabled) {
+            $('input.'+color).prop('disabled', 'disabled');
+        }
+    });
 }
 
 ;
@@ -11272,7 +11281,7 @@ function popintable2() {
 *********************/
 function loadLevel3() {
     countLevel = 3;
-    if (!level3IsVisited) {
+    //if (!level3IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
@@ -11285,14 +11294,14 @@ function loadLevel3() {
             0 : content['jeu3astuce1'],
             1 : content['jeu3astuce2'],
             2 : content['jeu3astuce3']
-           }
+        }
         //var tips1 = []
         Tip3 = new Tip({
             'tips' : tipsLevel3,
             'duration' : 30000,
             'level': 3
         })
-    }
+    //}
 
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
@@ -11304,18 +11313,18 @@ function loadLevel3() {
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
         codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder",
-                lineWrapping: true,
-                lineNumbers: true,
-                autofocus: false
-                //matchBrackets: true
-            }
+            mode: "text/javascript",
+            theme: "icecoder",
+            lineWrapping: true,
+            lineNumbers: true,
+            autofocus: false
+            //matchBrackets: true
+        }
         //Initialisation des variables
         var defaultValue = 0;
 
         codeConfig.readOnly = 'nocursor';
-        
+
         //thisLvlAnswers = answers.lvl3;
         //console.log(thisLvlAnswers)
 
@@ -11332,7 +11341,7 @@ function loadLevel3() {
         $('.js-run-code').click(function(){
             runCodeLevel3();
         });
-       
+
 
         //Change Active Pixel
         pixel.on('touch click', function() {
@@ -11340,35 +11349,38 @@ function loadLevel3() {
                 $('.pixel-active').removeClass('pixel-active');
                 $(this).addClass('pixel-active');
                 var thisColors = $(this).data('rvb');
-                console.log(thisColors)
+                //console.log(thisColors)
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
+                disableSliders($(this).data('validated'));
                 resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
                 showModal();
             }
         })
 
         $('.apply-color').on('touch click', hideModal)
-        
-        
+
+
         $('input[name="chooseFrameLvl3"]').on('change', function() {
             which = $('input[name="chooseFrameLvl3"]:checked').val();
             //console.log(which)
         })
-        
-       $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
-           
-           $('input[name="chooseFrameLvl3"]').off();
-           
-           var varNames = [];
-           $(content['jeu3variables_'+which]).map(function() {
-               varNames.push($(this).text())
-           })
-           //console.log(varNames)
-           
-            $('.js-framewrapper').children().each(function(){            
-            $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]);
-        });
-       })
+
+        $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
+            
+            console.log('initiating level')
+
+            $('input[name="chooseFrameLvl3"]').off();
+
+            var varNames = [];
+            $(content['jeu3variables_'+which]).map(function() {
+                varNames.push($(this).text())
+            })
+            //console.log(varNames)
+
+            $('.js-framewrapper').children().each(function(){
+                $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]).data('validated', {red:false, green:false, blue:false});
+            });
+        })
 
         //Change input
         $('input[type=range]').on("input", function(){
@@ -11447,35 +11459,40 @@ function runCodeLevel3() {
 *********************/
 
 function submitLevel3() {
-    
-    
-    
+
+
+
     $.each($('.square').not('correct'), function(i) {
-        
+
         //console.log(i);
         var rvb = $(this).data('rvb'),
+            validated = $(this).data('validated'),
             pixelName = $(this).data('name'),
             correctRvb = thisLvlAnswers[which][pixelName],
             isCorrect = true;
+        
+        console.log(validated)
 
-        $.each(correctRvb, function(j, value){
+        $.each(correctRvb, function(color, value){
             if (value.length > 1) { 
-                if (rvb[j] < value[0] || rvb[j] > value[1]) { 
-                    isCorrect = false; 
-                }   
+                if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
+                    validated[color] = true;
+                }
             } else { 
-                if (rvb[j] != value[0]) { 
-                    isCorrect = false; 
-                } 
+                if (rvb[color] == value[0]) { 
+                    validated[color] = true;
+                }
             }     
         }) 
+        
+        $(this).data('validated', validated);
 
         //console.log(isCorrect);
-        if (isCorrect) {
-           $(this).removeClass('incorrect')
-           $(this).addClass('correct')
+        if (validated.red && validated.green && validated.blue) {
+            $(this).removeClass('incorrect')
+            $(this).addClass('correct')
         } else {
-           $(this).addClass('incorrect')
+            $(this).addClass('incorrect')
         }
         //console.log(i);
     });
@@ -11488,7 +11505,7 @@ function submitLevel3() {
                 type: 'succes',
                 icon: 'succes3'
             });
-            
+
             Tip3.destroy('Tip3');
         } else {
             loadLevel4();
@@ -11503,13 +11520,13 @@ function submitLevel3() {
 }
 
 function popinTable3 () {
-    
+
     var $popinTableau = new Popin({
-                content: content['encyclo2jeu3'],
-                type: 'encyclo',
-                callback: 'loadLevel4()',
-                title: 'Troisième oeuvre'
-            });
+        content: content['encyclo2jeu3'],
+        type: 'encyclo',
+        callback: 'loadLevel4()',
+        title: 'Troisième oeuvre'
+    });
 }
 ;
  /*********************************************************/
