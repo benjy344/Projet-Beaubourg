@@ -5,7 +5,7 @@
 *********************/
 function loadLevel3() {
     countLevel = 3;
-    //if (!level3IsVisited) {
+    if (!level3IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
@@ -25,7 +25,7 @@ function loadLevel3() {
             'duration' : 30000,
             'level': 3
         })
-    //}
+    }
 
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
@@ -54,11 +54,11 @@ function loadLevel3() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        codeMirror.addKeyMap({
-            Enter: function (cm) {
-                enterKeyMap();
-            }
-        });
+        //        codeMirror.addKeyMap({
+        //            Enter: function (cm) {
+        //                enterKeyMap();
+        //            }
+        //        });
         $('.cm-s-icecoder').addClass('only-color');
 
         //Run Code
@@ -90,9 +90,8 @@ function loadLevel3() {
         })
 
         $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
-            
-            console.log('initiating level')
 
+            //console.log('initiating level')
             $('input[name="chooseFrameLvl3"]').off();
 
             var varNames = [];
@@ -194,7 +193,7 @@ function submitLevel3() {
             pixelName = $(this).data('name'),
             correctRvb = thisLvlAnswers[which][pixelName],
             isCorrect = true;
-        
+
         console.log(validated)
 
         $.each(correctRvb, function(color, value){
@@ -208,7 +207,7 @@ function submitLevel3() {
                 }
             }     
         }) 
-        
+
         $(this).data('validated', validated);
 
         //console.log(isCorrect);

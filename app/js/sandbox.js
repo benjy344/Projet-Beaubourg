@@ -17,7 +17,7 @@ function loadSandbox() {
         addHelp('Niveau 4 Aide n°2', content['jeu4astuce2']);
         addHelp('Niveau 4 Aide n°3', content['jeu4astuce3']); 
     }
-    
+
     sandboxIsVisited = true;
     arrayCookieUser.sandboxIsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -92,10 +92,8 @@ function loadSandbox() {
                 $('.btn-color').addClass('hidden');
                 $('.btn-position').removeClass('hidden');
                 $('.cm-s-icecoder').removeClass('only-color');
-
+                showModal();  
                 resetCode();
-
-                showModal();                
             }
         })
 
@@ -134,7 +132,7 @@ function loadSandbox() {
             hideModal();
             runCodeLevel4();  
         });
-        
+
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {

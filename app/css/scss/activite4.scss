@@ -86,16 +86,10 @@
                 flex-basis: 100%;
                 margin: 0.35em 0;
 
-                &.mid {
+                &.third {
                     -ms-flex-preferred-size: calc(100%/3);
                     flex-basis: calc(100%/3);
                 }
-                &.top {
-                    -ms-flex-preferred-size: calc(100%/3);
-                    flex-basis: calc(100%/3);
-                }
-
-
             }
         }
 
