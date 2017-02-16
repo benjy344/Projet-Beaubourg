@@ -3,12 +3,14 @@
   height: 60%;
   background-color: white;
   overflow: hidden;
+  width: 100%;
+  height: calc(100vw - 20px);
 }
 #sandbox .sandboxwrapper .pixel {
   background-color: black;
   box-sizing: border-box;
-  height: 100px;
-  width: 100px;
+  height: calc(100%/4);
+  width: calc(100%/4);
   border: solid 1px black;
   position: absolute;
 }
@@ -22,6 +24,7 @@
 }
 #sandbox .sandbox-btn-general .btn {
   max-width: 50%;
+  font-size: 0.8em;
   background-color: #242322;
 }
 #sandbox .edit-pixel {
@@ -30,6 +33,7 @@
 }
 #sandbox .edit-pixel .btn {
   max-width: 50%;
+  font-size: 0.8em;
   background-color: #242322;
 }
 #sandbox .edit-pixel.hidden {

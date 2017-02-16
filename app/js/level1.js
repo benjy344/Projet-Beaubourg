@@ -3,6 +3,14 @@
 *   Chapitre 1
 *
 *********************/
+function portalLevel1() {
+    var $portalLevel1 = new Portal({
+            title: 'Level 1',
+            notion: 'Le Pixem',
+            callback: 'loadLevel1()'
+        });
+}
+
 function loadLevel1() {
     $('main').addClass('flex');
     $('.background').addClass('none');
@@ -139,7 +147,7 @@ function popinTable() {
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu1'],
                 type: 'encyclo',
-                callback: 'loadLevel2()',
+                callback: 'portalLevel2()',
                 title: 'Première oeuvre'
             });
     return;

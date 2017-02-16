@@ -2,20 +2,20 @@
  * Popin is a module that fades in an element over #popin-overlay
  *
  * Args : object {
- *   $popin, $open, $close, $overlay, $popinWrapper :                   jQuery element
- *   closeButton :                                      true|false
- *   onOpen, onOpened, onClose, onClosed, onResize :    callback function
+ *   $popin, $open, $close, $overlay, $popinWrapper : jQuery element
  *   type : popin | help | succes | encyclo | info
+ *   callback : string to eval 
  * }
  *
  */
 
-    // $popin = new Popin({
-                
-    //             content: 'blabla',
-    //             type: 'popin',
-    //             callback: 'loadIntro()'
-    //     });
+/* $popin = new Popin({
+            
+*             content: 'blabla',
+*             type: 'popin',
+*             callback: 'loadIntro()'
+*     });
+*/
 function Popin(options) {
     this.init(options);
 }

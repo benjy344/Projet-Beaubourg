@@ -9261,7 +9261,6 @@ function loadIntro(){
 
 function isUserExiste (username) {
     if(readCookie(username)){
-        //console.log(readCookie(username))
         arrayCookieUser = readCookie(username);
         $('main').load(views+'intro.html', function() {
             initRealoadSession();
@@ -9747,9 +9746,9 @@ function addPixel() {
         .data('pos', {
         x: 0,
         y: 0,
-        rot: 0
-    })
-        .data('name', 'pixel_'+$(this).index());
+        rot: 0,
+        scale: 4,
+    }).data('name', 'pixel_'+$(this).index());
 
     $('.js-sandboxwrapper').append(pixel);
 }
@@ -9956,6 +9955,12 @@ function addCode(btn) {
         case 'rotate':
             comment = '//Touner de 90 degrés dans le sens horaire';
             break;
+        case 'scaleUp':
+            comment = '//Augmenter la taille'
+            break;
+        case 'scaleDown':
+            comment = '//Diminuer la taille'
+            break;
         default:
             break;
     }
@@ -9987,7 +9992,7 @@ function moveDown() {
     $('.img-active').data('pos', pos)
 }
 function rotate(deg) {
-    
+
     if (screen == 'sandbox' && !deg) {
         deg = 22.5
     } else if (!deg) {
@@ -10027,53 +10032,42 @@ function move(direction, repeat) {
         }
     }
 } 
-function scale(sens) {
-
-    var size =   $('.img-active').outerWidth();
-
-    if (!sens) {
-        sens = up;
-    }
-    switch(sens) {
-        case up:
-        case plus:
-            size *= 1.25;
-            break;
-        case down:
-        case moins:
-            size *= 0.75;
-            break;
-        default:
-            console.log("error") //{DEV}   
-            break;
-    }
-
-    size += 'px';
-    $('.img-active').css('width', size);
-    $('.img-active').css('height', size);
+function scaleUp() {
+    var pos = $('.img-active').data('pos'); 
+    pos.scale--;
+    if (pos.scale < 2) {size = 2}
+    $('.img-active').data('pos', pos)
+}
+function scaleDown() {
+    var pos = $('.img-active').data('pos'); 
+    pos.scale++;
+    if (pos.scale > 8) {size = 8}
+    $('.img-active').data('pos', pos)
 }
 
 function applyPosition() {
     var pos = $('.img-active').data('pos'); 
-    
 
     if (screen == 'sandbox') {
 
-        var size = $('.img-active').outerWidth();
+        var scale = $('.img-active').data('pos', pos);
+        scale = pos.scale;
+        size = 100/scale;
+        var sizepx = size + '%'
+        console.log(size)
 
-        var xMax = Math.ceil($('#sandboxWrapper').width() / size) - 1;
-        var yMax = Math.ceil($('#sandboxWrapper').height() / size) - 1;
-        console.log(xMax, yMax)
-
-        pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
-        pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
+        var posMax = scale - 1;
+        console.log(posMax, posMax);
+        pos.x = pos.x > posMax ? posMax : (pos.x < 0) ? 0 : pos.x;
+        pos.y = pos.y > posMax ? posMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-
         console.log(pos.x, pos.y);
 
+        $('.img-active').css('width', sizepx);
+        $('.img-active').css('height', sizepx);
         $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
-        $('.pixel-active').css('left', pos.x * size + 'px');
-        $('.pixel-active').css('top', pos.y * size + 'px');
+        $('.pixel-active').css('left', pos.x * size + '%');
+        $('.pixel-active').css('top', pos.y * size + '%');
 
     } else {
 
@@ -10896,6 +10890,14 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 *   Chapitre 1
 *
 *********************/
+function portalLevel1() {
+    var $portalLevel1 = new Portal({
+            title: 'Level 1',
+            notion: 'Le Pixem',
+            callback: 'loadLevel1()'
+        });
+}
+
 function loadLevel1() {
     $('main').addClass('flex');
     $('.background').addClass('none');
@@ -11032,7 +11034,7 @@ function popinTable() {
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu1'],
                 type: 'encyclo',
-                callback: 'loadLevel2()',
+                callback: 'portalLevel2()',
                 title: 'Première oeuvre'
             });
     return;
@@ -11044,6 +11046,13 @@ function popinTable() {
 *   Chapitre 2
 *
 *********************/
+function portalLevel2() {
+    var $portalLevel2 = new Portal({
+            title: 'Level 2',
+            notion: 'Blabla',
+            callback: 'loadLevel2()'
+        });
+}
 function loadLevel2() {
     countLevel = 2;
     if (!level2IsVisited) {
@@ -11649,6 +11658,7 @@ function runCodeLevel4() {
     // console.log($('.imgActive').data('pos'))
     //alert('ok')
     var code = codeMirror.getValue();
+    var oldPos = $('.img-active').data('pos'); 
     eval(code)
     applyPosition();
     resetCode();
@@ -11707,20 +11717,20 @@ function popinTable4 () {
  * Popin is a module that fades in an element over #popin-overlay
  *
  * Args : object {
- *   $popin, $open, $close, $overlay, $popinWrapper :                   jQuery element
- *   closeButton :                                      true|false
- *   onOpen, onOpened, onClose, onClosed, onResize :    callback function
+ *   $popin, $open, $close, $overlay, $popinWrapper : jQuery element
  *   type : popin | help | succes | encyclo | info
+ *   callback : string to eval 
  * }
  *
  */
 
-    // $popin = new Popin({
-                
-    //             content: 'blabla',
-    //             type: 'popin',
-    //             callback: 'loadIntro()'
-    //     });
+/* $popin = new Popin({
+            
+*             content: 'blabla',
+*             type: 'popin',
+*             callback: 'loadIntro()'
+*     });
+*/
 function Popin(options) {
     this.init(options);
 }
@@ -11855,6 +11865,64 @@ Popin.prototype = {
 };
 
 /*module.exports = modules.Popin = Popin;*/;
+ /*********************************************************/
+/*
+ * Portal is a module that hide load of the next level
+ *
+ * Args : object {
+ *   title : string 
+ *   notion : string 
+ *   callback : string to eval 
+ * }
+ *
+ */
+
+/* $popin = new Portal({
+*         
+*             title: 'Titre',
+*             notion: 'Notion',
+*             callback: 'loadIntro()'
+*     });
+*/
+function Portal(options) {
+    this.init(options);
+}
+
+Portal.prototype = {
+
+	init: function(options) {
+		var _this           =   this;
+        this.$portal    =   $(".js-level-portal");
+        this.$title     =   this.$portal.find('.js-portail-title');
+        this.$notion 	=   this.$portal.find(".js-notion-title");
+
+        if (options) {
+            if (options.title) this.title = options.title;
+            if (options.notion) this.notion = options.notion;
+            if (options.callback) this.callback = options.callback;
+        }
+        
+        this.$title.text(this.title);
+        this.$notion.text(this.notion);
+
+        this.onOpen();
+        this.$portal.on('touch click', function(e) { $.proxy(_this.onClose, _this, e)(); });
+    },
+
+    onOpen: function() {
+    	this.$portal.addClass('show');
+    	this.$title.addClass('fade-in');
+    	this.$notion.addClass('fade-in');
+    	eval(this.callback);
+    },
+    onClose: function(e) {
+		this.$portal.removeClass('show');
+		this.$title.removeClass('fade-in');
+		this.$notion.removeClass('fade-in');
+    },
+
+}
+;
  /*********************************************************/
 /*********************
 
@@ -12253,21 +12321,7 @@ function runSandbox() {
         resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-}
-
-
-;
+};
  /*********************************************************/
 /*
  * Tip is a module that constructs in an element and put it in the menu

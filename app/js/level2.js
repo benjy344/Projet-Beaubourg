@@ -3,6 +3,13 @@
 *   Chapitre 2
 *
 *********************/
+function portalLevel2() {
+    var $portalLevel2 = new Portal({
+            title: 'Level 2',
+            notion: 'Blabla',
+            callback: 'loadLevel2()'
+        });
+}
 function loadLevel2() {
     countLevel = 2;
     if (!level2IsVisited) {

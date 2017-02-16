@@ -37,7 +37,6 @@ function loadIntro(){
 
 function isUserExiste (username) {
     if(readCookie(username)){
-        //console.log(readCookie(username))
         arrayCookieUser = readCookie(username);
         $('main').load(views+'intro.html', function() {
             initRealoadSession();
