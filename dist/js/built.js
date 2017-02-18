@@ -9317,7 +9317,6 @@ function initRealoadSession() {
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
-            console.log(numberTitle)
             switch (numberTitle) {
                 case 1:
                     var title = 'Première oeuvre';
@@ -11214,11 +11213,11 @@ function loadLevel2() {
     })
 }
 
-function afterLoadLevel2() {
-    console.log('coucou')
+// function afterLoadLevel2() {
+//     console.log('coucou')
 
         
-}
+// }
 
 function runCodeLevel2() {
     var code = codeMirror.getValue();
@@ -11339,6 +11338,10 @@ function loadLevel3() {
             'duration' : 30000,
             'level': 3
         })
+    } else {
+        var $popinSlider = new Popin({
+            content: content['jeu3reloadpopin']
+        });
     }
 
     level3IsVisited = true;

@@ -91,7 +91,6 @@ function initRealoadSession() {
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
-            console.log(numberTitle)
             switch (numberTitle) {
                 case 1:
                     var title = 'Première oeuvre';

@@ -38,6 +38,10 @@ function loadLevel3() {
             'duration' : 30000,
             'level': 3
         })
+    } else {
+        var $popinSlider = new Popin({
+            content: content['jeu3reloadpopin']
+        });
     }
 
     level3IsVisited = true;

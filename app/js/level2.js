@@ -141,11 +141,11 @@ function loadLevel2() {
     })
 }
 
-function afterLoadLevel2() {
-    console.log('coucou')
+// function afterLoadLevel2() {
+//     console.log('coucou')
 
         
-}
+// }
 
 function runCodeLevel2() {
     var code = codeMirror.getValue();
