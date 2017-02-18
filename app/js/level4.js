@@ -3,7 +3,17 @@
 *   Chapitre 4
 *
 *********************/
+function portalLevel4() {
+    var $portalLevel2 = new Portal({
+            title: 'Le Positionnement',
+            notion: 'Blabla',
+            callback: 'loadLevel4()'
+        });
+    arrayCookieUser.currentLevel = 4;
+    createCookie(Username, arrayCookieUser, 20);
+}
 function loadLevel4() {
+    if (!ecrin) {initEcrin()}
     countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
@@ -180,7 +190,7 @@ function submitLevel4() {
             });
             Tip4.destroy('Tip4');
         } else {
-            loadSandbox();
+            portalSandbox();
         }
     } else {
         var $popinError = new Popin({
@@ -193,7 +203,7 @@ function popinTable4 () {
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu4'],
                 type: 'encyclo',
-                callback: 'loadSandbox()',
+                callback: 'portalSandbox()',
                 title: 'Dernière oeuvre'
             });
 }

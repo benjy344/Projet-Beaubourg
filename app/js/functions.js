@@ -40,7 +40,16 @@ function isUserExiste (username) {
         arrayCookieUser = readCookie(username);
         $('main').load(views+'intro.html', function() {
             initRealoadSession();
-            $('#username').text(Username);     
+            if (countLevel == 5) {
+                var l = 'loadSandbox()';
+            } else {
+                var l = 'loadLevel'+countLevel+'()';
+            }
+            var $portalLevel1 = new Portal({
+                title: 'Bon retour '+Username,
+                notion: 'Vous retrouverez tout ce que vous avez débloqué',
+                callback: l
+            });    
         });
     } else {
         createCookie(username, arrayCookieUser, 20);
@@ -58,12 +67,12 @@ function initRealoadSession() {
     } else {
         $tabSuccess = [];
     }
-    console.log(eval(arrayCookieUser.$tabSuccess), arrayCookieUser.$tabSuccess, $tabSuccess)
     level1IsVisited = eval(arrayCookieUser.level1IsVisited),
     level2IsVisited = eval(arrayCookieUser.level2IsVisited),
     level3IsVisited = eval(arrayCookieUser.level3IsVisited),
     level4IsVisited = eval(arrayCookieUser.level4IsVisited),
     sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
+    countLevel = eval(arrayCookieUser.currentLevel);
     var countHelp = arrayCookieUser.$countHelp;
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
@@ -78,9 +87,12 @@ function initRealoadSession() {
         addHelp(title, content[thecontent]);
         if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
     }
+    var numberTitle = 0
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
-            switch ((i+1)) {
+            numberTitle++;
+            console.log(numberTitle)
+            switch (numberTitle) {
                 case 1:
                     var title = 'Première oeuvre';
                     break;
@@ -369,6 +381,13 @@ function showModal() {
             $('.content-global').hide();
         }
     }, 1000);
+}
+
+function initEcrin() {
+    $('main').addClass('flex');
+    $('.background').addClass('none');
+    $('.js-hamburger').show();
+    ecrin = true;
 }
 
 function hideModal() {

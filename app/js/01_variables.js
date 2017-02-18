@@ -9,6 +9,7 @@ var dest = './dist/',
     views = './dist/views/',
     screen = 'index',
     countLevel = 0,
+    ecrin = false, 
 
     Username = "",
     testing = false,
@@ -33,7 +34,8 @@ var arrayCookieUser = {
     $tabSuccess : [],
     $countHelp : 0,
     $countip : 0,
-    $countEncyclo : 0
+    $countEncyclo : 0, 
+    currentLevel:1
 };
 
 var up = 'up',

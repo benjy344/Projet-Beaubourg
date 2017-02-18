@@ -5,12 +5,16 @@
 *********************/
 function portalLevel2() {
     var $portalLevel2 = new Portal({
-            title: 'Level 2',
+            title: 'La Couleur',
             notion: 'Blabla',
             callback: 'loadLevel2()'
         });
+    arrayCookieUser.currentLevel = 2;
+    createCookie(Username, arrayCookieUser, 20);
 }
+
 function loadLevel2() {
+    if (!ecrin) {initEcrin()}
     countLevel = 2;
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
@@ -203,7 +207,7 @@ function submitLevel2() {
             
             Tip2.destroy('Tip2');
         } else {
-            loadLevel3();
+            portalLevel3();
         }
     } else {
        var $popinError = new Popin({
@@ -217,7 +221,7 @@ function popintable2() {
      var $popinTableau = new Popin({
                 content: content['encyclo2jeu2'],
                 type: 'encyclo',
-                callback: 'loadLevel3()',
+                callback: 'portalLevel3()',
                 title: 'Deuxième oeuvre'
             });
 }

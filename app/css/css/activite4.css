@@ -67,11 +67,7 @@
   flex-basis: 100%;
   margin: 0.35em 0;
 }
-#modal-content .buttons .functions-btn div.mid {
-  -ms-flex-preferred-size: calc(100%/3);
-  flex-basis: calc(100%/3);
-}
-#modal-content .buttons .functions-btn div.top {
+#modal-content .buttons .functions-btn div.third {
   -ms-flex-preferred-size: calc(100%/3);
   flex-basis: calc(100%/3);
 }

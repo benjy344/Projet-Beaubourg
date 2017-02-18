@@ -15,6 +15,7 @@ var dest = './dist/',
     views = './dist/views/',
     screen = 'index',
     countLevel = 0,
+    ecrin = false, 
 
     Username = "",
     testing = false,
@@ -39,7 +40,8 @@ var arrayCookieUser = {
     $tabSuccess : [],
     $countHelp : 0,
     $countip : 0,
-    $countEncyclo : 0
+    $countEncyclo : 0, 
+    currentLevel:1
 };
 
 var up = 'up',
@@ -9264,7 +9266,16 @@ function isUserExiste (username) {
         arrayCookieUser = readCookie(username);
         $('main').load(views+'intro.html', function() {
             initRealoadSession();
-            $('#username').text(Username);     
+            if (countLevel == 5) {
+                var l = 'loadSandbox()';
+            } else {
+                var l = 'loadLevel'+countLevel+'()';
+            }
+            var $portalLevel1 = new Portal({
+                title: 'Bon retour '+Username,
+                notion: 'Vous retrouverez tout ce que vous avez débloqué',
+                callback: l
+            });    
         });
     } else {
         createCookie(username, arrayCookieUser, 20);
@@ -9282,12 +9293,12 @@ function initRealoadSession() {
     } else {
         $tabSuccess = [];
     }
-    console.log(eval(arrayCookieUser.$tabSuccess), arrayCookieUser.$tabSuccess, $tabSuccess)
     level1IsVisited = eval(arrayCookieUser.level1IsVisited),
     level2IsVisited = eval(arrayCookieUser.level2IsVisited),
     level3IsVisited = eval(arrayCookieUser.level3IsVisited),
     level4IsVisited = eval(arrayCookieUser.level4IsVisited),
     sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
+    countLevel = eval(arrayCookieUser.currentLevel);
     var countHelp = arrayCookieUser.$countHelp;
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
@@ -9302,9 +9313,12 @@ function initRealoadSession() {
         addHelp(title, content[thecontent]);
         if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
     }
+    var numberTitle = 0
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
-            switch ((i+1)) {
+            numberTitle++;
+            console.log(numberTitle)
+            switch (numberTitle) {
                 case 1:
                     var title = 'Première oeuvre';
                     break;
@@ -9593,6 +9607,13 @@ function showModal() {
             $('.content-global').hide();
         }
     }, 1000);
+}
+
+function initEcrin() {
+    $('main').addClass('flex');
+    $('.background').addClass('none');
+    $('.js-hamburger').show();
+    ecrin = true;
 }
 
 function hideModal() {
@@ -10090,9 +10111,9 @@ function resetCode() {
 }
 
 function resetSliders(r, g, b) {
-    $('input.red').prop('disabled', '').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)')
-    $('input.green').prop('disabled', '').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)')
-    $('input.blue').prop('disabled', '').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')')
+    $('input.red').prop('disabled', '').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)').removeClass('validated')
+    $('input.green').prop('disabled', '').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)').removeClass('validated')
+    $('input.blue').prop('disabled', '').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')').removeClass('validated')
 
     colorModel(r, g, b)
 }
@@ -10101,7 +10122,7 @@ function disableSliders(validated) {
     $.each(validated, function(color, disabled) {
         console.log(color, disabled)
         if (disabled) {
-            $('input.'+color).prop('disabled', 'disabled');
+            $('input.'+color).prop('disabled', 'disabled').parent().addClass('validated');
         }
     });
 }
@@ -10902,15 +10923,15 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 function portalLevel1() {
     var $portalLevel1 = new Portal({
             title: 'Level 1',
-            notion: 'Le Pixem',
+            notion: 'Le Pixel',
             callback: 'loadLevel1()'
         });
+    arrayCookieUser.currentLevel = 1;
+    createCookie(Username, arrayCookieUser, 20);
 }
 
 function loadLevel1() {
-    $('main').addClass('flex');
-    $('.background').addClass('none');
-    $('.js-hamburger').show();
+    initEcrin();
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -11057,12 +11078,16 @@ function popinTable() {
 *********************/
 function portalLevel2() {
     var $portalLevel2 = new Portal({
-            title: 'Level 2',
+            title: 'La Couleur',
             notion: 'Blabla',
             callback: 'loadLevel2()'
         });
+    arrayCookieUser.currentLevel = 2;
+    createCookie(Username, arrayCookieUser, 20);
 }
+
 function loadLevel2() {
+    if (!ecrin) {initEcrin()}
     countLevel = 2;
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
@@ -11255,7 +11280,7 @@ function submitLevel2() {
             
             Tip2.destroy('Tip2');
         } else {
-            loadLevel3();
+            portalLevel3();
         }
     } else {
        var $popinError = new Popin({
@@ -11269,7 +11294,7 @@ function popintable2() {
      var $popinTableau = new Popin({
                 content: content['encyclo2jeu2'],
                 type: 'encyclo',
-                callback: 'loadLevel3()',
+                callback: 'portalLevel3()',
                 title: 'Deuxième oeuvre'
             });
 };
@@ -11279,9 +11304,22 @@ function popintable2() {
 *   Chapitre 3
 *
 *********************/
+
+function portalLevel3() {
+    var $portalLevel2 = new Portal({
+            title: 'La couleur aditive',
+            notion: 'Blabla',
+            callback: 'loadLevel3()'
+        });
+    arrayCookieUser.currentLevel = 3;
+    createCookie(Username, arrayCookieUser, 20);
+}
+
+
 function loadLevel3() {
+    if (!ecrin) {initEcrin()}
     countLevel = 3;
-    //if (!level3IsVisited) {
+    if (!level3IsVisited) {
         var $popinSlider = new Popin({
             isSlider: true,
             type: 'encyclo',
@@ -11301,7 +11339,7 @@ function loadLevel3() {
             'duration' : 30000,
             'level': 3
         })
-    //}
+    }
 
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
@@ -11330,11 +11368,11 @@ function loadLevel3() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        codeMirror.addKeyMap({
-            Enter: function (cm) {
-                enterKeyMap();
-            }
-        });
+        //        codeMirror.addKeyMap({
+        //            Enter: function (cm) {
+        //                enterKeyMap();
+        //            }
+        //        });
         $('.cm-s-icecoder').addClass('only-color');
 
         //Run Code
@@ -11360,15 +11398,14 @@ function loadLevel3() {
         $('.apply-color').on('touch click', hideModal)
 
 
-        $('input[name="chooseFrameLvl3"]').on('change', function() {
-            which = $('input[name="chooseFrameLvl3"]:checked').val();
+        $('#chooseFrameLvl3 input[type="radio"]').on('change', function() {
+            which = $('#chooseFrameLvl3 input[type="radio"]:checked').attr('id');
             //console.log(which)
         })
 
         $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
-            
-            console.log('initiating level')
 
+            //console.log('initiating level')
             $('input[name="chooseFrameLvl3"]').off();
 
             var varNames = [];
@@ -11470,8 +11507,8 @@ function submitLevel3() {
             pixelName = $(this).data('name'),
             correctRvb = thisLvlAnswers[which][pixelName],
             isCorrect = true;
-        
-        console.log(validated)
+
+        //console.log(validated)
 
         $.each(correctRvb, function(color, value){
             if (value.length > 1) { 
@@ -11484,7 +11521,7 @@ function submitLevel3() {
                 }
             }     
         }) 
-        
+
         $(this).data('validated', validated);
 
         //console.log(isCorrect);
@@ -11508,7 +11545,7 @@ function submitLevel3() {
 
             Tip3.destroy('Tip3');
         } else {
-            loadLevel4();
+            portalLevel4();
         }
 
     } else {
@@ -11524,7 +11561,7 @@ function popinTable3 () {
     var $popinTableau = new Popin({
         content: content['encyclo2jeu3'],
         type: 'encyclo',
-        callback: 'loadLevel4()',
+        callback: 'portalLevel4()',
         title: 'Troisième oeuvre'
     });
 }
@@ -11535,7 +11572,17 @@ function popinTable3 () {
 *   Chapitre 4
 *
 *********************/
+function portalLevel4() {
+    var $portalLevel2 = new Portal({
+            title: 'Le Positionnement',
+            notion: 'Blabla',
+            callback: 'loadLevel4()'
+        });
+    arrayCookieUser.currentLevel = 4;
+    createCookie(Username, arrayCookieUser, 20);
+}
 function loadLevel4() {
+    if (!ecrin) {initEcrin()}
     countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
@@ -11712,7 +11759,7 @@ function submitLevel4() {
             });
             Tip4.destroy('Tip4');
         } else {
-            loadSandbox();
+            portalSandbox();
         }
     } else {
         var $popinError = new Popin({
@@ -11725,7 +11772,7 @@ function popinTable4 () {
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu4'],
                 type: 'encyclo',
-                callback: 'loadSandbox()',
+                callback: 'portalSandbox()',
                 title: 'Dernière oeuvre'
             });
 };
@@ -12129,7 +12176,18 @@ function reinitSandbox() {
 *   Sandbox
 *
 *********************/
+function portalSandbox() {
+    var $portalSandbox = new Portal({
+            title: 'Sandbox',
+            notion: 'Blabla',
+            callback: 'loadSandbox()'
+        });
+    arrayCookieUser.currentLevel = 5;
+    createCookie(Username, arrayCookieUser, 20);
+}
+
 function loadSandbox() {
+    if (!ecrin) {initEcrin()}
     countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
@@ -12142,7 +12200,7 @@ function loadSandbox() {
         addHelp('Niveau 4 Aide n°2', content['jeu4astuce2']);
         addHelp('Niveau 4 Aide n°3', content['jeu4astuce3']); 
     }
-    
+
     sandboxIsVisited = true;
     arrayCookieUser.sandboxIsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -12217,10 +12275,8 @@ function loadSandbox() {
                 $('.btn-color').addClass('hidden');
                 $('.btn-position').removeClass('hidden');
                 $('.cm-s-icecoder').removeClass('only-color');
-
+                showModal();  
                 resetCode();
-
-                showModal();                
             }
         })
 
@@ -12259,7 +12315,7 @@ function loadSandbox() {
             hideModal();
             runCodeLevel4();  
         });
-        
+
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {

@@ -3,7 +3,20 @@
 *   Chapitre 3
 *
 *********************/
+
+function portalLevel3() {
+    var $portalLevel2 = new Portal({
+            title: 'La couleur aditive',
+            notion: 'Blabla',
+            callback: 'loadLevel3()'
+        });
+    arrayCookieUser.currentLevel = 3;
+    createCookie(Username, arrayCookieUser, 20);
+}
+
+
 function loadLevel3() {
+    if (!ecrin) {initEcrin()}
     countLevel = 3;
     if (!level3IsVisited) {
         var $popinSlider = new Popin({
@@ -231,7 +244,7 @@ function submitLevel3() {
 
             Tip3.destroy('Tip3');
         } else {
-            loadLevel4();
+            portalLevel4();
         }
 
     } else {
@@ -247,7 +260,7 @@ function popinTable3 () {
     var $popinTableau = new Popin({
         content: content['encyclo2jeu3'],
         type: 'encyclo',
-        callback: 'loadLevel4()',
+        callback: 'portalLevel4()',
         title: 'Troisième oeuvre'
     });
 }

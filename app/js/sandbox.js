@@ -4,7 +4,18 @@
 *   Sandbox
 *
 *********************/
+function portalSandbox() {
+    var $portalSandbox = new Portal({
+            title: 'Sandbox',
+            notion: 'Blabla',
+            callback: 'loadSandbox()'
+        });
+    arrayCookieUser.currentLevel = 5;
+    createCookie(Username, arrayCookieUser, 20);
+}
+
 function loadSandbox() {
+    if (!ecrin) {initEcrin()}
     countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({

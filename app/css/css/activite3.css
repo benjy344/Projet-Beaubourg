@@ -167,6 +167,12 @@
   height: calc(100vw/2);
   width: calc(100vw/2);
 }
+@media (max-width: 360px) {
+  #modal-content .pixel-model .buttons .sliders {
+    height: calc(60vw/2);
+    width: calc(60vw/2);
+  }
+}
 #modal-content .pixel-model .buttons .sliders .range-bg {
   background-color: black;
   width: calc(100%/3);
@@ -180,6 +186,10 @@
   -webkit-box-pack: center;
   justify-content: center;
   border: 2px solid white;
+  box-sizing: border-box;
+}
+#modal-content .pixel-model .buttons .sliders .range-bg.validated {
+  border: 5px solid #7ac943;
 }
 #modal-content .pixel-model .buttons .sliders .range-bg input {
   width: 100%;
@@ -188,7 +198,7 @@
   appearance: slider-vertical;
   -webkit-appearance: slider-vertical;
   /*
-    Active state
+  Active state
   */
 }
 #modal-content .pixel-model .buttons .sliders .range-bg input::-webkit-slider-thumb {
@@ -230,6 +240,11 @@
 #modal-content .pixel-model .buttons .apply-color {
   min-width: 100%;
   background-color: #242322;
+}
+@media (max-width: 360px) {
+  #modal-content .pixel-model .buttons .apply-color {
+    font-size: 5vw;
+  }
 }
 
 /*# sourceMappingURL=activite3.css.map */

@@ -6,15 +6,15 @@
 function portalLevel1() {
     var $portalLevel1 = new Portal({
             title: 'Level 1',
-            notion: 'Le Pixem',
+            notion: 'Le Pixel',
             callback: 'loadLevel1()'
         });
+    arrayCookieUser.currentLevel = 1;
+    createCookie(Username, arrayCookieUser, 20);
 }
 
 function loadLevel1() {
-    $('main').addClass('flex');
-    $('.background').addClass('none');
-    $('.js-hamburger').show();
+    initEcrin();
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
