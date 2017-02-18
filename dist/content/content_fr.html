@@ -94,7 +94,7 @@
 <div id="encyclo2jeu2">
     <h1>Présentation de l'oeuvre</h1><p>Voici une oeuvre de Ellsworth Kelly, Kite II. Il s’agit d’un assemblage bord à bord de carrés noirs ou colorés et de rectangles blancs. L’oeuvre représente ici un rythme, un vide par le blanc, et un plein par la couleur et le noir. Les couleurs sont un mélange entre les couleurs primaires naturelles (rouge, bleu et jaune) et numérique (rouge, bleu et vert).</p>
 </div>
-            
+
 <div id="jeu2d"><p>Bravo ! Vous avez réussi le mini-jeu ! <i class="font-icon font-icon-success2"></i><br>Regardez sur votre droite, la prochaine activité vous attend ! Elle sera basée sur une oeuvre de François Morellet et voilà à quoi elle ressemble :</p><i class="icon icon-tableau3"></i></div>
 
 <!--Jeu 3-->
@@ -120,14 +120,15 @@
                     <div class="cell">
                         <h1>Choissisez le tableau que vous souhaitez reproduire</h1>
                         <div id="chooseFrameLvl3">
-                            <div class="btn">
-                                <input type="radio" name="chooseFrameLvl3" value="left" checked>
-                                <label for="chooseFrameLvl3">Gauche</label>
-                            </div>
-                            <div class="btn">
-                                <input type="radio" name="chooseFrameLvl3" value="right">
-                                <label for="chooseFrameLvl3">Droite</label>
-                            </div>
+                            <div class="leftFrame">Gauche</div> 
+                            <div id="radios"> 
+                                <label for="left"></label> 
+                                <input  id="left" name="radio" type="radio" /> 
+                                <label class="right" for="right"></label> 
+                                <input  id="right" name="radio" type="radio" /> 
+                                <span id="slider"></span> 
+                            </div> 
+                            <div class="rightFrame">Droite</div> 
                         </div>
                         <div class="js-close-popup-encyclo">Sélectionner !</div>	                
                     </div>

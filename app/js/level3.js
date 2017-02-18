@@ -84,8 +84,8 @@ function loadLevel3() {
         $('.apply-color').on('touch click', hideModal)
 
 
-        $('input[name="chooseFrameLvl3"]').on('change', function() {
-            which = $('input[name="chooseFrameLvl3"]:checked').val();
+        $('#chooseFrameLvl3 input[type="radio"]').on('change', function() {
+            which = $('#chooseFrameLvl3 input[type="radio"]:checked').attr('id');
             //console.log(which)
         })
 
@@ -194,7 +194,7 @@ function submitLevel3() {
             correctRvb = thisLvlAnswers[which][pixelName],
             isCorrect = true;
 
-        console.log(validated)
+        //console.log(validated)
 
         $.each(correctRvb, function(color, value){
             if (value.length > 1) { 

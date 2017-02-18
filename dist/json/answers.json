@@ -93,54 +93,54 @@
         "left" :{
             "bleu_acier" : {
                 "red": [60, 90], 
-                "green": [90, 120], 
-                "blue": [135, 165]
+                "green": [75, 120], 
+                "blue": [135, 180]
             },
             "azur" : {
-                "red": [0, 30], 
-                "green": [105, 135], 
-                "blue": [180, 210]
+                "red": [0, 45], 
+                "green": [90, 135], 
+                "blue": [180, 225]
             },
             "vert_sauge" : {
                 "red": [105, 135], 
-                "green": [135, 165], 
+                "green": [135, 180], 
                 "blue": [105, 135]
             },
             "jaune_banane" : {
-                "red": [165, 195], 
-                "green": [150, 180], 
-                "blue": [30, 60]
+                "red": [165, 210], 
+                "green": [150, 195], 
+                "blue": [0, 45]
             },
             "ocre_jaune" : {
                 "red": [225, 255], 
-                "green": [195, 225], 
+                "green": [195, 240], 
                 "blue": [0, 30]
             }
         },
         "right" :{        
             "rouge_velour" : {
                 "red": [150, 180], 
-                "green": [45, 75], 
-                "blue": [75, 105]
+                "green": [30, 75], 
+                "blue": [75, 120]
             },
             "rouge_coquelicot" : {
-                "red": [175, 205], 
-                "green": [15, 45], 
-                "blue": [15, 45]
+                "red": [180, 225], 
+                "green": [0, 45], 
+                "blue": [0, 45]
             },
             "orange_carotte" : {
-                "red": [210, 240], 
+                "red": [210, 255], 
                 "green": [75, 105], 
-                "blue": [0, 30]
+                "blue": [0, 45]
             },
             "orange_venitien" : {
                 "red": [225, 255], 
-                "green": [150, 180], 
-                "blue": [0, 30]
+                "green": [150, 195], 
+                "blue": [0, 45]
             },
             "safran" : {
                 "red": [225, 255], 
-                "green": [180, 210], 
+                "green": [180, 225], 
                 "blue": [0, 30]
             }
         }

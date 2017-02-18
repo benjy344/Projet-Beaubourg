@@ -135,6 +135,11 @@
                     -webkit-box-pack: center;
                     justify-content: center;
                     border: 2px solid white;
+                    box-sizing: border-box;
+                    
+                    &.validated {
+                            border: 5px solid #7ac943;
+                    }
 
                     input {
                         width: 100%;
