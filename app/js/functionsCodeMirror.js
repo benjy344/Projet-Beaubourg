@@ -205,25 +205,25 @@ function addCode(btn) {
 
     switch (btn.attr('data-function')) {
         case 'left':
-            comment = '//Déplacer de 1 case à gauche';
+            comment = (isFr ? '//Déplacer de 1 case à gauche' : '//Move one square left' );
             break;
         case 'right':
-            comment = '//Déplacer de 1 case à droite';
+            comment = (isFr ? '//Déplacer de 1 case à droite' : '//Move one square right' );
             break;
         case 'up':
-            comment = '//Déplacer de 1 case en haut';
+            comment = (isFr ? '//Déplacer de 1 case en haut' : '//Move one square up' );
             break;
         case 'down':
-            comment = '//Déplacer de 1 case en bas';
+            comment = (isFr ? '//Déplacer de 1 case en bas' : '//Move one square down' );
             break;
         case 'rotate':
-            comment = '//Touner de 90 degrés dans le sens horaire';
+            comment = (isFr ? '//Touner de 90 degrés dans le sens horaire' : '//Rotate 90 degrees clockwise' );
             break;
         case 'scaleUp':
-            comment = '//Augmenter la taille'
+            comment = (isFr ? '//Augmenter la taille' : '//Increase size' );
             break;
         case 'scaleDown':
-            comment = '//Diminuer la taille'
+            comment = (isFr ? '//Diminuer la taille' : '//Decrease size' );
             break;
         default:
             break;

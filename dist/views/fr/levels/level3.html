@@ -1,0 +1,54 @@
+<div id="level3" class="level-content">
+    <div class="consigne">
+        <p>Reproduisez un des deux dégradés ! Rouge ou bleu, c’est à vous de choisir !</p>
+    </div>
+
+    <div id="frameWrapper" class='framewrapper js-framewrapper'>
+        <!-- <div class="wrapper-grad"></div>-->
+        <div class="exterior"></div>
+        <div class="white-bg"></div>
+        <div class="square"></div>
+        <div class="white-bg"></div>        
+        <div class="square"></div>
+        <div class="white-bg"></div>        
+        <div class="square"></div>
+        <div class="white-bg"></div>        
+        <div class="square"></div>
+        <div class="white-bg"></div>        
+        <div class="square"></div>
+        <div class="white-bg"></div>
+        <div class="interior"></div>
+        <div class="white-bg"></div>
+        <div class="center"></div>
+    </div>
+
+    <div class="fleche btn-start-order" onclick="submitLevel3()">Valider la réponse</div>
+</div>
+
+<div id="modal-content" class="level3">
+
+    <textarea class="code-mirror js-code-mirror"></textarea>
+
+    <div class="pixel-model">
+        <div class="center">
+
+            <div class="buttons">
+
+                <div class="sliders notdev">
+                    <div class="range-bg">
+                        <input type="range" value="0" max="255" min="0" step="15" class="red">
+                    </div>
+
+                    <div class="range-bg">
+                        <input type="range" value="0" max="255" min="0" step="15" class="green">
+                    </div>
+                    <div class="range-bg">
+                        <input type="range" value="0" max="255" min="0" step="15" class="blue">
+                    </div>
+                </div>                
+                <button class="btn apply-color">Appliquer</button>
+            </div>
+
+        </div>
+    </div>
+</div>

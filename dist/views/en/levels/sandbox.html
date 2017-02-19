@@ -1,0 +1,69 @@
+<div id="sandbox" class="level-content">
+
+    <div id="sandboxWrapper" class='sandboxwrapper js-sandboxwrapper'>
+
+    </div>
+
+    <div class="sandbox-btn-general">
+        <button class="btn add-pixel js-add-pixel">Add pixel</button>
+        <button class="btn reinit-sandbox js-reinit-sandbox">Reset</button>
+    </div>
+
+    <div class="edit-pixel js-edit-pixel hidden">
+        <button class="btn change-color js-change-color">Change Color</button>
+        <button class="btn change-position js-change-position">Change Position</button>
+    </div>
+
+
+
+    <div class="fleche btn-start-order" onclick="finish()">Valider</div>
+</div>
+
+
+<div id="modal-content" class="sandbox">
+
+    <textarea class="code-mirror js-code-mirror">INIT</textarea>
+
+    <div class="buttons btn-position">
+
+        <div class="functions-btn">
+
+            <div class="third"><button class="btn addcode js-addcode" data-function="scaleDown">scaleDown()</button></div>
+            <div class="third"><button class="btn addcode js-addcode" data-function="up">moveUp()</button></div>
+            <div class="third"><button class="btn addcode js-addcode" data-function="scaleUp">scaleUp()</button></div>
+            <div class="third"><button class="btn addcode js-addcode" data-function="left">moveLeft()</button></div>
+            <div class="third"><button class="btn addcode js-addcode" data-function="rotate">rotate()</button></div>
+            <div class="third"><button class="btn addcode js-addcode" data-function="right">moveRight()</button></div>
+            <div class="full"><button class="btn addcode js-addcode" data-function="down">moveDown()</button></div>
+
+        </div>
+
+        <button class="btn run-code js-run-code">Run code</button>
+    </div>
+
+    <div class="pixel-model btn-color">
+
+        <div class="buttons">
+
+            <div class="sliders">
+                <div class="range-bg">
+                    <input type="range" value="0" max="255" min="0" step="15" class="red">
+                </div>
+
+                <div class="range-bg">
+                    <input type="range" value="0" max="255" min="0" step="15" class="green">
+                </div>
+                <div class="range-bg">
+                    <input type="range" value="0" max="255" min="0" step="15" class="blue">
+                </div>
+            </div>
+            <button class="btn apply-color js-apply-color">Apply</button>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        textArea = $('.js-code-mirror')[0];
+    </script>
+</div>

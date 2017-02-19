@@ -31,6 +31,19 @@ function loadIntro(){
     if (Username == '' || Username =='FX') { // {DEV}
         testing = true;
     }
+
+
+    lang = $('#chooseLang input[type="radio"]:checked').attr('id');
+    if (lang == 'en') {
+        isFr = false;
+    }
+
+    $.get("dist/content/content_"+lang+".html", function(data) {
+        $(data).filter('div').each(function(i) {
+            var name = $(this).attr("id");
+            content[name] = $(this).html()
+        })
+    });
     isUserExiste(Username);
 }
 
@@ -38,7 +51,7 @@ function loadIntro(){
 function isUserExiste (username) {
     if(readCookie(username)){
         arrayCookieUser = readCookie(username);
-        $('main').load(views+'intro.html', function() {
+        $('main').load(views+lang+'/intro.html', function() {
             initRealoadSession();
             if (countLevel == 5) {
                 var l = 'loadSandbox()';
@@ -53,7 +66,7 @@ function isUserExiste (username) {
         });
     } else {
         createCookie(username, arrayCookieUser, 20);
-        $('main').load(views+'intro.html', function() {
+        $('main').load(views+lang+'/intro.html', function() {
             $('#username').text(Username);     
         });
     }
@@ -63,15 +76,15 @@ function isUserExiste (username) {
 
 function initRealoadSession() {
     if (eval(arrayCookieUser.$tabSuccess)!= 0) {
-       $tabSuccess = eval(arrayCookieUser.$tabSuccess);
+        $tabSuccess = eval(arrayCookieUser.$tabSuccess);
     } else {
         $tabSuccess = [];
     }
     level1IsVisited = eval(arrayCookieUser.level1IsVisited),
-    level2IsVisited = eval(arrayCookieUser.level2IsVisited),
-    level3IsVisited = eval(arrayCookieUser.level3IsVisited),
-    level4IsVisited = eval(arrayCookieUser.level4IsVisited),
-    sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
+        level2IsVisited = eval(arrayCookieUser.level2IsVisited),
+        level3IsVisited = eval(arrayCookieUser.level3IsVisited),
+        level4IsVisited = eval(arrayCookieUser.level4IsVisited),
+        sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
     countLevel = eval(arrayCookieUser.currentLevel);
     var countHelp = arrayCookieUser.$countHelp;
     var countEncyclo = arrayCookieUser.$countEncyclo;
@@ -81,9 +94,8 @@ function initRealoadSession() {
     var levelForEncyclo = 1; 
 
     for (var i = 0; i < countHelp; i++) {
-
-        var title = 'Niveau '+levelForHelp+' Aide n°'+number;
-        var thecontent = 'jeu'+levelForHelp+'astuce'+number;
+        var thecontent = 'jeu'+levelForHelp+'astuce'+number,
+            title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
         addHelp(title, content[thecontent]);
         if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
     }
@@ -91,21 +103,41 @@ function initRealoadSession() {
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
-            switch (numberTitle) {
-                case 1:
-                    var title = 'Première oeuvre';
-                    break;
-                case 2:
-                    var title = 'Deuxième oeuvre';
-                    break;
-                case 3:
-                    var title = 'Troisième oeuvre';
-                    break;
-                case 4:
-                    var title = 'Quatrième oeuvre';
-                    break;    
+            if (isFr) {
+                switch (numberTitle) {
+                    case 1:
+                        var title = 'Première oeuvre';
+                        break;
+                    case 2:
+                        var title = 'Deuxième oeuvre';
+                        break;
+                    case 3:
+                        var title = 'Troisième oeuvre';
+                        break;
+                    case 4:
+                        var title = 'Quatrième oeuvre';
+                        break;    
+                }
+            } else {
+                switch (numberTitle) {
+                    case 1:
+                        var title = 'First work of art';
+                        break;
+                    case 2:
+                        var title = 'Second work of art';
+                        break;
+                    case 3:
+                        var title = 'Third work of art';
+                        break;
+                    case 4:
+                        var title = 'Fourth work of art';
+                        break;    
+                }
             }
-        }else{ var title = 'Niveau '+levelForEncyclo;}
+
+        }else{ 
+            var title = (isFr ? 'Niveau '+levelForEncyclo : 'Level '+levelForEncyclo);
+        }
         var thecontent = 'encyclo'+numberForEncyclo+'jeu'+levelForEncyclo;
         addEncyclo(title, content[thecontent]);
         if ((numberForEncyclo % 2) == 0) {levelForEncyclo++; numberForEncyclo = 1;} else {numberForEncyclo++; }
@@ -119,20 +151,20 @@ function initRealoadSession() {
 *********************************/
 
 function createCookie(name, tabvalue, duration) {
-// Le nombre de duration est spécifié
-value = decodeURIComponent( $.param( tabvalue ) );
-if (duration) {
-    var date = new Date();
-                // Converti le nombre de jour en millisecondes
-                date.setTime(date.getTime()+(duration*24*60*60*1000));
-                var expire = "; expire="+date.toGMTString();
-            }
-        // Aucune valeur de duration spécifiée
-        else var expire = "";
-        document.cookie = name+"="+value+expire+"; path=/";
+    // Le nombre de duration est spécifié
+    value = decodeURIComponent( $.param( tabvalue ) );
+    if (duration) {
+        var date = new Date();
+        // Converti le nombre de jour en millisecondes
+        date.setTime(date.getTime()+(duration*24*60*60*1000));
+        var expire = "; expire="+date.toGMTString();
     }
+    // Aucune valeur de duration spécifiée
+    else var expire = "";
+    document.cookie = name+"="+value+expire+"; path=/";
+}
 function readCookie(name) {
-// Ajoute le signe égale virgule au name
+    // Ajoute le signe égale virgule au name
     // pour la recherche
     var name2 = name + "=";
     // Array contenant tous les cookies
@@ -142,10 +174,10 @@ function readCookie(name) {
         var a = arrCookies[i];
         // Si c'est un espace, enlever
         while (a.charAt(0)==' ') {
-          a = a.substring(1,a.length);
+            a = a.substring(1,a.length);
         }
         if (a.indexOf(name2) == 0) {
-          return $.parseParams("?"+a.substring(name2.length,a.length));
+            return $.parseParams("?"+a.substring(name2.length,a.length));
         }
     }
     // Aucun cookie trouvé
@@ -163,7 +195,7 @@ function eraseCookie(name) {
 *
 *********************/
 function loadChooseLevel(){
-    $('main').load(views+'accueil.html');
+    $('main').load(views+lang+'/accueil.html');
 }
 
 $.fn.loadLevel = function(levelToLoad, callback) {
@@ -172,7 +204,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
     screen = levelToLoad;
 
-    var file = level+levelToLoad+'.html',
+    var file = views + lang + level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
         modal = '#modal-content';
 
@@ -181,10 +213,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
     this.load(file + ' ' + lvl, function() {  
         $('.modal-content').load(file + ' ' + modal, function() {
-
             callback();
-
-
         })
     })
 }
@@ -229,7 +258,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
 // function getATip(number, time, tips, total, finish) {
 //     if (finish) {
-        
+
 //         clearTimeout(t);
 //         t = 0;
 //         clearInterval(intervale);
@@ -410,7 +439,7 @@ function hideModal() {
 function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback) {
     // Check if condition met. If not, re-check later (msec).
     if (countLevel === level) {
-       if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
+        if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
             count++;
             setTimeout(function() {
                 waitforPopinIsOpen( expectedValue, msec, count, source, level, callback);
@@ -420,7 +449,7 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
     }else {
         return;
     }
-    
+
     // Condition finally met. callback() can be executed.
     //console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
@@ -467,41 +496,41 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
                     createElement(params[list[0]], new_key, value);
                 } else console.warn('parseParams :: empty property in key "' + key + '"');
             } else
-            // if the key is an array    
-            if (key.indexOf('[') !== -1) {
-                // extract the array name
-                var list = key.split('[');
-                key = list[0];
+                // if the key is an array    
+                if (key.indexOf('[') !== -1) {
+                    // extract the array name
+                    var list = key.split('[');
+                    key = list[0];
 
-                // extract the index of the array
-                var list = list[1].split(']');
-                var index = list[0]
+                    // extract the index of the array
+                    var list = list[1].split(']');
+                    var index = list[0]
 
-                // if index is empty, just push the value at the end of the array
-                if (index == '') {
-                    if (!params) params = {};
-                    if (!params[key] || !$.isArray(params[key])) params[key] = [];
-                    params[key].push(value);
+                    // if index is empty, just push the value at the end of the array
+                    if (index == '') {
+                        if (!params) params = {};
+                        if (!params[key] || !$.isArray(params[key])) params[key] = [];
+                        params[key].push(value);
+                    } else
+                        // add the value at the index (must be an integer)
+                    {
+                        if (!params) params = {};
+                        if (!params[key] || !$.isArray(params[key])) params[key] = [];
+                        params[key][parseInt(index)] = value;
+                    }
                 } else
-                // add the value at the index (must be an integer)
+                    // just normal key
                 {
                     if (!params) params = {};
-                    if (!params[key] || !$.isArray(params[key])) params[key] = [];
-                    params[key][parseInt(index)] = value;
+                    params[key] = value;
                 }
-            } else
-            // just normal key
-            {
-                if (!params) params = {};
-                params[key] = value;
-            }
         }
 
         // be sure the query is a string
         query = query + '';
-        
+
         if (query === '') query = window.location + '';
-        
+
         var params = {}, e;
         if (query) {
             // remove # from end of query
@@ -513,10 +542,10 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
             if (query.indexOf('?') !== -1) {
                 query = query.substr(query.indexOf('?') + 1, query.length);
             } else return {};
-            
+
             // empty parameters
             if (query == '') return {};
-            
+
             // execute a createElement on every key and value
             while (e = re.exec(query)) {
                 var key = decode(e[1]);

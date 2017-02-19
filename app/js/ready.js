@@ -6,7 +6,7 @@ Document.ready
 
 $(document).ready(function() {
 
-    Username = $('input#name').val();
+    //Username = $('input#name').val();
     $('.hamburger').hide();
 
     $('.hamburger').on('touch click', function() {
@@ -17,12 +17,6 @@ $(document).ready(function() {
     });
 
     $('.loading').slideUp(1000);
-
-    $("#name").on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            loadChooseDevMod();
-        }
-    });
 
     $('.modal .close').on('touch click', hideModal);
     /////////////////Gestion menu

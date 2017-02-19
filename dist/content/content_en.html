@@ -1,0 +1,241 @@
+<!--Présentation ouverture application-->
+<div id ="accueil"><p>Hello <span id="username"></span> et bienvenue sur notre application ! <p>Pour vous accompagner dans votre découverte du code informatique et vous en expliquer certaines notions, nous avons "vulgarisé" le code informatique pour vous ! <br> Partez à la découverte des notions fondamentales de la création d’une image numérique grâce à nos mini-jeux !</p> <p>Bonne chance et bon jeu !</p></div>
+
+<div id ="erreur">
+    <p>Mmmmh ... Il semblerait qu'il y ai une erreur</p>
+    <div class="popup-icon">
+        <i class="icon icon-error"></i>
+    </div>
+</div>
+
+<!--Jeu 1-->
+<div id="encyclo1jeu1">
+    <section class="slider-section">
+        <div class="slider swipe-mode dot-mode">
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Approached concept</h1><p>Initiez-vous à la notion de “pixel”. <br>Un pixel est le plus petit élément d'une surface d'affichage tel que l’ordinateur, le téléviseur, votre téléphone portable ou encore une tablette.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explanation of the game</h1><p> Vous disposerez d’un nombre aléatoire qu’il faudra retranscrire sur les 4 cases qui vous seront présentées, à la manière de Morellet. Attention : un pixel éteint pour un chiffre pair et un pixel allumé pour un chiffre impair.</p>
+                        <div class="js-close-popup-encyclo">J'ai compris !</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="encyclo2jeu1">
+    <h1>Introduction to the work of art</h1><p>Voici l’oeuvre de François Morellet, 6 répartitions aléatoires de 4 carrés noirs et blancs d’après les chiffres pairs et impairs du nombre PI. <br>L’artiste a représenté sous forme de carrés noirs et blancs les 24 premiers chiffres du nombre PI : 3.141 5992 6535 ..., pour cela, il a choisi de mettre un carré blanc pour représenter un chiffre impair (1,3,5...) et un carré noir pour signifier un chiffre pair (2,4,6...).</p>
+</div>
+
+<!--Oeuvre suivante-->
+<div id="jeu1d"><p>Bravo ! Vous avez réussi le premier mini-jeu ! La prochaine activité sera inspirée d’une oeuvre de Ellsworth Kelly, elle se trouve sur votre droite.</p>
+    <i class="font-icon font-icon-success1"></i>
+</div>
+
+<!--Astuce-->
+<!--Débutant-->
+<div id="jeu1astuce1"><p>La lecture de la chaîne de chiffres 3141 se fait dans ce sens :</p><i class="icon icon-tuto1"></i></div>
+<div id="jeu1astuce2"><p>Pair : Noir<br>Impair : Blanc</p></div>
+<div id="jeu1astuce3"><p>0 : Noir<br>1 : Blanc<br>2 : Noir<br>3 : Blanc<br>4 : Noir<br>5 : Blanc<br>6 : Noir<br>7 : Blanc<br>8 : Noir<br>9 : Blanc</p></div>
+<div id="jeu1astuce4"><p>voici la réponse à vous de la recopier !</p></div>
+<!--Dev-->
+<div id="jeu1astuce1dev"><p>Cliquez sur chaque cases pour changer le nombre du carré.</p></div>
+<div id="jeu1astuce2dev"><p>Chiffre pair : la case contiendra 0<br>Chiffre impair : la case contiendra 1</p></div>
+<div id="jeu1astuce3dev"><p>0 : 0<br>1 : 1<br>2 : 0<br>3 : 1<br>4 : 0<br>5 : 1<br>6 : 0<br>7 : 1<br>8 : 0<br>9 : 1</p></div>
+<div id="jeu1astuce4dev"><p>voici la réponse à vous de la recopier !</p></div>
+
+
+
+
+
+<!--Jeu 2-->
+<div id="encyclo1jeu2">
+    <section class="slider-section">
+        <div class="slider swipe-mode dot-mode">
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explication de la notion abordée</h1><p>Initiez-vous à la couleur.<br> En numérique, ce ne sont pas les couleurs primaires dites naturelles qui sont utilisées, mais les couleurs additives, le RVB : Rouge, Vert et Bleu.. Apprenez-en plus sur les couleurs numériques en recréant le tableau de Ellsworth Kelly !</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explication du jeu</h1><p>L’oeuvre d’Ellsworth Kelly a perdu ses couleurs ! Retrouvez les grâce à la synthèse additive des couleurs numériques !</p>
+                        <div class="js-close-popup-encyclo">J'ai compris !</div>	                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!--Astuce-->
+<!--Débutant-->
+<div id="jeu2astuce1"><p>Cliquez sur chaque élément pour changer sa couleur à l’aide des boutons proposés.</p></div>
+<div id="jeu2astuce2"><p>Voici le diagramme de la synthèse additive.</p><i class="icon icon-tuto2"></i></div>
+<div id="jeu2astuce3"><p>Les couleurs qui vous seront utiles :<br>Jaune : RV : allumés, B : éteins<br>Blanc : RVB : allumés<br>Noir : RVB : éteins</p></div>
+<!--Dev-->
+<div id="jeu2astuce1dev"><p>Voici le diagramme des couleurs additives.</p></div>
+<div id="jeu2astuce2dev"><p>Voici comment créer les couleurs qui vous seront utiles :<br>Jaune : RV : true, B : false<br>Blanc : RVB : true<br>Noir : RVB : false</p></div>
+<div id="jeu2astuce3dev"><p>Voici la réponse à vous de la recopier !</p></div>
+
+<!--Oeuvre suivante-->
+
+<div id="encyclo2jeu2">
+    <h1>Présentation de l'oeuvre</h1><p>Voici une oeuvre de Ellsworth Kelly, Kite II. Il s’agit d’un assemblage bord à bord de carrés noirs ou colorés et de rectangles blancs. L’oeuvre représente ici un rythme, un vide par le blanc, et un plein par la couleur et le noir. Les couleurs sont un mélange entre les couleurs primaires naturelles (rouge, bleu et jaune) et numérique (rouge, bleu et vert).</p>
+</div>
+
+<div id="jeu2d"><p>Bravo ! Vous avez réussi le mini-jeu ! <i class="font-icon font-icon-success2"></i><br>Regardez sur votre droite, la prochaine activité vous attend ! Elle sera basée sur une oeuvre de François Morellet et voilà à quoi elle ressemble :</p><i class="icon icon-tableau3"></i></div>
+
+<!--Jeu 3-->
+<div id="encyclo1jeu3">
+    <section class="slider-section">
+        <div class="slider swipe-mode dot-mode">
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explication de la notion abordée</h1><p>Initiez-vous aux nuances de couleurs. <br>C’est en mélangeant les couleurs RVB vu précédemment (Rouge, Vert et Bleu) que nous pouvons créer des couleurs intermédiaires.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explication du jeu</h1><p>Reproduisez les différentes nuances de couleur du tableau, en jouant avec l’intensité de chaque couleur primaire pour réussir à reproduire l’un des dégradés !<br>Couleurs froides ou couleurs chaudes ? C’est à vous de choisir ce que vous préférez !</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Choissisez le tableau que vous souhaitez reproduire</h1>
+                        <div id="chooseFrameLvl3" class="radioButtons">
+                            <div class="leftFrame input1">Gauche</div> 
+                            <div class="radio"> 
+                                <label for="left"></label> 
+                                <input  id="left" name="radio" type="radio" /> 
+                                <label class="right" for="right"></label> 
+                                <input  id="right" name="radio" type="radio" /> 
+                                <span id="slider"></span> 
+                            </div> 
+                            <div class="rightFrame input2">Droite</div> 
+                        </div>
+                        <div class="js-close-popup-encyclo">Sélectionner !</div>	                
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="jeu3reloadpopin">
+    <h1>Choissisez le tableau que vous souhaitez reproduire</h1>
+    <div id="chooseFrameLvl3">
+        <div class="leftFrame">Gauche</div> 
+        <div id="radios"> 
+            <label for="left"></label> 
+            <input  id="left" name="radio" type="radio" /> 
+            <label class="right" for="right"></label> 
+            <input  id="right" name="radio" type="radio" /> 
+            <span id="slider"></span> 
+        </div> 
+        <div class="rightFrame">Droite</div> 
+    </div>
+    <div class="js-close-popup-encyclo">Sélectionner !</div>
+</div>
+
+<div id="jeu3variables_left">
+    <li>violet</li>
+    <li>bleu_acier</li>
+    <li>azur</li>
+    <li>vert_sauge</li>
+    <li>jaune_banane</li>
+    <li>ocre_jaune</li>
+    <li>jaune</li>
+</div>
+
+<div id="jeu3variables_right">
+    <li>violet</li>
+    <li>rouge_velour</li>
+    <li>rouge_coquelicot</li>
+    <li>orange_carotte</li>
+    <li>orange_venitien</li>
+    <li>safran</li>
+    <li>jaune</li>
+</div>
+<div id="encyclo2jeu3">
+    <h1>Présentation de l'oeuvre</h1><p>Vous voici devant une oeuvre de François Morellet, du jaune au violet. L’artiste nous montre qu’il y a deux manières de passer de la couleur jaune à la couleur violette, tout d’abord en passant par des couleurs froides, le vert et le bleu, puis en passant par des couleurs chaudes, le orange et le rouge. Si vous y regardez de plus près, vous verrez qu’il joue avec l’épaisseur de trait jaune, rouge et violet, ou jaune, bleu et vert, pour former ce dégradé.</p>
+</div>
+<!--Oeuvre suivante-->
+<div id="jeu3d"><p>Bravo ! Vous avez réussi le mini-jeu !<i class="font-icon font-icon-success3"></i><br>La dernière activité sera basée sur une œuvre de François Morellet. Elle se trouve sur votre droite. Voilà à quoi elle ressemble :</p> <i class="icon icon-tableau4"></i></div>
+
+<!--Astuce-->
+<!--Débutant-->
+<div id="jeu3astuce1"><p>Jouez sur l'intensité des couleurs RVB, de 0 à 255.</p></div>
+<div id="jeu3astuce2"><p>Voici le diagramme des couleurs !</p></div>
+<div id="jeu3astuce3"><p>Sur les 3 curseurs, 2 sont totalement éteints ou allumés, trouvez la bonne couleur en jouant sur l’intensité du 3ème.</p></div>
+
+
+<!--Jeu 4-->
+
+
+<div id="encyclo1jeu4">
+    <section class="slider-section">
+        <div class="slider swipe-mode dot-mode">
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explication de la notion abordée</h1><p>Vous allez maintenant découvrir la notion de positionnement et de déplacement des formes.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="table table-block">
+                    <div class="cell">
+                        <h1>Explication du jeu</h1><p>Reproduisez le tableau devant vous en faisant pivoter et en déplaçant le carré du centre.</p>
+                        <div class="js-close-popup-encyclo">J'ai compris !</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<!--Astuce-->
+<!--Débutant-->
+<div id="jeu4astuce1"><p>Cliquez sur le carré du centre pour le dupliquer, puis modifiez-le pour le placer correctement (déplacer ou tourner).</p></div>
+<div id="jeu4astuce2"><p>Appuyez sur les boutons pour faire bouger ou pivoter le pixel sélectionné puis appuyez sur "Run Cod" pour appliquer le changement.</p></div>
+<div id="jeu4astuce3"><p>moveLeft() : Déplace l'image du carré à gauche<br>moveRight() : Déplace l'image du carré à droite<br>moveUp() : Déplace l'image du carré en haut<br>moveDown() : Déplace l'image du carré en bas<br>rotate() : Fait pivoter l'image à 90° dans le sens horaire</p></div>
+<div id="jeu4astuce4"><p>Voici la solution à vous de la reproduire pour finir le jeu !</p></div>
+<!--Dev-->
+<div id="jeu4astuce1dev"><p>Cliquez sur le pixel que vous souhaiter modifier (déplacer ou tourner).</p></div>
+<div id="jeu4astuce2dev"><p>Appuyez sur les boutons pour faire bouger ou pivoter le pixel sélectionné puis appuyez sur "Run Cod" pour appliquer le changement.</p></div>
+<!--
+
+<div id="jeu4astuce3dev"> même astuce que <div id="jeu4astuce3"> (pour débutant)
+
+-->
+<div id="jeu4astuce4dev"><p>Voici la solution à vous de la reproduire pour finir le jeu !</p></div>
+
+<!--Félicitation fin du jeu-->
+<div id="encyclo2jeu4">
+    <h1>Présentation de l'oeuvre</h1><p>Voici de nouveau une oeuvre de François Morellet, intitulée 3*3. C’est une disposition de 9 carrés identiques, positionnés bord à bord de manières différentes sur la toile.</p>
+</div>
+<div id="felicitation"><p>Bravo ! Vous venez de finir la dernière activité !<i class="font-icon font-icon-success4"></i> Êtes-vous prêt à faire marcher votre imagination pour mettre en application les notions que vous venez de découvrir ? Rendez-vous dans la sandbox !</p></div>
+
+<!--Sandbox-->
+<div id="encyclo1jeu5"><p>Vous avez complété toutes les activités ! Félicitations ! Une surprise vous attend à l’accueil du musée !<br> Mais avant cela, nous vous proposons une dernière animation pour résumer les connaissances que vous venez d'acquérir : expérimentez toutes les notions que vous venez de découvrir, à votre guise et sans contraintes !</p><div class="js-close-popup-encyclo">J'ai compris !</div></div>
+
+<!--FinSandbox-->
+<div id="finsandbox"><p>Bravo ! Vous vous venez de compléter toutes les activités de notre atelier !</p> <p>Nous espérons que nous vous aurons permis d’apprendre et de comprendre les notions de base de l’informatique et, qui sait, de faire naître une nouvelle passion ! </p></div>

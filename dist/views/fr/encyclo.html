@@ -1,0 +1,30 @@
+<div class="encyclo">
+	<ul>
+	</ul>
+</div>
+<div class="ContentEncycloPop"></div>
+<script type="text/javascript">
+    
+	for (var i = 0; i < $tabArchiveContent.length; i++) {
+                    $('.encyclo ul').prepend($tabArchiveTitle[i]);
+                    $('.archive').prepend($tabArchiveContent[i])
+                }
+        $popinEncyclo = $('.popencyclo');
+        //$popinEncyclo.html('<div class="close"><i class="icon icon-close"></i> </div><div class="content"></div>')
+        $popinEncycloContent = $popinEncyclo.find('.content');
+         $('.encyclo li').on('click touch', function (e) {
+            e.stopPropagation();
+         	$popEncycloLink = $(this).attr('data-link');
+         	$laPopin = $('.archive').find('#'+$popEncycloLink);
+         	
+
+         	$popinEncycloContent.html($laPopin.clone());
+            $popinEncyclo.addClass('open');
+            $slider = new Slider();
+         });
+
+         $($popinEncyclo.find('.close')).on('click touch', function () {
+         	$popinEncyclo.removeClass('open');
+            $slider = new Slider(true);
+         })
+</script>

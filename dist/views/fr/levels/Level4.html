@@ -1,0 +1,47 @@
+<div id="level4" class="level-content">
+    <div class="consigne">
+        <p>Reproduisez l’oeuvre de François Morellet !</p>
+    </div>
+
+    <div id="frameWrapper" class='framewrapper js-framewrapper'>
+        <div class="start-container">
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+            <div class="image-object js-image-object"><div class="bg-image-object"></div></div>
+        </div>
+    </div>
+
+    <button class="btn reinit-img">Reinitialiser</button>
+
+    <div class="fleche btn-start-order" onclick="submitLevel4()">Valider la réponse</div>
+</div>
+
+
+<div id="modal-content" class="level4">
+
+    <textarea class="code-mirror js-code-mirror">INIT</textarea>
+
+    <div class="buttons">
+
+        <div class="functions-btn notdev">
+
+            <div class="full"><button class="btn addcode" data-function="up">moveUp()</button></div>
+            <div class="third"><button class="btn addcode" data-function="left">moveLeft()</button></div>
+            <div class="third"><button class="btn addcode" data-function="rotate">rotate()</button></div>
+            <div class="third"><button class="btn addcode" data-function="right">moveRight()</button></div>
+            <div class="full"><button class="btn addcode" data-function="down">moveDown()</button></div>
+
+        </div>
+
+        <button class="btn run-code js-run-code">RUN CODE</button>
+    </div>
+    <script type="text/javascript">
+        textArea = $('.js-code-mirror')[0];
+    </script>
+</div>

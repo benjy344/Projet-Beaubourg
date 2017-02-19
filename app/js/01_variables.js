@@ -5,11 +5,14 @@ applyposition et applyColor pour la sandbox
 */
 
 var dest = './dist/',
-    level = './dist/views/levels/',
+    level = '/levels/',
     views = './dist/views/',
     screen = 'index',
     countLevel = 0,
     ecrin = false, 
+    
+    lang = "fr",
+    isFr = true,
 
     Username = "",
     testing = false,
@@ -53,13 +56,6 @@ var which = 'left';
 
 $.getJSON('dist/json/answers.json', function(data) {
     answers = data;
-});
-
-$.get("dist/content/content_fr.html", function(data) {
-    $(data).filter('div').each(function(i) {
-        var name = $(this).attr("id");
-        content[name] = $(this).html()
-    })
 });
 
 var textArea = $('.codeMirror')[0],

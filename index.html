@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        
+
         <meta name="theme-color" content="#242322">
 
         <!--<script src="//localhost:35729/livereload.js"></script>-->
@@ -13,17 +13,29 @@
         <!-- <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">  -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
 
-        <link rel="prefetch" href="./dist/views/accueil.html">
-        <link rel="prefetch" href="./dist/views/intro.html">
-        <link rel="prefetch" href="./dist/views/success.html">
-        <link rel="prefetch" href="./dist/views/encyclo.html">
-        <link rel="prefetch" href="./dist/views/levels/level1.html">
-        <link rel="prefetch" href="./dist/views/levels/level2.html">
-        <link rel="prefetch" href="./dist/views/levels/level3.html">
-        <link rel="prefetch" href="./dist/views/levels/level4.html">
-        <link rel="prefetch" href="./dist/views/levels/sandbox.html">
+        <link rel="prefetch" href="./dist/views/fr/accueil.html">
+        <link rel="prefetch" href="./dist/views/fr/intro.html">
+        <link rel="prefetch" href="./dist/views/fr/success.html">
+        <link rel="prefetch" href="./dist/views/fr/encyclo.html">
+        <link rel="prefetch" href="./dist/views/fr/levels/level1.html">
+        <link rel="prefetch" href="./dist/views/fr/levels/level2.html">
+        <link rel="prefetch" href="./dist/views/fr/levels/level3.html">
+        <link rel="prefetch" href="./dist/views/fr/levels/level4.html">
+        <link rel="prefetch" href="./dist/views/fr/levels/sandbox.html">
+
+        <link rel="prefetch" href="./dist/views/en/accueil.html">
+        <link rel="prefetch" href="./dist/views/en/intro.html">
+        <link rel="prefetch" href="./dist/views/en/success.html">
+        <link rel="prefetch" href="./dist/views/en/encyclo.html">
+        <link rel="prefetch" href="./dist/views/en/levels/level1.html">
+        <link rel="prefetch" href="./dist/views/en/levels/level2.html">
+        <link rel="prefetch" href="./dist/views/en/levels/level3.html">
+        <link rel="prefetch" href="./dist/views/en/levels/level4.html">
+        <link rel="prefetch" href="./dist/views/en/levels/sandbox.html">
+
         <link rel="prefetch" href="./dist/json/answers.json">
         <link rel="prefetch" href="./dist/content/content_fr.html">
+        <link rel="prefetch" href="./dist/content/content_en.html">
     </head>
     <body>
         <div class="loading">
@@ -88,6 +100,19 @@
                                 <label class="form-label" for="name">Username</label>
                                 <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadIntro();}" placeholder="Username" tabindex="1" required>
                             </div> 
+
+                            <div id="chooseLang" class="radioButtons">
+                                <div class="frLang input1">Français</div> 
+                                <div class="radio"> 
+                                    <label for="fr"></label> 
+                                    <input  id="fr" name="radio" type="radio" checked /> 
+                                    <label class="en" for="en"></label> 
+                                    <input  id="en" name="radio" type="radio" /> 
+                                    <span id="slider"></span> 
+                                </div> 
+                                <div class="enLang input2">English</div> 
+                            </div>
+
                             <div class="partener">
                                 <div class="icon icon-upem"></div>
                             </div>
@@ -140,35 +165,35 @@
         <script type="text/javascript" src="./dist/js/built.js"></script>
     </body>
     <script type="text/javascript">
-    window.addEventListener('load', function() {
-          var maybePreventPullToRefresh = false;
-          var lastTouchY = 0;
-          var touchstartHandler = function(e) {
-            if (e.touches.length != 1) return;
-            lastTouchY = e.touches[0].clientY;
-            // Pull-to-refresh will only trigger if the scroll begins when the
-            // document's Y offset is zero.
-            maybePreventPullToRefresh =
-                window.pageYOffset == 0;
-          }
-
-          var touchmoveHandler = function(e) {
-            var touchY = e.touches[0].clientY;
-            var touchYDelta = touchY - lastTouchY;
-            lastTouchY = touchY;
-
-            if (maybePreventPullToRefresh) {
-              // To suppress pull-to-refresh it is sufficient to preventDefault the
-              // first overscrolling touchmove.
-              maybePreventPullToRefresh = false;
-              if (touchYDelta > 0) {
-                e.preventDefault();
-                return;
-              }
+        window.addEventListener('load', function() {
+            var maybePreventPullToRefresh = false;
+            var lastTouchY = 0;
+            var touchstartHandler = function(e) {
+                if (e.touches.length != 1) return;
+                lastTouchY = e.touches[0].clientY;
+                // Pull-to-refresh will only trigger if the scroll begins when the
+                // document's Y offset is zero.
+                maybePreventPullToRefresh =
+                    window.pageYOffset == 0;
             }
-          }
 
-          document.addEventListener('touchstart', touchstartHandler, false);
-          document.addEventListener('touchmove', touchmoveHandler, false);      });
-</script>
+            var touchmoveHandler = function(e) {
+                var touchY = e.touches[0].clientY;
+                var touchYDelta = touchY - lastTouchY;
+                lastTouchY = touchY;
+
+                if (maybePreventPullToRefresh) {
+                    // To suppress pull-to-refresh it is sufficient to preventDefault the
+                    // first overscrolling touchmove.
+                    maybePreventPullToRefresh = false;
+                    if (touchYDelta > 0) {
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            }
+
+            document.addEventListener('touchstart', touchstartHandler, false);
+            document.addEventListener('touchmove', touchmoveHandler, false);      });
+    </script>
 </html>

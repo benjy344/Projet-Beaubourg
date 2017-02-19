@@ -1,0 +1,50 @@
+<div id="level2" class="level-content">
+    <div class="consigne">
+        <p>Reproduisez le tableau d’Ellsworth Kelly en modifiant les couleurs de chaque carré et rectangle !</p>
+    </div>
+
+    <div id="frameWrapper" class='framewrapper js-framewrapper'>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel large"></div>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel large"></div>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel large"></div>
+        <div class="js-pixel pixel"></div>
+        <div class="js-pixel pixel"></div>
+    </div>
+
+    <div class="fleche btn-start-order" onclick="submitLevel2()">Valider la réponse</div>
+</div>
+
+
+<div id="modal-content" class="level2">
+    <textarea class="code-mirror js-code-mirror"></textarea>
+
+    <div class="pixel-model">
+        <div class="buttons">
+            <div class="checkboxes ">
+                <div class="check-bg">
+                    <input type="checkbox" class="red"/>
+                </div>
+                <div class="check-bg">
+                    <input type="checkbox" class="green"/>
+                </div>
+                <div class="check-bg">
+                    <input type="checkbox" class="blue"/>
+                </div>
+            </div>
+
+            <button class="btn apply-color js-apply-color">Appliquer</button>
+
+        </div>
+
+    </div>
+     <script type="text/javascript">
+        textArea = $('.js-code-mirror')[0];
+        console.log(textArea)
+    </script>
+</div>

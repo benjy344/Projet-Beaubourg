@@ -1,0 +1,62 @@
+<div class="successGalery">
+	<div class="succes succes1">
+		<i class="font-icon font-icon-success1"></i>
+		<p>Finir le jeu "Pixel"</p>
+	</div>
+	<div class="succes succes2">
+		<i class="font-icon font-icon-success2"></i>
+		<p>Finir le jeu "Couleur"</p>
+	</div>
+	<div class="succes succes3">
+		<i class="font-icon font-icon-success3"></i>
+		<p>Finir le jeu "Dégradé"</p>
+	</div>
+	<div class="succes succes4">
+		<i class="font-icon font-icon-success4"></i>
+		<p>Finir le jeu "Positionnement" et débloqué la Sandbox</p>
+	</div>
+	<div class="succes succes5">
+		<i class="font-icon font-icon-success5"></i>
+		<p>Finir le jeu "Pixel" en moins de 30s</p>
+	</div>
+	<div class="succes succes6">
+		<i class="font-icon font-icon-success6"></i>
+		<p>Finir le jeu "Couleur" en moins de 40s</p>
+	</div>
+	<div class="succes succes7">
+		<i class="font-icon font-icon-success7"></i>
+		<p>Finir le jeu "Dégradé" en moins de 2min</p>
+	</div>
+	<div class="succes succes8">
+		<i class="font-icon font-icon-success8"></i>
+		<p>Finir le jeu "Positionnement" en moins de 1min</p>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$success = $('.successGalery .succes');
+	$popinEncyclo = $('.popencyclo');
+	$popinEncycloContent = $popinEncyclo.find('.content');
+	for (var i = 0; i < $tabSuccess.length; i++) {
+        var unlock = $tabSuccess[i];
+
+        $success.each(function () {
+        	if ($(this).hasClass(unlock)) $(this).addClass('unlock');
+        })
+        
+    }
+
+    $('.succes').on('click touch', function(e) {
+    	e.stopPropagation();
+    	$leSucces = $(this);
+    	$popinEncycloContent.html($leSucces.clone()).addClass('open');
+    	$popinEncyclo.addClass('open');
+    });
+
+    ($popinEncyclo.find('.close')).on('click touch', function () {
+    	$($popinEncyclo).removeClass('open');
+        //$('.succes').off();
+    });
+
+
+</script>

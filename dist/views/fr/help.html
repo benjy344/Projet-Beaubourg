@@ -1,0 +1,28 @@
+<div class="help">
+	<ul>
+	</ul>
+</div>
+<div class="ContentEncycloPop"></div>
+<script type="text/javascript">
+
+	for (var i = 0; i < $tabHelpContent.length; i++) {
+					//console.log($tabArchiveContent[i]);
+                    $('.help ul').prepend($tabHelpTitle[i]);
+                    $('.archive').prepend($tabHelpContent[i])
+                }
+        $popinEncyclo = $('.popencyclo');
+        $popinEncycloContent = $popinEncyclo.find('.content');
+         $('.help li').on('click touch', function (e) {
+            e.stopPropagation();
+         	$popHelpLink = $(this).attr('data-link');
+         	$laPopin = $('.archive').find('#'+$popHelpLink);
+         	
+
+            $popinEncycloContent.html($laPopin.clone());
+            $popinEncyclo.addClass('open')
+         });
+
+         $($popinEncyclo.find('.close')).on('click touch', function () {
+         	$popinEncyclo.removeClass('open');
+         })
+</script>
