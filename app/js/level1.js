@@ -113,6 +113,7 @@ function loadLevel1() {
 *
 *********************/
 function submitLevel1() {
+    console.log('submit lv1')
     var chaineTableau = '';
     var div = $('.tableau ul li div');
 
@@ -135,7 +136,7 @@ function submitLevel1() {
             
            if(Tip1){ Tip1.destroy('Tip1');}
         } else {
-            loadLevel2();
+            portalLevel2();
         }
         
     }else{var $popinError = new Popin({
@@ -144,6 +145,7 @@ function submitLevel1() {
 }
 
 function popinTable() {
+    console.log('portail lv2')
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu1'],
                 type: 'encyclo',
