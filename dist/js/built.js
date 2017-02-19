@@ -88,7 +88,8 @@ popinIsOpen = false;
 tipIsOpened = false;
 isNewTip = false;
 
-countip = 0;
+countip = 0,
+counter = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
@@ -9288,7 +9289,7 @@ function isUserExiste (username) {
 
 
 function initRealoadSession() {
-    if (eval(arrayCookieUser.$tabSuccess)!= 0) {
+    if (eval(arrayCookieUser.$tabSuccess)!= 0 && eval(arrayCookieUser.$tabSuccess)!= undefined) {
        $tabSuccess = eval(arrayCookieUser.$tabSuccess);
     } else {
         $tabSuccess = [];
@@ -9313,22 +9314,25 @@ function initRealoadSession() {
         addHelp(title, content[thecontent]);
         if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
     }
-    var numberTitle = 0
+    var numberTitle = 0;
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
             switch (numberTitle) {
                 case 1:
-                    var title = 'Première oeuvre';
+                    var title = 'Première oeuvre';                    
                     break;
                 case 2:
                     var title = 'Deuxième oeuvre';
+                    addEncyclo('Info 1', 'info1 blabla');
                     break;
                 case 3:
                     var title = 'Troisième oeuvre';
+                    addEncyclo('Info 2', 'info2 blabla');
                     break;
                 case 4:
                     var title = 'Quatrième oeuvre';
+                    addEncyclo('Info 3', 'info3 blabla');
                     break;    
             }
         }else{ var title = 'Niveau '+levelForEncyclo;}
@@ -9517,14 +9521,18 @@ function addEncyclo(name, content) {
             exist = true;
         }
     }
+
     if (!exist) {
-        encycloNameTab.push(name);
-        countEncyclo = encycloNameTab.length;
-        arrayCookieUser.$countEncyclo = countEncyclo;
+        if (name.indexOf("Info") != 0) {
+            encycloNameTab.push(name);
+            countEncyclo = encycloNameTab.length;
+            arrayCookieUser.$countEncyclo = countEncyclo;
+         } 
+        counter++;
         createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
-            $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
-            $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
+            $tabArchiveTitle.push('<li data-link="content-'+counter+'">'+name+'</li>');
+            $tabArchiveContent.push('<div id="content-'+counter+'" class="encycloPop " data-link="content-'+counter+'">'+content+'</div>');
         } 
     } else {
         return;
@@ -11029,6 +11037,7 @@ function loadLevel1() {
 *
 *********************/
 function submitLevel1() {
+    console.log('submit lv1')
     var chaineTableau = '';
     var div = $('.tableau ul li div');
 
@@ -11051,7 +11060,7 @@ function submitLevel1() {
             
            if(Tip1){ Tip1.destroy('Tip1');}
         } else {
-            loadLevel2();
+            portalLevel2();
         }
         
     }else{var $popinError = new Popin({
@@ -11060,6 +11069,7 @@ function submitLevel1() {
 }
 
 function popinTable() {
+    console.log('portail lv2')
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu1'],
                 type: 'encyclo',

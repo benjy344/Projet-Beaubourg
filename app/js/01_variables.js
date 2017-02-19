@@ -82,7 +82,8 @@ popinIsOpen = false;
 tipIsOpened = false;
 isNewTip = false;
 
-countip = 0;
+countip = 0,
+counter = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
