@@ -10,7 +10,7 @@
  */
 
 /* $popin = new Popin({
-            
+
 *             content: 'blabla',
 *             type: 'popin',
 *             callback: 'loadIntro()'
@@ -22,7 +22,7 @@ function Popin(options) {
 
 Popin.prototype = {
 
-    
+
 
     init: function(options) {
         this.$popin   =   $(".js-popup");
@@ -43,10 +43,10 @@ Popin.prototype = {
             if (options.helpTitle) this.helpTitle = options.helpTitle;
             if (options.title) this.title = options.title;
         }
-        
+
         this.buildElements();
         this.addEventListeners();
-        
+
 
     },
     /*
@@ -57,7 +57,7 @@ Popin.prototype = {
         if (this.$open) {
             this.updateOpenTriggers( this.$open );
         }else {
-           _this.defaultOpen(); 
+            _this.defaultOpen(); 
         }
 
         if (this.$close) {
@@ -78,11 +78,11 @@ Popin.prototype = {
         this.$open = $elements;
         var _this = this;
         this.$open.each(function() {
-           $(this).on( "click touch", function(e) { 
+            $(this).on( "click touch", function(e) { 
                 _this.defaultOpen(); 
             });
         });
-},
+    },
 
     /*
      * Builds the overlay and close button if necessary
@@ -96,7 +96,11 @@ Popin.prototype = {
         if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
             this.$close = this.$ContentPopup.find('.js-close-popup-encyclo');
         } else {
-            this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
+            if (isFr) {
+                this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
+            } else {
+                this.$close = $("<div class='fleche js-fleche-popup' >got it</div>");
+            }
             this.$popin.append(this.$close);
         }  
     },
@@ -108,7 +112,8 @@ Popin.prototype = {
             isNewTip = true ;
             tipIsOpened = true;
             if ($('.help-button').hasClass('newTip')) {
-                var title = 'Niveau '+countLevel+' '+this.helpTitle;
+                var title = isFr ? 'Niveau ' : 'Level '
+                title += countLevel+' '+this.helpTitle : ;
                 addHelp(title, this.content);
                 $countHelp++;
                 $('.help-button').removeClass('newTip');
@@ -116,9 +121,10 @@ Popin.prototype = {
         }
 
         if (this.type === 'succes') addSuccess(this.icon)
-        
+
         if (this.type === 'encyclo') {
-            if(this.title) {var title = this.title }else {var title = 'Niveau '+countLevel};
+            if(this.title) {var title = this.title }else {var title = isFr ? 'Niveau ' : 'Level '
+            title += countLevel};
             addEncyclo(title, this.content);
         }
         if (this.type === 'info') {

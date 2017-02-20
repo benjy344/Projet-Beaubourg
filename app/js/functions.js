@@ -58,11 +58,19 @@ function isUserExiste (username) {
             } else {
                 var l = 'loadLevel'+countLevel+'()';
             }
-            var $portalLevel1 = new Portal({
-                title: 'Bon retour '+Username,
-                notion: 'Vous retrouverez tout ce que vous avez débloqué',
-                callback: l
-            });    
+            if (isFr) {
+                var $portalLevel1 = new Portal({
+                    title: 'Bon retour '+Username,
+                    notion: 'Vous retrouverez tout ce que vous avez débloqué',
+                    callback: l
+                }); 
+            } else {
+                var $portalLevel1 = new Portal({
+                    title: 'Welcome back '+Username,
+                    notion: 'You can access everything you have already unlocked',
+                    callback: l
+                }); 
+            }
         });
     } else {
         createCookie(username, arrayCookieUser, 20);
@@ -103,42 +111,22 @@ function initRealoadSession() {
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
-            if (isFr) {
                 switch (numberTitle) {
                     case 1:
-                        var title = 'Première oeuvre';
+                        var title = content['art1'];
                         break;
                     case 2:
-                        var title = 'Deuxième oeuvre';
+                        var title = content['art2'];
                         addEncyclo('Info 1', 'info1 blabla');
                         break;
                     case 3:
-                        var title = 'Troisième oeuvre';
+                        var title = content['art3'];
                         addEncyclo('Info 2', 'info2 blabla');
                         break;
                     case 4:
-                        var title = 'Quatrième oeuvre';
+                        var title = content['art4'];
                         addEncyclo('Info 3', 'info3 blabla');
                         break;    
-                }
-            } else {
-                switch (numberTitle) {
-                    case 1:
-                        var title = 'First work of art';
-                        break;
-                    case 2:
-                        var title = 'Second work of art';
-                        addEncyclo('Info 1', 'info1 blabla');
-                        break;
-                    case 3:
-                        var title = 'Third work of art';
-                        addEncyclo('Info 2', 'info2 blabla');
-                        break;
-                    case 4:
-                        var title = 'Fourth work of art';
-                        addEncyclo('Info 3', 'info3 blabla');
-                        break;    
-                }
             }else{ 
                 var title = (isFr ? 'Niveau '+levelForEncyclo : 'Level '+levelForEncyclo);
             }
@@ -375,6 +363,11 @@ Implementation de l'aide
             return;
         }
 
+    }
+    
+    function helpTitle(level, help) {
+        var title = isFr : 'Niveau '+level+' Aide n°'+help ? 'Level '+level+' Help n°'+help;
+        return title;
     }
 
     /*********************

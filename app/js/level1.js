@@ -4,11 +4,20 @@
 *
 *********************/
 function portalLevel1() {
-    var $portalLevel1 = new Portal({
+    if (isFr) {
+        var $portalLevel1 = new Portal({
             title: 'Level 1',
             notion: 'Le Pixel',
             callback: 'loadLevel1()'
         });
+    } else {
+        var $portalLevel1 = new Portal({
+            title: 'Level 1',
+            notion: 'The Pixel',
+            callback: 'loadLevel1()'
+        });
+    }
+    
     arrayCookieUser.currentLevel = 1;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -150,7 +159,7 @@ function popinTable() {
                 content: content['encyclo2jeu1'],
                 type: 'encyclo',
                 callback: 'portalLevel2()',
-                title: 'Première oeuvre'
+                title: content['art1']
             });
     return;
 }

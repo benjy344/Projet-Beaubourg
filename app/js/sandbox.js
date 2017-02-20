@@ -5,11 +5,19 @@
 *
 *********************/
 function portalSandbox() {
-    var $portalSandbox = new Portal({
+    if (isFr) {
+        var $portalSandbox = new Portal({
             title: 'Sandbox',
             notion: 'Blabla',
             callback: 'loadSandbox()'
         });
+    } else {
+        var $portalSandbox = new Portal({
+            title: 'Sandbox',
+            notion: 'Blabla',
+            callback: 'loadSandbox()'
+        });
+    }
     arrayCookieUser.currentLevel = 5;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -24,9 +32,9 @@ function loadSandbox() {
             title: 'Sandbox'
         });
 
-        addHelp('Niveau 4 Aide n°1', content['jeu4astuce1']);
-        addHelp('Niveau 4 Aide n°2', content['jeu4astuce2']);
-        addHelp('Niveau 4 Aide n°3', content['jeu4astuce3']); 
+        addHelp(helpTitle(4, 1), content['jeu4astuce1']);
+        addHelp(helpTitle(4, 2), content['jeu4astuce2']);
+        addHelp(helpTitle(4, 3), content['jeu4astuce3']); 
     }
 
     sandboxIsVisited = true;

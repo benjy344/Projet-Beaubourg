@@ -10,12 +10,12 @@
  *
  */
 
-    // $popin = new Tip({
-                
-    //             content: 'blabla',
-    //             type: 'popin',
-    //             callback: 'loadIntro()'
-    //     });
+// $popin = new Tip({
+
+//             content: 'blabla',
+//             type: 'popin',
+//             callback: 'loadIntro()'
+//     });
 function Tip(options) {
     //console.log(options.stop)
     if (options.stop) { this.stop(options)} else {this.init(options);}
@@ -23,7 +23,7 @@ function Tip(options) {
 
 Tip.prototype = {
 
-    
+
 
     init: function(options) {
         this.duration = 42000;
@@ -34,7 +34,7 @@ Tip.prototype = {
         this.setTimeOut = 0;
         this.level = 1;
         this.waitFor = 0;
-        
+
 
         if (options) {
             if (options.tips) {
@@ -47,41 +47,42 @@ Tip.prototype = {
         }
         this.canIconstruct(this.tips[this.count]);
     },
-   
+
     canIconstruct: function(tip) {
         $this = this;
         ////console.log($this.canIconstruct())
         if (this.level === countLevel ) {
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
-               $this.setTimeOut = setTimeout(function () {
-                   $this.constructTip(tip)
-               }, $this.duration)
+            $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
+                $this.setTimeOut = setTimeout(function () {
+                    $this.constructTip(tip)
+                }, $this.duration)
             });
-            
+
         } else {this.destroy()}
-            
+
     },
 
     constructTip : function (tip) {
         //console.log('constructTip')
         $this = this;
         if (this.level === countLevel ) {
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
+            $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
-                title = 'Aide n°'+$this.count;
+                title = isFr ? 'Aide n°' : 'Help n°'
+                title += $this.count;
                 var $popup = $popin = new Popin({
-                            content: tip,
-                            type: 'help',
-                            helpTitle: title,
-                            $popin: $('.js-popup-tip'),
-                            $open: $this.$open
-                        });
-                if($this.count<$this.number0fTips) { $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+                    content: tip,
+                    type: 'help',
+                    helpTitle: title,
+                    $popin: $('.js-popup-tip'),
+                    $open: $this.$open
                 });
+                if($this.count<$this.number0fTips) { $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+            });
         } else {this.destroy()}
-        
+
     },
 
     stop : function (options) {
@@ -96,38 +97,38 @@ Tip.prototype = {
         //console.log(Tip1)
         switch (tip) {
             case 'Tip1':
-                    clearTimeout(window.Tip1.setTimeOut);
-                    window.Tip1.setTimeOut = 0;
-                    console.log('tip1 '+window.Tip1.setTimeOut)
-                    window.Tip1 = undefined;
-                    delete window.Tip1;
+                clearTimeout(window.Tip1.setTimeOut);
+                window.Tip1.setTimeOut = 0;
+                console.log('tip1 '+window.Tip1.setTimeOut)
+                window.Tip1 = undefined;
+                delete window.Tip1;
                 break;
-                case 'Tip2':
-                    clearTimeout(window.Tip2.setTimeOut);
-                    window.Tip2.setTimeOut = 0;
-                    console.log('tip2 '+window.Tip2.setTimeOut)
-                    window.Tip2 = undefined;
-                    delete window.Tip2;
+            case 'Tip2':
+                clearTimeout(window.Tip2.setTimeOut);
+                window.Tip2.setTimeOut = 0;
+                console.log('tip2 '+window.Tip2.setTimeOut)
+                window.Tip2 = undefined;
+                delete window.Tip2;
                 break;
-                case 'Tip3':
-                    clearTimeout(window.Tip3.setTimeOut);
-                    window.Tip3.setTimeOut = 0;
-                    console.log('tip3 '+window.Tip3.setTimeOut)
-                    window.Tip3 = undefined;
-                    delete window.Tip3;
+            case 'Tip3':
+                clearTimeout(window.Tip3.setTimeOut);
+                window.Tip3.setTimeOut = 0;
+                console.log('tip3 '+window.Tip3.setTimeOut)
+                window.Tip3 = undefined;
+                delete window.Tip3;
                 break;
-                case 'Tip4':
-                    clearTimeout(window.Tip4.setTimeOut);
-                    window.Tip4.setTimeOut = 0;
-                    console.log('tip4 '+window.Tip4.setTimeOut)
-                    window.Tip4 = undefined;
-                    delete window.Tip4;
+            case 'Tip4':
+                clearTimeout(window.Tip4.setTimeOut);
+                window.Tip4.setTimeOut = 0;
+                console.log('tip4 '+window.Tip4.setTimeOut)
+                window.Tip4 = undefined;
+                delete window.Tip4;
                 break;
         }
-        
-        
+
+
         //console.log(Tip1)
-      }
+    }
 
 };
 

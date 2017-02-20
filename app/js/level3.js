@@ -5,11 +5,19 @@
 *********************/
 
 function portalLevel3() {
-    var $portalLevel2 = new Portal({
-            title: 'La couleur aditive',
+    if (isFr) {
+        var $portalLevel2 = new Portal({
+            title: 'La Couleur Additive',
             notion: 'Blabla',
             callback: 'loadLevel3()'
         });
+    } else {
+        var $portalLevel2 = new Portal({
+            title: 'The Additive Color Process',
+            notion: 'Blabla',
+            callback: 'loadLevel3()'
+        });
+    }
     arrayCookieUser.currentLevel = 3;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -24,9 +32,9 @@ function loadLevel3() {
             type: 'encyclo',
             content: content['encyclo1jeu3']
         });
-        addHelp('Niveau 2 Aide n°1', content['jeu2astuce1']);
-        addHelp('Niveau 2 Aide n°2', content['jeu2astuce2']);
-        addHelp('Niveau 2 Aide n°3', content['jeu2astuce3']); 
+        addHelp(helpTitle(2, 1), content['jeu2astuce1']);
+        addHelp(helpTitle(2, 2), content['jeu2astuce2']);
+        addHelp(helpTitle(2, 3), content['jeu2astuce3']); 
         tipsLevel3 = {
             0 : content['jeu3astuce1'],
             1 : content['jeu3astuce2'],
@@ -265,6 +273,6 @@ function popinTable3 () {
         content: content['encyclo2jeu3'],
         type: 'encyclo',
         callback: 'portalLevel4()',
-        title: 'Troisième oeuvre'
+        title: content['art3']
     });
 }

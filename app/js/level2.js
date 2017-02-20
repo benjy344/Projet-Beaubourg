@@ -4,11 +4,19 @@
 *
 *********************/
 function portalLevel2() {
-    var $portalLevel2 = new Portal({
+    if (isFr) {
+        var $portalLevel2 = new Portal({
             title: 'La Couleur',
             notion: 'Blabla',
             callback: 'loadLevel2()'
         });
+    } else {
+        var $portalLevel2 = new Portal({
+            title: 'The Color',
+            notion: 'Blabla',
+            callback: 'loadLevel2()'
+        });
+    }
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -22,9 +30,9 @@ function loadLevel2() {
             type: 'encyclo',
             content: content['encyclo1jeu2']
         });
-        addHelp('Niveau 1 Aide n°1', content['jeu1astuce1']);
-        addHelp('Niveau 1 Aide n°2', content['jeu1astuce2']);
-        addHelp('Niveau 1 Aide n°3', content['jeu1astuce3']);   
+        addHelp(helpTitle(1, 1), content['jeu1astuce1']);
+        addHelp(helpTitle(1, 2), content['jeu1astuce2']);
+        addHelp(helpTitle(1, 3), content['jeu1astuce3']);   
 
         tipsLevel2 = {
             0 : content['jeu2astuce1'],
@@ -32,12 +40,12 @@ function loadLevel2() {
             2 : content['jeu2astuce3']
         }
         Tip2 = new Tip({
-                'tips' : tipsLevel2,
-                'duration' : 4000,
-                'level': 2
-            }) 
+            'tips' : tipsLevel2,
+            'duration' : 4000,
+            'level': 2
+        }) 
     }
-    
+
 
     level2IsVisited = true;
     arrayCookieUser.level2IsVisited = true;
@@ -69,8 +77,8 @@ function loadLevel2() {
         var defaultValue = false;
 
         codeConfig.readOnly = 'nocursor';
-        
-       
+
+
 
 
 
@@ -105,7 +113,7 @@ function loadLevel2() {
         $('.js-run-code').click(function () {
             runCodeLevel2();
         });
-        
+
         $('.js-apply-color').on('touch click', hideModal)
 
         //Change input
@@ -144,7 +152,7 @@ function loadLevel2() {
 // function afterLoadLevel2() {
 //     console.log('coucou')
 
-        
+
 // }
 
 function runCodeLevel2() {
@@ -203,14 +211,14 @@ function submitLevel2() {
                 type: 'succes',
                 icon: 'succes2'
             });
-           
-            
+
+
             Tip2.destroy('Tip2');
         } else {
             portalLevel3();
         }
     } else {
-       var $popinError = new Popin({
+        var $popinError = new Popin({
             content: content['erreur']
         });
     }
@@ -218,10 +226,10 @@ function submitLevel2() {
 }
 
 function popintable2() {
-     var $popinTableau = new Popin({
-                content: content['encyclo2jeu2'],
-                type: 'encyclo',
-                callback: 'portalLevel3()',
-                title: 'Deuxième oeuvre'
-            });
+    var $popinTableau = new Popin({
+        content: content['encyclo2jeu2'],
+        type: 'encyclo',
+        callback: 'portalLevel3()',
+        title: content['art2']
+    });
 }

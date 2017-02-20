@@ -4,11 +4,19 @@
 *
 *********************/
 function portalLevel4() {
-    var $portalLevel2 = new Portal({
+    if (isFr) {
+        var $portalLevel2 = new Portal({
             title: 'Le Positionnement',
             notion: 'Blabla',
             callback: 'loadLevel4()'
         });
+    } else {
+        var $portalLevel2 = new Portal({
+            title: 'Positionning',
+            notion: 'Blabla',
+            callback: 'loadLevel4()'
+        });
+    }
     arrayCookieUser.currentLevel = 4;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -21,22 +29,22 @@ function loadLevel4() {
             type: 'encyclo',
             content: content['encyclo1jeu4']
         });
-        addHelp('Niveau 3 Aide n°1', content['jeu3astuce1']);
-        addHelp('Niveau 3 Aide n°2', content['jeu3astuce2']);
-        addHelp('Niveau 3 Aide n°3', content['jeu3astuce3']); 
+        addHelp(helpTitle(3, 1), content['jeu3astuce1']);
+        addHelp(helpTitle(3, 2), content['jeu3astuce2']);
+        addHelp(helpTitle(3, 3), content['jeu3astuce3']); 
 
         tipsLevel4 = {
-                0 : content['jeu4astuce1'],
-                1 : content['jeu4astuce2'],
-                2 : content['jeu4astuce3']
-               }
+            0 : content['jeu4astuce1'],
+            1 : content['jeu4astuce2'],
+            2 : content['jeu4astuce3']
+        }
         Tip4 = new Tip({
             'tips' : tipsLevel4,
             'duration' : 42000,
             'level': 4
         })
     }
-    
+
     level4IsVisited = true;
     arrayCookieUser.level4IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -58,10 +66,10 @@ function loadLevel4() {
             //matchBrackets: true
         }
         //Initialisation des variables
-            codeConfig.readOnly = 'nocursor';
+        codeConfig.readOnly = 'nocursor';
 
-            
-        
+
+
 
         //thisLvlAnswers = answers.lvl4;
 
@@ -149,7 +157,7 @@ function loadLevel4() {
 
 
 function runCodeLevel4() {
-     console.log('running code lvl4')
+    console.log('running code lvl4')
     // console.log($('.imgActive').data('pos'))
     //alert('ok')
     var code = codeMirror.getValue();
@@ -199,11 +207,11 @@ function submitLevel4() {
     }
 }
 function popinTable4 () {
-    
+
     var $popinTableau = new Popin({
-                content: content['encyclo2jeu4'],
-                type: 'encyclo',
-                callback: 'portalSandbox()',
-                title: 'Dernière oeuvre'
-            });
+        content: content['encyclo2jeu4'],
+        type: 'encyclo',
+        callback: 'portalSandbox()',
+        title: content['art4']
+    });
 }
