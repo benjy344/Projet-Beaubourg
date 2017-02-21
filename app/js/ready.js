@@ -21,7 +21,7 @@ $(document).ready(function() {
     $('.modal .close').on('touch click', hideModal);
     /////////////////Gestion menu
 
-    $('.haveChild').on('click touch', function(event) {
+    $(document).on('click touch', '.haveChild', function(event) {
 
         event.preventDefault();
         event.stopPropagation();
@@ -34,11 +34,11 @@ $(document).ready(function() {
         $parent.addClass('childOpen');
         $child.addClass('isOpen');
 
-        $child_content.load(views+loader+'.html');
+        $child_content.load(views+lang+'/'+loader+'.html');
 
 
     });
-    $('.main-nav .child i').on('click touch', function(event){
+    $(document).on('click touch', '.main-nav .child i', function(event){
         event.preventDefault();
         event.stopPropagation();
         var $parent = $('.main-nav>ul');

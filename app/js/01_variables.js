@@ -112,6 +112,3 @@ var intervale = 0,
     t = 0;
 
 var which = 'left';
-
-
-

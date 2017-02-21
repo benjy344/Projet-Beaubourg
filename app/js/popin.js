@@ -112,8 +112,8 @@ Popin.prototype = {
             isNewTip = true ;
             tipIsOpened = true;
             if ($('.help-button').hasClass('newTip')) {
-                var title = isFr ? 'Niveau ' : 'Level '
-                title += countLevel+' '+this.helpTitle : ;
+                var title = isFr ? 'Niveau ' : 'Level ';
+                title += countLevel+' '+this.helpTitle;
                 addHelp(title, this.content);
                 $countHelp++;
                 $('.help-button').removeClass('newTip');
