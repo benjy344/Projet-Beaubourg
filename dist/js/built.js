@@ -10988,8 +10988,8 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 function portalLevel1() {
     if (isFr) {
         var $portalLevel1 = new Portal({
-            title: 'Level 1',
-            notion: 'Le Pixel',
+            title: 'Le Pixel',
+            notion: 'Chiffres pairs ou impairs ? À vous de retranscrire la chaîne de chiffre proposée',
             callback: 'loadLevel1()'
         });
     } else {
