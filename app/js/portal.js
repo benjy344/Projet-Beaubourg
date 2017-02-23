@@ -38,7 +38,7 @@ Portal.prototype = {
         this.$notion.text(this.notion);
 
         this.onOpen();
-        this.$portal.on('touch click', function(e) { $.proxy(_this.onClose, _this, e)(); });
+        this.$portal.on('click touch', function(e) { $.proxy(_this.onClose, _this, e)(); });
     },
 
     onOpen: function() {
