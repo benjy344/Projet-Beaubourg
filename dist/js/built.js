@@ -9623,6 +9623,45 @@ function alertErr() {
     alert('ERROR');
 }
 
+function finish() {
+    console.log('nrefkar')
+    var totalSucces = 8,
+        nbSucces = (totalSucces - $tabSuccess.length),
+        title = "", 
+        content = "";
+
+    if (totalSucces > $tabSuccess.length) {
+        if (isFr) {
+            title = "Félicitations !"; 
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        } else {
+            title = "Congratulations !";
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        }
+    } else {
+        if (isFr) {
+            title = "Félicitations !"; 
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        } else {
+            title = "Congratulations !";
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        }
+    }
+
+    var $portalFinish = new Portal({
+                title: title,
+                notion: content,
+                callback: 'portalLevel1()', 
+                loadCallbackOnClose: true
+            });
+    
+}
+function unlockAllSuccess() {
+    for (var i = 1; i < 9; i++) {
+        var succes = 'succes'+i;
+        addSuccess(succes); 
+    }
+}
 
 // Modal gestion
 function showModal() {
@@ -11127,6 +11166,7 @@ function portalLevel2() {
             callback: 'loadLevel2()'
         });
     }
+    console.log($portalLevel2.callback)
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -11323,7 +11363,7 @@ function submitLevel2() {
             });
 
 
-            Tip2.destroy('Tip2');
+            if(Tip2){Tip2.destroy('Tip2')};
         } else {
             portalLevel3();
         }
@@ -12026,7 +12066,7 @@ function Portal(options) {
 Portal.prototype = {
 
 	init: function(options) {
-		var _this           =   this;
+		var _this       =   this;
         this.$portal    =   $(".js-level-portal");
         this.$title     =   this.$portal.find('.js-portail-title');
         this.$notion 	=   this.$portal.find(".js-notion-title");
@@ -12035,25 +12075,33 @@ Portal.prototype = {
             if (options.title) this.title = options.title;
             if (options.notion) this.notion = options.notion;
             if (options.callback) this.callback = options.callback;
+            if (options.loadCallbackOnClose) this.loadCallbackOnClose = options.loadCallbackOnClose;
         }
         
         this.$title.text(this.title);
         this.$notion.text(this.notion);
 
         this.onOpen();
-        this.$portal.on('touch click', function(e) { $.proxy(_this.onClose, _this, e)(); });
+        this.$portal.on('click touch', function(e) { $.proxy(_this.onClose, _this, e)(); });
     },
 
     onOpen: function() {
     	this.$portal.addClass('show');
     	this.$title.addClass('fade-in');
     	this.$notion.addClass('fade-in');
-    	eval(this.callback);
+        console.log('on open', this.loadCallbackOnClose)
+    	if(!this.loadCallbackOnClose) {
+            console.log('callback on open')
+            eval(this.callback)
+        };
     },
     onClose: function(e) {
 		this.$portal.removeClass('show');
 		this.$title.removeClass('fade-in');
 		this.$notion.removeClass('fade-in');
+        console.log('on close', this.loadCallbackOnClose)
+        if(this.loadCallbackOnClose) {this.loadCallbackOnClose = false; eval(this.callback)};
+        delete this;
     },
 
 }

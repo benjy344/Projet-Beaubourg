@@ -23,7 +23,7 @@ function Portal(options) {
 Portal.prototype = {
 
 	init: function(options) {
-		var _this           =   this;
+		var _this       =   this;
         this.$portal    =   $(".js-level-portal");
         this.$title     =   this.$portal.find('.js-portail-title');
         this.$notion 	=   this.$portal.find(".js-notion-title");
@@ -32,6 +32,7 @@ Portal.prototype = {
             if (options.title) this.title = options.title;
             if (options.notion) this.notion = options.notion;
             if (options.callback) this.callback = options.callback;
+            if (options.loadCallbackOnClose) this.loadCallbackOnClose = options.loadCallbackOnClose;
         }
         
         this.$title.text(this.title);
@@ -45,12 +46,19 @@ Portal.prototype = {
     	this.$portal.addClass('show');
     	this.$title.addClass('fade-in');
     	this.$notion.addClass('fade-in');
-    	eval(this.callback);
+        console.log('on open', this.loadCallbackOnClose)
+    	if(!this.loadCallbackOnClose) {
+            console.log('callback on open')
+            eval(this.callback)
+        };
     },
     onClose: function(e) {
 		this.$portal.removeClass('show');
 		this.$title.removeClass('fade-in');
 		this.$notion.removeClass('fade-in');
+        console.log('on close', this.loadCallbackOnClose)
+        if(this.loadCallbackOnClose) {this.loadCallbackOnClose = false; eval(this.callback)};
+        delete this;
     },
 
 }

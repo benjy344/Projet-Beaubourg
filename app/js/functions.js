@@ -404,6 +404,45 @@ function alertErr() {
     alert('ERROR');
 }
 
+function finish() {
+    console.log('nrefkar')
+    var totalSucces = 8,
+        nbSucces = (totalSucces - $tabSuccess.length),
+        title = "", 
+        content = "";
+
+    if (totalSucces > $tabSuccess.length) {
+        if (isFr) {
+            title = "Félicitations !"; 
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        } else {
+            title = "Congratulations !";
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        }
+    } else {
+        if (isFr) {
+            title = "Félicitations !"; 
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        } else {
+            title = "Congratulations !";
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+        }
+    }
+
+    var $portalFinish = new Portal({
+                title: title,
+                notion: content,
+                callback: 'portalLevel1()', 
+                loadCallbackOnClose: true
+            });
+    
+}
+function unlockAllSuccess() {
+    for (var i = 1; i < 9; i++) {
+        var succes = 'succes'+i;
+        addSuccess(succes); 
+    }
+}
 
 // Modal gestion
 function showModal() {

@@ -17,6 +17,7 @@ function portalLevel2() {
             callback: 'loadLevel2()'
         });
     }
+    console.log($portalLevel2.callback)
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -213,7 +214,7 @@ function submitLevel2() {
             });
 
 
-            Tip2.destroy('Tip2');
+            if(Tip2){Tip2.destroy('Tip2')};
         } else {
             portalLevel3();
         }
