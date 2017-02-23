@@ -624,10 +624,12 @@ body {
 
         &.none {
             background: url("../assets/backgroundBlack.jpg");
+            background-size: cover;
         }
         @include desktop {
             /*font-size: 2vw*/
             background-image: url("../assets/background4K.jpg");
+            background-size: cover;
         }
         background-image: url("../assets/background.jpg");
         height: 100%;

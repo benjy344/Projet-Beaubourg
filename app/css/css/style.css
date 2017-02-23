@@ -1181,70 +1181,6 @@ body .popup .overflow .fleche {
   position: relative;
   left: 70%;
 }
-body .popup #chooseFrameLvl3 {
-  display: flex;
-  margin: 20% 0;
-  align-items: center;
-}
-body .popup #chooseFrameLvl3 .leftFrame, body .popup #chooseFrameLvl3 .rightFrame {
-  text-align: center;
-  flex-grow: 1;
-}
-body .popup #chooseFrameLvl3 #radios {
-  position: relative;
-  width: 50%;
-  margin: 0 auto;
-  flex-grow: 2;
-}
-body .popup #chooseFrameLvl3 #radios input[type="radio"] {
-  position: absolute;
-  right: 1000%;
-}
-body .popup #chooseFrameLvl3 #radios #left:checked ~ #slider {
-  animation-name: input1;
-  left: 0;
-}
-body .popup #chooseFrameLvl3 #radios #right:checked ~ #slider {
-  animation-name: input5;
-  left: 80%;
-}
-body .popup #chooseFrameLvl3 #radios label {
-  float: left;
-  width: 15%;
-  padding-bottom: 15%;
-  margin: 0 2.5%;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  cursor: pointer;
-}
-body .popup #chooseFrameLvl3 #radios label.right {
-  float: right;
-}
-body .popup #chooseFrameLvl3 #radios #slider {
-  position: absolute;
-  left: 0%;
-  top: 0;
-  width: 10%;
-  padding-bottom: 10%;
-  margin: 2.5% 0 0 5%;
-  background: #fff;
-  transition: transform 1s;
-  border-radius: 50%;
-  animation-timing-function: ease-in-out;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-  transition: 0.2s left 0.05s ease-in-out;
-}
-@keyframes input1 {
-  30%, 70% {
-    transform: scale(0.5);
-  }
-}
-@keyframes input5 {
-  30%, 70% {
-    transform: scale(0.5);
-  }
-}
 body .hoverlay {
   background: rgba(24, 23, 22, 0.5);
   position: fixed;
@@ -1282,11 +1218,13 @@ body .background {
 }
 body .background.none {
   background: url("../assets/backgroundBlack.jpg");
+  background-size: cover;
 }
 @media (min-width: 768px) {
   body .background {
     /*font-size: 2vw*/
     background-image: url("../assets/background4K.jpg");
+    background-size: cover;
   }
 }
 body main {
@@ -1678,6 +1616,78 @@ body .wiggle {
   animation: wiggle 0.3s infinite;
 }
 
+.radioButtons {
+  display: flex;
+  margin: 20% 0;
+  align-items: center;
+}
+.radioButtons .input1, .radioButtons .input2 {
+  text-align: center;
+  flex-grow: 1;
+}
+.radioButtons .radio {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
+  flex-grow: 2;
+}
+.radioButtons .radio input[type="radio"] {
+  position: absolute;
+  right: 1000%;
+}
+.radioButtons .radio #left:checked ~ #slider {
+  animation-name: input1;
+  left: 0;
+}
+.radioButtons .radio #right:checked ~ #slider {
+  animation-name: input5;
+  left: 80%;
+}
+.radioButtons .radio #fr:checked ~ #slider {
+  animation-name: input1;
+  left: 0;
+}
+.radioButtons .radio #en:checked ~ #slider {
+  animation-name: input5;
+  left: 80%;
+}
+.radioButtons .radio label {
+  float: left;
+  width: 15%;
+  padding-bottom: 15%;
+  margin: 0 2.5%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.radioButtons .radio label.right, .radioButtons .radio label.en {
+  float: right;
+}
+.radioButtons .radio #slider {
+  position: absolute;
+  left: 0%;
+  top: 0;
+  width: 10%;
+  padding-bottom: 10%;
+  margin: 2.5% 0 0 5%;
+  background: #fff;
+  transition: transform 1s;
+  border-radius: 50%;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  transition: 0.2s left 0.05s ease-in-out;
+}
+@keyframes input1 {
+  30%, 70% {
+    transform: scale(0.5);
+  }
+}
+@keyframes input5 {
+  30%, 70% {
+    transform: scale(0.5);
+  }
+}
 /******************
 *
 *      Annimations

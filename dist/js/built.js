@@ -11,11 +11,14 @@ applyposition et applyColor pour la sandbox
 */
 
 var dest = './dist/',
-    level = './dist/views/levels/',
+    level = '/levels/',
     views = './dist/views/',
     screen = 'index',
     countLevel = 0,
     ecrin = false, 
+    
+    lang = "fr",
+    isFr = true,
 
     Username = "",
     testing = false,
@@ -61,13 +64,6 @@ $.getJSON('dist/json/answers.json', function(data) {
     answers = data;
 });
 
-$.get("dist/content/content_fr.html", function(data) {
-    $(data).filter('div').each(function(i) {
-        var name = $(this).attr("id");
-        content[name] = $(this).html()
-    })
-});
-
 var textArea = $('.codeMirror')[0],
             codeConfig = {
                 mode: "text/javascript",
@@ -88,7 +84,8 @@ popinIsOpen = false;
 tipIsOpened = false;
 isNewTip = false;
 
-countip = 0;
+countip = 0,
+counter = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
@@ -120,11 +117,7 @@ var $countHelp = 0,
 var intervale = 0,
     t = 0;
 
-var which = 'left';
-
-
-
-;
+var which = 'left';;
  /*********************************************************/
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -9257,29 +9250,53 @@ function loadIntro(){
     if (Username == '' || Username =='FX') { // {DEV}
         testing = true;
     }
-    isUserExiste(Username);
+
+
+    lang = $('#chooseLang input[type="radio"]:checked').attr('id');
+    if (lang == 'en') {
+        isFr = false;
+    }
+
+    $.get("dist/content/content_"+lang+".html", function(data) {
+        $(data).filter('div').each(function(i) {
+            var name = $(this).attr("id");
+            content[name] = $(this).html()
+        })
+
+        $('.main-nav ul').html(content['menu'])
+        isUserExiste(Username);
+    });
+    
 }
 
 
 function isUserExiste (username) {
     if(readCookie(username)){
         arrayCookieUser = readCookie(username);
-        $('main').load(views+'intro.html', function() {
+        $('main').load(views+lang+'/intro.html', function() {
             initRealoadSession();
             if (countLevel == 5) {
                 var l = 'loadSandbox()';
             } else {
                 var l = 'loadLevel'+countLevel+'()';
             }
-            var $portalLevel1 = new Portal({
-                title: 'Bon retour '+Username,
-                notion: 'Vous retrouverez tout ce que vous avez débloqué',
-                callback: l
-            });    
+            if (isFr) {
+                var $portalLevel1 = new Portal({
+                    title: 'Bon retour '+Username,
+                    notion: 'Vous retrouverez tout ce que vous avez débloqué',
+                    callback: l
+                }); 
+            } else {
+                var $portalLevel1 = new Portal({
+                    title: 'Welcome back '+Username,
+                    notion: 'You can access everything you have already unlocked',
+                    callback: l
+                }); 
+            }
         });
     } else {
         createCookie(username, arrayCookieUser, 20);
-        $('main').load(views+'intro.html', function() {
+        $('main').load(views+lang+'/intro.html', function() {
             $('#username').text(Username);     
         });
     }
@@ -9288,16 +9305,16 @@ function isUserExiste (username) {
 
 
 function initRealoadSession() {
-    if (eval(arrayCookieUser.$tabSuccess)!= 0) {
-       $tabSuccess = eval(arrayCookieUser.$tabSuccess);
+    if (eval(arrayCookieUser.$tabSuccess)!= 0 && eval(arrayCookieUser.$tabSuccess)!= undefined) {
+        $tabSuccess = eval(arrayCookieUser.$tabSuccess);
     } else {
         $tabSuccess = [];
     }
     level1IsVisited = eval(arrayCookieUser.level1IsVisited),
-    level2IsVisited = eval(arrayCookieUser.level2IsVisited),
-    level3IsVisited = eval(arrayCookieUser.level3IsVisited),
-    level4IsVisited = eval(arrayCookieUser.level4IsVisited),
-    sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
+        level2IsVisited = eval(arrayCookieUser.level2IsVisited),
+        level3IsVisited = eval(arrayCookieUser.level3IsVisited),
+        level4IsVisited = eval(arrayCookieUser.level4IsVisited),
+        sandboxIsVisited = eval(arrayCookieUser.sandboxIsVisited);
     countLevel = eval(arrayCookieUser.currentLevel);
     var countHelp = arrayCookieUser.$countHelp;
     var countEncyclo = arrayCookieUser.$countEncyclo;
@@ -9307,31 +9324,35 @@ function initRealoadSession() {
     var levelForEncyclo = 1; 
 
     for (var i = 0; i < countHelp; i++) {
-
-        var title = 'Niveau '+levelForHelp+' Aide n°'+number;
-        var thecontent = 'jeu'+levelForHelp+'astuce'+number;
+        var thecontent = 'jeu'+levelForHelp+'astuce'+number,
+            title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
         addHelp(title, content[thecontent]);
         if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
     }
-    var numberTitle = 0
+    var numberTitle = 0;
     for (var i = 0; i < countEncyclo; i++) {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
             switch (numberTitle) {
                 case 1:
-                    var title = 'Première oeuvre';
+                    var title = content['art1'];
                     break;
                 case 2:
-                    var title = 'Deuxième oeuvre';
+                    var title = content['art2'];
+                    addEncyclo('Info 1', 'info1 blabla');
                     break;
                 case 3:
-                    var title = 'Troisième oeuvre';
+                    var title = content['art3'];
+                    addEncyclo('Info 2', 'info2 blabla');
                     break;
                 case 4:
-                    var title = 'Quatrième oeuvre';
-                    break;    
+                    var title = content['art4'];
+                    addEncyclo('Info 3', 'info3 blabla');
+                    break;   
             }
-        }else{ var title = 'Niveau '+levelForEncyclo;}
+        }else{ 
+            var title = (isFr ? 'Niveau '+levelForEncyclo : 'Level '+levelForEncyclo);
+        }
         var thecontent = 'encyclo'+numberForEncyclo+'jeu'+levelForEncyclo;
         addEncyclo(title, content[thecontent]);
         if ((numberForEncyclo % 2) == 0) {levelForEncyclo++; numberForEncyclo = 1;} else {numberForEncyclo++; }
@@ -9345,20 +9366,20 @@ function initRealoadSession() {
 *********************************/
 
 function createCookie(name, tabvalue, duration) {
-// Le nombre de duration est spécifié
-value = decodeURIComponent( $.param( tabvalue ) );
-if (duration) {
-    var date = new Date();
-                // Converti le nombre de jour en millisecondes
-                date.setTime(date.getTime()+(duration*24*60*60*1000));
-                var expire = "; expire="+date.toGMTString();
-            }
-        // Aucune valeur de duration spécifiée
-        else var expire = "";
-        document.cookie = name+"="+value+expire+"; path=/";
+    // Le nombre de duration est spécifié
+    value = decodeURIComponent( $.param( tabvalue ) );
+    if (duration) {
+        var date = new Date();
+        // Converti le nombre de jour en millisecondes
+        date.setTime(date.getTime()+(duration*24*60*60*1000));
+        var expire = "; expire="+date.toGMTString();
     }
+    // Aucune valeur de duration spécifiée
+    else var expire = "";
+    document.cookie = name+"="+value+expire+"; path=/";
+}
 function readCookie(name) {
-// Ajoute le signe égale virgule au name
+    // Ajoute le signe égale virgule au name
     // pour la recherche
     var name2 = name + "=";
     // Array contenant tous les cookies
@@ -9368,10 +9389,10 @@ function readCookie(name) {
         var a = arrCookies[i];
         // Si c'est un espace, enlever
         while (a.charAt(0)==' ') {
-          a = a.substring(1,a.length);
+            a = a.substring(1,a.length);
         }
         if (a.indexOf(name2) == 0) {
-          return $.parseParams("?"+a.substring(name2.length,a.length));
+            return $.parseParams("?"+a.substring(name2.length,a.length));
         }
     }
     // Aucun cookie trouvé
@@ -9389,7 +9410,7 @@ function eraseCookie(name) {
 *
 *********************/
 function loadChooseLevel(){
-    $('main').load(views+'accueil.html');
+    $('main').load(views+lang+'/accueil.html');
 }
 
 $.fn.loadLevel = function(levelToLoad, callback) {
@@ -9398,7 +9419,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
     screen = levelToLoad;
 
-    var file = level+levelToLoad+'.html',
+    var file = views + lang + level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
         modal = '#modal-content';
 
@@ -9407,10 +9428,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
     this.load(file + ' ' + lvl, function() {  
         $('.modal-content').load(file + ' ' + modal, function() {
-
             callback();
-
-
         })
     })
 }
@@ -9455,7 +9473,7 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 
 // function getATip(number, time, tips, total, finish) {
 //     if (finish) {
-        
+
 //         clearTimeout(t);
 //         t = 0;
 //         clearInterval(intervale);
@@ -9517,14 +9535,18 @@ function addEncyclo(name, content) {
             exist = true;
         }
     }
+
     if (!exist) {
-        encycloNameTab.push(name);
-        countEncyclo = encycloNameTab.length;
-        arrayCookieUser.$countEncyclo = countEncyclo;
+        if (name.indexOf("Info") != 0) {
+            encycloNameTab.push(name);
+            countEncyclo = encycloNameTab.length;
+            arrayCookieUser.$countEncyclo = countEncyclo;
+        } 
+        counter++;
         createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
-            $tabArchiveTitle.push('<li data-link="content-'+countEncyclo+'">'+name+'</li>');
-            $tabArchiveContent.push('<div id="content-'+countEncyclo+'" class="encycloPop " data-link="content-'+countEncyclo+'">'+content+'</div>');
+            $tabArchiveTitle.push('<li data-link="content-'+counter+'">'+name+'</li>');
+            $tabArchiveContent.push('<div id="content-'+counter+'" class="encycloPop " data-link="content-'+counter+'">'+content+'</div>');
         } 
     } else {
         return;
@@ -9564,6 +9586,11 @@ function addHelp(name, content) {
         return;
     }
 
+}
+
+function helpTitle(level, help) {
+    var title = isFr ? 'Niveau '+level+' Aide n°'+help : 'Level '+level+' Help n°'+help;
+    return title;
 }
 
 /*********************
@@ -9636,7 +9663,7 @@ function hideModal() {
 function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback) {
     // Check if condition met. If not, re-check later (msec).
     if (countLevel === level) {
-       if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
+        if (popinIsOpen !== expectedValue || isNewTip !== expectedValue) {
             count++;
             setTimeout(function() {
                 waitforPopinIsOpen( expectedValue, msec, count, source, level, callback);
@@ -9646,7 +9673,7 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
     }else {
         return;
     }
-    
+
     // Condition finally met. callback() can be executed.
     //console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
@@ -9693,41 +9720,41 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
                     createElement(params[list[0]], new_key, value);
                 } else console.warn('parseParams :: empty property in key "' + key + '"');
             } else
-            // if the key is an array    
-            if (key.indexOf('[') !== -1) {
-                // extract the array name
-                var list = key.split('[');
-                key = list[0];
+                // if the key is an array    
+                if (key.indexOf('[') !== -1) {
+                    // extract the array name
+                    var list = key.split('[');
+                    key = list[0];
 
-                // extract the index of the array
-                var list = list[1].split(']');
-                var index = list[0]
+                    // extract the index of the array
+                    var list = list[1].split(']');
+                    var index = list[0]
 
-                // if index is empty, just push the value at the end of the array
-                if (index == '') {
-                    if (!params) params = {};
-                    if (!params[key] || !$.isArray(params[key])) params[key] = [];
-                    params[key].push(value);
+                    // if index is empty, just push the value at the end of the array
+                    if (index == '') {
+                        if (!params) params = {};
+                        if (!params[key] || !$.isArray(params[key])) params[key] = [];
+                        params[key].push(value);
+                    } else
+                        // add the value at the index (must be an integer)
+                    {
+                        if (!params) params = {};
+                        if (!params[key] || !$.isArray(params[key])) params[key] = [];
+                        params[key][parseInt(index)] = value;
+                    }
                 } else
-                // add the value at the index (must be an integer)
+                    // just normal key
                 {
                     if (!params) params = {};
-                    if (!params[key] || !$.isArray(params[key])) params[key] = [];
-                    params[key][parseInt(index)] = value;
+                    params[key] = value;
                 }
-            } else
-            // just normal key
-            {
-                if (!params) params = {};
-                params[key] = value;
-            }
         }
 
         // be sure the query is a string
         query = query + '';
-        
+
         if (query === '') query = window.location + '';
-        
+
         var params = {}, e;
         if (query) {
             // remove # from end of query
@@ -9739,10 +9766,10 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
             if (query.indexOf('?') !== -1) {
                 query = query.substr(query.indexOf('?') + 1, query.length);
             } else return {};
-            
+
             // empty parameters
             if (query == '') return {};
-            
+
             // execute a createElement on every key and value
             while (e = re.exec(query)) {
                 var key = decode(e[1]);
@@ -9961,25 +9988,25 @@ function addCode(btn) {
 
     switch (btn.attr('data-function')) {
         case 'left':
-            comment = '//Déplacer de 1 case à gauche';
+            comment = (isFr ? '//Déplacer de 1 case à gauche' : '//Move one square left' );
             break;
         case 'right':
-            comment = '//Déplacer de 1 case à droite';
+            comment = (isFr ? '//Déplacer de 1 case à droite' : '//Move one square right' );
             break;
         case 'up':
-            comment = '//Déplacer de 1 case en haut';
+            comment = (isFr ? '//Déplacer de 1 case en haut' : '//Move one square up' );
             break;
         case 'down':
-            comment = '//Déplacer de 1 case en bas';
+            comment = (isFr ? '//Déplacer de 1 case en bas' : '//Move one square down' );
             break;
         case 'rotate':
-            comment = '//Touner de 90 degrés dans le sens horaire';
+            comment = (isFr ? '//Touner de 90 degrés dans le sens horaire' : '//Rotate 90 degrees clockwise' );
             break;
         case 'scaleUp':
-            comment = '//Augmenter la taille'
+            comment = (isFr ? '//Augmenter la taille' : '//Increase size' );
             break;
         case 'scaleDown':
-            comment = '//Diminuer la taille'
+            comment = (isFr ? '//Diminuer la taille' : '//Decrease size' );
             break;
         default:
             break;
@@ -10920,11 +10947,20 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 *
 *********************/
 function portalLevel1() {
-    var $portalLevel1 = new Portal({
+    if (isFr) {
+        var $portalLevel1 = new Portal({
             title: 'Level 1',
             notion: 'Le Pixel',
             callback: 'loadLevel1()'
         });
+    } else {
+        var $portalLevel1 = new Portal({
+            title: 'Level 1',
+            notion: 'The Pixel',
+            callback: 'loadLevel1()'
+        });
+    }
+    
     arrayCookieUser.currentLevel = 1;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -11029,6 +11065,7 @@ function loadLevel1() {
 *
 *********************/
 function submitLevel1() {
+    console.log('submit lv1')
     var chaineTableau = '';
     var div = $('.tableau ul li div');
 
@@ -11051,7 +11088,7 @@ function submitLevel1() {
             
            if(Tip1){ Tip1.destroy('Tip1');}
         } else {
-            loadLevel2();
+            portalLevel2();
         }
         
     }else{var $popinError = new Popin({
@@ -11060,11 +11097,12 @@ function submitLevel1() {
 }
 
 function popinTable() {
+    console.log('portail lv2')
     var $popinTableau = new Popin({
                 content: content['encyclo2jeu1'],
                 type: 'encyclo',
                 callback: 'portalLevel2()',
-                title: 'Première oeuvre'
+                title: content['art1']
             });
     return;
 }
@@ -11076,11 +11114,19 @@ function popinTable() {
 *
 *********************/
 function portalLevel2() {
-    var $portalLevel2 = new Portal({
+    if (isFr) {
+        var $portalLevel2 = new Portal({
             title: 'La Couleur',
             notion: 'Blabla',
             callback: 'loadLevel2()'
         });
+    } else {
+        var $portalLevel2 = new Portal({
+            title: 'The Color',
+            notion: 'Blabla',
+            callback: 'loadLevel2()'
+        });
+    }
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -11094,9 +11140,9 @@ function loadLevel2() {
             type: 'encyclo',
             content: content['encyclo1jeu2']
         });
-        addHelp('Niveau 1 Aide n°1', content['jeu1astuce1']);
-        addHelp('Niveau 1 Aide n°2', content['jeu1astuce2']);
-        addHelp('Niveau 1 Aide n°3', content['jeu1astuce3']);   
+        addHelp(helpTitle(1, 1), content['jeu1astuce1']);
+        addHelp(helpTitle(1, 2), content['jeu1astuce2']);
+        addHelp(helpTitle(1, 3), content['jeu1astuce3']);   
 
         tipsLevel2 = {
             0 : content['jeu2astuce1'],
@@ -11104,12 +11150,12 @@ function loadLevel2() {
             2 : content['jeu2astuce3']
         }
         Tip2 = new Tip({
-                'tips' : tipsLevel2,
-                'duration' : 4000,
-                'level': 2
-            }) 
+            'tips' : tipsLevel2,
+            'duration' : 4000,
+            'level': 2
+        }) 
     }
-    
+
 
     level2IsVisited = true;
     arrayCookieUser.level2IsVisited = true;
@@ -11141,8 +11187,8 @@ function loadLevel2() {
         var defaultValue = false;
 
         codeConfig.readOnly = 'nocursor';
-        
-       
+
+
 
 
 
@@ -11177,7 +11223,7 @@ function loadLevel2() {
         $('.js-run-code').click(function () {
             runCodeLevel2();
         });
-        
+
         $('.js-apply-color').on('touch click', hideModal)
 
         //Change input
@@ -11216,7 +11262,7 @@ function loadLevel2() {
 // function afterLoadLevel2() {
 //     console.log('coucou')
 
-        
+
 // }
 
 function runCodeLevel2() {
@@ -11275,14 +11321,14 @@ function submitLevel2() {
                 type: 'succes',
                 icon: 'succes2'
             });
-           
-            
+
+
             Tip2.destroy('Tip2');
         } else {
             portalLevel3();
         }
     } else {
-       var $popinError = new Popin({
+        var $popinError = new Popin({
             content: content['erreur']
         });
     }
@@ -11290,12 +11336,12 @@ function submitLevel2() {
 }
 
 function popintable2() {
-     var $popinTableau = new Popin({
-                content: content['encyclo2jeu2'],
-                type: 'encyclo',
-                callback: 'portalLevel3()',
-                title: 'Deuxième oeuvre'
-            });
+    var $popinTableau = new Popin({
+        content: content['encyclo2jeu2'],
+        type: 'encyclo',
+        callback: 'portalLevel3()',
+        title: content['art2']
+    });
 };
  /*********************************************************/
 /********************
@@ -11305,11 +11351,19 @@ function popintable2() {
 *********************/
 
 function portalLevel3() {
-    var $portalLevel2 = new Portal({
-            title: 'La couleur aditive',
+    if (isFr) {
+        var $portalLevel2 = new Portal({
+            title: 'La Couleur Additive',
             notion: 'Blabla',
             callback: 'loadLevel3()'
         });
+    } else {
+        var $portalLevel2 = new Portal({
+            title: 'The Additive Color Process',
+            notion: 'Blabla',
+            callback: 'loadLevel3()'
+        });
+    }
     arrayCookieUser.currentLevel = 3;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -11324,9 +11378,9 @@ function loadLevel3() {
             type: 'encyclo',
             content: content['encyclo1jeu3']
         });
-        addHelp('Niveau 2 Aide n°1', content['jeu2astuce1']);
-        addHelp('Niveau 2 Aide n°2', content['jeu2astuce2']);
-        addHelp('Niveau 2 Aide n°3', content['jeu2astuce3']); 
+        addHelp(helpTitle(2, 1), content['jeu2astuce1']);
+        addHelp(helpTitle(2, 2), content['jeu2astuce2']);
+        addHelp(helpTitle(2, 3), content['jeu2astuce3']); 
         tipsLevel3 = {
             0 : content['jeu3astuce1'],
             1 : content['jeu3astuce2'],
@@ -11565,7 +11619,7 @@ function popinTable3 () {
         content: content['encyclo2jeu3'],
         type: 'encyclo',
         callback: 'portalLevel4()',
-        title: 'Troisième oeuvre'
+        title: content['art3']
     });
 }
 ;
@@ -11576,11 +11630,19 @@ function popinTable3 () {
 *
 *********************/
 function portalLevel4() {
-    var $portalLevel2 = new Portal({
+    if (isFr) {
+        var $portalLevel2 = new Portal({
             title: 'Le Positionnement',
             notion: 'Blabla',
             callback: 'loadLevel4()'
         });
+    } else {
+        var $portalLevel2 = new Portal({
+            title: 'Positionning',
+            notion: 'Blabla',
+            callback: 'loadLevel4()'
+        });
+    }
     arrayCookieUser.currentLevel = 4;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -11593,22 +11655,22 @@ function loadLevel4() {
             type: 'encyclo',
             content: content['encyclo1jeu4']
         });
-        addHelp('Niveau 3 Aide n°1', content['jeu3astuce1']);
-        addHelp('Niveau 3 Aide n°2', content['jeu3astuce2']);
-        addHelp('Niveau 3 Aide n°3', content['jeu3astuce3']); 
+        addHelp(helpTitle(3, 1), content['jeu3astuce1']);
+        addHelp(helpTitle(3, 2), content['jeu3astuce2']);
+        addHelp(helpTitle(3, 3), content['jeu3astuce3']); 
 
         tipsLevel4 = {
-                0 : content['jeu4astuce1'],
-                1 : content['jeu4astuce2'],
-                2 : content['jeu4astuce3']
-               }
+            0 : content['jeu4astuce1'],
+            1 : content['jeu4astuce2'],
+            2 : content['jeu4astuce3']
+        }
         Tip4 = new Tip({
             'tips' : tipsLevel4,
             'duration' : 42000,
             'level': 4
         })
     }
-    
+
     level4IsVisited = true;
     arrayCookieUser.level4IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -11630,10 +11692,10 @@ function loadLevel4() {
             //matchBrackets: true
         }
         //Initialisation des variables
-            codeConfig.readOnly = 'nocursor';
+        codeConfig.readOnly = 'nocursor';
 
-            
-        
+
+
 
         //thisLvlAnswers = answers.lvl4;
 
@@ -11721,7 +11783,7 @@ function loadLevel4() {
 
 
 function runCodeLevel4() {
-     console.log('running code lvl4')
+    console.log('running code lvl4')
     // console.log($('.imgActive').data('pos'))
     //alert('ok')
     var code = codeMirror.getValue();
@@ -11771,13 +11833,13 @@ function submitLevel4() {
     }
 }
 function popinTable4 () {
-    
+
     var $popinTableau = new Popin({
-                content: content['encyclo2jeu4'],
-                type: 'encyclo',
-                callback: 'portalSandbox()',
-                title: 'Dernière oeuvre'
-            });
+        content: content['encyclo2jeu4'],
+        type: 'encyclo',
+        callback: 'portalSandbox()',
+        title: content['art4']
+    });
 };
  /*********************************************************/
 /*
@@ -11792,7 +11854,7 @@ function popinTable4 () {
  */
 
 /* $popin = new Popin({
-            
+
 *             content: 'blabla',
 *             type: 'popin',
 *             callback: 'loadIntro()'
@@ -11804,7 +11866,7 @@ function Popin(options) {
 
 Popin.prototype = {
 
-    
+
 
     init: function(options) {
         this.$popin   =   $(".js-popup");
@@ -11825,10 +11887,10 @@ Popin.prototype = {
             if (options.helpTitle) this.helpTitle = options.helpTitle;
             if (options.title) this.title = options.title;
         }
-        
+
         this.buildElements();
         this.addEventListeners();
-        
+
 
     },
     /*
@@ -11839,7 +11901,7 @@ Popin.prototype = {
         if (this.$open) {
             this.updateOpenTriggers( this.$open );
         }else {
-           _this.defaultOpen(); 
+            _this.defaultOpen(); 
         }
 
         if (this.$close) {
@@ -11860,11 +11922,11 @@ Popin.prototype = {
         this.$open = $elements;
         var _this = this;
         this.$open.each(function() {
-           $(this).on( "click touch", function(e) { 
+            $(this).on( "click touch", function(e) { 
                 _this.defaultOpen(); 
             });
         });
-},
+    },
 
     /*
      * Builds the overlay and close button if necessary
@@ -11878,7 +11940,11 @@ Popin.prototype = {
         if (this.$ContentPopup.find('.js-close-popup-encyclo').length) {
             this.$close = this.$ContentPopup.find('.js-close-popup-encyclo');
         } else {
-            this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
+            if (isFr) {
+                this.$close = $("<div class='fleche js-fleche-popup' >c'est compris</div>");
+            } else {
+                this.$close = $("<div class='fleche js-fleche-popup' >got it</div>");
+            }
             this.$popin.append(this.$close);
         }  
     },
@@ -11890,7 +11956,8 @@ Popin.prototype = {
             isNewTip = true ;
             tipIsOpened = true;
             if ($('.help-button').hasClass('newTip')) {
-                var title = 'Niveau '+countLevel+' '+this.helpTitle;
+                var title = isFr ? 'Niveau ' : 'Level ';
+                title += countLevel+' '+this.helpTitle;
                 addHelp(title, this.content);
                 $countHelp++;
                 $('.help-button').removeClass('newTip');
@@ -11898,9 +11965,10 @@ Popin.prototype = {
         }
 
         if (this.type === 'succes') addSuccess(this.icon)
-        
+
         if (this.type === 'encyclo') {
-            if(this.title) {var title = this.title }else {var title = 'Niveau '+countLevel};
+            if(this.title) {var title = this.title }else {var title = isFr ? 'Niveau ' : 'Level '
+            title += countLevel};
             addEncyclo(title, this.content);
         }
         if (this.type === 'info') {
@@ -11999,7 +12067,7 @@ Document.ready
 
 $(document).ready(function() {
 
-    Username = $('input#name').val();
+    //Username = $('input#name').val();
     $('.hamburger').hide();
 
     $('.hamburger').on('touch click', function() {
@@ -12011,16 +12079,10 @@ $(document).ready(function() {
 
     $('.loading').slideUp(1000);
 
-    $("#name").on('keyup', function (e) {
-        if (e.keyCode == 13) {
-            loadChooseDevMod();
-        }
-    });
-
     $('.modal .close').on('touch click', hideModal);
     /////////////////Gestion menu
 
-    $('.haveChild').on('click touch', function(event) {
+    $(document).on('click touch', '.haveChild', function(event) {
 
         event.preventDefault();
         event.stopPropagation();
@@ -12033,11 +12095,11 @@ $(document).ready(function() {
         $parent.addClass('childOpen');
         $child.addClass('isOpen');
 
-        $child_content.load(views+loader+'.html');
+        $child_content.load(views+lang+'/'+loader+'.html');
 
 
     });
-    $('.main-nav .child i').on('click touch', function(event){
+    $(document).on('click touch', '.main-nav .child i', function(event){
         event.preventDefault();
         event.stopPropagation();
         var $parent = $('.main-nav>ul');
@@ -12180,11 +12242,19 @@ function reinitSandbox() {
 *
 *********************/
 function portalSandbox() {
-    var $portalSandbox = new Portal({
+    if (isFr) {
+        var $portalSandbox = new Portal({
             title: 'Sandbox',
             notion: 'Blabla',
             callback: 'loadSandbox()'
         });
+    } else {
+        var $portalSandbox = new Portal({
+            title: 'Sandbox',
+            notion: 'Blabla',
+            callback: 'loadSandbox()'
+        });
+    }
     arrayCookieUser.currentLevel = 5;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -12199,9 +12269,9 @@ function loadSandbox() {
             title: 'Sandbox'
         });
 
-        addHelp('Niveau 4 Aide n°1', content['jeu4astuce1']);
-        addHelp('Niveau 4 Aide n°2', content['jeu4astuce2']);
-        addHelp('Niveau 4 Aide n°3', content['jeu4astuce3']); 
+        addHelp(helpTitle(4, 1), content['jeu4astuce1']);
+        addHelp(helpTitle(4, 2), content['jeu4astuce2']);
+        addHelp(helpTitle(4, 3), content['jeu4astuce3']); 
     }
 
     sandboxIsVisited = true;
@@ -12411,12 +12481,12 @@ function runSandbox() {
  *
  */
 
-    // $popin = new Tip({
-                
-    //             content: 'blabla',
-    //             type: 'popin',
-    //             callback: 'loadIntro()'
-    //     });
+// $popin = new Tip({
+
+//             content: 'blabla',
+//             type: 'popin',
+//             callback: 'loadIntro()'
+//     });
 function Tip(options) {
     //console.log(options.stop)
     if (options.stop) { this.stop(options)} else {this.init(options);}
@@ -12424,7 +12494,7 @@ function Tip(options) {
 
 Tip.prototype = {
 
-    
+
 
     init: function(options) {
         this.duration = 42000;
@@ -12435,7 +12505,7 @@ Tip.prototype = {
         this.setTimeOut = 0;
         this.level = 1;
         this.waitFor = 0;
-        
+
 
         if (options) {
             if (options.tips) {
@@ -12448,41 +12518,42 @@ Tip.prototype = {
         }
         this.canIconstruct(this.tips[this.count]);
     },
-   
+
     canIconstruct: function(tip) {
         $this = this;
         ////console.log($this.canIconstruct())
         if (this.level === countLevel ) {
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
-               $this.setTimeOut = setTimeout(function () {
-                   $this.constructTip(tip)
-               }, $this.duration)
+            $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
+                $this.setTimeOut = setTimeout(function () {
+                    $this.constructTip(tip)
+                }, $this.duration)
             });
-            
+
         } else {this.destroy()}
-            
+
     },
 
     constructTip : function (tip) {
         //console.log('constructTip')
         $this = this;
         if (this.level === countLevel ) {
-        $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
+            $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
                 isNewTip = true;
-                title = 'Aide n°'+$this.count;
+                title = isFr ? 'Aide n°' : 'Help n°'
+                title += $this.count;
                 var $popup = $popin = new Popin({
-                            content: tip,
-                            type: 'help',
-                            helpTitle: title,
-                            $popin: $('.js-popup-tip'),
-                            $open: $this.$open
-                        });
-                if($this.count<$this.number0fTips) { $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+                    content: tip,
+                    type: 'help',
+                    helpTitle: title,
+                    $popin: $('.js-popup-tip'),
+                    $open: $this.$open
                 });
+                if($this.count<$this.number0fTips) { $this.canIconstruct($this.tips[$this.count])} else {$this.stop};
+            });
         } else {this.destroy()}
-        
+
     },
 
     stop : function (options) {
@@ -12497,38 +12568,38 @@ Tip.prototype = {
         //console.log(Tip1)
         switch (tip) {
             case 'Tip1':
-                    clearTimeout(window.Tip1.setTimeOut);
-                    window.Tip1.setTimeOut = 0;
-                    console.log('tip1 '+window.Tip1.setTimeOut)
-                    window.Tip1 = undefined;
-                    delete window.Tip1;
+                clearTimeout(window.Tip1.setTimeOut);
+                window.Tip1.setTimeOut = 0;
+                console.log('tip1 '+window.Tip1.setTimeOut)
+                window.Tip1 = undefined;
+                delete window.Tip1;
                 break;
-                case 'Tip2':
-                    clearTimeout(window.Tip2.setTimeOut);
-                    window.Tip2.setTimeOut = 0;
-                    console.log('tip2 '+window.Tip2.setTimeOut)
-                    window.Tip2 = undefined;
-                    delete window.Tip2;
+            case 'Tip2':
+                clearTimeout(window.Tip2.setTimeOut);
+                window.Tip2.setTimeOut = 0;
+                console.log('tip2 '+window.Tip2.setTimeOut)
+                window.Tip2 = undefined;
+                delete window.Tip2;
                 break;
-                case 'Tip3':
-                    clearTimeout(window.Tip3.setTimeOut);
-                    window.Tip3.setTimeOut = 0;
-                    console.log('tip3 '+window.Tip3.setTimeOut)
-                    window.Tip3 = undefined;
-                    delete window.Tip3;
+            case 'Tip3':
+                clearTimeout(window.Tip3.setTimeOut);
+                window.Tip3.setTimeOut = 0;
+                console.log('tip3 '+window.Tip3.setTimeOut)
+                window.Tip3 = undefined;
+                delete window.Tip3;
                 break;
-                case 'Tip4':
-                    clearTimeout(window.Tip4.setTimeOut);
-                    window.Tip4.setTimeOut = 0;
-                    console.log('tip4 '+window.Tip4.setTimeOut)
-                    window.Tip4 = undefined;
-                    delete window.Tip4;
+            case 'Tip4':
+                clearTimeout(window.Tip4.setTimeOut);
+                window.Tip4.setTimeOut = 0;
+                console.log('tip4 '+window.Tip4.setTimeOut)
+                window.Tip4 = undefined;
+                delete window.Tip4;
                 break;
         }
-        
-        
+
+
         //console.log(Tip1)
-      }
+    }
 
 };
 
