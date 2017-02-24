@@ -284,12 +284,23 @@ function submitLevel3() {
 }
 function popinEndLevel3 () {
     if (!level4IsVisited) { var callback = 'popinTable3()'} else { var callback = 'portalLevel4()'}
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes7') {
+            exist = true;
+            break;
+        }
+    }
+    if (!exist) {
     var $popinSuccessTime = new Popin({
                 content: content['jeu3s'],
                 type: 'succes',
                 callback: callback,
                 icon: 'succes7'
             });
+    }else {
+        eval(callback);
+    }
 }
 function popinTable3 () {
 

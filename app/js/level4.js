@@ -234,12 +234,23 @@ function submitLevel4() {
 
 function popinEndLevel3 () {
     if (!sandboxIsVisited) { var callback = 'popinTable4()'} else { var callback = 'portalSandbox()'}
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes8') {
+            exist = true;
+            break;
+        }
+    }
+    if (!exist) {
     var $popinSuccessTime = new Popin({
                 content: content['jeu3s'],
                 type: 'succes',
                 callback: callback,
                 icon: 'succes8'
             });
+    }else {
+        eval(callback);
+    }
 }
 function popinTable4 () {
 

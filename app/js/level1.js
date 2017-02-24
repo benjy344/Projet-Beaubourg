@@ -171,12 +171,25 @@ function submitLevel1() {
 }
 function popinEndLevel1 () {
     if (!level2IsVisited) { var callback = 'popinTable()'} else {var callback = 'portalLevel2()'}
-    var $popinSuccessTime = new Popin({
-                content: content['jeu1s'],
-                type: 'succes',
-                callback: callback,
-                icon: 'succes5'
-            });
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes5') {
+            exist = true;
+            break;
+        }
+    }
+    console.log(exist)
+    if (!exist) {
+        var $popinSuccessTime = new Popin({
+            content: content['jeu1s'],
+            type: 'succes',
+            callback: callback,
+            icon: 'succes5'
+        });
+    }else {
+        eval(callback);
+    }
+    
 }
 
 function popinTable() {

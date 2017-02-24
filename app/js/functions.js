@@ -352,6 +352,7 @@ function addHelp(name, content) {
     for (var i = 0; i < helpNameTab.length; i++) {
         if (helpNameTab[i] === name) {
             exist = true;
+            break;
         }
     }
     if (!exist) {
@@ -405,7 +406,6 @@ function alertErr() {
 }
 
 function finish() {
-    console.log('nrefkar')
     var totalSucces = 8,
         nbSucces = (totalSucces - $tabSuccess.length),
         title = "", 

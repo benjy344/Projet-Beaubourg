@@ -9572,6 +9572,7 @@ function addHelp(name, content) {
     for (var i = 0; i < helpNameTab.length; i++) {
         if (helpNameTab[i] === name) {
             exist = true;
+            break;
         }
     }
     if (!exist) {
@@ -9625,7 +9626,6 @@ function alertErr() {
 }
 
 function finish() {
-    console.log('nrefkar')
     var totalSucces = 8,
         nbSucces = (totalSucces - $tabSuccess.length),
         title = "", 
@@ -11154,12 +11154,25 @@ function submitLevel1() {
 }
 function popinEndLevel1 () {
     if (!level2IsVisited) { var callback = 'popinTable()'} else {var callback = 'portalLevel2()'}
-    var $popinSuccessTime = new Popin({
-                content: content['jeu1s'],
-                type: 'succes',
-                callback: callback,
-                icon: 'succes5'
-            });
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes5') {
+            exist = true;
+            break;
+        }
+    }
+    console.log(exist)
+    if (!exist) {
+        var $popinSuccessTime = new Popin({
+            content: content['jeu1s'],
+            type: 'succes',
+            callback: callback,
+            icon: 'succes5'
+        });
+    }else {
+        eval(callback);
+    }
+    
 }
 
 function popinTable() {
@@ -11419,12 +11432,23 @@ function submitLevel2() {
 }
 function popinEndLevel2 () {
     if (!level3IsVisited) { var callback = 'popinTable2()'} else { var callback = 'portalLevel3()'}
-    var $popinSuccessTime = new Popin({
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes6') {
+            exist = true;
+            break;
+        }
+    }
+    if (!exist) {
+        var $popinSuccessTime = new Popin({
                 content: content['jeu2s'],
                 type: 'succes',
                 callback: callback,
                 icon: 'succes6'
             });
+    }else {
+        eval(callback);
+    }
 }
 
 function popinTable2() {
@@ -11722,12 +11746,23 @@ function submitLevel3() {
 }
 function popinEndLevel3 () {
     if (!level4IsVisited) { var callback = 'popinTable3()'} else { var callback = 'portalLevel4()'}
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes7') {
+            exist = true;
+            break;
+        }
+    }
+    if (!exist) {
     var $popinSuccessTime = new Popin({
                 content: content['jeu3s'],
                 type: 'succes',
                 callback: callback,
                 icon: 'succes7'
             });
+    }else {
+        eval(callback);
+    }
 }
 function popinTable3 () {
 
@@ -11976,12 +12011,23 @@ function submitLevel4() {
 
 function popinEndLevel3 () {
     if (!sandboxIsVisited) { var callback = 'popinTable4()'} else { var callback = 'portalSandbox()'}
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes8') {
+            exist = true;
+            break;
+        }
+    }
+    if (!exist) {
     var $popinSuccessTime = new Popin({
                 content: content['jeu3s'],
                 type: 'succes',
                 callback: callback,
                 icon: 'succes8'
             });
+    }else {
+        eval(callback);
+    }
 }
 function popinTable4 () {
 
