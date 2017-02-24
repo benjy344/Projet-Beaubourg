@@ -32,14 +32,11 @@ body {
         top: 5px;
         font-size: 2em;
     }
-    @include tablet {
-
-
+    
+    @include mini-mobile {
+        font-size: 1em;
     }
 
-    @include desktop {
-        /*font-size: 2vw*/
-    }
 
     .loading {
         z-index: 20000;
