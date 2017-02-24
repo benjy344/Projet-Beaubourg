@@ -11144,7 +11144,7 @@ function submitLevel1() {
 
             if(Tip1){ Tip1.destroy('Tip1');}
         } else {
-            portalLevel2();
+            if (myTime <= 30) { popinEndLevel1();} else { portalLevel2();}
         } 
         
         
@@ -11367,6 +11367,7 @@ function submitLevel2() {
     endTime = Date.now();
     var numCorrect = 0;
     var pixels = $('.js-pixel');
+    var myTime = (endTime - startTime)/1000;
 
     for (i=0; i < pixels.length; i++) {
         var rvb = $(pixels[i]).data('rvb'),
@@ -11381,9 +11382,10 @@ function submitLevel2() {
     }
 
     if (numCorrect == pixels.length || testing) { //{}
+        
         if (!level3IsVisited) {
 
-            if (myTime <= 30) {
+            if (myTime <= 40) {
                 var $popinError = new Popin({
                     content: content['jeu2d'],
                     type: 'succes',
@@ -11401,7 +11403,11 @@ function submitLevel2() {
 
             if(Tip2){Tip2.destroy('Tip2')};
         } else {
-            portalLevel3();
+            if (myTime <= 40) {
+                popinEndLevel2();
+            } else {
+                portalLevel3();                
+            }
         }
     } else {
         var $popinError = new Popin({
@@ -11454,6 +11460,7 @@ function portalLevel3() {
 
 
 function loadLevel3() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
     countLevel = 3;
     if (!level3IsVisited) {

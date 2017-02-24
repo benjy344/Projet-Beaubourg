@@ -161,7 +161,7 @@ function submitLevel1() {
 
             if(Tip1){ Tip1.destroy('Tip1');}
         } else {
-            portalLevel2();
+            if (myTime <= 30) { popinEndLevel1();} else { portalLevel2();}
         } 
         
         

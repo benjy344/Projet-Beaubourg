@@ -24,6 +24,7 @@ function portalLevel3() {
 
 
 function loadLevel3() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
     countLevel = 3;
     if (!level3IsVisited) {
