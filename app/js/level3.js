@@ -8,7 +8,7 @@ function portalLevel3() {
     if (isFr) {
         var $portalLevel2 = new Portal({
             title: 'La Couleur Additive',
-            notion: 'Blabla',
+            notion: 'Reproduisez les teintes de l’un des dégradés de Morellet, soyez méticuleux !',
             callback: 'loadLevel3()'
         });
     } else {

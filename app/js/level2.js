@@ -7,7 +7,7 @@ function portalLevel2() {
     if (isFr) {
         var $portalLevel2 = new Portal({
             title: 'La Couleur',
-            notion: 'Blabla',
+            notion: 'Retrouvez les couleurs perdues du tableau !',
             callback: 'loadLevel2()'
         });
     } else {

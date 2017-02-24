@@ -414,18 +414,18 @@ function finish() {
     if (totalSucces > $tabSuccess.length) {
         if (isFr) {
             title = "Félicitations !"; 
-            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! n\'hésitez pas à rejouer les activités. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         } else {
             title = "Congratulations !";
-            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! n\'hésitez pas à rejouer les activités. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         }
     } else {
         if (isFr) {
             title = "Félicitations !"; 
-            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! Allez présenter cet écran aux résponssables pour recevoir une recompence! D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         } else {
             title = "Congratulations !";
-            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! Allez présenter cet écran aux résponssables pour recevoir une recompence! D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         }
     }
 

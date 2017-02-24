@@ -23,6 +23,7 @@ function portalLevel1() {
 }
 
 function loadLevel1() {
+    binaire = '';
     initEcrin();
     countLevel = 1;
     if (!level1IsVisited) {

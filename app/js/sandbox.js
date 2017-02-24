@@ -8,7 +8,7 @@ function portalSandbox() {
     if (isFr) {
         var $portalSandbox = new Portal({
             title: 'Sandbox',
-            notion: 'Blabla',
+            notion: 'Appliquez toutes les notions vues précedement, vous êtes libre !',
             callback: 'loadSandbox()'
         });
     } else {

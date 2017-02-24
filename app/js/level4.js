@@ -7,7 +7,7 @@ function portalLevel4() {
     if (isFr) {
         var $portalLevel2 = new Portal({
             title: 'Le Positionnement',
-            notion: 'Blabla',
+            notion: 'Repositionnez les 9 carrés superposés et recréer l’oeuvre de Morellet',
             callback: 'loadLevel4()'
         });
     } else {

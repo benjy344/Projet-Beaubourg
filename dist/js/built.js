@@ -9633,18 +9633,18 @@ function finish() {
     if (totalSucces > $tabSuccess.length) {
         if (isFr) {
             title = "Félicitations !"; 
-            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! n\'hésitez pas à rejouer les activités. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         } else {
             title = "Congratulations !";
-            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! <br/> n\'hésitez pas à rejouer les activités. <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! n\'hésitez pas à rejouer les activités. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         }
     } else {
         if (isFr) {
             title = "Félicitations !"; 
-            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! Allez présenter cet écran aux résponssables pour recevoir une recompence! D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         } else {
             title = "Congratulations !";
-            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! <br/> Allez présenter cet écran aux résponssables pour recevoir une recompence! <br/> D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! Allez présenter cet écran aux résponssables pour recevoir une recompence! D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
         }
     }
 
@@ -11005,6 +11005,7 @@ function portalLevel1() {
 }
 
 function loadLevel1() {
+    binaire = '';
     initEcrin();
     countLevel = 1;
     if (!level1IsVisited) {
@@ -11156,7 +11157,7 @@ function portalLevel2() {
     if (isFr) {
         var $portalLevel2 = new Portal({
             title: 'La Couleur',
-            notion: 'Blabla',
+            notion: 'Retrouvez les couleurs perdues du tableau !',
             callback: 'loadLevel2()'
         });
     } else {
@@ -11394,7 +11395,7 @@ function portalLevel3() {
     if (isFr) {
         var $portalLevel2 = new Portal({
             title: 'La Couleur Additive',
-            notion: 'Blabla',
+            notion: 'Reproduisez les teintes de l’un des dégradés de Morellet, soyez méticuleux !',
             callback: 'loadLevel3()'
         });
     } else {
@@ -11673,7 +11674,7 @@ function portalLevel4() {
     if (isFr) {
         var $portalLevel2 = new Portal({
             title: 'Le Positionnement',
-            notion: 'Blabla',
+            notion: 'Repositionnez les 9 carrés superposés et recréer l’oeuvre de Morellet',
             callback: 'loadLevel4()'
         });
     } else {
@@ -12091,12 +12092,13 @@ Portal.prototype = {
     	this.$notion.addClass('fade-in');
         console.log('on open', this.loadCallbackOnClose)
     	if(!this.loadCallbackOnClose) {
-            console.log('callback on open')
-            eval(this.callback)
-        };
+            eval(this.callback);
+        }else {
+            this.$portal.addClass('last-portal');
+        }
     },
     onClose: function(e) {
-		this.$portal.removeClass('show');
+		this.$portal.removeClass('show').removeClass('last-portal');
 		this.$title.removeClass('fade-in');
 		this.$notion.removeClass('fade-in');
         console.log('on close', this.loadCallbackOnClose)
@@ -12293,7 +12295,7 @@ function portalSandbox() {
     if (isFr) {
         var $portalSandbox = new Portal({
             title: 'Sandbox',
-            notion: 'Blabla',
+            notion: 'Appliquez toutes les notions vues précedement, vous êtes libre !',
             callback: 'loadSandbox()'
         });
     } else {

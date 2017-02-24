@@ -720,6 +720,9 @@ body .level-portal.show {
   transition: all 0.4s;
   visibility: visible;
 }
+body .level-portal.last-portal p {
+  font-size: 1em;
+}
 body .level-portal h1 {
   font-size: 2em;
   line-height: 2em;

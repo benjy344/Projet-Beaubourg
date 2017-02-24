@@ -48,12 +48,13 @@ Portal.prototype = {
     	this.$notion.addClass('fade-in');
         console.log('on open', this.loadCallbackOnClose)
     	if(!this.loadCallbackOnClose) {
-            console.log('callback on open')
-            eval(this.callback)
-        };
+            eval(this.callback);
+        }else {
+            this.$portal.addClass('last-portal');
+        }
     },
     onClose: function(e) {
-		this.$portal.removeClass('show');
+		this.$portal.removeClass('show').removeClass('last-portal');
 		this.$title.removeClass('fade-in');
 		this.$notion.removeClass('fade-in');
         console.log('on close', this.loadCallbackOnClose)
