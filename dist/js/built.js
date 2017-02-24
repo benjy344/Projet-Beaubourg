@@ -113,7 +113,8 @@ var $countHelp = 0,
     Tip5,
     tipsLevel5;
 
-
+var startTime = 0,
+    endTime =0;
 var intervale = 0,
     t = 0;
 
@@ -11007,6 +11008,7 @@ function portalLevel1() {
 function loadLevel1() {
     binaire = '';
     initEcrin();
+    startTime = Date.now();
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -11019,7 +11021,7 @@ function loadLevel1() {
             0 : content['jeu1astuce1'],
             1 : content['jeu1astuce2'],
             2 : content['jeu1astuce3']
-           }
+        }
         //var tips1 = []
         Tip1 = new Tip({
             'tips' : tipsLevel1,
@@ -11030,26 +11032,26 @@ function loadLevel1() {
         if (arrayCookieUser.$countHelp <=3) {
             switch (arrayCookieUser.$countHelp) {
                 case 0:
-                    tipsLevel1 = {
-                        0 : content['jeu1astuce1'],
-                        1 : content['jeu1astuce2'],
-                        2 : content['jeu1astuce3']
-                       }
-                    break;
+                tipsLevel1 = {
+                    0 : content['jeu1astuce1'],
+                    1 : content['jeu1astuce2'],
+                    2 : content['jeu1astuce3']
+                }
+                break;
                 case 1:
-                    tipsLevel1 = {
-                        0 : content['jeu1astuce1'],
-                        1 : content['jeu1astuce2'],
-                        2 : content['jeu1astuce3']
-                       }
-                    break;
+                tipsLevel1 = {
+                    0 : content['jeu1astuce1'],
+                    1 : content['jeu1astuce2'],
+                    2 : content['jeu1astuce3']
+                }
+                break;
                 case 2:
-                    tipsLevel1 = {
-                        0 : content['jeu1astuce1'],
-                        1 : content['jeu1astuce2'],
-                        2 : content['jeu1astuce3']
-                       }
-                    break;
+                tipsLevel1 = {
+                    0 : content['jeu1astuce1'],
+                    1 : content['jeu1astuce2'],
+                    2 : content['jeu1astuce3']
+                }
+                break;
             }
             
             //var tips1 = []
@@ -11106,6 +11108,10 @@ function loadLevel1() {
 *********************/
 function submitLevel1() {
     console.log('submit lv1')
+    endTime = Date.now();
+
+    var myTime = (endTime - startTime)/1000;
+
     var chaineTableau = '';
     var div = $('.tableau ul li div');
 
@@ -11118,32 +11124,50 @@ function submitLevel1() {
         }
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
+
         if (!level2IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu1d'],
-                type: 'succes',
-                callback: 'popinTable()',
-                icon: 'succes1'
-            });
-            
-           if(Tip1){ Tip1.destroy('Tip1');}
+            if (myTime <= 30) {
+                var $popinError = new Popin({
+                    content: content['jeu1d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel1()',
+                    icon: 'succes1'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu1d'],
+                    type: 'succes',
+                    callback: 'popinTable()',
+                    icon: 'succes1'
+                });
+            }
+
+            if(Tip1){ Tip1.destroy('Tip1');}
         } else {
             portalLevel2();
-        }
+        } 
+        
         
     }else{var $popinError = new Popin({
         content: content['erreur'],
     });}
 }
+function popinEndLevel1 () {
+    var $popinSuccessTime = new Popin({
+                content: content['jeu1s'],
+                type: 'succes',
+                callback: 'popinTable()',
+                icon: 'succes5'
+            });
+}
 
 function popinTable() {
-    console.log('portail lv2')
     var $popinTableau = new Popin({
-                content: content['encyclo2jeu1'],
-                type: 'encyclo',
-                callback: 'portalLevel2()',
-                title: content['art1']
-            });
+        content: content['encyclo2jeu1'],
+        type: 'encyclo',
+        callback: 'portalLevel2()',
+        title: content['art1']
+    });
     return;
 }
 ;
@@ -11173,6 +11197,7 @@ function portalLevel2() {
 }
 
 function loadLevel2() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
     countLevel = 2;
     if (!level2IsVisited) {
@@ -11339,6 +11364,7 @@ function runCodeLevel2() {
 *********************/
 
 function submitLevel2() {
+    endTime = Date.now();
     var numCorrect = 0;
     var pixels = $('.js-pixel');
 
@@ -11356,13 +11382,22 @@ function submitLevel2() {
 
     if (numCorrect == pixels.length || testing) { //{}
         if (!level3IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu2d'],
-                callback: 'popintable2()',
-                type: 'succes',
-                icon: 'succes2'
-            });
 
+            if (myTime <= 30) {
+                var $popinError = new Popin({
+                    content: content['jeu2d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel2()',
+                    icon: 'succes2'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu2d'],
+                    type: 'succes',
+                    callback: 'popinTabl2()',
+                    icon: 'succes2'
+                });
+            }
 
             if(Tip2){Tip2.destroy('Tip2')};
         } else {
@@ -11374,6 +11409,14 @@ function submitLevel2() {
         });
     }
 
+}
+function popinEndLevel2 () {
+    var $popinSuccessTime = new Popin({
+                content: content['jeu2s'],
+                type: 'succes',
+                callback: 'popinTable2()',
+                icon: 'succes6'
+            });
 }
 
 function popintable2() {

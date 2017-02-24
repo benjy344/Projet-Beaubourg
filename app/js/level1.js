@@ -25,6 +25,7 @@ function portalLevel1() {
 function loadLevel1() {
     binaire = '';
     initEcrin();
+    startTime = Date.now();
     countLevel = 1;
     if (!level1IsVisited) {
         var $popinSlider = new Popin({
@@ -37,7 +38,7 @@ function loadLevel1() {
             0 : content['jeu1astuce1'],
             1 : content['jeu1astuce2'],
             2 : content['jeu1astuce3']
-           }
+        }
         //var tips1 = []
         Tip1 = new Tip({
             'tips' : tipsLevel1,
@@ -48,26 +49,26 @@ function loadLevel1() {
         if (arrayCookieUser.$countHelp <=3) {
             switch (arrayCookieUser.$countHelp) {
                 case 0:
-                    tipsLevel1 = {
-                        0 : content['jeu1astuce1'],
-                        1 : content['jeu1astuce2'],
-                        2 : content['jeu1astuce3']
-                       }
-                    break;
+                tipsLevel1 = {
+                    0 : content['jeu1astuce1'],
+                    1 : content['jeu1astuce2'],
+                    2 : content['jeu1astuce3']
+                }
+                break;
                 case 1:
-                    tipsLevel1 = {
-                        0 : content['jeu1astuce1'],
-                        1 : content['jeu1astuce2'],
-                        2 : content['jeu1astuce3']
-                       }
-                    break;
+                tipsLevel1 = {
+                    0 : content['jeu1astuce1'],
+                    1 : content['jeu1astuce2'],
+                    2 : content['jeu1astuce3']
+                }
+                break;
                 case 2:
-                    tipsLevel1 = {
-                        0 : content['jeu1astuce1'],
-                        1 : content['jeu1astuce2'],
-                        2 : content['jeu1astuce3']
-                       }
-                    break;
+                tipsLevel1 = {
+                    0 : content['jeu1astuce1'],
+                    1 : content['jeu1astuce2'],
+                    2 : content['jeu1astuce3']
+                }
+                break;
             }
             
             //var tips1 = []
@@ -124,6 +125,10 @@ function loadLevel1() {
 *********************/
 function submitLevel1() {
     console.log('submit lv1')
+    endTime = Date.now();
+
+    var myTime = (endTime - startTime)/1000;
+
     var chaineTableau = '';
     var div = $('.tableau ul li div');
 
@@ -136,31 +141,49 @@ function submitLevel1() {
         }
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
+
         if (!level2IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu1d'],
-                type: 'succes',
-                callback: 'popinTable()',
-                icon: 'succes1'
-            });
-            
-           if(Tip1){ Tip1.destroy('Tip1');}
+            if (myTime <= 30) {
+                var $popinError = new Popin({
+                    content: content['jeu1d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel1()',
+                    icon: 'succes1'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu1d'],
+                    type: 'succes',
+                    callback: 'popinTable()',
+                    icon: 'succes1'
+                });
+            }
+
+            if(Tip1){ Tip1.destroy('Tip1');}
         } else {
             portalLevel2();
-        }
+        } 
+        
         
     }else{var $popinError = new Popin({
         content: content['erreur'],
     });}
 }
+function popinEndLevel1 () {
+    var $popinSuccessTime = new Popin({
+                content: content['jeu1s'],
+                type: 'succes',
+                callback: 'popinTable()',
+                icon: 'succes5'
+            });
+}
 
 function popinTable() {
-    console.log('portail lv2')
     var $popinTableau = new Popin({
-                content: content['encyclo2jeu1'],
-                type: 'encyclo',
-                callback: 'portalLevel2()',
-                title: content['art1']
-            });
+        content: content['encyclo2jeu1'],
+        type: 'encyclo',
+        callback: 'portalLevel2()',
+        title: content['art1']
+    });
     return;
 }

@@ -107,7 +107,8 @@ var $countHelp = 0,
     Tip5,
     tipsLevel5;
 
-
+var startTime = 0,
+    endTime =0;
 var intervale = 0,
     t = 0;
 

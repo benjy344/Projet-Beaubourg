@@ -23,6 +23,7 @@ function portalLevel2() {
 }
 
 function loadLevel2() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
     countLevel = 2;
     if (!level2IsVisited) {
@@ -189,6 +190,7 @@ function runCodeLevel2() {
 *********************/
 
 function submitLevel2() {
+    endTime = Date.now();
     var numCorrect = 0;
     var pixels = $('.js-pixel');
 
@@ -206,13 +208,22 @@ function submitLevel2() {
 
     if (numCorrect == pixels.length || testing) { //{}
         if (!level3IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu2d'],
-                callback: 'popintable2()',
-                type: 'succes',
-                icon: 'succes2'
-            });
 
+            if (myTime <= 30) {
+                var $popinError = new Popin({
+                    content: content['jeu2d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel2()',
+                    icon: 'succes2'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu2d'],
+                    type: 'succes',
+                    callback: 'popinTabl2()',
+                    icon: 'succes2'
+                });
+            }
 
             if(Tip2){Tip2.destroy('Tip2')};
         } else {
@@ -224,6 +235,14 @@ function submitLevel2() {
         });
     }
 
+}
+function popinEndLevel2 () {
+    var $popinSuccessTime = new Popin({
+                content: content['jeu2s'],
+                type: 'succes',
+                callback: 'popinTable2()',
+                icon: 'succes6'
+            });
 }
 
 function popintable2() {
