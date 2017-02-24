@@ -9261,7 +9261,7 @@ function loadIntro(){
     $.get("dist/content/content_"+lang+".html", function(data) {
         $(data).filter('div').each(function(i) {
             var name = $(this).attr("id");
-            content[name] = $(this).html()
+            content[name] = $(this).html();
         })
 
         $('.main-nav ul').html(content['menu'])
@@ -11397,7 +11397,7 @@ function submitLevel2() {
                 var $popinError = new Popin({
                     content: content['jeu2d'],
                     type: 'succes',
-                    callback: 'popinTabl2()',
+                    callback: 'popinTable2()',
                     icon: 'succes2'
                 });
             }
@@ -11427,7 +11427,7 @@ function popinEndLevel2 () {
             });
 }
 
-function popintable2() {
+function popinTable2() {
     var $popinTableau = new Popin({
         content: content['encyclo2jeu2'],
         type: 'encyclo',
