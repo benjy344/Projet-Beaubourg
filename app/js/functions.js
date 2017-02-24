@@ -41,7 +41,7 @@ function loadIntro(){
     $.get("dist/content/content_"+lang+".html", function(data) {
         $(data).filter('div').each(function(i) {
             var name = $(this).attr("id");
-            content[name] = $(this).html()
+            content[name] = $(this).html();
         })
 
         $('.main-nav ul').html(content['menu'])
