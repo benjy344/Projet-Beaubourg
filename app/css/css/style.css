@@ -671,9 +671,9 @@ body .font-icon-info {
   top: 5px;
   font-size: 2em;
 }
-@media (min-width: 768px) {
+@media (max-width: 359px) {
   body {
-    /*font-size: 2vw*/
+    font-size: 1em;
   }
 }
 body .loading {

@@ -167,12 +167,6 @@
   height: calc(100vw/2);
   width: calc(100vw/2);
 }
-@media (max-width: 360px) {
-  #modal-content .pixel-model .buttons .sliders {
-    height: calc(60vw/2);
-    width: calc(60vw/2);
-  }
-}
 #modal-content .pixel-model .buttons .sliders .range-bg {
   background-color: black;
   width: calc(100%/3);
@@ -240,11 +234,6 @@
 #modal-content .pixel-model .buttons .apply-color {
   min-width: 100%;
   background-color: #242322;
-}
-@media (max-width: 360px) {
-  #modal-content .pixel-model .buttons .apply-color {
-    font-size: 5vw;
-  }
 }
 
 /*# sourceMappingURL=activite3.css.map */
