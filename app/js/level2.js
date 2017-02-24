@@ -243,10 +243,11 @@ function submitLevel2() {
 
 }
 function popinEndLevel2 () {
+    if (!level3IsVisited) { var callback = 'popinTable2()'} else { var callback = 'portalLevel3()'}
     var $popinSuccessTime = new Popin({
                 content: content['jeu2s'],
                 type: 'succes',
-                callback: 'popinTable2()',
+                callback: callback,
                 icon: 'succes6'
             });
 }

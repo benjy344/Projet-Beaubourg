@@ -177,6 +177,10 @@ function runCodeLevel4() {
 
 function submitLevel4() {
     //Validate
+    endTime = Date.now();
+    var myTime = (endTime - startTime)/1000;
+
+
     var isCorrect = 0;
     $.each($('.js-image-object'), function(i) {
         var pos = $(this).data('pos');
@@ -190,21 +194,52 @@ function submitLevel4() {
     })
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
+
+
+            if (myTime <= 90) { 
+                var $popinError = new Popin({
+                    content: content['jeu4d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel4()',
+                    icon: 'succes4'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu4d'],
+                    type: 'succes',
+                    callback: 'popinTable4()',
+                    icon: 'succes4'
+                });
+            }
             var $popinError = new Popin({
                 content: content['felicitation'],
                 callback: 'popinTable4()',
                 type: 'succes',
                 icon: 'succes4'
             });
-            Tip4.destroy('Tip4');
+            if (Tip4) Tip4.destroy('Tip4');
         } else {
-            portalSandbox();
+            if (myTime <= 90) {
+                popinEndLevel4();
+            } else {
+                portalSandbox();                
+            }
         }
     } else {
         var $popinError = new Popin({
             content: content['erreur']
         });
     }
+}
+
+function popinEndLevel3 () {
+    if (!sandboxIsVisited) { var callback = 'popinTable4()'} else { var callback = 'portalSandbox()'}
+    var $popinSuccessTime = new Popin({
+                content: content['jeu3s'],
+                type: 'succes',
+                callback: callback,
+                icon: 'succes8'
+            });
 }
 function popinTable4 () {
 

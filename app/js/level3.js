@@ -208,7 +208,8 @@ function runCodeLevel3() {
 *********************/
 
 function submitLevel3() {
-
+    endTime = Date.now();
+    var myTime = (endTime - startTime)/1000;
 
 
     $.each($('.square').not('correct'), function(i) {
@@ -248,16 +249,30 @@ function submitLevel3() {
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu3d'],
-                callback: 'popinTable3()',
-                type: 'succes',
-                icon: 'succes3'
-            });
 
-            Tip3.destroy('Tip3');
+            if (myTime <= 120) { 
+                var $popinError = new Popin({
+                    content: content['jeu3d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel3()',
+                    icon: 'succes3'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu3d'],
+                    type: 'succes',
+                    callback: 'popinTable3()',
+                    icon: 'succes3'
+                });
+            }
+
+            if (Tip3) Tip3.destroy('Tip3');
         } else {
-            portalLevel4();
+            if (myTime <= 120) {
+                popinEndLevel3();
+            } else {
+                portalLevel4();                
+            }
         }
 
     } else {
@@ -267,7 +282,15 @@ function submitLevel3() {
     }
 
 }
-
+function popinEndLevel3 () {
+    if (!level4IsVisited) { var callback = 'popinTable3()'} else { var callback = 'portalLevel4()'}
+    var $popinSuccessTime = new Popin({
+                content: content['jeu3s'],
+                type: 'succes',
+                callback: callback,
+                icon: 'succes7'
+            });
+}
 function popinTable3 () {
 
     var $popinTableau = new Popin({

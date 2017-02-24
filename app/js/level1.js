@@ -170,10 +170,11 @@ function submitLevel1() {
     });}
 }
 function popinEndLevel1 () {
+    if (!level2IsVisited) { var callback = 'popinTable()'} else {var callback = 'portalLevel2()'}
     var $popinSuccessTime = new Popin({
                 content: content['jeu1s'],
                 type: 'succes',
-                callback: 'popinTable()',
+                callback: callback,
                 icon: 'succes5'
             });
 }

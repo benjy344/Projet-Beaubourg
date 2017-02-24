@@ -11153,10 +11153,11 @@ function submitLevel1() {
     });}
 }
 function popinEndLevel1 () {
+    if (!level2IsVisited) { var callback = 'popinTable()'} else {var callback = 'portalLevel2()'}
     var $popinSuccessTime = new Popin({
                 content: content['jeu1s'],
                 type: 'succes',
-                callback: 'popinTable()',
+                callback: callback,
                 icon: 'succes5'
             });
 }
@@ -11417,10 +11418,11 @@ function submitLevel2() {
 
 }
 function popinEndLevel2 () {
+    if (!level3IsVisited) { var callback = 'popinTable2()'} else { var callback = 'portalLevel3()'}
     var $popinSuccessTime = new Popin({
                 content: content['jeu2s'],
                 type: 'succes',
-                callback: 'popinTable2()',
+                callback: callback,
                 icon: 'succes6'
             });
 }
@@ -11644,7 +11646,8 @@ function runCodeLevel3() {
 *********************/
 
 function submitLevel3() {
-
+    endTime = Date.now();
+    var myTime = (endTime - startTime)/1000;
 
 
     $.each($('.square').not('correct'), function(i) {
@@ -11684,16 +11687,30 @@ function submitLevel3() {
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
         if (!level4IsVisited) {
-            var $popinError = new Popin({
-                content: content['jeu3d'],
-                callback: 'popinTable3()',
-                type: 'succes',
-                icon: 'succes3'
-            });
 
-            Tip3.destroy('Tip3');
+            if (myTime <= 120) { 
+                var $popinError = new Popin({
+                    content: content['jeu3d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel3()',
+                    icon: 'succes3'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu3d'],
+                    type: 'succes',
+                    callback: 'popinTable3()',
+                    icon: 'succes3'
+                });
+            }
+
+            if (Tip3) Tip3.destroy('Tip3');
         } else {
-            portalLevel4();
+            if (myTime <= 120) {
+                popinEndLevel3();
+            } else {
+                portalLevel4();                
+            }
         }
 
     } else {
@@ -11703,7 +11720,15 @@ function submitLevel3() {
     }
 
 }
-
+function popinEndLevel3 () {
+    if (!level4IsVisited) { var callback = 'popinTable3()'} else { var callback = 'portalLevel4()'}
+    var $popinSuccessTime = new Popin({
+                content: content['jeu3s'],
+                type: 'succes',
+                callback: callback,
+                icon: 'succes7'
+            });
+}
 function popinTable3 () {
 
     var $popinTableau = new Popin({
@@ -11894,6 +11919,10 @@ function runCodeLevel4() {
 
 function submitLevel4() {
     //Validate
+    endTime = Date.now();
+    var myTime = (endTime - startTime)/1000;
+
+
     var isCorrect = 0;
     $.each($('.js-image-object'), function(i) {
         var pos = $(this).data('pos');
@@ -11907,21 +11936,52 @@ function submitLevel4() {
     })
     if (isCorrect == 9 || testing) { //{TEST}
         if (!sandboxIsVisited) {
+
+
+            if (myTime <= 90) { 
+                var $popinError = new Popin({
+                    content: content['jeu4d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel4()',
+                    icon: 'succes4'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu4d'],
+                    type: 'succes',
+                    callback: 'popinTable4()',
+                    icon: 'succes4'
+                });
+            }
             var $popinError = new Popin({
                 content: content['felicitation'],
                 callback: 'popinTable4()',
                 type: 'succes',
                 icon: 'succes4'
             });
-            Tip4.destroy('Tip4');
+            if (Tip4) Tip4.destroy('Tip4');
         } else {
-            portalSandbox();
+            if (myTime <= 90) {
+                popinEndLevel4();
+            } else {
+                portalSandbox();                
+            }
         }
     } else {
         var $popinError = new Popin({
             content: content['erreur']
         });
     }
+}
+
+function popinEndLevel3 () {
+    if (!sandboxIsVisited) { var callback = 'popinTable4()'} else { var callback = 'portalSandbox()'}
+    var $popinSuccessTime = new Popin({
+                content: content['jeu3s'],
+                type: 'succes',
+                callback: callback,
+                icon: 'succes8'
+            });
 }
 function popinTable4 () {
 
