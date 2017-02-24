@@ -116,12 +116,6 @@
                 height: calc(100vw/2);
                 width: calc(100vw/2);
 
-                @include mini-mobile {
-                    height: calc(60vw/2);
-                    width: calc(60vw/2);
-                }
-
-
                 .range-bg {
                     background-color: black;
                     width: calc(100%/3);
@@ -203,10 +197,6 @@
             .apply-color {
                 min-width: 100%;
                 background-color: $black;
-                
-                @include mini-mobile {
-                    font-size: 5vw;
-                }
             }
 
 
