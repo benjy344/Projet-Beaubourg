@@ -12246,7 +12246,6 @@ Portal.prototype = {
     	this.$portal.addClass('show');
     	this.$title.addClass('fade-in');
     	this.$notion.addClass('fade-in');
-        console.log('on open', this.loadCallbackOnClose)
     	if(!this.loadCallbackOnClose) {
             eval(this.callback);
         }else {
@@ -12257,7 +12256,6 @@ Portal.prototype = {
 		this.$portal.removeClass('show').removeClass('last-portal');
 		this.$title.removeClass('fade-in');
 		this.$notion.removeClass('fade-in');
-        console.log('on close', this.loadCallbackOnClose)
         if(this.loadCallbackOnClose) {this.loadCallbackOnClose = false; eval(this.callback)};
         delete this;
     },
