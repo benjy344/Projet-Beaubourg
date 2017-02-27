@@ -52,7 +52,8 @@ var up = 'up',
     plus = 'up',
     moins = 'down';
 
-var which = 'left';
+var which = 'left',
+    isFailedOnce = false;
 
 $.getJSON('dist/json/answers.json', function(data) {
     answers = data;

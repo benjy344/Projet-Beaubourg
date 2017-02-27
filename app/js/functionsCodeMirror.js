@@ -363,9 +363,13 @@ function resetSliders(r, g, b) {
 
 function disableSliders(validated) {
     $.each(validated, function(color, disabled) {
-        console.log(color, disabled)
+        //console.log(color, disabled)
         if (disabled) {
             $('input.'+color).prop('disabled', 'disabled').parent().addClass('validated');
+            if (!isFailedOnce) {
+                isFailedOnce = true;
+                popinExplainLevel3();
+            }
         }
     });
 }
