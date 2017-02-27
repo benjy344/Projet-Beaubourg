@@ -58,7 +58,8 @@ var up = 'up',
     plus = 'up',
     moins = 'down';
 
-var which = 'left';
+var which = 'left',
+    isFailedOnce = false;
 
 $.getJSON('dist/json/answers.json', function(data) {
     answers = data;
@@ -10186,9 +10187,13 @@ function resetSliders(r, g, b) {
 
 function disableSliders(validated) {
     $.each(validated, function(color, disabled) {
-        console.log(color, disabled)
+        //console.log(color, disabled)
         if (disabled) {
             $('input.'+color).prop('disabled', 'disabled').parent().addClass('validated');
+            if (!isFailedOnce) {
+                isFailedOnce = true;
+                popinExplainLevel3();
+            }
         }
     });
 }
@@ -11569,7 +11574,9 @@ function loadLevel3() {
             }
         })
 
-        $('.apply-color').on('touch click', hideModal)
+        $('.apply-color').on('touch click', function(){
+            $('.pixel-active').verifyPixel();
+        })
 
 
         $('#chooseFrameLvl3 input[type="radio"]').on('change', function() {
@@ -11578,16 +11585,13 @@ function loadLevel3() {
         })
 
         $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
-
             //console.log('initiating level')
             $('input[name="chooseFrameLvl3"]').off();
-
             var varNames = [];
             $(content['jeu3variables_'+which]).map(function() {
                 varNames.push($(this).text())
             })
             //console.log(varNames)
-
             $('.js-framewrapper').children().each(function(){
                 $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]).data('validated', {red:false, green:false, blue:false});
             });
@@ -11618,9 +11622,6 @@ function loadLevel3() {
             colorPixel();
         })
 
-        $('input[type=range]').on("change", function(){
-            //verifPixelLevel3();
-        })
     });
 }
 
@@ -11675,38 +11676,8 @@ function submitLevel3() {
 
 
     $.each($('.square').not('correct'), function(i) {
-
-        //console.log(i);
-        var rvb = $(this).data('rvb'),
-            validated = $(this).data('validated'),
-            pixelName = $(this).data('name'),
-            correctRvb = thisLvlAnswers[which][pixelName],
-            isCorrect = true;
-
-        //console.log(validated)
-
-        $.each(correctRvb, function(color, value){
-            if (value.length > 1) { 
-                if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
-                    validated[color] = true;
-                }
-            } else { 
-                if (rvb[color] == value[0]) { 
-                    validated[color] = true;
-                }
-            }     
-        }) 
-
-        $(this).data('validated', validated);
-
-        //console.log(isCorrect);
-        if (validated.red && validated.green && validated.blue) {
-            $(this).removeClass('incorrect')
-            $(this).addClass('correct')
-        } else {
-            $(this).addClass('incorrect')
-        }
-        //console.log(i);
+        $(this).removeClass('active-pixel');
+        $(this).verifyPixel();
     });
 
     if ($('.correct').length == $('.square').length || testing) { //{TEST}
@@ -11744,6 +11715,55 @@ function submitLevel3() {
     }
 
 }
+
+$.fn.verifyPixel = function() {
+    //console.log('verifying');
+    //console.log($(this))
+    var rvb = $(this).data('rvb'),
+        validated = $(this).data('validated'),
+        pixelName = $(this).data('name'),
+        correctRvb = thisLvlAnswers[which][pixelName],
+        isCorrect = true;
+
+    //console.log(validated)
+
+    $.each(correctRvb, function(color, value){
+        if (value.length > 1) { 
+            if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
+                validated[color] = true;
+            }
+        } else { 
+            if (rvb[color] == value[0]) { 
+                validated[color] = true;
+            }
+        }     
+    }) 
+
+    $(this).data('validated', validated);
+    if ($(this).hasClass('pixel-active')) {
+        disableSliders(validated);
+    }
+
+    //console.log(isCorrect);
+    if (validated.red && validated.green && validated.blue) {
+        $(this).removeClass('incorrect')
+        $(this).addClass('correct')
+        setTimeout(hideModal, 500);
+    } else {
+        $(this).addClass('incorrect') 
+    }
+}
+
+function popinExplainLevel3() {
+    var title = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
+    var popinExplain = new Popin({
+        content: content['lvl3explanation'],
+        type: 'info',
+        callback: '',
+        title: title
+    });
+}
+
 function popinEndLevel3 () {
     if (!level4IsVisited) { var callback = 'popinTable3()'} else { var callback = 'portalLevel4()'}
     var exist = false;
@@ -11754,18 +11774,17 @@ function popinEndLevel3 () {
         }
     }
     if (!exist) {
-    var $popinSuccessTime = new Popin({
-                content: content['jeu3s'],
-                type: 'succes',
-                callback: callback,
-                icon: 'succes7'
-            });
+        var $popinSuccessTime = new Popin({
+            content: content['jeu3s'],
+            type: 'succes',
+            callback: callback,
+            icon: 'succes7'
+        });
     }else {
         eval(callback);
     }
 }
 function popinTable3 () {
-
     var $popinTableau = new Popin({
         content: content['encyclo2jeu3'],
         type: 'encyclo',
