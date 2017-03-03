@@ -40,7 +40,7 @@ function loadLevel4() {
         }
         Tip4 = new Tip({
             'tips' : tipsLevel4,
-            'duration' : 42000,
+            'duration' : 4000,
             'level': 4
         })
     }
@@ -207,16 +207,10 @@ function submitLevel4() {
                 var $popinError = new Popin({
                     content: content['jeu4d'],
                     type: 'succes',
-                    callback: 'popinTable4()',
+                    callback: 'portalSandbox()',
                     icon: 'succes4'
                 });
             }
-            var $popinError = new Popin({
-                content: content['felicitation'],
-                callback: 'popinTable4()',
-                type: 'succes',
-                icon: 'succes4'
-            });
             if (Tip4) Tip4.destroy('Tip4');
         } else {
             if (myTime <= 90) {
@@ -233,7 +227,6 @@ function submitLevel4() {
 }
 
 function popinEndLevel3 () {
-    if (!sandboxIsVisited) { var callback = 'popinTable4()'} else { var callback = 'portalSandbox()'}
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
         if ($tabSuccess[i] === 'succes8') {
@@ -245,19 +238,10 @@ function popinEndLevel3 () {
     var $popinSuccessTime = new Popin({
                 content: content['jeu3s'],
                 type: 'succes',
-                callback: callback,
+                callback: 'portalSandbox()',
                 icon: 'succes8'
             });
     }else {
-        eval(callback);
+        portalSandbox();
     }
-}
-function popinTable4 () {
-
-    var $popinTableau = new Popin({
-        content: content['encyclo2jeu4'],
-        type: 'encyclo',
-        callback: 'portalSandbox()',
-        title: content['art4']
-    });
 }

@@ -44,7 +44,7 @@ function loadLevel3() {
         //var tips1 = []
         Tip3 = new Tip({
             'tips' : tipsLevel3,
-            'duration' : 30000,
+            'duration' : 4000,
             'level': 3
         })
     } else {
@@ -227,7 +227,7 @@ function submitLevel3() {
                 var $popinError = new Popin({
                     content: content['jeu3d'],
                     type: 'succes',
-                    callback: 'popinTable3()',
+                    callback: 'portalLevel4()',
                     icon: 'succes3'
                 });
             }
@@ -292,13 +292,11 @@ function popinExplainLevel3() {
     var popinExplain = new Popin({
         content: content['lvl3explanation'],
         type: 'info',
-        callback: '',
         title: title
     });
 }
 
 function popinEndLevel3 () {
-    if (!level4IsVisited) { var callback = 'popinTable3()'} else { var callback = 'portalLevel4()'}
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
         if ($tabSuccess[i] === 'succes7') {
@@ -310,18 +308,10 @@ function popinEndLevel3 () {
         var $popinSuccessTime = new Popin({
             content: content['jeu3s'],
             type: 'succes',
-            callback: callback,
+            callback: 'portalLevel4()',
             icon: 'succes7'
         });
     }else {
-        eval(callback);
+        portalLevel4();
     }
-}
-function popinTable3 () {
-    var $popinTableau = new Popin({
-        content: content['encyclo2jeu3'],
-        type: 'encyclo',
-        callback: 'portalLevel4()',
-        title: content['art3']
-    });
 }

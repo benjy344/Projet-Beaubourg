@@ -115,25 +115,18 @@ function initRealoadSession() {
         if ((numberForEncyclo % 2) == 0){
             numberTitle++;
             switch (numberTitle) {
-                case 1:
-                    var title = content['art1'];
-                    break;
                 case 2:
-                    var title = content['art2'];
                     addEncyclo('Info 1', 'info1 blabla');
                     break;
                 case 3:
-                    var title = content['art3'];
                     addEncyclo('Info 2', 'info2 blabla');
                     break;
                 case 4:
-                    var title = content['art4'];
                     addEncyclo('Info 3', 'info3 blabla');
                     break;   
             }
-        }else{ 
-            var title = (isFr ? 'Niveau '+levelForEncyclo : 'Level '+levelForEncyclo);
         }
+        var title = (isFr ? 'Niveau '+levelForEncyclo : 'Level '+levelForEncyclo);
         var thecontent = 'encyclo'+numberForEncyclo+'jeu'+levelForEncyclo;
         addEncyclo(title, content[thecontent]);
         if ((numberForEncyclo % 2) == 0) {levelForEncyclo++; numberForEncyclo = 1;} else {numberForEncyclo++; }
@@ -396,6 +389,9 @@ function addSuccess(icon) {
     }
 }
 
+function openFirstTip() {
+    $(".help-button").removeClass("first-tip").trigger( "click" );   
+}
 
 function alertErr() {
     var pixel = $('.pixel-active').data('rvb');

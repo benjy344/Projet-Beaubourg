@@ -154,7 +154,7 @@ function submitLevel1() {
                 var $popinError = new Popin({
                     content: content['jeu1d'],
                     type: 'succes',
-                    callback: 'popinTable()',
+                    callback: 'portalLevel2()',
                     icon: 'succes1'
                 });
             }
@@ -170,7 +170,6 @@ function submitLevel1() {
     });}
 }
 function popinEndLevel1 () {
-    if (!level2IsVisited) { var callback = 'popinTable()'} else {var callback = 'portalLevel2()'}
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
         if ($tabSuccess[i] === 'succes5') {
@@ -178,26 +177,15 @@ function popinEndLevel1 () {
             break;
         }
     }
-    console.log(exist)
     if (!exist) {
         var $popinSuccessTime = new Popin({
             content: content['jeu1s'],
             type: 'succes',
-            callback: callback,
+            callback: 'portalLevel2()',
             icon: 'succes5'
         });
     }else {
-        eval(callback);
+        portalLevel2();
     }
     
-}
-
-function popinTable() {
-    var $popinTableau = new Popin({
-        content: content['encyclo2jeu1'],
-        type: 'encyclo',
-        callback: 'portalLevel2()',
-        title: content['art1']
-    });
-    return;
 }

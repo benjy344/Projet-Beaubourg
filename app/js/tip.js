@@ -69,6 +69,12 @@ Tip.prototype = {
             $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
                 $this.count++;
                 $this.$open.show().addClass('newTip');
+                if($this.$open.hasClass('first-tip')) {
+                    var $explain = new Popin({
+                        content: content['tipexplain'], 
+                        callback: 'openFirstTip()'                   
+                    });
+                }
                 isNewTip = true;
                 title = isFr ? 'Aide n°' : 'Help n°'
                 title += $this.count;

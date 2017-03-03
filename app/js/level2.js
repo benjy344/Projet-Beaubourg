@@ -17,7 +17,6 @@ function portalLevel2() {
             callback: 'loadLevel2()'
         });
     }
-    console.log($portalLevel2.callback)
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
 }
@@ -57,7 +56,8 @@ function loadLevel2() {
         var info = new Popin({
             type: 'info',
             title: 'Info 1',
-            content: content['accueil'],
+            content: content['variable'],
+            isSlider: true, 
             $popin: $('.js-popup-info'),
             $open: $('.js-icon-info')
         })
@@ -151,12 +151,6 @@ function loadLevel2() {
     })
 }
 
-// function afterLoadLevel2() {
-//     console.log('coucou')
-
-
-// }
-
 function runCodeLevel2() {
     var code = codeMirror.getValue();
 
@@ -222,7 +216,7 @@ function submitLevel2() {
                 var $popinError = new Popin({
                     content: content['jeu2d'],
                     type: 'succes',
-                    callback: 'popinTable2()',
+                    callback: 'portalLevel3()',
                     icon: 'succes2'
                 });
             }
@@ -243,7 +237,6 @@ function submitLevel2() {
 
 }
 function popinEndLevel2 () {
-    if (!level3IsVisited) { var callback = 'popinTable2()'} else { var callback = 'portalLevel3()'}
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
         if ($tabSuccess[i] === 'succes6') {
@@ -255,19 +248,10 @@ function popinEndLevel2 () {
         var $popinSuccessTime = new Popin({
                 content: content['jeu2s'],
                 type: 'succes',
-                callback: callback,
+                callback: 'portalLevel3()',
                 icon: 'succes6'
             });
     }else {
-        eval(callback);
+        portalLevel3();
     }
-}
-
-function popinTable2() {
-    var $popinTableau = new Popin({
-        content: content['encyclo2jeu2'],
-        type: 'encyclo',
-        callback: 'portalLevel3()',
-        title: content['art2']
-    });
 }
