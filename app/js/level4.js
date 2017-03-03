@@ -47,7 +47,7 @@ function loadLevel4() {
             'level': 4
         })
 
-        console.log(Tip4)
+        //console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
@@ -149,7 +149,7 @@ function loadLevel4() {
         });
 
         $('.functions-btn .btn').click(function() {
-            console.log($(this))
+            //console.log($(this))
             addCode($(this));
         })
 
@@ -165,7 +165,7 @@ function loadLevel4() {
 
 
 function runCodeLevel4() {
-    console.log('running code lvl4')
+    //console.log('running code lvl4')
     // console.log($('.imgActive').data('pos'))
     //alert('ok')
     var code = codeMirror.getValue();
@@ -194,8 +194,8 @@ function submitLevel4() {
         var pos = $(this).data('pos');
         $.each(thisLvlAnswers, function(i, value) {
             if (JSON.stringify(pos) == JSON.stringify(value)) {
-                console.log(pos);
-                console.log(value);
+                //console.log(pos);
+                //console.log(value);
                 isCorrect++;
             }
         });

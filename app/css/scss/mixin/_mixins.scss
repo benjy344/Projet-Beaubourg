@@ -3,7 +3,7 @@ $tablet-width: 480px;
 $desktop-width: 768px;
 
 @mixin mini-mobile {
-     @media (max-width: #{$mobile-width - 1px}) {
+    @media (max-width: #{$mobile-width - 1px}) {
         @content;
     }
 }
@@ -22,6 +22,18 @@ $desktop-width: 768px;
 
 @mixin desktop {
     @media (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin portrait {
+    @media (orientation:portrait) {
+        @content;
+    }
+}
+
+@mixin landscape {
+    @media (orientation:landscape) {
         @content;
     }
 }

@@ -291,7 +291,7 @@ function move(direction, repeat) {
                 moveRight();
                 break;
             default:
-                console.log("error") //{DEV}   
+                //console.log("error") //{DEV}   
                 break;
         }
     }
@@ -318,14 +318,14 @@ function applyPosition() {
         scale = pos.scale;
         size = 100/scale;
         var sizepx = size + '%'
-        console.log(size)
+        //console.log(size)
 
         var posMax = scale - 1;
-        console.log(posMax, posMax);
+        //console.log(posMax, posMax);
         pos.x = pos.x > posMax ? posMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > posMax ? posMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-        console.log(pos.x, pos.y);
+        //console.log(pos.x, pos.y);
 
         $('.img-active').css('width', sizepx);
         $('.img-active').css('height', sizepx);

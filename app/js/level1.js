@@ -124,7 +124,7 @@ function loadLevel1() {
 *
 *********************/
 function submitLevel1() {
-    console.log('submit lv1')
+    //console.log('submit lv1')
     endTime = Date.now();
 
     var myTime = (endTime - startTime)/1000;

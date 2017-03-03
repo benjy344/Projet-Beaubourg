@@ -34,7 +34,7 @@ function loadIntro(){
 
     } else {
         Username = $('input#name').val();
-        if (Username =='FX') { // {DEV}
+        if (Username =='DreamTeam!77') { // {DEV}
             testing = true;
         } 
 
@@ -111,7 +111,7 @@ function initRealoadSession() {
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
     var levelForHelp = 1; 
-    console.log(countEncyclo)
+    //console.log(countEncyclo)
     for (var i = 0; i < countHelp; i++) {
         var thecontent = 'jeu'+levelForHelp+'astuce'+number,
             title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
