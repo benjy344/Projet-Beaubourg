@@ -19,9 +19,12 @@ function portalLevel4() {
     }
     arrayCookieUser.currentLevel = 4;
     createCookie(Username, arrayCookieUser, 20);
+    isNewTip = false;
 }
 function loadLevel4() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
@@ -43,6 +46,8 @@ function loadLevel4() {
             'duration' : 4000,
             'level': 4
         })
+
+        console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
@@ -201,14 +206,14 @@ function submitLevel4() {
 
             if (myTime <= 90) { 
                 var $popinError = new Popin({
-                    content: content['jeu4d'],
+                    content: content['felicitation'],
                     type: 'succes',
                     callback: 'popinEndLevel4()',
                     icon: 'succes4'
                 });
             } else {
                 var $popinError = new Popin({
-                    content: content['jeu4d'],
+                    content: content['felicitation'],
                     type: 'succes',
                     callback: 'portalSandbox()',
                     icon: 'succes4'
@@ -229,7 +234,7 @@ function submitLevel4() {
     }
 }
 
-function popinEndLevel3 () {
+function popinEndLevel4 () {
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
         if ($tabSuccess[i] === 'succes8') {
@@ -239,7 +244,7 @@ function popinEndLevel3 () {
     }
     if (!exist) {
     var $popinSuccessTime = new Popin({
-                content: content['jeu3s'],
+                content: content['jeu4s'],
                 type: 'succes',
                 callback: 'portalSandbox()',
                 icon: 'succes8'

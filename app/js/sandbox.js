@@ -24,6 +24,7 @@ function portalSandbox() {
 
 function loadSandbox() {
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({

@@ -9448,7 +9448,6 @@ Implementation de l'encyclopedie
 
 function addEncyclo(name, content, count = true) {
     var exist = false;
-    console.log('addEncyclo', name)
     for (var i = 0; i < encycloNameTab.length; i++) {
         if (encycloNameTab[i] === name) {
             exist = true;
@@ -9461,7 +9460,6 @@ function addEncyclo(name, content, count = true) {
             countEncyclo = encycloNameTab.length;
             arrayCookieUser.$countEncyclo = countEncyclo;
         } 
-        console.log(arrayCookieUser.$countEncyclo)
         counter++;
         createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
@@ -9556,18 +9554,18 @@ function finish() {
     if (totalSucces > $tabSuccess.length) {
         if (isFr) {
             title = "Félicitations !"; 
-            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! n\'hésitez pas à rejouer les activités. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venus à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succès à débloquer ! N\'hésitez pas à rejouer les activités pour obtenir une récompense. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres expériences.'; 
         } else {
             title = "Congratulations !";
-            content = 'Vous êtes venu à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succé(s) à débloquer! n\'hésitez pas à rejouer les activités. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'You made it through all the mini-games. However, there are still '+nbSucces+' success(es) to unlock ! Feel free to play the games again. Other groups are awaiting for you in the museum with new experiences and games !'; 
         }
     } else {
         if (isFr) {
             title = "Félicitations !"; 
-            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! Allez présenter cet écran aux résponssables pour recevoir une recompence! D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'Vous êtes venus à bout de toutes les épreuves en débloquant tous les succès ! Allez présenter cet écran aux responsables pour recevoir une récompense ! D\'autres groupes vous attendant dans le musée pour vous proposer d\'autres expériences !'; 
         } else {
             title = "Congratulations !";
-            content = 'Vous êtes venu à bout de toutes les épreuves en débloquant tous les succés!! Allez présenter cet écran aux résponssables pour recevoir une recompence! D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres experiences'; 
+            content = 'You made it through all the mini-games and unlocked all the successes ! Show us this screen at our booth to receive your reward ! Other groups are waiting for you in the museum with new experiences and games !'; 
         }
     }
 
@@ -10921,8 +10919,8 @@ function portalLevel1() {
         });
     } else {
         var $portalLevel1 = new Portal({
-            title: 'Level 1',
-            notion: 'The Pixel',
+            title: 'The Pixel',
+            notion: 'Odd or even? It\'s up to you to transcribe the proposed number chain',
             callback: 'loadLevel1()'
         });
     }
@@ -11115,12 +11113,13 @@ function portalLevel2() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'The Color',
-            notion: 'Blabla',
+            notion: 'Find the lost colors of the painting!',
             callback: 'loadLevel2()'
         });
     }
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
+    isNewTip = false;
 }
 
 function loadLevel2() {
@@ -11375,18 +11374,21 @@ function portalLevel3() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'The Additive Color Process',
-            notion: 'Blabla',
+            notion: 'Reproduce the shades of one of Morellet\'s gradations, be meticulous!',
             callback: 'loadLevel3()'
         });
     }
     arrayCookieUser.currentLevel = 3;
     createCookie(Username, arrayCookieUser, 20);
+
+    isNewTip = false;
 }
 
 
 function loadLevel3() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 3;
     if (!level3IsVisited) {
         var $popinSlider = new Popin({
@@ -11408,6 +11410,7 @@ function loadLevel3() {
             'duration' : 4000,
             'level': 3
         })
+        console.log(Tip3)
     } else {
         var $popinSlider = new Popin({
             content: content['jeu3reloadpopin']
@@ -11701,15 +11704,18 @@ function portalLevel4() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'Positionning',
-            notion: 'Blabla',
+            notion: 'Reposition the 9 superimposed squares and recreate the work of Morellet',
             callback: 'loadLevel4()'
         });
     }
     arrayCookieUser.currentLevel = 4;
     createCookie(Username, arrayCookieUser, 20);
+    isNewTip = false;
 }
 function loadLevel4() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
@@ -11731,6 +11737,8 @@ function loadLevel4() {
             'duration' : 4000,
             'level': 4
         })
+
+        console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
@@ -11893,14 +11901,14 @@ function submitLevel4() {
 
             if (myTime <= 90) { 
                 var $popinError = new Popin({
-                    content: content['jeu4d'],
+                    content: content['felicitation'],
                     type: 'succes',
                     callback: 'popinEndLevel4()',
                     icon: 'succes4'
                 });
             } else {
                 var $popinError = new Popin({
-                    content: content['jeu4d'],
+                    content: content['felicitation'],
                     type: 'succes',
                     callback: 'portalSandbox()',
                     icon: 'succes4'
@@ -11921,7 +11929,7 @@ function submitLevel4() {
     }
 }
 
-function popinEndLevel3 () {
+function popinEndLevel4 () {
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
         if ($tabSuccess[i] === 'succes8') {
@@ -11931,7 +11939,7 @@ function popinEndLevel3 () {
     }
     if (!exist) {
     var $popinSuccessTime = new Popin({
-                content: content['jeu3s'],
+                content: content['jeu4s'],
                 type: 'succes',
                 callback: 'portalSandbox()',
                 icon: 'succes8'
@@ -12090,6 +12098,7 @@ Popin.prototype = {
                 if (isNewTip) isNewTip=false;
                 if (tipIsOpened) tipIsOpened=false;
             }
+
             //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");
@@ -12368,6 +12377,7 @@ function portalSandbox() {
 
 function loadSandbox() {
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 5;
     if (!sandboxIsVisited) {
         var $popinSlider = new Popin({
@@ -12627,8 +12637,7 @@ Tip.prototype = {
     },
 
     canIconstruct: function(tip) {
-        $this = this;
-        ////console.log($this.canIconstruct())
+        var $this = this;
         if (this.level === countLevel ) {
             $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'lunch constructTip false', $this.level, function() {
                 $this.setTimeOut = setTimeout(function () {
@@ -12641,8 +12650,7 @@ Tip.prototype = {
     },
 
     constructTip : function (tip) {
-        //console.log('constructTip')
-        $this = this;
+        var $this = this;
         if (this.level === countLevel ) {
             $this.waitFor = waitforPopinIsOpen(false, 500, 0, 'play->popinIsOpen false', $this.level, function() {
                 $this.count++;
@@ -12670,48 +12678,40 @@ Tip.prototype = {
     },
 
     stop : function (options) {
-        $this = this;
-        //console.log('stop');
+        var $this = this;
         clearTimeout($this.setTimeOut);
         $this.setTimeOut = 0;
         $this.waitFor = 0;
     },
     destroy: function(tip) {
         // Delete the variable that references the instance of the constructor.
-        //console.log(Tip1)
         switch (tip) {
             case 'Tip1':
                 clearTimeout(window.Tip1.setTimeOut);
                 window.Tip1.setTimeOut = 0;
-                console.log('tip1 '+window.Tip1.setTimeOut)
                 window.Tip1 = undefined;
                 delete window.Tip1;
                 break;
             case 'Tip2':
                 clearTimeout(window.Tip2.setTimeOut);
                 window.Tip2.setTimeOut = 0;
-                console.log('tip2 '+window.Tip2.setTimeOut)
                 window.Tip2 = undefined;
                 delete window.Tip2;
                 break;
             case 'Tip3':
                 clearTimeout(window.Tip3.setTimeOut);
                 window.Tip3.setTimeOut = 0;
-                console.log('tip3 '+window.Tip3.setTimeOut)
                 window.Tip3 = undefined;
                 delete window.Tip3;
                 break;
             case 'Tip4':
                 clearTimeout(window.Tip4.setTimeOut);
                 window.Tip4.setTimeOut = 0;
-                console.log('tip4 '+window.Tip4.setTimeOut)
                 window.Tip4 = undefined;
                 delete window.Tip4;
                 break;
         }
 
-
-        //console.log(Tip1)
     }
 
 };

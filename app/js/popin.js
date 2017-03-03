@@ -146,6 +146,7 @@ Popin.prototype = {
                 if (isNewTip) isNewTip=false;
                 if (tipIsOpened) tipIsOpened=false;
             }
+
             //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");
