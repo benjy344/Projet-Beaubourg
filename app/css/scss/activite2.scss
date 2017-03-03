@@ -44,8 +44,8 @@
         width: calc(100vw/2);
 
         @include landscape {
-            height: calc(100vh/2);
-            width: calc(100vh/2);
+            height: calc(100vh/3);
+            width: calc(100vh/3);
         }
 
         input {
@@ -71,8 +71,8 @@
     }
 
     .buttons {
-        /*        display: flex;*/
-        /*        justify-content : center; */
+        /* display: flex; */
+        /* justify-content : center; */
 
         .apply-color {
             min-width: 100%;

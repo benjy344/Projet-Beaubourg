@@ -52,7 +52,7 @@ var up = 'up',
     plus = 'up',
     moins = 'down';
 
-var which = 'left',
+var which = 'right',
     isFailedOnce = false;
 
 var textArea = $('.codeMirror')[0],
@@ -108,5 +108,3 @@ var startTime = 0,
     endTime =0;
 var intervale = 0,
     t = 0;
-
-var which = 'left';

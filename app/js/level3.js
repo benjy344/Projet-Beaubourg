@@ -58,12 +58,12 @@ function loadLevel3() {
     }
     var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
     var info = new Popin({
-            type: 'info',
-            title: titleExplain,
-            content: content['lvl3explanation'],
-            $popin: $('.js-popup-info'),
-            $open: $('.js-icon-info')
-        })
+        type: 'info',
+        title: titleExplain,
+        content: content['lvl3explanation'],
+        $popin: $('.js-popup-info'),
+        $open: $('.js-icon-info')
+    })
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -139,6 +139,16 @@ function loadLevel3() {
             $('.js-framewrapper').children().each(function(){
                 $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]).data('validated', {red:false, green:false, blue:false});
             });
+
+            if (isFr) {
+                var side = which == left ? 'gauche' : 'droite';
+                var colors = which == left ? 'bleus' : 'rouges';
+                $('#level3 .consigne p').text('Reproduisez le dégradé allant du jaune au violet en passant par les '+colors+' ! (Partie '+side+' du tableau)'); 
+            } else {
+                var side = which == left ? 'Left' : 'Right';
+                var colors = which == left ? 'blue' : 'red';
+                $('#level3 .consigne p').text('Reproduce the '+colors+' gradient ! ('+side+' part of the painting)');
+            }
         })
 
         //Change input
