@@ -205,14 +205,14 @@ function submitLevel4() {
 
             if (myTime <= 90) { 
                 var $popinError = new Popin({
-                    content: content['jeu4d'],
+                    content: content['felicitation'],
                     type: 'succes',
                     callback: 'popinEndLevel4()',
                     icon: 'succes4'
                 });
             } else {
                 var $popinError = new Popin({
-                    content: content['jeu4d'],
+                    content: content['felicitation'],
                     type: 'succes',
                     callback: 'portalSandbox()',
                     icon: 'succes4'
@@ -243,7 +243,7 @@ function popinEndLevel4 () {
     }
     if (!exist) {
     var $popinSuccessTime = new Popin({
-                content: content['jeu3s'],
+                content: content['jeu4s'],
                 type: 'succes',
                 callback: 'portalSandbox()',
                 icon: 'succes8'
