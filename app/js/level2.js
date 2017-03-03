@@ -24,6 +24,7 @@ function portalLevel2() {
 function loadLevel2() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 2;
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
@@ -52,10 +53,10 @@ function loadLevel2() {
     arrayCookieUser.level2IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level2', function() {
-
+       var titleExplain = isFr ? 'Les Variables' : 'Variables';
         var info = new Popin({
             type: 'info',
-            title: 'Info 1',
+            title: titleExplain,
             content: content['variable'],
             isSlider: true, 
             $popin: $('.js-popup-info'),

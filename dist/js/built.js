@@ -16,7 +16,7 @@ var dest = './dist/',
     screen = 'index',
     countLevel = 0,
     ecrin = false, 
-    
+
     lang = "fr",
     isFr = true,
 
@@ -61,19 +61,15 @@ var up = 'up',
 var which = 'left',
     isFailedOnce = false;
 
-$.getJSON('dist/json/answers.json', function(data) {
-    answers = data;
-});
-
 var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false
-                //matchBrackets: true
-            };
+    codeConfig = {
+        mode: "text/javascript",
+        theme: "icecoder", 
+        lineWrapping: true, 
+        lineNumbers: true, 
+        autofocus: false
+        //matchBrackets: true
+    };
 
 $Popup = $('.js-popup');
 $content_popup = $Popup.find('.js-content-popup');
@@ -86,7 +82,7 @@ tipIsOpened = false;
 isNewTip = false;
 
 countip = 0,
-counter = 0;
+    counter = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];
@@ -9248,27 +9244,37 @@ function reloadLevel() {
 *
 *********************/
 function loadIntro(){
-    Username = $('input#name').val();
-    if (Username == '' || Username =='FX') { // {DEV}
-        testing = true;
+
+    if ($('input#name').val() == '') {
+
+        $('input#name').focus();
+
+    } else {
+        Username = $('input#name').val();
+        if (Username =='FX') { // {DEV}
+            testing = true;
+        } 
+
+        lang = $('#chooseLang input[type="radio"]:checked').attr('id');
+        if (lang == 'en') {
+            isFr = false;
+        }
+
+        $.get("dist/content/content_"+lang+".html", function(data) {
+            $(data).filter('div').each(function(i) {
+                var name = $(this).attr("id");
+                content[name] = $(this).html();
+            })
+
+            $('.main-nav ul').html(content['menu'])
+
+            $.getJSON('dist/json/answers_' + lang + '.json', function(data) {
+                answers = data;
+
+                isUserExiste(Username);
+            });
+        });
     }
-
-
-    lang = $('#chooseLang input[type="radio"]:checked').attr('id');
-    if (lang == 'en') {
-        isFr = false;
-    }
-
-    $.get("dist/content/content_"+lang+".html", function(data) {
-        $(data).filter('div').each(function(i) {
-            var name = $(this).attr("id");
-            content[name] = $(this).html();
-        })
-
-        $('.main-nav ul').html(content['menu'])
-        isUserExiste(Username);
-    });
-    
 }
 
 
@@ -9322,9 +9328,7 @@ function initRealoadSession() {
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
     var levelForHelp = 1; 
-    var numberForEncyclo = 1; 
-    var levelForEncyclo = 1; 
-
+    console.log(countEncyclo)
     for (var i = 0; i < countHelp; i++) {
         var thecontent = 'jeu'+levelForHelp+'astuce'+number,
             title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
@@ -9332,25 +9336,23 @@ function initRealoadSession() {
         if ((number % 3) == 0) {levelForHelp++; number = 1;} else {number++; }
     }
     var numberTitle = 0;
-    for (var i = 0; i < countEncyclo; i++) {
-        if ((numberForEncyclo % 2) == 0){
-            numberTitle++;
-            switch (numberTitle) {
-                case 2:
-                    addEncyclo('Info 1', 'info1 blabla');
-                    break;
-                case 3:
-                    addEncyclo('Info 2', 'info2 blabla');
-                    break;
-                case 4:
-                    addEncyclo('Info 3', 'info3 blabla');
-                    break;   
-            }
+    if(level2IsVisited){
+            var titleExplain = isFr ? 'Les Variables' : 'Variables';
+            addEncyclo(titleExplain, content['variable'], false);
         }
-        var title = (isFr ? 'Niveau '+levelForEncyclo : 'Level '+levelForEncyclo);
-        var thecontent = 'encyclo'+numberForEncyclo+'jeu'+levelForEncyclo;
+    if(level3IsVisited){
+        var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
+        addEncyclo(titleExplain, content['lvl3explanation'], false);
+    }
+    if(level4IsVisited){
+        var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
+        addEncyclo(titleExplain, content['fonction'], false);
+    }
+
+    for (var i = 1; i < (parseInt(countEncyclo)+1); i++) {        
+        var title = (isFr ? 'Niveau '+i : 'Level '+i);
+        var thecontent = 'encyclo1jeu'+i;
         addEncyclo(title, content[thecontent]);
-        if ((numberForEncyclo % 2) == 0) {levelForEncyclo++; numberForEncyclo = 1;} else {numberForEncyclo++; }
     }
 
 }
@@ -9429,85 +9431,6 @@ $.fn.loadLevel = function(levelToLoad, callback) {
 }
 
 
-/********************
-*
-*   Popup & Modal
-*
-*********************/
-
-
-
-/*********************
-
-    Popup Aide
-
-********************/
-/**
-* constructTips
-* function de construction des popups d'aide
-* time en ms, durée entre chaque aide;
-* numberOftips nombre total de tips;
-* tips = {
-*   0 : 'blabla1',
-*   1 : 'blabla2',
-*   2 : 'blabla'
-* }
-**/
-// function constructTips(time, numberOftips, tips ) {
-//     var number = 0;
-//     timeOut = setTimeout( function () {
-//         if (popinIsOpen === false) {
-//             getATip(number, time, tips, numberOftips);
-//         } else {
-//             constructTips(time, numberOftips, tips );
-//         } 
-//     } , time);
-
-// }
-
-
-// function getATip(number, time, tips, total, finish) {
-//     if (finish) {
-
-//         clearTimeout(t);
-//         t = 0;
-//         clearInterval(intervale);
-//         intervale = 0;
-//         console.log('kill')
-//         console.log(t)
-//         console.log(intervale)
-//     } else {
-//         intervale = 0;
-//         t = 0;
-//         $('.help-button').show().addClass('newTip');
-//         isNewTip = true;
-//         var $popup = $popin = new Popin({
-//                     content: tips[number],
-//                     type: 'help',
-//                     $open: $('.help-button')
-//                 });
-//         number++;
-//         if (number < total) {
-
-//             //var t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-//             intervale = setInterval(function () {
-//                 if (isNewTip == true || tipIsOpened == true || popinIsOpen == true) {
-//                     clearTimeout(t);
-//                     t = 0;
-//                 } else {
-//                     t = setTimeout( function(){getATip(number, time, tips, total)} , time);
-//                     clearInterval(intervale);
-//                 }
-//             }, 1000);
-
-//         } else {
-//             clearTimeout(t);
-//             t = 0;
-//             clearInterval(intervale);
-//             intervale = 0;
-//         }
-//     }
-// }
 
 /*********************
 
@@ -9523,8 +9446,9 @@ Implementation de l'encyclopedie
 *
 */
 
-function addEncyclo(name, content) {
+function addEncyclo(name, content, count = true) {
     var exist = false;
+    console.log('addEncyclo', name)
     for (var i = 0; i < encycloNameTab.length; i++) {
         if (encycloNameTab[i] === name) {
             exist = true;
@@ -9532,11 +9456,12 @@ function addEncyclo(name, content) {
     }
 
     if (!exist) {
-        if (name.indexOf("Info") != 0) {
+        if (count) {
             encycloNameTab.push(name);
             countEncyclo = encycloNameTab.length;
             arrayCookieUser.$countEncyclo = countEncyclo;
         } 
+        console.log(arrayCookieUser.$countEncyclo)
         counter++;
         createCookie(Username, arrayCookieUser, 20);
         if (name && content) {
@@ -9647,12 +9572,12 @@ function finish() {
     }
 
     var $portalFinish = new Portal({
-                title: title,
-                notion: content,
-                callback: 'portalLevel1()', 
-                loadCallbackOnClose: true
-            });
-    
+        title: title,
+        notion: content,
+        callback: 'portalLevel1()', 
+        loadCallbackOnClose: true
+    });
+
 }
 function unlockAllSuccess() {
     for (var i = 1; i < 9; i++) {
@@ -11201,6 +11126,7 @@ function portalLevel2() {
 function loadLevel2() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 2;
     if (!level2IsVisited) {
         var $popinSlider = new Popin({
@@ -11229,10 +11155,10 @@ function loadLevel2() {
     arrayCookieUser.level2IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level2', function() {
-
+       var titleExplain = isFr ? 'Les Variables' : 'Variables';
         var info = new Popin({
             type: 'info',
-            title: 'Info 1',
+            title: titleExplain,
             content: content['variable'],
             isSlider: true, 
             $popin: $('.js-popup-info'),
@@ -11487,7 +11413,14 @@ function loadLevel3() {
             content: content['jeu3reloadpopin']
         });
     }
-
+    var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
+    var info = new Popin({
+            type: 'info',
+            title: titleExplain,
+            content: content['lvl3explanation'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        })
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -11696,6 +11629,7 @@ $.fn.verifyPixel = function() {
     //console.log(validated)
 
     $.each(correctRvb, function(color, value){
+        //console.log(color, value);
         if (value.length > 1) { 
             if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
                 validated[color] = true;
@@ -11798,7 +11732,14 @@ function loadLevel4() {
             'level': 4
         })
     }
-
+    var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
+    var info = new Popin({
+            type: 'info',
+            title: titleExplain,
+            content: content['fonction'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        })
     level4IsVisited = true;
     arrayCookieUser.level4IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);

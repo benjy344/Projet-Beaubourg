@@ -52,7 +52,14 @@ function loadLevel3() {
             content: content['jeu3reloadpopin']
         });
     }
-
+    var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
+    var info = new Popin({
+            type: 'info',
+            title: titleExplain,
+            content: content['lvl3explanation'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        })
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -261,6 +268,7 @@ $.fn.verifyPixel = function() {
     //console.log(validated)
 
     $.each(correctRvb, function(color, value){
+        //console.log(color, value);
         if (value.length > 1) { 
             if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
                 validated[color] = true;

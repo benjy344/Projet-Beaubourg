@@ -44,7 +44,14 @@ function loadLevel4() {
             'level': 4
         })
     }
-
+    var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
+    var info = new Popin({
+            type: 'info',
+            title: titleExplain,
+            content: content['fonction'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        })
     level4IsVisited = true;
     arrayCookieUser.level4IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
