@@ -13,7 +13,7 @@ function portalLevel4() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'Positionning',
-            notion: 'Blabla',
+            notion: 'Reposition the 9 superimposed squares and recreate Morellet’s piece.',
             callback: 'loadLevel4()'
         });
     }
@@ -60,7 +60,6 @@ function loadLevel4() {
         var image = $('.js-image-object');
         var holdTimeout = '';
 
-
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
         codeConfig = {
@@ -74,9 +73,6 @@ function loadLevel4() {
         }
         //Initialisation des variables
         codeConfig.readOnly = 'nocursor';
-
-
-
 
         //thisLvlAnswers = answers.lvl4;
 

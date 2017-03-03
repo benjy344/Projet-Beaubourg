@@ -13,7 +13,7 @@ function portalLevel2() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'The Color',
-            notion: 'Blabla',
+            notion: 'Find the lost colors of the painting',
             callback: 'loadLevel2()'
         });
     }
@@ -63,9 +63,6 @@ function loadLevel2() {
             $open: $('.js-icon-info')
         })
 
-        var pixel = $('.js-pixel');
-        pixel.on('touch click', showModal) //{DEV}
-
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
         codeConfig = {
@@ -80,11 +77,6 @@ function loadLevel2() {
         var defaultValue = false;
 
         codeConfig.readOnly = 'nocursor';
-
-
-
-
-
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
         //cm.addKeyMap(map: object, bottom: boolean) || extraKeys: Dans la config du CM
@@ -103,13 +95,16 @@ function loadLevel2() {
             }).data('name', 'pixel_'+$(this).index());
         });
 
+        console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
+            console.log($(this));
             $('.pixel-active').removeClass('pixel-active');
             $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
             resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
             resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+            showModal();
         })
 
         //Run Code

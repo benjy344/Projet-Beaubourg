@@ -12,8 +12,8 @@ function portalLevel1() {
         });
     } else {
         var $portalLevel1 = new Portal({
-            title: 'Level 1',
-            notion: 'The Pixel',
+            title: 'The Pixel',
+            notion: 'Odd or even number ? It’s your turn to transcribe the given string of numbers.',
             callback: 'loadLevel1()'
         });
     }

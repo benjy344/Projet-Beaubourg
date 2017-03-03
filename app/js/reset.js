@@ -48,31 +48,41 @@ function reinitMain() {
 }
 
 function resetLevel1() {
-
+    $('.tableau ul li div').off();
 }
 
 function resetLevel2() {
-    $('.pixel').off()
-    $('.runCode').off()
+    $('.js-framewrapper .js-pixel').off()
+    $('.js-run-code').off()
+    $('.js-apply-color').off()
     $('.checkboxes input:checkbox').off();
 }
 
 function resetLevel3() {
     $('.square').off();
-    $('.runCode').off()
-    $('input[type=range]').off();
+    $('.js-run-code').off()
+    $('.apply-color').off()
+    $('#chooseFrameLvl3 input[type="radio"]').off();
 }
 
 function resetLevel4() {
-    $('.imageObject').off();
-    $('.functions-btn .btn');
-    $('.runCode').off()
-    $('.reinitImg').off();
+    $('.js-image-object').off();
+    $('.functions-btn .btn').off();
+    $('.js-run-code').off()
+    $('.reinit-img').off();
 
 }
 
 function resetSandbox() {
-
+    $(document).off('touch click', '.js-sandboxwrapper .js-pixel');
+    $('.js-change-color').off();
+    $('.js-change-position').off();
+    $('.js-reinit-sandbox').off();
+    $('.js-add-pixel').off();
+    $('input[type=range]').off();
+    $('.js-run-code').off()
+    $('.js-apply-color').off()
+    $('.functions-btn .btn').off();
 }
 
 function reinitSandbox() {

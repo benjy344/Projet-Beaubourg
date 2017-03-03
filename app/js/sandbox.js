@@ -14,7 +14,7 @@ function portalSandbox() {
     } else {
         var $portalSandbox = new Portal({
             title: 'Sandbox',
-            notion: 'Blabla',
+            notion: 'Apply all the concepts you have seen, you are totally free !',
             callback: 'loadSandbox()'
         });
     }
@@ -76,7 +76,7 @@ function loadSandbox() {
 
 
         //Change Active Pixel
-        $(document).on('touch click', '.js-pixel', function () {
+        $(document).on('touch click', '.js-sandboxwrapper .js-pixel', function () {
 
             if ($(this).hasClass('pixel-active')) {
                 $('.pixel-active').removeClass('pixel-active img-active');
