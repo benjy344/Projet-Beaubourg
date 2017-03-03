@@ -50,7 +50,7 @@ function loadLevel3() {
             'duration' : 4000,
             'level': 3
         })
-        console.log(Tip3)
+        //console.log(Tip3)
     } else {
         var $popinSlider = new Popin({
             content: content['jeu3reloadpopin']

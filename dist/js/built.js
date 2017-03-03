@@ -9251,7 +9251,7 @@ function loadIntro(){
 
     } else {
         Username = $('input#name').val();
-        if (Username =='FX') { // {DEV}
+        if (Username =='DreamTeam!77') { // {DEV}
             testing = true;
         } 
 
@@ -9328,7 +9328,7 @@ function initRealoadSession() {
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
     var levelForHelp = 1; 
-    console.log(countEncyclo)
+    //console.log(countEncyclo)
     for (var i = 0; i < countHelp; i++) {
         var thecontent = 'jeu'+levelForHelp+'astuce'+number,
             title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
@@ -10034,7 +10034,7 @@ function move(direction, repeat) {
                 moveRight();
                 break;
             default:
-                console.log("error") //{DEV}   
+                //console.log("error") //{DEV}   
                 break;
         }
     }
@@ -10061,14 +10061,14 @@ function applyPosition() {
         scale = pos.scale;
         size = 100/scale;
         var sizepx = size + '%'
-        console.log(size)
+        //console.log(size)
 
         var posMax = scale - 1;
-        console.log(posMax, posMax);
+        //console.log(posMax, posMax);
         pos.x = pos.x > posMax ? posMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > posMax ? posMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-        console.log(pos.x, pos.y);
+        //console.log(pos.x, pos.y);
 
         $('.img-active').css('width', sizepx);
         $('.img-active').css('height', sizepx);
@@ -11031,7 +11031,7 @@ function loadLevel1() {
 *
 *********************/
 function submitLevel1() {
-    console.log('submit lv1')
+    //console.log('submit lv1')
     endTime = Date.now();
 
     var myTime = (endTime - startTime)/1000;
@@ -11196,10 +11196,10 @@ function loadLevel2() {
             }).data('name', 'pixel_'+$(this).index());
         });
 
-        console.log('TEST');
+        //console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
-            console.log($(this));
+            //console.log($(this));
             $('.pixel-active').removeClass('pixel-active');
             $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
@@ -11405,7 +11405,7 @@ function loadLevel3() {
             'duration' : 4000,
             'level': 3
         })
-        console.log(Tip3)
+        //console.log(Tip3)
     } else {
         var $popinSlider = new Popin({
             content: content['jeu3reloadpopin']
@@ -11733,7 +11733,7 @@ function loadLevel4() {
             'level': 4
         })
 
-        console.log(Tip4)
+        //console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
@@ -11835,7 +11835,7 @@ function loadLevel4() {
         });
 
         $('.functions-btn .btn').click(function() {
-            console.log($(this))
+            //console.log($(this))
             addCode($(this));
         })
 
@@ -11851,7 +11851,7 @@ function loadLevel4() {
 
 
 function runCodeLevel4() {
-    console.log('running code lvl4')
+    //console.log('running code lvl4')
     // console.log($('.imgActive').data('pos'))
     //alert('ok')
     var code = codeMirror.getValue();
@@ -11880,8 +11880,8 @@ function submitLevel4() {
         var pos = $(this).data('pos');
         $.each(thisLvlAnswers, function(i, value) {
             if (JSON.stringify(pos) == JSON.stringify(value)) {
-                console.log(pos);
-                console.log(value);
+                //console.log(pos);
+                //console.log(value);
                 isCorrect++;
             }
         });

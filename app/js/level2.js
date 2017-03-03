@@ -96,10 +96,10 @@ function loadLevel2() {
             }).data('name', 'pixel_'+$(this).index());
         });
 
-        console.log('TEST');
+        //console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
-            console.log($(this));
+            //console.log($(this));
             $('.pixel-active').removeClass('pixel-active');
             $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');

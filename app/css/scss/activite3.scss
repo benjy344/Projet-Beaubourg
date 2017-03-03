@@ -77,10 +77,10 @@
         height: 100px;
         position: relative;
         background-color: black;
-        height: calc(100% - 175px);
+        //height: calc(100% - 175px);
         display: -webkit-box;
         display: -ms-flexbox;
-        display: flex;
+        //display: flex;
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
@@ -116,6 +116,11 @@
                 height: calc(100vw/2);
                 width: calc(100vw/2);
 
+                @include landscape {
+                    height: calc(100vh/2);
+                    width: calc(100vh/2);
+                }
+
                 .range-bg {
                     background-color: black;
                     width: calc(100%/3);
@@ -130,9 +135,9 @@
                     justify-content: center;
                     border: 2px solid white;
                     box-sizing: border-box;
-                    
+
                     &.validated {
-                            border: 5px solid #7ac943;
+                        border: 5px solid #7ac943;
                     }
 
                     input {

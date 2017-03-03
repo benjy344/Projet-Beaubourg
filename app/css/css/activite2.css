@@ -41,6 +41,12 @@
   height: calc(100vw/2);
   width: calc(100vw/2);
 }
+@media (orientation: landscape) {
+  #modal-content.level2 .checkboxes {
+    height: calc(100vh/2);
+    width: calc(100vh/2);
+  }
+}
 #modal-content.level2 .checkboxes input {
   opacity: 0;
   width: 100%;
