@@ -10920,7 +10920,7 @@ function portalLevel1() {
     } else {
         var $portalLevel1 = new Portal({
             title: 'The Pixel',
-            notion: 'Odd or even? It\'s up to you to transcribe the proposed number chain',
+            notion: 'Odd or even? It\'s up to you to transcribe the proposed string of numbers',
             callback: 'loadLevel1()'
         });
     }
@@ -11113,7 +11113,7 @@ function portalLevel2() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'The Color',
-            notion: 'Find the lost colors of the painting!',
+            notion: 'Find the lost colors of the painting',
             callback: 'loadLevel2()'
         });
     }
@@ -11164,9 +11164,6 @@ function loadLevel2() {
             $open: $('.js-icon-info')
         })
 
-        var pixel = $('.js-pixel');
-        pixel.on('touch click', showModal) //{DEV}
-
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
         codeConfig = {
@@ -11181,11 +11178,6 @@ function loadLevel2() {
         var defaultValue = false;
 
         codeConfig.readOnly = 'nocursor';
-
-
-
-
-
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
         //cm.addKeyMap(map: object, bottom: boolean) || extraKeys: Dans la config du CM
@@ -11204,13 +11196,16 @@ function loadLevel2() {
             }).data('name', 'pixel_'+$(this).index());
         });
 
+        console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
+            console.log($(this));
             $('.pixel-active').removeClass('pixel-active');
             $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
             resetCheckboxes(thisColors.red, thisColors.green, thisColors.blue);
             resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
+            showModal();
         })
 
         //Run Code
@@ -11704,7 +11699,7 @@ function portalLevel4() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'Positionning',
-            notion: 'Reposition the 9 superimposed squares and recreate the work of Morellet',
+            notion: 'Reposition the 9 superimposed squares and recreate Morellet’s painting.',
             callback: 'loadLevel4()'
         });
     }
@@ -11756,7 +11751,6 @@ function loadLevel4() {
         var image = $('.js-image-object');
         var holdTimeout = '';
 
-
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
         codeConfig = {
@@ -11770,9 +11764,6 @@ function loadLevel4() {
         }
         //Initialisation des variables
         codeConfig.readOnly = 'nocursor';
-
-
-
 
         //thisLvlAnswers = answers.lvl4;
 
@@ -12319,31 +12310,41 @@ function reinitMain() {
 }
 
 function resetLevel1() {
-
+    $('.tableau ul li div').off();
 }
 
 function resetLevel2() {
-    $('.pixel').off()
-    $('.runCode').off()
+    $('.js-framewrapper .js-pixel').off()
+    $('.js-run-code').off()
+    $('.js-apply-color').off()
     $('.checkboxes input:checkbox').off();
 }
 
 function resetLevel3() {
     $('.square').off();
-    $('.runCode').off()
-    $('input[type=range]').off();
+    $('.js-run-code').off()
+    $('.apply-color').off()
+    $('#chooseFrameLvl3 input[type="radio"]').off();
 }
 
 function resetLevel4() {
-    $('.imageObject').off();
-    $('.functions-btn .btn');
-    $('.runCode').off()
-    $('.reinitImg').off();
+    $('.js-image-object').off();
+    $('.functions-btn .btn').off();
+    $('.js-run-code').off()
+    $('.reinit-img').off();
 
 }
 
 function resetSandbox() {
-
+    $(document).off('touch click', '.js-sandboxwrapper .js-pixel');
+    $('.js-change-color').off();
+    $('.js-change-position').off();
+    $('.js-reinit-sandbox').off();
+    $('.js-add-pixel').off();
+    $('input[type=range]').off();
+    $('.js-run-code').off()
+    $('.js-apply-color').off()
+    $('.functions-btn .btn').off();
 }
 
 function reinitSandbox() {
@@ -12367,7 +12368,7 @@ function portalSandbox() {
     } else {
         var $portalSandbox = new Portal({
             title: 'Sandbox',
-            notion: 'Blabla',
+            notion: 'Apply all the concepts you have seen, you are totally free !',
             callback: 'loadSandbox()'
         });
     }
@@ -12430,7 +12431,7 @@ function loadSandbox() {
 
 
         //Change Active Pixel
-        $(document).on('touch click', '.js-pixel', function () {
+        $(document).on('touch click', '.js-sandboxwrapper .js-pixel', function () {
 
             if ($(this).hasClass('pixel-active')) {
                 $('.pixel-active').removeClass('pixel-active img-active');
