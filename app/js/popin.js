@@ -67,7 +67,7 @@ Popin.prototype = {
 
         }
 
-        this.$overlay.off('click touch').on("click touch", function(e) {$.proxy(_this.defaultClose, _this, e)();});
+        //this.$overlay.off('click touch').on("click touch", function(e) {$.proxy(_this.defaultClose, _this, e)();});
 
     },
 

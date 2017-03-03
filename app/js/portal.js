@@ -46,8 +46,9 @@ Portal.prototype = {
     	this.$portal.addClass('show');
     	this.$title.addClass('fade-in');
     	this.$notion.addClass('fade-in');
+        var $this = this;
     	if(!this.loadCallbackOnClose) {
-            eval(this.callback);
+            setTimeout(function(){eval($this.callback)}, 1000);
         }else {
             this.$portal.addClass('last-portal');
         }
