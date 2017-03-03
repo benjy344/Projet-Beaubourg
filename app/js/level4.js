@@ -13,7 +13,7 @@ function portalLevel4() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'Positionning',
-            notion: 'Blabla',
+            notion: 'Reposition the 9 superimposed squares and recreate the work of Morellet',
             callback: 'loadLevel4()'
         });
     }

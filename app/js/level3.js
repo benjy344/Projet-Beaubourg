@@ -14,7 +14,7 @@ function portalLevel3() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'The Additive Color Process',
-            notion: 'Blabla',
+            notion: 'Reproduce the shades of one of Morellet\'s gradations, be meticulous!',
             callback: 'loadLevel3()'
         });
     }

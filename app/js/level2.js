@@ -13,7 +13,7 @@ function portalLevel2() {
     } else {
         var $portalLevel2 = new Portal({
             title: 'The Color',
-            notion: 'Blabla',
+            notion: 'Find the lost colors of the painting!',
             callback: 'loadLevel2()'
         });
     }
