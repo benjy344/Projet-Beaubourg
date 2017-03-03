@@ -691,6 +691,20 @@ body .loading img {
 body .icon {
   display: inline-block;
 }
+body #credits p, body #credits li {
+  font-size: 0.5em;
+  text-align: left;
+  padding: 0 30px;
+  line-height: 25px;
+  min-height: 10px;
+  height: auto;
+}
+body #credits h1 {
+  font-size: 1em;
+}
+body #credits ul {
+  height: auto;
+}
 body .level-portal {
   z-index: 999999;
   position: fixed;
@@ -1526,6 +1540,9 @@ body .overlay nav {
   font-family: "Josefin Sans", sans-serif;
   font-weight: 400;
   text-align: center;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 body .overlay nav ul {
   list-style: none;

@@ -336,18 +336,18 @@ function finish() {
 
     if (totalSucces > $tabSuccess.length) {
         if (isFr) {
-            title = "Félicitations !"; 
+            title = "Félicitations "+Username+"!"; 
             content = 'Vous êtes venus à bout de toutes les épreuves, cependant il vous reste '+nbSucces+' succès à débloquer ! N\'hésitez pas à rejouer les activités pour obtenir une récompense. D\'autres groupes vous attendent dans le musée pour vous proposer d\'autres expériences.'; 
         } else {
-            title = "Congratulations !";
+            title = "Congratulations "+Username+"!";
             content = 'You made it through all the mini-games. However, there are still '+nbSucces+' success(es) to unlock ! Feel free to play the games again. Other groups are awaiting for you in the museum with new experiences and games !'; 
         }
     } else {
         if (isFr) {
-            title = "Félicitations !"; 
+            title = "Félicitations "+Username+"!"; 
             content = 'Vous êtes venus à bout de toutes les épreuves en débloquant tous les succès ! Allez présenter cet écran aux responsables pour recevoir une récompense ! D\'autres groupes vous attendant dans le musée pour vous proposer d\'autres expériences !'; 
         } else {
-            title = "Congratulations !";
+            title = "Congratulations "+Username+"!";
             content = 'You made it through all the mini-games and unlocked all the successes ! Show us this screen at our booth to receive your reward ! Other groups are waiting for you in the museum with new experiences and games !'; 
         }
     }
