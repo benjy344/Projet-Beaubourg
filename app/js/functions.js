@@ -27,27 +27,37 @@ function reloadLevel() {
 *
 *********************/
 function loadIntro(){
-    Username = $('input#name').val();
-    if (Username == '' || Username =='FX') { // {DEV}
-        testing = true;
+
+    if ($('input#name').val() == '') {
+
+        $('input#name').focus();
+
+    } else {
+        Username = $('input#name').val();
+        if (Username =='FX') { // {DEV}
+            testing = true;
+        } 
+
+        lang = $('#chooseLang input[type="radio"]:checked').attr('id');
+        if (lang == 'en') {
+            isFr = false;
+        }
+
+        $.get("dist/content/content_"+lang+".html", function(data) {
+            $(data).filter('div').each(function(i) {
+                var name = $(this).attr("id");
+                content[name] = $(this).html();
+            })
+
+            $('.main-nav ul').html(content['menu'])
+
+            $.getJSON('dist/json/answers_' + lang + '.json', function(data) {
+                answers = data;
+
+                isUserExiste(Username);
+            });
+        });
     }
-
-
-    lang = $('#chooseLang input[type="radio"]:checked').attr('id');
-    if (lang == 'en') {
-        isFr = false;
-    }
-
-    $.get("dist/content/content_"+lang+".html", function(data) {
-        $(data).filter('div').each(function(i) {
-            var name = $(this).attr("id");
-            content[name] = $(this).html();
-        })
-
-        $('.main-nav ul').html(content['menu'])
-        isUserExiste(Username);
-    });
-    
 }
 
 
@@ -430,12 +440,12 @@ function finish() {
     }
 
     var $portalFinish = new Portal({
-                title: title,
-                notion: content,
-                callback: 'portalLevel1()', 
-                loadCallbackOnClose: true
-            });
-    
+        title: title,
+        notion: content,
+        callback: 'portalLevel1()', 
+        loadCallbackOnClose: true
+    });
+
 }
 function unlockAllSuccess() {
     for (var i = 1; i < 9; i++) {

@@ -261,6 +261,7 @@ $.fn.verifyPixel = function() {
     //console.log(validated)
 
     $.each(correctRvb, function(color, value){
+        //console.log(color, value);
         if (value.length > 1) { 
             if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
                 validated[color] = true;

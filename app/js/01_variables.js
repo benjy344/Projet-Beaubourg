@@ -10,7 +10,7 @@ var dest = './dist/',
     screen = 'index',
     countLevel = 0,
     ecrin = false, 
-    
+
     lang = "fr",
     isFr = true,
 
@@ -55,19 +55,15 @@ var up = 'up',
 var which = 'left',
     isFailedOnce = false;
 
-$.getJSON('dist/json/answers.json', function(data) {
-    answers = data;
-});
-
 var textArea = $('.codeMirror')[0],
-            codeConfig = {
-                mode: "text/javascript",
-                theme: "icecoder", 
-                lineWrapping: true, 
-                lineNumbers: true, 
-                autofocus: false
-                //matchBrackets: true
-            };
+    codeConfig = {
+        mode: "text/javascript",
+        theme: "icecoder", 
+        lineWrapping: true, 
+        lineNumbers: true, 
+        autofocus: false
+        //matchBrackets: true
+    };
 
 $Popup = $('.js-popup');
 $content_popup = $Popup.find('.js-content-popup');
@@ -80,7 +76,7 @@ tipIsOpened = false;
 isNewTip = false;
 
 countip = 0,
-counter = 0;
+    counter = 0;
 
 $tabArchiveTitle = [];
 $tabArchiveContent = [];

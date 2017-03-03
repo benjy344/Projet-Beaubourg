@@ -1,0 +1,159 @@
+{
+    "level2" : {
+        "pixel_0" : {
+            "rvb" : { 
+                "red": false,
+                "green": false,
+                "blue": true
+            },
+            "validate": false
+        },
+        "pixel_1" : {
+            "rvb" : { 
+                "red": false,
+                "green": false,
+                "blue": false
+            },
+            "validate": true
+        },
+        "pixel_2" : {
+            "rvb" : { 
+                "red": true,
+                "green": true,
+                "blue": true
+            },
+            "validate": false
+        },
+        "pixel_3" : {
+            "rvb" : { 
+                "red": true,
+                "green": true,
+                "blue": false
+            },
+            "validate": false
+        },
+        "pixel_4" : {
+            "rvb" : { 
+                "red": false,
+                "green": false,
+                "blue": false
+            },
+            "validate": true
+        },
+        "pixel_5" : {
+            "rvb" : { 
+                "red": true,
+                "green": true,
+                "blue": true
+            },
+            "validate": false
+        },
+        "pixel_6" : {
+            "rvb" : { 
+                "red": true,
+                "green": false,
+                "blue": false
+            },
+            "validate": false
+        },
+        "pixel_7" : {
+            "rvb" : { 
+                "red": false,
+                "green": false,
+                "blue": false
+            },
+            "validate": true
+        },
+        "pixel_8" : {
+            "rvb" : { 
+                "red": true,
+                "green": true,
+                "blue": true
+            },
+            "validate": false
+        },
+        "pixel_9" : {
+            "rvb" : { 
+                "red": false,
+                "green": true,
+                "blue": false
+            },
+            "validate": false
+        },
+        "pixel_10" : {
+            "rvb" : { 
+                "red": false,
+                "green": false,
+                "blue": false
+            },
+            "validate": true
+        }
+    },
+    "level3" : {
+        "left" :{
+            "steel_blue" : {
+                "red": [60, 90], 
+                "green": [75, 120], 
+                "blue": [165, 210]
+            },
+            "sky_blue" : {
+                "red": [0, 45], 
+                "green": [90, 135], 
+                "blue": [195, 255]
+            },
+            "sage_green" : {
+                "red": [30, 90], 
+                "green": [75, 120], 
+                "blue": [45, 90]
+            },
+            "lemon_yellow" : {
+                "red": [165, 210], 
+                "green": [150, 195], 
+                "blue": [0, 45]
+            },
+            "ochre_yellow" : {
+                "red": [195, 240], 
+                "green": [195, 240], 
+                "blue": [0, 30]
+            }
+        },
+        "right" :{        
+            "velvet_red" : {
+                "red": [150, 180], 
+                "green": [0, 45], 
+                "blue": [75, 120]
+            },
+            "poppy_red" : {
+                "red": [180, 225], 
+                "green": [0, 45], 
+                "blue": [30, 75]
+            },
+            "orange" : {
+                "red": [210, 255], 
+                "green": [75, 120], 
+                "blue": [0, 45]
+            },
+            "amber" : {
+                "red": [225, 255], 
+                "green": [150, 195], 
+                "blue": [0, 45]
+            },
+            "saffron" : {
+                "red": [225, 255], 
+                "green": [180, 225], 
+                "blue": [0, 30]
+            }
+        }
+    },
+    "level4" : [
+        {"x": -1, "y": -1, "rot": 270},
+        {"x": 0, "y": -1, "rot": 0},
+        {"x": 1, "y": -1, "rot": 270},
+        {"x": -1, "y": 0, "rot": 180},
+        {"x": 0, "y": 0, "rot": 90},
+        {"x": 1, "y": 0, "rot": 180},
+        {"x": -1, "y": 1, "rot": 270},
+        {"x": 0, "y": 1, "rot": 0},
+        {"x": 1, "y": 1, "rot": 270}   
+    ]
+}
