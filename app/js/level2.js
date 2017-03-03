@@ -19,6 +19,7 @@ function portalLevel2() {
     }
     arrayCookieUser.currentLevel = 2;
     createCookie(Username, arrayCookieUser, 20);
+    isNewTip = false;
 }
 
 function loadLevel2() {

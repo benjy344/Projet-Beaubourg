@@ -20,12 +20,15 @@ function portalLevel3() {
     }
     arrayCookieUser.currentLevel = 3;
     createCookie(Username, arrayCookieUser, 20);
+
+    isNewTip = false;
 }
 
 
 function loadLevel3() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 3;
     if (!level3IsVisited) {
         var $popinSlider = new Popin({
@@ -47,6 +50,7 @@ function loadLevel3() {
             'duration' : 4000,
             'level': 3
         })
+        console.log(Tip3)
     } else {
         var $popinSlider = new Popin({
             content: content['jeu3reloadpopin']

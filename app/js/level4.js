@@ -19,9 +19,12 @@ function portalLevel4() {
     }
     arrayCookieUser.currentLevel = 4;
     createCookie(Username, arrayCookieUser, 20);
+    isNewTip = false;
 }
 function loadLevel4() {
+    startTime = Date.now();
     if (!ecrin) {initEcrin()}
+    $('.help-button').removeClass("first-tip");
     countLevel = 4;
     if (!level4IsVisited) {
         var $popinSlider = new Popin({
@@ -43,6 +46,8 @@ function loadLevel4() {
             'duration' : 4000,
             'level': 4
         })
+
+        console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
