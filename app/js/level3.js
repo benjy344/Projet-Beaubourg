@@ -209,7 +209,7 @@ function runCodeLevel3() {
         colorPixel();
 
     } catch(e) {
-        alert ('pls input only nu')
+        alert ('pls input only nu');
 
         var resetPixel = $('.pixel-active').data('rvb');
 
