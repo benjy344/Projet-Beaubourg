@@ -9756,6 +9756,8 @@ function addPixel() {
     }).data('name', 'pixel_'+$(this).index());
 
     $('.js-sandboxwrapper').append(pixel);
+    
+    pixel.trigger('click');
 }
 
 function colorPixelRVB() {
@@ -9943,6 +9945,7 @@ function addCode(btn) {
 
     var fn = btn.html();
     var comment = ''
+    var deg = screen == 'sandbox' ? '22.5' : '90'; 
 
     switch (btn.attr('data-function')) {
         case 'left':
@@ -9958,7 +9961,7 @@ function addCode(btn) {
             comment = (isFr ? '//Déplacer de 1 case en bas' : '//Move one square down' );
             break;
         case 'rotate':
-            comment = (isFr ? '//Touner de 90 degrés dans le sens horaire' : '//Rotate 90 degrees clockwise' );
+            comment = (isFr ? '//Touner de '+deg+' degrés dans le sens horaire' : '//Rotate '+deg+' degrees clockwise' );
             break;
         case 'scaleUp':
             comment = (isFr ? '//Augmenter la taille' : '//Increase size' );
@@ -11562,7 +11565,7 @@ function runCodeLevel3() {
         colorPixel();
 
     } catch(e) {
-        alert ('pls input only nu')
+        alert ('pls input only nu');
 
         var resetPixel = $('.pixel-active').data('rvb');
 
@@ -12519,7 +12522,7 @@ function loadSandbox() {
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
-            console.log($(this))
+            //console.log($(this))
             addCode($(this));
         })
 
