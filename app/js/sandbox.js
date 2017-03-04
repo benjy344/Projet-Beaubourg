@@ -156,7 +156,7 @@ function loadSandbox() {
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
-            console.log($(this))
+            //console.log($(this))
             addCode($(this));
         })
 
