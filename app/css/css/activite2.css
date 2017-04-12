@@ -43,8 +43,8 @@
 }
 @media (orientation: landscape) {
   #modal-content.level2 .checkboxes {
-    height: calc(100vh/2);
-    width: calc(100vh/2);
+    height: calc(100vh/3);
+    width: calc(100vh/3);
   }
 }
 #modal-content.level2 .checkboxes input {
@@ -67,8 +67,8 @@
   border: 2px solid white;
 }
 #modal-content.level2 .buttons {
-  /*        display: flex;*/
-  /*        justify-content : center; */
+  /* display: flex; */
+  /* justify-content : center; */
 }
 #modal-content.level2 .buttons .apply-color {
   min-width: 100%;

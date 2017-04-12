@@ -58,7 +58,7 @@ var up = 'up',
     plus = 'up',
     moins = 'down';
 
-var which = 'left',
+var which = 'right',
     isFailedOnce = false;
 
 var textArea = $('.codeMirror')[0],
@@ -113,9 +113,7 @@ var $countHelp = 0,
 var startTime = 0,
     endTime =0;
 var intervale = 0,
-    t = 0;
-
-var which = 'left';;
+    t = 0;;
  /*********************************************************/
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -9758,6 +9756,8 @@ function addPixel() {
     }).data('name', 'pixel_'+$(this).index());
 
     $('.js-sandboxwrapper').append(pixel);
+    
+    pixel.trigger('click');
 }
 
 function colorPixelRVB() {
@@ -9945,6 +9945,7 @@ function addCode(btn) {
 
     var fn = btn.html();
     var comment = ''
+    var deg = screen == 'sandbox' ? '22.5' : '90'; 
 
     switch (btn.attr('data-function')) {
         case 'left':
@@ -9960,7 +9961,7 @@ function addCode(btn) {
             comment = (isFr ? '//Déplacer de 1 case en bas' : '//Move one square down' );
             break;
         case 'rotate':
-            comment = (isFr ? '//Touner de 90 degrés dans le sens horaire' : '//Rotate 90 degrees clockwise' );
+            comment = (isFr ? '//Touner de '+deg+' degrés dans le sens horaire' : '//Rotate '+deg+' degrees clockwise' );
             break;
         case 'scaleUp':
             comment = (isFr ? '//Augmenter la taille' : '//Increase size' );
@@ -11413,12 +11414,12 @@ function loadLevel3() {
     }
     var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
     var info = new Popin({
-            type: 'info',
-            title: titleExplain,
-            content: content['lvl3explanation'],
-            $popin: $('.js-popup-info'),
-            $open: $('.js-icon-info')
-        })
+        type: 'info',
+        title: titleExplain,
+        content: content['lvl3explanation'],
+        $popin: $('.js-popup-info'),
+        $open: $('.js-icon-info')
+    })
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -11494,6 +11495,16 @@ function loadLevel3() {
             $('.js-framewrapper').children().each(function(){
                 $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]).data('validated', {red:false, green:false, blue:false});
             });
+
+            if (isFr) {
+                var side = which == left ? 'gauche' : 'droite';
+                var colors = which == left ? 'bleus' : 'rouges';
+                $('#level3 .consigne p').text('Reproduisez le dégradé allant du jaune au violet en passant par les '+colors+' ! (Partie '+side+' du tableau)'); 
+            } else {
+                var side = which == left ? 'Left' : 'Right';
+                var colors = which == left ? 'blue' : 'red';
+                $('#level3 .consigne p').text('Reproduce the '+colors+' gradient ! ('+side+' part of the painting)');
+            }
         })
 
         //Change input
@@ -11554,7 +11565,7 @@ function runCodeLevel3() {
         colorPixel();
 
     } catch(e) {
-        alert ('pls input only nu')
+        alert ('pls input only nu');
 
         var resetPixel = $('.pixel-active').data('rvb');
 
@@ -12511,7 +12522,7 @@ function loadSandbox() {
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
-            console.log($(this))
+            //console.log($(this))
             addCode($(this));
         })
 
