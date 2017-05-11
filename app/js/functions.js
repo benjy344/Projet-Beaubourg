@@ -1,9 +1,17 @@
+/**
+* @file General functions
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
+
 /********************
 *
 *   gestion niveaux/chapitres 
 *
 *********************/
-
+/**
+* @function reloadLevel
+* @description Reload the current level
+**/
 function reloadLevel() {
     switch(screen) {
         case 'level1':
@@ -21,11 +29,38 @@ function reloadLevel() {
     }
 }
 
+/**
+* @function loadLevel
+* @description Load a level
+* @param {string} levelToLoad - Name of the level to load
+* @callback callback
+**/
+$.fn.loadLevel = function(levelToLoad, callback) {
+    reinitMain();
+    screen = levelToLoad;
+    var file = views + lang + level+levelToLoad+'.html',
+        lvl = '#'+levelToLoad,
+        modal = '#modal-content';
+    thisLvlAnswers = answers[levelToLoad];
+    //Google VR
+    loadScene(screen);
+    this.load(file + ' ' + lvl, function() {  
+        $('.modal-content').load(file + ' ' + modal, function() {
+            callback();
+        })
+    })
+}
+
 /********************
 *
 *   Intro 
 *
 *********************/
+/**
+* @function loadIntro
+* @description Load Introduction, initialize username and language, get the answers
+* @callback isUserExiste
+**/
 function loadIntro(){
 
     if ($('input#name').val() == '') {
@@ -120,9 +155,9 @@ function initRealoadSession() {
     }
     var numberTitle = 0;
     if(level2IsVisited){
-            var titleExplain = isFr ? 'Les Variables' : 'Variables';
-            addEncyclo(titleExplain, content['variable'], false);
-        }
+        var titleExplain = isFr ? 'Les Variables' : 'Variables';
+        addEncyclo(titleExplain, content['variable'], false);
+    }
     if(level3IsVisited){
         var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
         addEncyclo(titleExplain, content['lvl3explanation'], false);
@@ -192,27 +227,6 @@ function eraseCookie(name) {
 function loadChooseLevel(){
     $('main').load(views+lang+'/accueil.html');
 }
-
-$.fn.loadLevel = function(levelToLoad, callback) {
-
-    reinitMain();
-
-    screen = levelToLoad;
-
-    var file = views + lang + level+levelToLoad+'.html',
-        lvl = '#'+levelToLoad,
-        modal = '#modal-content';
-
-    thisLvlAnswers = answers[levelToLoad];
-    //console.log(thisLvlAnswers);
-
-    this.load(file + ' ' + lvl, function() {  
-        $('.modal-content').load(file + ' ' + modal, function() {
-            callback();
-        })
-    })
-}
-
 
 
 /*********************

@@ -1,10 +1,29 @@
-/*********************
-
-Document.ready
-
-********************/
+/**
+* @file Functions to execute when document is ready
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
 
 $(document).ready(function() {
+
+    //VRView 
+    if (isMobile) {
+        $('#view').addClass('hidden');
+        window.addEventListener("deviceorientation", function () {
+            processGyro(event.alpha, event.beta, event.gamma);  
+        }, true);
+    } else {
+    }
+
+    vrView = new VRView.Player('#vrview', {
+        image: vrviews + 'test.jpg',
+        is_autopan_off: true
+    });
+
+    vrView.on('ready', onVRViewReady);
+    vrView.on('modechange', onModeChange);
+    vrView.on('click', onHotspotClick);
+    vrView.on('error', onVRViewError);
+
 
     //Username = $('input#name').val();
     $('.hamburger').hide();
@@ -19,24 +38,18 @@ $(document).ready(function() {
     $('.loading').slideUp(1000);
 
     $('.modal .close').on('touch click', hideModal);
-    /////////////////Gestion menu
-
+    
+    //Menu
     $(document).on('click touch', '.haveChild', function(event) {
-
         event.preventDefault();
         event.stopPropagation();
-        var loader = $(this).attr('data-loading');
-
-        var $parent = $('.main-nav>ul');
-        var $child = $('.main-nav .child');
-        var $child_content = $('.main-nav .child .child-content');
-
+        var loader = $(this).attr('data-loading'),
+            $parent = $('.main-nav>ul'),
+            $child = $('.main-nav .child'),
+            $child_content = $('.main-nav .child .child-content');
         $parent.addClass('childOpen');
         $child.addClass('isOpen');
-
         $child_content.load(views+lang+'/'+loader+'.html');
-
-
     });
     $(document).on('click touch', '.main-nav .child i', function(event){
         event.preventDefault();
@@ -49,8 +62,8 @@ $(document).ready(function() {
 
     });
 
-    /////////////////Formulaire
-    // Test for placeholder support
+    //Formulaire&
+    //placeholder
     $.support.placeholder = (function(){
         var i = document.createElement('input');
         return 'placeholder' in i;
@@ -61,7 +74,6 @@ $(document).ready(function() {
         $('.form-label').each(function(){
             $(this).addClass('js-hide-label');
         });  
-
         // Code for adding/removing classes here
         $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
             //Cache our selectors

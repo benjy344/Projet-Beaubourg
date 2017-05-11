@@ -1,3 +1,8 @@
+/**
+* @file 
+* @author Benjamin Demaizière
+**/
+
 /*
  * Popin is a module that fades in an element over #popin-overlay
  *

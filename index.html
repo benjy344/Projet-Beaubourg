@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes">
-        
+
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
         <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon.png">
@@ -48,127 +48,139 @@
         <link rel="prefetch" href="./dist/content/content_en.html">
     </head>
     <body>
-        <div class="loading">
-            <img src="./dist/assets/loading.svg" alt="loading">
-        </div>
-        <div id="modal-container">
-            <div class="modal-background">
-                <div class="modal">
-                    <div class="font-icon font-icon-info js-icon-info"></div>
 
-                    <div class="close">
-                        <span></span>
-                    </div>
+        <section id="view">
+            <div id="vrview"></div>
+        </section>
 
-                    <div class="modal-content">
+        <section id="app">
 
-                    </div>
-
-                </div>
+            <div class="loading">
+                <img src="./dist/assets/loading.svg" alt="loading">
             </div>
-        </div>
+            <div id="modal-container">
+                <div class="modal-background">
+                    <div class="modal">
+                        <div class="font-icon font-icon-info js-icon-info"></div>
 
-        <div class="content-global">
-            <div class='background'></div>
-            <div id="menu">
-                <div class="button-burger">
-                    <button class="js-hamburger hamburger hamburger--spin" type="button">
-                        <span class="hamburger-box">
-                            <span class="hamburger-inner"></span>
-                        </span>
-                    </button>
-                </div>
-                <div class="overlay" id="overlay">
-                    <nav class="main-nav">
-                        <ul>
-
-                        </ul>
-                        <div class="child">
-                            <i class="icon icon-return"></i>
-                            <div class="child-content"></div>
+                        <div class="close">
+                            <span></span>
                         </div>
-                    </nav>
-                </div>
-            </div>
 
-            <div class="help-button newTip first-tip">
-                <i class="icon icon-help"></i>
-            </div>
+                        <div class="modal-content">
 
-            <main >
-                <div id="intro">
-                    <figure class="logo">
-                        <img src="./dist/assets/logo.png" alt="Logo Cod'Art">
-                    </figure>
+                        </div>
 
-                    <div class="content-form">
-                        <form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
-                            <div class="form-group">
-                                <label class="form-label" for="name">Username</label>
-                                <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadIntro();}" placeholder="Username" tabindex="1" required>
-                            </div> 
-
-                            <div id="chooseLang" class="radioButtons">
-                                <div class="frLang input1">Français</div> 
-                                <div class="radio"> 
-                                    <label for="fr"></label> 
-                                    <input  id="fr" name="radio" type="radio" checked /> 
-                                    <label class="en" for="en"></label> 
-                                    <input  id="en" name="radio" type="radio" /> 
-                                    <span id="slider"></span> 
-                                </div> 
-                                <div class="enLang input2">English</div> 
-                            </div>
-
-                            <div class="partener">
-                                <div class="icon icon-upem"></div>
-                            </div>
-                            <div >
-                                <div class="fleche btn-start-order" onclick="loadIntro()">Commencer l'experience</div>
-                            </div>
-                        </form>
                     </div>
                 </div>
-            </main>
-        </div>
-
-        <div class="popup js-popup hide">
-            <div class="overflow">
-
-                <div class="js-content-popup content-popup">
-                </div>                
             </div>
-        </div>
-        <div class="archive" style="display : none; ">
 
-        </div>
-        <div class="popencyclo">
-            <div class="close">
-                <span></span>
-            </div>
-            <div class="content"></div>
-        </div>
-        <div class="popup popup-tips js-popup-tip hide">
-            <div class="overflow">
+            <div class="content-global">
+                <div class='background'></div>
+                <div id="menu">
+                    <div class="button-burger">
+                        <button class="js-hamburger hamburger hamburger--spin" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="overlay" id="overlay">
+                        <nav class="main-nav">
+                            <ul>
 
-                <div class="js-content-popup content-popup">
-                </div>                
-            </div>
-        </div>
-        <div class="popup popup-info js-popup-info hide">
-            <div class="overflow">
+                            </ul>
+                            <div class="child">
+                                <i class="icon icon-return"></i>
+                                <div class="child-content"></div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
 
-                <div class="js-content-popup content-popup">
-                </div>                
+                <div class="help-button newTip first-tip">
+                    <i class="icon icon-help"></i>
+                </div>
+
+                <main >
+                    <div id="intro">
+                        <figure class="logo">
+                            <img src="./dist/assets/logo.png" alt="Logo Cod'Art">
+                        </figure>
+
+                        <div class="content-form">
+                            <form id="pseudo-form" class="form" action="#" method="POST" role="form" onsubmit="event.preventDefault()">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Username</label>
+                                    <input type="text" class="form-control" id="name" name="name" onPaste="" onkeydown="if (event.keyCode == 13 ){loadIntro();}" placeholder="Username" tabindex="1" required>
+                                </div> 
+
+                                <div id="chooseLang" class="radioButtons">
+                                    <div class="frLang input1">Français</div> 
+                                    <div class="radio"> 
+                                        <label for="fr"></label> 
+                                        <input  id="fr" name="radio" type="radio" checked /> 
+                                        <label class="en" for="en"></label> 
+                                        <input  id="en" name="radio" type="radio" /> 
+                                        <span id="slider"></span> 
+                                    </div> 
+                                    <div class="enLang input2">English</div> 
+                                </div>
+
+                                <div class="partener">
+                                    <div class="icon icon-upem"></div>
+                                </div>
+                                <div >
+                                    <div class="fleche btn-start-order" onclick="loadIntro()">Commencer l'experience</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </main>
             </div>
-        </div>
-        <div class="level-portal js-level-portal">
-            <h1 class="js-portail-title">Le Pixel</h1>
-            <p class="js-notion-title">Aborde la notion de Pixel</p>
-        </div>
-        <div class='js-overlay hoverlay hide'></div>
-        <div class='js-overlay-tips hoverlay hide'></div>
-        <div class='js-overlay-info hoverlay hide'></div>
+
+            <div class="popup js-popup hide">
+                <div class="overflow">
+
+                    <div class="js-content-popup content-popup">
+                    </div>                
+                </div>
+            </div>
+            <div class="archive" style="display : none; ">
+
+            </div>
+            <div class="popencyclo">
+                <div class="close">
+                    <span></span>
+                </div>
+                <div class="content"></div>
+            </div>
+            <div class="popup popup-tips js-popup-tip hide">
+                <div class="overflow">
+
+                    <div class="js-content-popup content-popup">
+                    </div>                
+                </div>
+            </div>
+            <div class="popup popup-info js-popup-info hide">
+                <div class="overflow">
+
+                    <div class="js-content-popup content-popup">
+                    </div>                
+                </div>
+            </div>
+            <div class="level-portal js-level-portal">
+                <h1 class="js-portail-title">Le Pixel</h1>
+                <p class="js-notion-title">Aborde la notion de Pixel</p>
+            </div>
+            <div class='js-overlay hoverlay hide'></div>
+            <div class='js-overlay-tips hoverlay hide'></div>
+            <div class='js-overlay-info hoverlay hide'></div>
+
+        </section>
+
+
+        <script src="//storage.googleapis.com/vrview/2.0/build/vrview.min.js"></script>
         <script type="text/javascript" src="./dist/js/built.js"></script>
     </body>
     <script type="text/javascript">

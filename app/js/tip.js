@@ -1,3 +1,8 @@
+/**
+* @file General functions used in level 4
+* @author Benjamin Demaizière
+**/
+
 /*
  * Tip is a module that constructs in an element and put it in the menu
  *
@@ -22,9 +27,6 @@ function Tip(options) {
 }
 
 Tip.prototype = {
-
-
-
     init: function(options) {
         this.duration = 42000;
         this.tips = "";

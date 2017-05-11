@@ -1,3 +1,8 @@
+/**
+* @file
+* @author Benjamin Demaizière
+**/
+
 /*
  * Portal is a module that hide load of the next level
  *

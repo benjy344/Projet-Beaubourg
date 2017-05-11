@@ -1,9 +1,12 @@
+/**
+* @file General functions used in the sandbopx
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
 
-/********************
-*
-*   Sandbox
-*
-*********************/
+/**
+* @function portalSandbox
+* @description
+**/
 function portalSandbox() {
     if (isFr) {
         var $portalSandbox = new Portal({
@@ -22,6 +25,10 @@ function portalSandbox() {
     createCookie(Username, arrayCookieUser, 20);
 }
 
+/**
+* @function loadSandbox
+* @description Load and initialize sandbox
+**/
 function loadSandbox() {
     if (!ecrin) {initEcrin()}
     $('.help-button').removeClass("first-tip");
@@ -59,22 +66,11 @@ function loadSandbox() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        codeMirror.addKeyMap({
-            Enter: function (cm) {
-                enterKeyMap();
-            }
-        });
-
-
-        //        $('#frameWrapper .imageObject').each(function () {
-        //            $(this).data('pos', {
-        //                x: 0,
-        //                y: 0,
-        //                rot: 0
-        //            }).data('name', 'img_'+$(this).index());
-        //        });
-
-
+        //codeMirror.addKeyMap({
+        //    Enter: function (cm) {
+        //        enterKeyMap();
+        //    }
+        //});
 
         //Change Active Pixel
         $(document).on('touch click', '.js-sandboxwrapper .js-pixel', function () {
@@ -91,22 +87,21 @@ function loadSandbox() {
 
         })
 
+        //Edit Pixel - Color
         $('.js-change-color').on('touch click', function() {
             if($('.pixel-active').length > 0) {
-
                 $('.btn-position').addClass('hidden');
                 $('.btn-color').removeClass('hidden');
                 $('.cm-s-icecoder').addClass('only-color');
-
                 var name = $('.pixel-active').data('name');
                 var thisColors = $('.pixel-active').data('rvb');
                 resetCodePixel(name, thisColors.red, thisColors.green, thisColors.blue);
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
-
                 showModal();
             }
         })
 
+        //Edit Pixel - Position
         $('.js-change-position').on('touch click', function() {
             if($('.pixel-active').length > 0) {
                 $('.btn-color').addClass('hidden');
@@ -119,16 +114,12 @@ function loadSandbox() {
 
         $('.js-reinit-sandbox').click(reinitSandbox);
 
-
-
         $('.js-add-pixel').click(addPixel);
 
-
+        //Change color
         $('input[type=range]').on("input", function(){
-
-            var name = $(this).attr('class');
-            var thisPixel = $('.pixel-active').data('rvb');
-
+            var name = $(this).attr('class'),
+                thisPixel = $('.pixel-active').data('rvb');
             switch(name) {
                 case 'red':
                     $(this).parent().css('background-color', 'rgb('+$(this).val()+', 0, 0)');
@@ -148,24 +139,26 @@ function loadSandbox() {
             colorPixel();
         })
 
-        $('.js-run-code').click(function () {
-            hideModal();
-            runCodeLevel4();  
-        });
+        //$('.js-run-code').click(function () {
+        //    hideModal();
+        //    runCodeLevel4();  
+        //});
 
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
-            //console.log($(this))
             addCode($(this));
         })
-
         codeMirror.setValue('init');
         resetCode();
-
     })
 }
 
+/**
+* @function runCodeLevel4
+* @description Execute code from Code Mirror Editor - Sandbox
+* @deprecated Was used for developer mode
+**/
 function runSandbox() {
 
     var code = codeMirror.getValue();
