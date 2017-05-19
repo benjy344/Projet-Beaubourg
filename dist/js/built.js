@@ -58,7 +58,8 @@ var dest = './dist/',
         beta: 0,
         gamma: 0
     },
-    isMobile = typeof window.orientation != 'undefined' ? true : false,
+    isHandheld = typeof window.orientation != 'undefined' &&  window.DeviceMotionEvent
+    inIframe = inIframe(),
 
     //Deprecated : used for move() function in developer mode
     up = 'up',
@@ -9316,6 +9317,14 @@ return CodeMirror$1;
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
+function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
 /********************
 *
 *   gestion niveaux/chapitres 
@@ -9356,7 +9365,9 @@ $.fn.loadLevel = function(levelToLoad, callback) {
         modal = '#modal-content';
     thisLvlAnswers = answers[levelToLoad];
     //Google VR
-    loadScene(screen);
+    if (!inIframe) {
+        loadScene(screen);
+    }
     this.load(file + ' ' + lvl, function() {  
         $('.modal-content').load(file + ' ' + modal, function() {
             callback();
@@ -12374,23 +12385,45 @@ Portal.prototype = {
 $(document).ready(function() {
 
     //VRView 
-    if (isMobile) {
-        $('#view').addClass('hidden');
-        window.addEventListener("deviceorientation", function () {
+    if (isHandheld) {
+        $('#js-switchView').remove();
+        window.addEventListener("deviceorientation", function (event) {
             processGyro(event.alpha, event.beta, event.gamma);  
         }, true);
+        $('#appFrame').remove();
+        
+        $('#view').addClass('hidden');
+
     } else {
+        
+        
+
+        if(!inIframe) {
+            $('#app').remove();
+            $('#appFrame').attr('src', window.location);  
+            $('#js-switchView').click(function() {
+                $('#appFrame').toggleClass("hidden");
+            })
+        } else {
+            $('#view').remove();
+            $('#appFrame').remove();
+            $('#js-switchView').remove();
+        }
+
+
     }
 
-    vrView = new VRView.Player('#vrview', {
-        image: vrviews + 'test.jpg',
-        is_autopan_off: true
-    });
+    if (!inIframe) {
+        vrView = new VRView.Player('#vrview', {
+            image: vrviews + 'test.jpg',
+            is_autopan_off: true
+        });
 
-    vrView.on('ready', onVRViewReady);
-    vrView.on('modechange', onModeChange);
-    vrView.on('click', onHotspotClick);
-    vrView.on('error', onVRViewError);
+        vrView.on('ready', onVRViewReady);
+        vrView.on('modechange', onModeChange);
+        vrView.on('click', onHotspotClick);
+        vrView.on('error', onVRViewError);
+    }
 
 
     //Username = $('input#name').val();
@@ -12406,7 +12439,7 @@ $(document).ready(function() {
     $('.loading').slideUp(1000);
 
     $('.modal .close').on('touch click', hideModal);
-    
+
     //Menu
     $(document).on('click touch', '.haveChild', function(event) {
         event.preventDefault();
@@ -12469,6 +12502,7 @@ $(document).ready(function() {
                 }
             }
         });
+
     } 
 });;
  /*********************************************************/
@@ -12960,12 +12994,12 @@ function processGyro(a, b, g) {
     deviceOrientationData.beta = b;
     deviceOrientationData.gamma = g;
 
-    if (b > 60 && $('#view').hasClass('hidden')) {
+    if (b > 60 && !$('#app').hasClass('hidden')) {
         $('#app').addClass('hidden');
         $('#view').removeClass('hidden');
     } else if (b <= 60 && $('#app').hasClass('hidden')) {
+        $('#app').removeClass('hidden');
         $('#view').addClass('hidden');
-        $('#app').removeClass('hidden')
     }
 }
 

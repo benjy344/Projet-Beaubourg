@@ -15,12 +15,12 @@ function processGyro(a, b, g) {
     deviceOrientationData.beta = b;
     deviceOrientationData.gamma = g;
 
-    if (b > 60 && $('#view').hasClass('hidden')) {
+    if (b > 60 && !$('#app').hasClass('hidden')) {
         $('#app').addClass('hidden');
         $('#view').removeClass('hidden');
     } else if (b <= 60 && $('#app').hasClass('hidden')) {
+        $('#app').removeClass('hidden');
         $('#view').addClass('hidden');
-        $('#app').removeClass('hidden')
     }
 }
 

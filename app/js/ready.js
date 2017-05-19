@@ -6,23 +6,45 @@
 $(document).ready(function() {
 
     //VRView 
-    if (isMobile) {
-        $('#view').addClass('hidden');
-        window.addEventListener("deviceorientation", function () {
+    if (isHandheld) {
+        $('#js-switchView').remove();
+        window.addEventListener("deviceorientation", function (event) {
             processGyro(event.alpha, event.beta, event.gamma);  
         }, true);
+        $('#appFrame').remove();
+        
+        $('#view').addClass('hidden');
+
     } else {
+        
+        
+
+        if(!inIframe) {
+            $('#app').remove();
+            $('#appFrame').attr('src', window.location);  
+            $('#js-switchView').click(function() {
+                $('#appFrame').toggleClass("hidden");
+            })
+        } else {
+            $('#view').remove();
+            $('#appFrame').remove();
+            $('#js-switchView').remove();
+        }
+
+
     }
 
-    vrView = new VRView.Player('#vrview', {
-        image: vrviews + 'test.jpg',
-        is_autopan_off: true
-    });
+    if (!inIframe) {
+        vrView = new VRView.Player('#vrview', {
+            image: vrviews + 'test.jpg',
+            is_autopan_off: true
+        });
 
-    vrView.on('ready', onVRViewReady);
-    vrView.on('modechange', onModeChange);
-    vrView.on('click', onHotspotClick);
-    vrView.on('error', onVRViewError);
+        vrView.on('ready', onVRViewReady);
+        vrView.on('modechange', onModeChange);
+        vrView.on('click', onHotspotClick);
+        vrView.on('error', onVRViewError);
+    }
 
 
     //Username = $('input#name').val();
@@ -38,7 +60,7 @@ $(document).ready(function() {
     $('.loading').slideUp(1000);
 
     $('.modal .close').on('touch click', hideModal);
-    
+
     //Menu
     $(document).on('click touch', '.haveChild', function(event) {
         event.preventDefault();
@@ -101,5 +123,6 @@ $(document).ready(function() {
                 }
             }
         });
+
     } 
 });

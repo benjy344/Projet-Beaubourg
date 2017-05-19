@@ -52,7 +52,8 @@ var dest = './dist/',
         beta: 0,
         gamma: 0
     },
-    isMobile = typeof window.orientation != 'undefined' ? true : false,
+    isHandheld = typeof window.orientation != 'undefined' &&  window.DeviceMotionEvent
+    inIframe = inIframe(),
 
     //Deprecated : used for move() function in developer mode
     up = 'up',

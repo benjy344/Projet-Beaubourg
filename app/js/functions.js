@@ -3,6 +3,14 @@
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
+function inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
+}
+
 /********************
 *
 *   gestion niveaux/chapitres 
@@ -43,7 +51,9 @@ $.fn.loadLevel = function(levelToLoad, callback) {
         modal = '#modal-content';
     thisLvlAnswers = answers[levelToLoad];
     //Google VR
-    loadScene(screen);
+    if (!inIframe) {
+        loadScene(screen);
+    }
     this.load(file + ' ' + lvl, function() {  
         $('.modal-content').load(file + ' ' + modal, function() {
             callback();
