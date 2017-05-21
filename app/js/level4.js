@@ -1,8 +1,12 @@
-/********************
-*
-*   Chapitre 4
-*
-*********************/
+/**
+* @file General functions used in level 4
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
+
+/**
+* @function portalLevel4
+* @description
+**/
 function portalLevel4() {
     if (isFr) {
         var $portalLevel2 = new Portal({
@@ -21,6 +25,11 @@ function portalLevel4() {
     createCookie(Username, arrayCookieUser, 20);
     isNewTip = false;
 }
+
+/**
+* @function loadLevel4
+* @description Load and initialize level 4
+**/
 function loadLevel4() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
@@ -90,6 +99,7 @@ function loadLevel4() {
         //            }
         //        });
 
+         //Set default data
         image.each(function () {
             $(this).data('pos', {
                 x: 0,
@@ -97,28 +107,8 @@ function loadLevel4() {
                 rot: 0
             }).data('name', 'img_'+$(this).index());
         });
-
-
-        //        $('.imageObject').bind('mousedown touchstart', function() {
-        //            console.log($(this))
-        //            var that = $(this)
-        //            holdTimeout = setTimeout(add.bind(null, that), 1000);
-        //        })
-        //        
-        //        $('.imageObject').bind('mouseup touchend', function() {
-        //            console.log($(this))
-        //            if ($(this).hasClass('hovered')) {
-        //                $(this).removeClass('hovered')
-        //            } else {
-        //                clearTimeout(holdTimeout);
-        //            }
-        //        })
-        //        
-        //        function add(that) {
-        //            console.log(that)
-        //            that.addClass('hovered');
-        //        }
-
+        
+        //Image Hover effect
         image.bind('mousedown touchstart', function() {
             $(this).addClass('hovered');
         })
@@ -129,7 +119,6 @@ function loadLevel4() {
             }
         })
 
-
         //Change Active Pixel
         image.on('touch click', function () {
             showModal();
@@ -139,17 +128,13 @@ function loadLevel4() {
             resetCode();
         });
 
-
-
-
         //Run Code
-        $('.js-run-code').on('touch click', function () {
-            runCodeLevel4();
-            hideModal();
-        });
+        //$('.js-run-code').on('touch click', function () {
+        //    runCodeLevel4();
+        //    hideModal();
+        //});
 
         $('.functions-btn .btn').click(function() {
-            //console.log($(this))
             addCode($(this));
         })
 
@@ -157,32 +142,13 @@ function loadLevel4() {
 
         codeMirror.setValue('init');
         //resetCode();
-
     })
-
 }
 
-
-
-function runCodeLevel4() {
-    //console.log('running code lvl4')
-    // console.log($('.imgActive').data('pos'))
-    //alert('ok')
-    var code = codeMirror.getValue();
-    var oldPos = $('.img-active').data('pos'); 
-    eval(code)
-    applyPosition();
-    resetCode();
-}
-
-
-
-/********************
-*
-*   Fonctions du Chapitre 4
-*
-*********************/
-
+/**
+* @function submitLevel4
+* @description Submit level 4 and verify anwsers 
+**/
 function submitLevel4() {
     //Validate
     endTime = Date.now();
@@ -234,6 +200,10 @@ function submitLevel4() {
     }
 }
 
+/**
+* @function popinEndLevel4
+* @description
+**/
 function popinEndLevel4 () {
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
@@ -252,4 +222,17 @@ function popinEndLevel4 () {
     }else {
         portalSandbox();
     }
+}
+
+/**
+* @function runCodeLevel4
+* @description Execute code from Code Mirror Editor - Level 4
+* @deprecated Was used for developer mode
+**/
+function runCodeLevel4() {
+    var code = codeMirror.getValue(),
+        oldPos = $('.img-active').data('pos'); 
+    eval(code)
+    applyPosition();
+    resetCode();
 }

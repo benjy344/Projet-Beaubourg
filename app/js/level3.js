@@ -1,9 +1,12 @@
-/********************
-*
-*   Chapitre 3
-*
-*********************/
+/**
+* @file General functions used in level 3
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
 
+/**
+* @function portalLevel3
+* @description
+**/
 function portalLevel3() {
     if (isFr) {
         var $portalLevel2 = new Portal({
@@ -20,11 +23,13 @@ function portalLevel3() {
     }
     arrayCookieUser.currentLevel = 3;
     createCookie(Username, arrayCookieUser, 20);
-
     isNewTip = false;
 }
 
-
+/**
+* @function loadLevel3
+* @description Load and initialize level 3
+**/
 function loadLevel3() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
@@ -44,33 +49,29 @@ function loadLevel3() {
             1 : content['jeu3astuce2'],
             2 : content['jeu3astuce3']
         }
-        //var tips1 = []
         Tip3 = new Tip({
             'tips' : tipsLevel3,
             'duration' : 4000,
             'level': 3
         })
-        //console.log(Tip3)
     } else {
         var $popinSlider = new Popin({
             content: content['jeu3reloadpopin']
         });
     }
-    var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
-    var info = new Popin({
-        type: 'info',
-        title: titleExplain,
-        content: content['lvl3explanation'],
-        $popin: $('.js-popup-info'),
-        $open: $('.js-icon-info')
-    })
+    var titleExplain = isFr ? 'Validation du niveau 3' : 'Level 3 validation',
+        info = new Popin({
+            type: 'info',
+            title: titleExplain,
+            content: content['lvl3explanation'],
+            $popin: $('.js-popup-info'),
+            $open: $('.js-icon-info')
+        });
     level3IsVisited = true;
     arrayCookieUser.level3IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level3', function () {
-
         var pixel = $('.square');
-
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
         codeConfig = {
@@ -79,16 +80,10 @@ function loadLevel3() {
             lineWrapping: true,
             lineNumbers: true,
             autofocus: false
-            //matchBrackets: true
         }
         //Initialisation des variables
         var defaultValue = 0;
-
         codeConfig.readOnly = 'nocursor';
-
-        //thisLvlAnswers = answers.lvl3;
-        //console.log(thisLvlAnswers)
-
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
         //        codeMirror.addKeyMap({
@@ -102,7 +97,6 @@ function loadLevel3() {
         $('.js-run-code').click(function(){
             runCodeLevel3();
         });
-
 
         //Change Active Pixel
         pixel.on('touch click', function() {
@@ -118,16 +112,15 @@ function loadLevel3() {
             }
         })
 
+        //Verify pixel on 
         $('.apply-color').on('touch click', function(){
             $('.pixel-active').verifyPixel();
         })
 
-
+        //Choose which part of the painting to reproduce
         $('#chooseFrameLvl3 input[type="radio"]').on('change', function() {
             which = $('#chooseFrameLvl3 input[type="radio"]:checked').attr('id');
-            //console.log(which)
         })
-
         $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
             //console.log('initiating level')
             $('input[name="chooseFrameLvl3"]').off();
@@ -153,10 +146,8 @@ function loadLevel3() {
 
         //Change input
         $('input[type=range]').on("input", function(){
-
-            var name = $(this).attr('class');
-            var thisPixel = $('.pixel-active').data('rvb');
-
+            var name = $(this).attr('class'),
+                thisPixel = $('.pixel-active').data('rvb');
             switch(name) {
                 case 'red':
                     $(this).parent().css('background-color', 'rgb('+$(this).val()+', 0, 0)');
@@ -175,10 +166,136 @@ function loadLevel3() {
             resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixel();
         })
-
     });
 }
 
+/**
+* @function submitLevel3
+* @description Submit level 3 and verify anwsers 
+**/
+function submitLevel3() {
+    endTime = Date.now();
+    var myTime = (endTime - startTime)/1000;
+
+    $.each($('.square').not('correct'), function(i) {
+        $(this).removeClass('active-pixel');
+        $(this).verifyPixel();
+    });
+
+    if ($('.correct').length == $('.square').length || testing) { //{TEST}
+        if (!level4IsVisited) {
+            if (myTime <= 120) { 
+                var $popinError = new Popin({
+                    content: content['jeu3d'],
+                    type: 'succes',
+                    callback: 'popinEndLevel3()',
+                    icon: 'succes3'
+                });
+            } else {
+                var $popinError = new Popin({
+                    content: content['jeu3d'],
+                    type: 'succes',
+                    callback: 'portalLevel4()',
+                    icon: 'succes3'
+                });
+            }
+            if (Tip3) Tip3.destroy('Tip3');
+        } else {
+            if (myTime <= 120) {
+                popinEndLevel3();
+            } else {
+                portalLevel4();                
+            }
+        }
+    } else {
+        var $popinError = new Popin({
+            content: content['erreur']
+        });
+    }
+}
+
+/**
+* @function verifyPixel
+* @description Verify active pixel - Level 3
+**/
+$.fn.verifyPixel = function() {
+    var rvb = $(this).data('rvb'),
+        validated = $(this).data('validated'),
+        pixelName = $(this).data('name'),
+        correctRvb = thisLvlAnswers[which][pixelName],
+        isCorrect = true;
+
+    //Verify each color
+    $.each(correctRvb, function(color, value){
+        if (value.length > 1) { 
+            if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
+                validated[color] = true;
+            }
+        } else { 
+            if (rvb[color] == value[0]) { 
+                validated[color] = true;
+            }
+        }     
+    }) 
+
+    //Disable sliders
+    $(this).data('validated', validated);
+    if ($(this).hasClass('pixel-active')) {
+        disableSliders(validated);
+    }
+
+    //Set pixel to correct or incorrect
+    if (validated.red && validated.green && validated.blue) {
+        $(this).removeClass('incorrect')
+        $(this).addClass('correct')
+        setTimeout(hideModal, 500);
+    } else {
+        $(this).addClass('incorrect') 
+    }
+}
+
+/**
+* @function popinExplainLevel3
+* @description
+**/
+function popinExplainLevel3() {
+    var title = isFr ? 'Validation du niveau 3' : 'Level 3 validation',
+        popinExplain = new Popin({
+            content: content['lvl3explanation'],
+            type: 'info',
+            title: title
+        });
+}
+
+/**
+* @function popinEndLevel3
+* @description
+**/
+function popinEndLevel3 () {
+    var exist = false;
+    for (var i = 0; i < $tabSuccess.length; i++) {
+        if ($tabSuccess[i] === 'succes7') {
+            exist = true;
+            break;
+        }
+    }
+    if (!exist) {
+        var $popinSuccessTime = new Popin({
+            content: content['jeu3s'],
+            type: 'succes',
+            callback: 'portalLevel4()',
+            icon: 'succes7'
+        });
+    }else {
+        portalLevel4();
+    }
+}
+
+/**
+* @function runCodeLevel3
+* @description Execute code from Code Mirror Editor - Level 3
+* @deprecated Was used for developer mode
+**/
 function runCodeLevel3() {
     //console.log('running code')
     var code = codeMirror.getValue();
@@ -214,126 +331,5 @@ function runCodeLevel3() {
         var resetPixel = $('.pixel-active').data('rvb');
 
         resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
-    }
-}
-
-
-/********************
-*
-*   Fonctions du Chapitre 3
-*
-*********************/
-
-function submitLevel3() {
-    endTime = Date.now();
-    var myTime = (endTime - startTime)/1000;
-
-
-    $.each($('.square').not('correct'), function(i) {
-        $(this).removeClass('active-pixel');
-        $(this).verifyPixel();
-    });
-
-    if ($('.correct').length == $('.square').length || testing) { //{TEST}
-        if (!level4IsVisited) {
-
-            if (myTime <= 120) { 
-                var $popinError = new Popin({
-                    content: content['jeu3d'],
-                    type: 'succes',
-                    callback: 'popinEndLevel3()',
-                    icon: 'succes3'
-                });
-            } else {
-                var $popinError = new Popin({
-                    content: content['jeu3d'],
-                    type: 'succes',
-                    callback: 'portalLevel4()',
-                    icon: 'succes3'
-                });
-            }
-
-            if (Tip3) Tip3.destroy('Tip3');
-        } else {
-            if (myTime <= 120) {
-                popinEndLevel3();
-            } else {
-                portalLevel4();                
-            }
-        }
-
-    } else {
-        var $popinError = new Popin({
-            content: content['erreur']
-        });
-    }
-
-}
-
-$.fn.verifyPixel = function() {
-    //console.log('verifying');
-    //console.log($(this))
-    var rvb = $(this).data('rvb'),
-        validated = $(this).data('validated'),
-        pixelName = $(this).data('name'),
-        correctRvb = thisLvlAnswers[which][pixelName],
-        isCorrect = true;
-
-    //console.log(validated)
-
-    $.each(correctRvb, function(color, value){
-        //console.log(color, value);
-        if (value.length > 1) { 
-            if (!(rvb[color] < value[0] || rvb[color] > value[1])) { 
-                validated[color] = true;
-            }
-        } else { 
-            if (rvb[color] == value[0]) { 
-                validated[color] = true;
-            }
-        }     
-    }) 
-
-    $(this).data('validated', validated);
-    if ($(this).hasClass('pixel-active')) {
-        disableSliders(validated);
-    }
-
-    //console.log(isCorrect);
-    if (validated.red && validated.green && validated.blue) {
-        $(this).removeClass('incorrect')
-        $(this).addClass('correct')
-        setTimeout(hideModal, 500);
-    } else {
-        $(this).addClass('incorrect') 
-    }
-}
-
-function popinExplainLevel3() {
-    var title = isFr ? 'Validation du niveau 3' : 'Level 3 validation';
-    var popinExplain = new Popin({
-        content: content['lvl3explanation'],
-        type: 'info',
-        title: title
-    });
-}
-
-function popinEndLevel3 () {
-    var exist = false;
-    for (var i = 0; i < $tabSuccess.length; i++) {
-        if ($tabSuccess[i] === 'succes7') {
-            exist = true;
-            break;
-        }
-    }
-    if (!exist) {
-        var $popinSuccessTime = new Popin({
-            content: content['jeu3s'],
-            type: 'succes',
-            callback: 'portalLevel4()',
-            icon: 'succes7'
-        });
-    }else {
-        portalLevel4();
     }
 }

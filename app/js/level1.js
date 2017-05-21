@@ -1,8 +1,12 @@
-/********************
-*
-*   Chapitre 1
-*
-*********************/
+/**
+* @file General functions used in level 1
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
+
+/**
+* @function portalLevel1
+* @description
+**/
 function portalLevel1() {
     if (isFr) {
         var $portalLevel1 = new Portal({
@@ -17,11 +21,14 @@ function portalLevel1() {
             callback: 'loadLevel1()'
         });
     }
-    
     arrayCookieUser.currentLevel = 1;
     createCookie(Username, arrayCookieUser, 20);
 }
 
+/**
+* @function loadLevel1
+* @description Load and initialize level 1
+**/
 function loadLevel1() {
     binaire = '';
     initEcrin();
@@ -49,28 +56,28 @@ function loadLevel1() {
         if (arrayCookieUser.$countHelp <=3) {
             switch (arrayCookieUser.$countHelp) {
                 case 0:
-                tipsLevel1 = {
-                    0 : content['jeu1astuce1'],
-                    1 : content['jeu1astuce2'],
-                    2 : content['jeu1astuce3']
-                }
-                break;
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                    }
+                    break;
                 case 1:
-                tipsLevel1 = {
-                    0 : content['jeu1astuce1'],
-                    1 : content['jeu1astuce2'],
-                    2 : content['jeu1astuce3']
-                }
-                break;
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                    }
+                    break;
                 case 2:
-                tipsLevel1 = {
-                    0 : content['jeu1astuce1'],
-                    1 : content['jeu1astuce2'],
-                    2 : content['jeu1astuce3']
-                }
-                break;
+                    tipsLevel1 = {
+                        0 : content['jeu1astuce1'],
+                        1 : content['jeu1astuce2'],
+                        2 : content['jeu1astuce3']
+                    }
+                    break;
             }
-            
+
             //var tips1 = []
             Tip1 = new Tip({
                 'tips' : tipsLevel1,
@@ -79,7 +86,7 @@ function loadLevel1() {
             })
         }
     }
-    
+
     level1IsVisited = true;
     arrayCookieUser.level1IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
@@ -89,7 +96,7 @@ function loadLevel1() {
         var heightNumber =  16;
         var min = Math.ceil(0);
         var max = Math.floor(9);
-        
+
         for (var i = 0; i < heightNumber; i++){
             var alea = Math.floor(Math.random() * (max - min +1)) + min;
             if (alea % 2 == 0) {
@@ -101,14 +108,12 @@ function loadLevel1() {
                 if (i % 4 === 0) { alenumber += '</span><span class="numbercase">'+alea+'';} else {alenumber += ''+alea+'';}
             } else {
                 alenumber += '<span class="numbercase">'+alea+'';
-            }
-            
-            
+            }  
         }
 
         alenumber += '</span>';
         $('.js-alenumber').html(alenumber);
-        
+
         var div = $('.tableau ul li div');
 
         div.on('touch click', function(e) {
@@ -117,20 +122,17 @@ function loadLevel1() {
     });
 }
 
-
-/********************
-*
-*   Fonctions du Chapitre 1
-*
-*********************/
+/**
+* @function submitLevel1
+* @description Submit level 1 and verify anwsers 
+**/
 function submitLevel1() {
     //console.log('submit lv1')
     endTime = Date.now();
 
-    var myTime = (endTime - startTime)/1000;
-
-    var chaineTableau = '';
-    var div = $('.tableau ul li div');
+    var myTime = (endTime - startTime)/1000,
+        chaineTableau = '',
+        div = $('.tableau ul li div');
 
     $(div).each(function() {
         if($( this ).hasClass( "black" )){
@@ -141,7 +143,6 @@ function submitLevel1() {
         }
     });
     if (chaineTableau == binaire || testing) { //{TEST} Always True
-
         if (!level2IsVisited) {
             if (myTime <= 30) {
                 var $popinError = new Popin({
@@ -163,12 +164,15 @@ function submitLevel1() {
         } else {
             if (myTime <= 30) { popinEndLevel1();} else { portalLevel2();}
         } 
-        
-        
     }else{var $popinError = new Popin({
         content: content['erreur'],
     });}
 }
+
+/**
+* @function popinEndLevel1
+* @description 
+**/
 function popinEndLevel1 () {
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
@@ -187,5 +191,5 @@ function popinEndLevel1 () {
     }else {
         portalLevel2();
     }
-    
+
 }

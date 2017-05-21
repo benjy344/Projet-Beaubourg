@@ -1,8 +1,12 @@
-/********************
-*
-*   Chapitre 2
-*
-*********************/
+/**
+* @file General functions used in level 2
+* @author François-Xavier Bresson & Benjamin Demaizière
+**/
+
+/**
+* @function portalLevel2
+* @description
+**/
 function portalLevel2() {
     if (isFr) {
         var $portalLevel2 = new Portal({
@@ -22,6 +26,10 @@ function portalLevel2() {
     isNewTip = false;
 }
 
+/**
+* @function loadLevel2
+* @description Load and initialize level 2
+**/
 function loadLevel2() {
     startTime = Date.now();
     if (!ecrin) {initEcrin()}
@@ -49,12 +57,11 @@ function loadLevel2() {
         }) 
     }
 
-
     level2IsVisited = true;
     arrayCookieUser.level2IsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
     $('main').loadLevel('level2', function() {
-       var titleExplain = isFr ? 'Les Variables' : 'Variables';
+        var titleExplain = isFr ? 'Les Variables' : 'Variables';
         var info = new Popin({
             type: 'info',
             title: titleExplain,
@@ -88,6 +95,7 @@ function loadLevel2() {
         });
         $('.cm-s-icecoder').addClass('only-color');
 
+        //Set default data
         $('.js-framewrapper').children().each(function () {
             $(this).data('rvb', {
                 red: defaultValue,
@@ -95,7 +103,6 @@ function loadLevel2() {
                 blue: defaultValue
             }).data('name', 'pixel_'+$(this).index());
         });
-
         //console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
@@ -109,9 +116,9 @@ function loadLevel2() {
         })
 
         //Run Code
-        $('.js-run-code').click(function () {
-            runCodeLevel2();
-        });
+        //$('.js-run-code').click(function () {
+        //    runCodeLevel2();
+        //});
 
         $('.js-apply-color').on('touch click', hideModal)
 
@@ -148,38 +155,10 @@ function loadLevel2() {
     })
 }
 
-function runCodeLevel2() {
-    var code = codeMirror.getValue();
-
-    try {
-        eval(code)
-
-        pixel = eval($('.pixel-active').data('name'));
-        //console.log(pixel)                    
-        $('.pixel-active').data('rvb', {
-            red: pixel.red, 
-            green: pixel.green, 
-            blue: pixel.blue
-        });
-        resetCheckboxes(pixel.red, pixel.green, pixel.blue);
-        resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue);
-        colorPixelRVB();
-        //verifPixelLevel2();
-    } catch(e) {
-        var resetPixel = $('.pixel-active').data('rvb');
-
-        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
-    }
-}
-
-
-
-/********************
-*
-*   Fonctions du Chapitre 2
-*
-*********************/
-
+/**
+* @function submitLevel2
+* @description Submit level 2 and verify anwsers 
+**/
 function submitLevel2() {
     endTime = Date.now();
     var numCorrect = 0;
@@ -199,7 +178,7 @@ function submitLevel2() {
     }
 
     if (numCorrect == pixels.length || testing) { //{}
-        
+
         if (!level3IsVisited) {
 
             if (myTime <= 40) {
@@ -233,6 +212,11 @@ function submitLevel2() {
     }
 
 }
+
+/**
+* @function popinEndLevel2
+* @description
+**/
 function popinEndLevel2 () {
     var exist = false;
     for (var i = 0; i < $tabSuccess.length; i++) {
@@ -243,12 +227,37 @@ function popinEndLevel2 () {
     }
     if (!exist) {
         var $popinSuccessTime = new Popin({
-                content: content['jeu2s'],
-                type: 'succes',
-                callback: 'portalLevel3()',
-                icon: 'succes6'
-            });
+            content: content['jeu2s'],
+            type: 'succes',
+            callback: 'portalLevel3()',
+            icon: 'succes6'
+        });
     }else {
         portalLevel3();
+    }
+}
+
+/**
+* @function runCodeLevel2
+* @description Execute code from Code Mirror Editor - Level 2
+* @deprecated Was used for developer mode
+**/
+function runCodeLevel2() {
+    var code = codeMirror.getValue();
+    try {
+        eval(code)
+
+        pixel = eval($('.pixel-active').data('name'));
+        $('.pixel-active').data('rvb', {
+            red: pixel.red, 
+            green: pixel.green, 
+            blue: pixel.blue
+        });
+        resetCheckboxes(pixel.red, pixel.green, pixel.blue);
+        resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue);
+        colorPixelRVB();
+    } catch(e) { //Handle eval error
+        var resetPixel = $('.pixel-active').data('rvb');
+        resetCodePixel($('.pixel-active').data('name'), resetPixel.red, resetPixel.green, resetPixel.blue);
     }
 }

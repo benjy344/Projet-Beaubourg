@@ -1,22 +1,25 @@
-/********************
-*
-*   Fonctions de réinitialisation
-*
-*********************/
+/**
+* @file Functions to reset the level, the variables, and detach event listener
+* @author François-Xavier Bresson
+**/
 
+/**
+* @function resetCM
+* @description Remove the Code Mirror Editor
+**/
 function resetCM() {
-
     if(codeMirror) {
-
         codeMirror.off();
         codeMirror.getWrapperElement().parentNode.removeChild(codeMirror.getWrapperElement());
         codeMirror=null;
-        //console.log('cm = ' + codeMirror);
     }
 }
 
+/**
+* @function reinitMain
+* @description Main reset function, handle modal, menu, timeouts, and call specific level reset function
+**/
 function reinitMain() {
-    //hidePopup();
     hideModal();
     resetCM();
     $('.hamburger').removeClass('is-active');
@@ -25,7 +28,6 @@ function reinitMain() {
     $('.main-nav .child').removeClass('isOpen');
     $('.help-button').hide();
     clearTimeout(timeOut);
-
     switch(screen) {
         case 'level1':
             resetLevel1(); 
@@ -47,10 +49,18 @@ function reinitMain() {
     }
 }
 
+/**
+* @function resetLevel1
+* @description Reset function for level 1
+**/
 function resetLevel1() {
     $('.tableau ul li div').off();
 }
 
+/**
+* @function resetLevel2
+* @description Reset function for level 2
+**/
 function resetLevel2() {
     $('.js-framewrapper .js-pixel').off()
     $('.js-run-code').off()
@@ -58,6 +68,10 @@ function resetLevel2() {
     $('.checkboxes input:checkbox').off();
 }
 
+/**
+* @function resetLevel3
+* @description Reset function for level 3
+**/
 function resetLevel3() {
     $('.square').off();
     $('.js-run-code').off()
@@ -65,6 +79,10 @@ function resetLevel3() {
     $('#chooseFrameLvl3 input[type="radio"]').off();
 }
 
+/**
+* @function resetLevel4
+* @description Reset function for level 4
+**/
 function resetLevel4() {
     $('.js-image-object').off();
     $('.functions-btn .btn').off();
@@ -73,6 +91,10 @@ function resetLevel4() {
 
 }
 
+/**
+* @function resetSandbox
+* @description Reset function for the sandbox
+**/
 function resetSandbox() {
     $(document).off('touch click', '.js-sandboxwrapper .js-pixel');
     $('.js-change-color').off();
@@ -83,8 +105,4 @@ function resetSandbox() {
     $('.js-run-code').off()
     $('.js-apply-color').off()
     $('.functions-btn .btn').off();
-}
-
-function reinitSandbox() {
-    $('#sandboxWrapper').empty(); 
 }
