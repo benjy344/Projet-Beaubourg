@@ -1,3 +1,9 @@
+
+/**
+* @file Define Tip prototype
+* @author  Benjamin Demaizière
+**/
+
 /*
  * Tip is a module that constructs in an element and put it in the menu
  *
@@ -10,21 +16,29 @@
  *
  */
 
-// $popin = new Tip({
+/* $tip = new Tip({
 
-//             content: 'blabla',
-//             type: 'popin',
-//             callback: 'loadIntro()'
-//     });
+*            content: 'blabla',
+*             type: 'popin',
+*             callback: 'loadIntro()'
+*     });
+*/
+
+/**
+ * Tip is a module that constructs in an element and put it in the menu
+ * @constructor
+ * @param {object} options - list of options.
+ */
 function Tip(options) {
-    //console.log(options.stop)
     if (options.stop) { this.stop(options)} else {this.init(options);}
 }
 
 Tip.prototype = {
 
-
-
+    /**
+    * @function init
+    * @description Initialise Tip's options
+    **/ 
     init: function(options) {
         this.duration = 42000;
         this.tips = "";
@@ -48,6 +62,11 @@ Tip.prototype = {
         this.canIconstruct(this.tips[this.count]);
     },
 
+    /**
+    * @function canIconstruct
+    * @description Verify if can construc a new Tip
+    * @param {string} tip - the current tip.
+    **/ 
     canIconstruct: function(tip) {
         var $this = this;
         if (this.level === countLevel ) {
@@ -61,6 +80,11 @@ Tip.prototype = {
 
     },
 
+    /**
+    * @function constructTip
+    * @description construct the tip and create a popin
+    * @param {string} tip - the current tip.
+    **/
     constructTip : function (tip) {
         var $this = this;
         if (this.level === countLevel ) {
@@ -89,12 +113,22 @@ Tip.prototype = {
 
     },
 
-    stop : function (options) {
+    /**
+    * @function stop
+    * @description Clear the setTimeout if a popin or a other tip is open
+    **/
+    stop : function () {
         var $this = this;
         clearTimeout($this.setTimeOut);
         $this.setTimeOut = 0;
         $this.waitFor = 0;
     },
+
+    /**
+    * @function destroy
+    * @description destroy the current tip's instance
+    * @param {string} tip - the current tip.
+    **/
     destroy: function(tip) {
         // Delete the variable that references the instance of the constructor.
         switch (tip) {

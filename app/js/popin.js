@@ -1,3 +1,8 @@
+/**
+* @file Define Popin prototype
+* @author  Benjamin Demaizière
+**/
+
 /*
  * Popin is a module that fades in an element over #popin-overlay
  *
@@ -10,48 +15,55 @@
  */
 
 /* $popin = new Popin({
-
 *             content: 'blabla',
 *             type: 'popin',
 *             callback: 'loadIntro()'
 *     });
 */
+
+/**
+ * Popin is a module that fades in an element over #popin-overlay
+ * @constructor
+ * @param {object} options - list of options.
+ */
 function Popin(options) {
     this.init(options);
 }
 
 Popin.prototype = {
 
-
-
+    /**
+    * @function init
+    * @description Initialise Popin's options
+    **/    
     init: function(options) {
-        this.$popin   =   $(".js-popup");
-        this.$open    =   undefined;
-        this.$overlay =   $(".js-overlay");
-        this.type     =   'popin';
-        this.content  =   '';
-        this.isSlider =   false;
+        this.$popin   = $(".js-popup");
+        this.$open    = undefined;
+        this.$overlay = $(".js-overlay");
+        this.type     = 'popin';
+        this.content  = '';
+        this.isSlider = false;
 
         if (options) {
-            if (options.type) this.type = options.type;
-            if (options.$popin) this.$popin = options.$popin;
-            if (options.content) this.content = options.content;
-            if (options.$open) this.$open = options.$open;            
-            if (options.callback) this.callback = options.callback;            
-            if (options.isSlider) this.isSlider = options.isSlider;
-            if (options.icon) this.icon = options.icon;
+            if (options.type)      this.type = options.type;
+            if (options.$popin)    this.$popin = options.$popin;
+            if (options.content)   this.content = options.content;
+            if (options.$open)     this.$open = options.$open;            
+            if (options.callback)  this.callback = options.callback;            
+            if (options.isSlider)  this.isSlider = options.isSlider;
+            if (options.icon)      this.icon = options.icon;
             if (options.helpTitle) this.helpTitle = options.helpTitle;
-            if (options.title) this.title = options.title;
+            if (options.title)     this.title = options.title;
         }
 
         this.buildElements();
         this.addEventListeners();
-
-
     },
-    /*
-     * Adds listeners for open / close 
-     */
+
+    /**
+    * @function addEventListeners
+    * @description Adds listeners for open / close 
+    **/     
     addEventListeners: function() {
         var _this = this;
         if (this.$open) {
@@ -66,16 +78,18 @@ Popin.prototype = {
             this.$close.on( "click touch", function(e) { $.proxy(_this.defaultClose, _this, e)(); });
 
         }
-
-        //this.$overlay.off('click touch').on("click touch", function(e) {$.proxy(_this.defaultClose, _this, e)();});
-
     },
-
-    updateOpenTriggers: function( $elements) {
+    
+    /**
+    * @function updateOpenTriggers
+    * @description Update the Open Trigger
+    * @param {jquery element} $element - the new trigger element.
+    **/   
+    updateOpenTriggers: function($element) {
         if (this.$open) {
             this.$open.off("click touch");
         }
-        this.$open = $elements;
+        this.$open = $element;
         var _this = this;
         this.$open.each(function() {
             $(this).on( "click touch", function(e) { 
@@ -84,9 +98,10 @@ Popin.prototype = {
         });
     },
 
-    /*
-     * Builds the overlay and close button if necessary
-     */
+    /**
+    * @function buildElements
+    * @description Builds the overlay and close button if necessary
+    **/ 
     buildElements: function() {
         this.$ContentPopup = this.$popin.find('.js-content-popup');
         if(this.type === "help") this.$overlay = $(".js-overlay-tips");
@@ -105,6 +120,10 @@ Popin.prototype = {
         }  
     },
 
+    /**
+    * @function defaultOpen
+    * @description Open the popin
+    **/ 
     defaultOpen: function() {
         popinIsOpen = true;
 
@@ -138,6 +157,10 @@ Popin.prototype = {
         this.$popin.removeClass("hide");
     },
 
+    /**
+    * @function defaultClose
+    * @description Close the popin
+    **/ 
     defaultClose: function(e) {
         if (popinIsOpen) {
             var _this = this;
@@ -146,8 +169,6 @@ Popin.prototype = {
                 if (isNewTip) isNewTip=false;
                 if (tipIsOpened) tipIsOpened=false;
             }
-
-            //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");
             if (this.callback) eval(this.callback);

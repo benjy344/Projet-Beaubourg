@@ -11952,6 +11952,11 @@ function popinEndLevel4 () {
 }
 ;
  /*********************************************************/
+/**
+* @file Define Popin prototype
+* @author  Benjamin Demaizière
+**/
+
 /*
  * Popin is a module that fades in an element over #popin-overlay
  *
@@ -11964,48 +11969,55 @@ function popinEndLevel4 () {
  */
 
 /* $popin = new Popin({
-
 *             content: 'blabla',
 *             type: 'popin',
 *             callback: 'loadIntro()'
 *     });
 */
+
+/**
+ * Popin is a module that fades in an element over #popin-overlay
+ * @constructor
+ * @param {object} options - list of options.
+ */
 function Popin(options) {
     this.init(options);
 }
 
 Popin.prototype = {
 
-
-
+    /**
+    * @function init
+    * @description Initialise Popin's options
+    **/    
     init: function(options) {
-        this.$popin   =   $(".js-popup");
-        this.$open    =   undefined;
-        this.$overlay =   $(".js-overlay");
-        this.type     =   'popin';
-        this.content  =   '';
-        this.isSlider =   false;
+        this.$popin   = $(".js-popup");
+        this.$open    = undefined;
+        this.$overlay = $(".js-overlay");
+        this.type     = 'popin';
+        this.content  = '';
+        this.isSlider = false;
 
         if (options) {
-            if (options.type) this.type = options.type;
-            if (options.$popin) this.$popin = options.$popin;
-            if (options.content) this.content = options.content;
-            if (options.$open) this.$open = options.$open;            
-            if (options.callback) this.callback = options.callback;            
-            if (options.isSlider) this.isSlider = options.isSlider;
-            if (options.icon) this.icon = options.icon;
+            if (options.type)      this.type = options.type;
+            if (options.$popin)    this.$popin = options.$popin;
+            if (options.content)   this.content = options.content;
+            if (options.$open)     this.$open = options.$open;            
+            if (options.callback)  this.callback = options.callback;            
+            if (options.isSlider)  this.isSlider = options.isSlider;
+            if (options.icon)      this.icon = options.icon;
             if (options.helpTitle) this.helpTitle = options.helpTitle;
-            if (options.title) this.title = options.title;
+            if (options.title)     this.title = options.title;
         }
 
         this.buildElements();
         this.addEventListeners();
-
-
     },
-    /*
-     * Adds listeners for open / close 
-     */
+
+    /**
+    * @function addEventListeners
+    * @description Adds listeners for open / close 
+    **/     
     addEventListeners: function() {
         var _this = this;
         if (this.$open) {
@@ -12020,16 +12032,18 @@ Popin.prototype = {
             this.$close.on( "click touch", function(e) { $.proxy(_this.defaultClose, _this, e)(); });
 
         }
-
-        //this.$overlay.off('click touch').on("click touch", function(e) {$.proxy(_this.defaultClose, _this, e)();});
-
     },
-
-    updateOpenTriggers: function( $elements) {
+    
+    /**
+    * @function updateOpenTriggers
+    * @description Update the Open Trigger
+    * @param {jquery element} $element - the new trigger element.
+    **/   
+    updateOpenTriggers: function($element) {
         if (this.$open) {
             this.$open.off("click touch");
         }
-        this.$open = $elements;
+        this.$open = $element;
         var _this = this;
         this.$open.each(function() {
             $(this).on( "click touch", function(e) { 
@@ -12038,9 +12052,10 @@ Popin.prototype = {
         });
     },
 
-    /*
-     * Builds the overlay and close button if necessary
-     */
+    /**
+    * @function buildElements
+    * @description Builds the overlay and close button if necessary
+    **/ 
     buildElements: function() {
         this.$ContentPopup = this.$popin.find('.js-content-popup');
         if(this.type === "help") this.$overlay = $(".js-overlay-tips");
@@ -12059,6 +12074,10 @@ Popin.prototype = {
         }  
     },
 
+    /**
+    * @function defaultOpen
+    * @description Open the popin
+    **/ 
     defaultOpen: function() {
         popinIsOpen = true;
 
@@ -12092,6 +12111,10 @@ Popin.prototype = {
         this.$popin.removeClass("hide");
     },
 
+    /**
+    * @function defaultClose
+    * @description Close the popin
+    **/ 
     defaultClose: function(e) {
         if (popinIsOpen) {
             var _this = this;
@@ -12100,8 +12123,6 @@ Popin.prototype = {
                 if (isNewTip) isNewTip=false;
                 if (tipIsOpened) tipIsOpened=false;
             }
-
-            //this.$ContentPopup.html('');
             this.$overlay.addClass("hide");
             this.$popin.addClass("hide");
             if (this.callback) eval(this.callback);
@@ -12112,6 +12133,11 @@ Popin.prototype = {
 
 /*module.exports = modules.Popin = Popin;*/;
  /*********************************************************/
+/**
+* @file Define Portal prototype
+* @author  Benjamin Demaizière
+**/
+
 /*
  * Portal is a module that hide load of the next level
  *
@@ -12130,12 +12156,22 @@ Popin.prototype = {
 *             callback: 'loadIntro()'
 *     });
 */
+
+/**
+ * Portal is a module that hide load of the next level
+ * @constructor
+ * @param {object} options - list of options.
+ */
 function Portal(options) {
     this.init(options);
 }
 
 Portal.prototype = {
 
+    /**
+    * @function init
+    * @description Initialise Portal's options
+    **/ 
 	init: function(options) {
 		var _this       =   this;
         this.$portal    =   $(".js-level-portal");
@@ -12156,6 +12192,10 @@ Portal.prototype = {
         this.$portal.on('click touch', function(e) { $.proxy(_this.onClose, _this, e)(); });
     },
 
+    /**
+    * @function onOpen
+    * @description Open portal
+    **/ 
     onOpen: function() {
     	this.$portal.addClass('show');
     	this.$title.addClass('fade-in');
@@ -12167,6 +12207,11 @@ Portal.prototype = {
             this.$portal.addClass('last-portal');
         }
     },
+
+    /**
+    * @function onClose
+    * @description Close portal
+    **/ 
     onClose: function(e) {
 		this.$portal.removeClass('show').removeClass('last-portal');
 		this.$title.removeClass('fade-in');
@@ -12599,6 +12644,12 @@ function runSandbox() {
     }
 };
  /*********************************************************/
+
+/**
+* @file Define Tip prototype
+* @author  Benjamin Demaizière
+**/
+
 /*
  * Tip is a module that constructs in an element and put it in the menu
  *
@@ -12611,21 +12662,29 @@ function runSandbox() {
  *
  */
 
-// $popin = new Tip({
+/* $tip = new Tip({
 
-//             content: 'blabla',
-//             type: 'popin',
-//             callback: 'loadIntro()'
-//     });
+*            content: 'blabla',
+*             type: 'popin',
+*             callback: 'loadIntro()'
+*     });
+*/
+
+/**
+ * Tip is a module that constructs in an element and put it in the menu
+ * @constructor
+ * @param {object} options - list of options.
+ */
 function Tip(options) {
-    //console.log(options.stop)
     if (options.stop) { this.stop(options)} else {this.init(options);}
 }
 
 Tip.prototype = {
 
-
-
+    /**
+    * @function init
+    * @description Initialise Tip's options
+    **/ 
     init: function(options) {
         this.duration = 42000;
         this.tips = "";
@@ -12649,6 +12708,11 @@ Tip.prototype = {
         this.canIconstruct(this.tips[this.count]);
     },
 
+    /**
+    * @function canIconstruct
+    * @description Verify if can construc a new Tip
+    * @param {string} tip - the current tip.
+    **/ 
     canIconstruct: function(tip) {
         var $this = this;
         if (this.level === countLevel ) {
@@ -12662,6 +12726,11 @@ Tip.prototype = {
 
     },
 
+    /**
+    * @function constructTip
+    * @description construct the tip and create a popin
+    * @param {string} tip - the current tip.
+    **/
     constructTip : function (tip) {
         var $this = this;
         if (this.level === countLevel ) {
@@ -12690,12 +12759,22 @@ Tip.prototype = {
 
     },
 
-    stop : function (options) {
+    /**
+    * @function stop
+    * @description Clear the setTimeout if a popin or a other tip is open
+    **/
+    stop : function () {
         var $this = this;
         clearTimeout($this.setTimeOut);
         $this.setTimeOut = 0;
         $this.waitFor = 0;
     },
+
+    /**
+    * @function destroy
+    * @description destroy the current tip's instance
+    * @param {string} tip - the current tip.
+    **/
     destroy: function(tip) {
         // Delete the variable that references the instance of the constructor.
         switch (tip) {

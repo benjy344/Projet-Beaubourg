@@ -1,3 +1,8 @@
+/**
+* @file Define Portal prototype
+* @author  Benjamin Demaizière
+**/
+
 /*
  * Portal is a module that hide load of the next level
  *
@@ -16,12 +21,22 @@
 *             callback: 'loadIntro()'
 *     });
 */
+
+/**
+ * Portal is a module that hide load of the next level
+ * @constructor
+ * @param {object} options - list of options.
+ */
 function Portal(options) {
     this.init(options);
 }
 
 Portal.prototype = {
 
+    /**
+    * @function init
+    * @description Initialise Portal's options
+    **/ 
 	init: function(options) {
 		var _this       =   this;
         this.$portal    =   $(".js-level-portal");
@@ -42,6 +57,10 @@ Portal.prototype = {
         this.$portal.on('click touch', function(e) { $.proxy(_this.onClose, _this, e)(); });
     },
 
+    /**
+    * @function onOpen
+    * @description Open portal
+    **/ 
     onOpen: function() {
     	this.$portal.addClass('show');
     	this.$title.addClass('fade-in');
@@ -53,6 +72,11 @@ Portal.prototype = {
             this.$portal.addClass('last-portal');
         }
     },
+
+    /**
+    * @function onClose
+    * @description Close portal
+    **/ 
     onClose: function(e) {
 		this.$portal.removeClass('show').removeClass('last-portal');
 		this.$title.removeClass('fade-in');
