@@ -5,7 +5,7 @@
 
 /**
 * @function portalLevel1
-* @description
+* @description initialise the level1's portal
 **/
 function portalLevel1() {
     if (isFr) {
@@ -46,7 +46,6 @@ function loadLevel1() {
             1 : content['jeu1astuce2'],
             2 : content['jeu1astuce3']
         }
-        //var tips1 = []
         Tip1 = new Tip({
             'tips' : tipsLevel1,
             'duration' : 4000,
@@ -78,7 +77,6 @@ function loadLevel1() {
                     break;
             }
 
-            //var tips1 = []
             Tip1 = new Tip({
                 'tips' : tipsLevel1,
                 'duration' : 4000,
@@ -92,7 +90,7 @@ function loadLevel1() {
     createCookie(Username, arrayCookieUser, 20);
     alenumber = "";
     $('main').loadLevel('level1', function(){
-        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
+        //generation du nombre aléatoir a 16 chiffres + creation d'une chaine binaire
         var heightNumber =  16;
         var min = Math.ceil(0);
         var max = Math.floor(9);
@@ -103,7 +101,6 @@ function loadLevel1() {
                 binaire = binaire+'0';
             }
             else { binaire = binaire+'1'; }
-            //console.log( i % 4 )
             if (i != 0) {
                 if (i % 4 === 0) { alenumber += '</span><span class="numbercase">'+alea+'';} else {alenumber += ''+alea+'';}
             } else {
@@ -127,7 +124,6 @@ function loadLevel1() {
 * @description Submit level 1 and verify anwsers 
 **/
 function submitLevel1() {
-    //console.log('submit lv1')
     endTime = Date.now();
 
     var myTime = (endTime - startTime)/1000,
@@ -171,7 +167,7 @@ function submitLevel1() {
 
 /**
 * @function popinEndLevel1
-* @description 
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel1 () {
     var exist = false;

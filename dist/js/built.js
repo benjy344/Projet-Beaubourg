@@ -9419,7 +9419,12 @@ function loadIntro(){
     }
 }
 
-
+/**
+* @function isUserExiste
+* @description check in cookies if the username already exist
+* @param {string} username - Username to check
+* @callback initRealoadSession createCookie
+**/
 function isUserExiste (username) {
     if(readCookie(username)){
         arrayCookieUser = readCookie(username);
@@ -9453,7 +9458,10 @@ function isUserExiste (username) {
 }
 
 
-
+/**
+* @function initRealoadSession
+* @description set variables as the same value of the last connexion
+**/
 function initRealoadSession() {
     if (eval(arrayCookieUser.$tabSuccess)!= 0 && eval(arrayCookieUser.$tabSuccess)!= undefined) {
         $tabSuccess = eval(arrayCookieUser.$tabSuccess);
@@ -9470,7 +9478,6 @@ function initRealoadSession() {
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
     var levelForHelp = 1; 
-    //console.log(countEncyclo)
     for (var i = 0; i < countHelp; i++) {
         var thecontent = 'jeu'+levelForHelp+'astuce'+number,
             title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
@@ -9504,6 +9511,13 @@ function initRealoadSession() {
 *
 *********************************/
 
+/**
+* @function createCookie
+* @description create a new cookie
+* @param {string} name - name of the cookie
+* @param {string} tabvalue - value of the cookie
+* @param {number} duration - duration of the cookie (in day)
+**/
 function createCookie(name, tabvalue, duration) {
     // Le nombre de duration est spécifié
     value = decodeURIComponent( $.param( tabvalue ) );
@@ -9517,6 +9531,13 @@ function createCookie(name, tabvalue, duration) {
     else var expire = "";
     document.cookie = name+"="+value+expire+"; path=/";
 }
+
+/**
+* @function readCookie
+* @description read the value of a cookie
+* @param {string} name - name of the cookie
+* @return the cookie's value
+**/
 function readCookie(name) {
     // Ajoute le signe égale virgule au name
     // pour la recherche
@@ -9537,7 +9558,11 @@ function readCookie(name) {
     // Aucun cookie trouvé
     return null;
 }
-
+/**
+* @function eraseCookie
+* @description delete a cookie
+* @param {string} name - name of the cookie
+**/
 function eraseCookie(name) {
     createCookie(name,"",-1);
 }
@@ -9547,7 +9572,12 @@ function eraseCookie(name) {
 *
 *   Page de choix des chapitres 
 *
-*********************/
+*********************/$
+
+/**
+* @function loadChooseLevel
+* @description load a level
+**/
 function loadChooseLevel(){
     $('main').load(views+lang+'/accueil.html');
 }
@@ -9559,14 +9589,13 @@ Implementation de l'encyclopedie
 
 ********************/
 
-// ici tout le contenu designé sera stoqué en tant que page dans l'encyclopedie
-// en param de la fonction => 
 /**
-* Nom de la page ( titre du li)
-* contenu textuel
-*
-*/
-
+* @function addEncyclo
+* @description add a content in the encyclopedia
+* @param {string} name - name of the content
+* @param {string} content - the content
+* @param {boolean} count - if a content need to be add on cookie
+**/
 function addEncyclo(name, content, count = true) {
     var exist = false;
     for (var i = 0; i < encycloNameTab.length; i++) {
@@ -9597,14 +9626,12 @@ Implementation de l'aide
 
 ********************/
 
-// ici tout le contenu designé sera stoqué en tant que page dans l'aide
-// en param de la fonction => 
 /**
-* Nom de la page ( titre du li)
-* contenu textuel
-*
-*/
-
+* @function addHelp
+* @description add a content in the help menu
+* @param {string} name - name of the content
+* @param {string} content - the content
+**/
 function addHelp(name, content) {
     var exist = false;
     for (var i = 0; i < helpNameTab.length; i++) {
@@ -9628,6 +9655,13 @@ function addHelp(name, content) {
 
 }
 
+/**
+* @function helpTitle
+* @description return a title
+* @param {number} level - current level
+* @param {number} help - the number of the current help
+* @return title
+**/
 function helpTitle(level, help) {
     var title = isFr ? 'Niveau '+level+' Aide n°'+help : 'Level '+level+' Help n°'+help;
     return title;
@@ -9639,12 +9673,12 @@ Implementation des success
 
 ********************/
 
-// ici tout le contenu designé sera stoqué en tant trophé dans la pages des success 
-// en param de la fonction => 
+
 /**
-* class de l'icon du success
-*
-*/
+* @function addSuccess
+* @description add a content in the success menu
+* @param {string} icon - icon of the succes
+**/
 function addSuccess(icon) {
     countSuccess = $tabSuccess.length;
     if (icon) {
@@ -9653,11 +9687,18 @@ function addSuccess(icon) {
         createCookie(Username, arrayCookieUser, 20);
     }
 }
-
+/**
+* @function openFirstTip
+* @description auto open the first tip
+**/
 function openFirstTip() {
     $(".help-button").removeClass("first-tip").trigger( "click" );   
 }
 
+/**
+* @function alertError
+* @description display error on codemirror
+**/
 function alertErr() {
     var pixel = $('.pixel-active').data('rvb');
     resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue)
@@ -9666,6 +9707,10 @@ function alertErr() {
     alert('ERROR');
 }
 
+/**
+* @function finish
+* @description show the last screen of the app
+**/
 function finish() {
     var totalSucces = 8,
         nbSucces = (totalSucces - $tabSuccess.length),
@@ -9698,6 +9743,11 @@ function finish() {
     });
 
 }
+
+/**
+* @function unlockAllSuccess
+* @description For dev, unlock all the success in the success menu
+**/
 function unlockAllSuccess() {
     for (var i = 1; i < 9; i++) {
         var succes = 'succes'+i;
@@ -9706,6 +9756,11 @@ function unlockAllSuccess() {
 }
 
 // Modal gestion
+
+/**
+* @function showModal
+* @description display the modal
+**/
 function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
     $('body').addClass('modal-active');
@@ -9716,6 +9771,10 @@ function showModal() {
     }, 1000);
 }
 
+/**
+* @function initEcran
+* @description initialisate some class
+**/
 function initEcrin() {
     $('main').addClass('flex');
     $('.background').addClass('none');
@@ -9723,6 +9782,10 @@ function initEcrin() {
     ecrin = true;
 }
 
+/**
+* @function hideModal
+* @description hide the modal
+**/
 function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
@@ -9741,6 +9804,17 @@ function hideModal() {
 //    count: used to count the loops
 //    source: a string to specify an ID, a message, etc
 //**********************************************************************
+
+/**
+* @function waitforPopinIsOpen
+* @description wait for a event
+* @param {boolean} expectedValue - exepted value who waitind for
+* @param {number} msec - duration of each verification
+* @param {number} count - for debug, count loops
+* @param {string} source - a string to specify an ID, a message, etc
+* @param {number} level - the level of the tip
+* @param {function} callback - the callback in case of success
+**/
 function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback) {
     // Check if condition met. If not, re-check later (msec).
     if (countLevel === level) {
@@ -9754,9 +9828,6 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
     }else {
         return;
     }
-
-    // Condition finally met. callback() can be executed.
-    //console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
 }
 
@@ -11112,7 +11183,7 @@ CodeMirror.defineMIME("application/typescript", { name: "javascript", typescript
 
 /**
 * @function portalLevel1
-* @description
+* @description initialise the level1's portal
 **/
 function portalLevel1() {
     if (isFr) {
@@ -11153,7 +11224,6 @@ function loadLevel1() {
             1 : content['jeu1astuce2'],
             2 : content['jeu1astuce3']
         }
-        //var tips1 = []
         Tip1 = new Tip({
             'tips' : tipsLevel1,
             'duration' : 4000,
@@ -11185,7 +11255,6 @@ function loadLevel1() {
                     break;
             }
 
-            //var tips1 = []
             Tip1 = new Tip({
                 'tips' : tipsLevel1,
                 'duration' : 4000,
@@ -11199,7 +11268,7 @@ function loadLevel1() {
     createCookie(Username, arrayCookieUser, 20);
     alenumber = "";
     $('main').loadLevel('level1', function(){
-        //generation du nombre aléatoir a 24 chiffres + creation d'une chaine binaire
+        //generation du nombre aléatoir a 16 chiffres + creation d'une chaine binaire
         var heightNumber =  16;
         var min = Math.ceil(0);
         var max = Math.floor(9);
@@ -11210,7 +11279,6 @@ function loadLevel1() {
                 binaire = binaire+'0';
             }
             else { binaire = binaire+'1'; }
-            //console.log( i % 4 )
             if (i != 0) {
                 if (i % 4 === 0) { alenumber += '</span><span class="numbercase">'+alea+'';} else {alenumber += ''+alea+'';}
             } else {
@@ -11234,7 +11302,6 @@ function loadLevel1() {
 * @description Submit level 1 and verify anwsers 
 **/
 function submitLevel1() {
-    //console.log('submit lv1')
     endTime = Date.now();
 
     var myTime = (endTime - startTime)/1000,
@@ -11278,7 +11345,7 @@ function submitLevel1() {
 
 /**
 * @function popinEndLevel1
-* @description 
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel1 () {
     var exist = false;
@@ -11309,7 +11376,7 @@ function popinEndLevel1 () {
 
 /**
 * @function portalLevel2
-* @description
+* @description initialise the level2's portal
 **/
 function portalLevel2() {
     if (isFr) {
@@ -11407,10 +11474,8 @@ function loadLevel2() {
                 blue: defaultValue
             }).data('name', 'pixel_'+$(this).index());
         });
-        //console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
-            //console.log($(this));
             $('.pixel-active').removeClass('pixel-active');
             $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
@@ -11418,11 +11483,6 @@ function loadLevel2() {
             resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
             showModal();
         })
-
-        //Run Code
-        //$('.js-run-code').click(function () {
-        //    runCodeLevel2();
-        //});
 
         $('.js-apply-color').on('touch click', hideModal)
 
@@ -11454,7 +11514,6 @@ function loadLevel2() {
             }
             resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixelRVB();
-            //verifPixelLevel2();
         })
     })
 }
@@ -11481,7 +11540,7 @@ function submitLevel2() {
         }
     }
 
-    if (numCorrect == pixels.length || testing) { //{}
+    if (numCorrect == pixels.length || testing) { 
 
         if (!level3IsVisited) {
 
@@ -11519,7 +11578,7 @@ function submitLevel2() {
 
 /**
 * @function popinEndLevel2
-* @description
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel2 () {
     var exist = false;
@@ -11573,7 +11632,7 @@ function runCodeLevel2() {
 
 /**
 * @function portalLevel3
-* @description
+* @description initialise the level3's portal
 **/
 function portalLevel3() {
     if (isFr) {
@@ -11654,11 +11713,6 @@ function loadLevel3() {
         codeConfig.readOnly = 'nocursor';
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        //        codeMirror.addKeyMap({
-        //            Enter: function (cm) {
-        //                enterKeyMap();
-        //            }
-        //        });
         $('.cm-s-icecoder').addClass('only-color');
 
         //Run Code
@@ -11672,7 +11726,6 @@ function loadLevel3() {
                 $('.pixel-active').removeClass('pixel-active');
                 $(this).addClass('pixel-active');
                 var thisColors = $(this).data('rvb');
-                //console.log(thisColors)
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
                 disableSliders($(this).data('validated'));
                 resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
@@ -11690,13 +11743,11 @@ function loadLevel3() {
             which = $('#chooseFrameLvl3 input[type="radio"]:checked').attr('id');
         })
         $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
-            //console.log('initiating level')
             $('input[name="chooseFrameLvl3"]').off();
             var varNames = [];
             $(content['jeu3variables_'+which]).map(function() {
                 varNames.push($(this).text())
             })
-            //console.log(varNames)
             $('.js-framewrapper').children().each(function(){
                 $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]).data('validated', {red:false, green:false, blue:false});
             });
@@ -11837,7 +11888,7 @@ function popinExplainLevel3() {
 
 /**
 * @function popinEndLevel3
-* @description
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel3 () {
     var exist = false;
@@ -11865,7 +11916,6 @@ function popinEndLevel3 () {
 * @deprecated Was used for developer mode
 **/
 function runCodeLevel3() {
-    //console.log('running code')
     var code = codeMirror.getValue();
 
     try {
@@ -11909,7 +11959,7 @@ function runCodeLevel3() {
 
 /**
 * @function portalLevel4
-* @description
+* @description initialise the level4's portal
 **/
 function portalLevel4() {
     if (isFr) {
@@ -11959,8 +12009,6 @@ function loadLevel4() {
             'duration' : 4000,
             'level': 4
         })
-
-        //console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
@@ -11987,7 +12035,6 @@ function loadLevel4() {
             lineNumbers: true, 
             autofocus: false,
             readOnly: 'nocursor'
-            //matchBrackets: true
         }
         //Initialisation des variables
         codeConfig.readOnly = 'nocursor';
@@ -11996,13 +12043,6 @@ function loadLevel4() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-
-        //        codeMirror.addKeyMap({
-        //            Enter: function (cm) {
-        //
-        //            }
-        //        });
-
          //Set default data
         image.each(function () {
             $(this).data('pos', {
@@ -12031,13 +12071,6 @@ function loadLevel4() {
 
             resetCode();
         });
-
-        //Run Code
-        //$('.js-run-code').on('touch click', function () {
-        //    runCodeLevel4();
-        //    hideModal();
-        //});
-
         $('.functions-btn .btn').click(function() {
             addCode($(this));
         })
@@ -12045,7 +12078,6 @@ function loadLevel4() {
         $('.reinit-img').click(reinitImg);
 
         codeMirror.setValue('init');
-        //resetCode();
     })
 }
 
@@ -12063,9 +12095,7 @@ function submitLevel4() {
     $.each($('.js-image-object'), function(i) {
         var pos = $(this).data('pos');
         $.each(thisLvlAnswers, function(i, value) {
-            if (JSON.stringify(pos) == JSON.stringify(value)) {
-                //console.log(pos);
-                //console.log(value);
+            if (JSON.stringify(pos) == JSON.stringify(value)) {                
                 isCorrect++;
             }
         });
@@ -12106,7 +12136,7 @@ function submitLevel4() {
 
 /**
 * @function popinEndLevel4
-* @description
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel4 () {
     var exist = false;
@@ -12461,7 +12491,6 @@ $(document).ready(function() {
     }
 
 
-    //Username = $('input#name').val();
     $('.hamburger').hide();
 
     $('.hamburger').on('touch click', function() {
@@ -12657,7 +12686,7 @@ function resetSandbox() {
 
 /**
 * @function portalSandbox
-* @description
+* @description initialise the sandboxe's portal
 **/
 function portalSandbox() {
     if (isFr) {
@@ -12700,9 +12729,7 @@ function loadSandbox() {
     sandboxIsVisited = true;
     arrayCookieUser.sandboxIsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
-    $('main').loadLevel('sandbox', function () {
-
-        //var image = $('.imageObject');
+    $('main').loadLevel('sandbox', function () {       
 
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
@@ -12718,11 +12745,6 @@ function loadSandbox() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        //codeMirror.addKeyMap({
-        //    Enter: function (cm) {
-        //        enterKeyMap();
-        //    }
-        //});
 
         //Change Active Pixel
         $(document).on('touch click', '.js-sandboxwrapper .js-pixel', function () {
@@ -12791,11 +12813,6 @@ function loadSandbox() {
             colorPixel();
         })
 
-        //$('.js-run-code').click(function () {
-        //    hideModal();
-        //    runCodeLevel4();  
-        //});
-
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
@@ -12849,16 +12866,12 @@ function runSandbox() {
 
         hideModal();
 
-        //console.log($('.js-sandboxwrapper').length);
         var xMax = Math.ceil($('.js-sandboxwrapper').width() / size) - 1;
         var yMax = Math.ceil($('.js-sandboxwrapper').height() / size) - 1;
-        //console.log(xMax, yMax)
 
         pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-
-        //console.log(pos.x, pos.y);
 
         $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
         $('.pixel-active').css('left', pos.x * size + 'px');

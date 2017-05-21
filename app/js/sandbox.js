@@ -5,7 +5,7 @@
 
 /**
 * @function portalSandbox
-* @description
+* @description initialise the sandboxe's portal
 **/
 function portalSandbox() {
     if (isFr) {
@@ -48,9 +48,7 @@ function loadSandbox() {
     sandboxIsVisited = true;
     arrayCookieUser.sandboxIsVisited = true;
     createCookie(Username, arrayCookieUser, 20);
-    $('main').loadLevel('sandbox', function () {
-
-        //var image = $('.imageObject');
+    $('main').loadLevel('sandbox', function () {       
 
         //CodeMirror
         textArea = $('.js-code-mirror')[0];
@@ -66,11 +64,6 @@ function loadSandbox() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        //codeMirror.addKeyMap({
-        //    Enter: function (cm) {
-        //        enterKeyMap();
-        //    }
-        //});
 
         //Change Active Pixel
         $(document).on('touch click', '.js-sandboxwrapper .js-pixel', function () {
@@ -139,11 +132,6 @@ function loadSandbox() {
             colorPixel();
         })
 
-        //$('.js-run-code').click(function () {
-        //    hideModal();
-        //    runCodeLevel4();  
-        //});
-
         $('.js-apply-color').on('touch click', hideModal)
 
         $('.functions-btn .btn').on('touch click', function() {
@@ -197,16 +185,12 @@ function runSandbox() {
 
         hideModal();
 
-        //console.log($('.js-sandboxwrapper').length);
         var xMax = Math.ceil($('.js-sandboxwrapper').width() / size) - 1;
         var yMax = Math.ceil($('.js-sandboxwrapper').height() / size) - 1;
-        //console.log(xMax, yMax)
 
         pos.x = pos.x > xMax ? xMax : (pos.x < 0) ? 0 : pos.x;
         pos.y = pos.y > yMax ? yMax : (pos.y < 0) ? 0 : pos.y;
         pos.rot %= 360;
-
-        //console.log(pos.x, pos.y);
 
         $('.pixel-active').css('transform', 'rotate('+pos.rot+'deg)');
         $('.pixel-active').css('left', pos.x * size + 'px');

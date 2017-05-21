@@ -5,7 +5,7 @@
 
 /**
 * @function portalLevel3
-* @description
+* @description initialise the level3's portal
 **/
 function portalLevel3() {
     if (isFr) {
@@ -86,11 +86,6 @@ function loadLevel3() {
         codeConfig.readOnly = 'nocursor';
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-        //        codeMirror.addKeyMap({
-        //            Enter: function (cm) {
-        //                enterKeyMap();
-        //            }
-        //        });
         $('.cm-s-icecoder').addClass('only-color');
 
         //Run Code
@@ -104,7 +99,6 @@ function loadLevel3() {
                 $('.pixel-active').removeClass('pixel-active');
                 $(this).addClass('pixel-active');
                 var thisColors = $(this).data('rvb');
-                //console.log(thisColors)
                 resetSliders(thisColors.red, thisColors.green, thisColors.blue);
                 disableSliders($(this).data('validated'));
                 resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
@@ -122,13 +116,11 @@ function loadLevel3() {
             which = $('#chooseFrameLvl3 input[type="radio"]:checked').attr('id');
         })
         $('.js-close-popup-encyclo, .js-overlay').on('touch click', function() {
-            //console.log('initiating level')
             $('input[name="chooseFrameLvl3"]').off();
             var varNames = [];
             $(content['jeu3variables_'+which]).map(function() {
                 varNames.push($(this).text())
             })
-            //console.log(varNames)
             $('.js-framewrapper').children().each(function(){
                 $(this).data('rvb', {red: defaultValue, green: defaultValue, blue: defaultValue}).data('name', varNames[$(this).index()]).data('validated', {red:false, green:false, blue:false});
             });
@@ -269,7 +261,7 @@ function popinExplainLevel3() {
 
 /**
 * @function popinEndLevel3
-* @description
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel3 () {
     var exist = false;
@@ -297,7 +289,6 @@ function popinEndLevel3 () {
 * @deprecated Was used for developer mode
 **/
 function runCodeLevel3() {
-    //console.log('running code')
     var code = codeMirror.getValue();
 
     try {

@@ -5,7 +5,7 @@
 
 /**
 * @function portalLevel4
-* @description
+* @description initialise the level4's portal
 **/
 function portalLevel4() {
     if (isFr) {
@@ -55,8 +55,6 @@ function loadLevel4() {
             'duration' : 4000,
             'level': 4
         })
-
-        //console.log(Tip4)
     }
     var titleExplain = isFr ? 'Les Fonctions' : 'Functions';
     var info = new Popin({
@@ -83,7 +81,6 @@ function loadLevel4() {
             lineNumbers: true, 
             autofocus: false,
             readOnly: 'nocursor'
-            //matchBrackets: true
         }
         //Initialisation des variables
         codeConfig.readOnly = 'nocursor';
@@ -92,13 +89,6 @@ function loadLevel4() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
-
-        //        codeMirror.addKeyMap({
-        //            Enter: function (cm) {
-        //
-        //            }
-        //        });
-
          //Set default data
         image.each(function () {
             $(this).data('pos', {
@@ -127,13 +117,6 @@ function loadLevel4() {
 
             resetCode();
         });
-
-        //Run Code
-        //$('.js-run-code').on('touch click', function () {
-        //    runCodeLevel4();
-        //    hideModal();
-        //});
-
         $('.functions-btn .btn').click(function() {
             addCode($(this));
         })
@@ -141,7 +124,6 @@ function loadLevel4() {
         $('.reinit-img').click(reinitImg);
 
         codeMirror.setValue('init');
-        //resetCode();
     })
 }
 
@@ -159,9 +141,7 @@ function submitLevel4() {
     $.each($('.js-image-object'), function(i) {
         var pos = $(this).data('pos');
         $.each(thisLvlAnswers, function(i, value) {
-            if (JSON.stringify(pos) == JSON.stringify(value)) {
-                //console.log(pos);
-                //console.log(value);
+            if (JSON.stringify(pos) == JSON.stringify(value)) {                
                 isCorrect++;
             }
         });
@@ -202,7 +182,7 @@ function submitLevel4() {
 
 /**
 * @function popinEndLevel4
-* @description
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel4 () {
     var exist = false;

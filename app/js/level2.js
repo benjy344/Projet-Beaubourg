@@ -5,7 +5,7 @@
 
 /**
 * @function portalLevel2
-* @description
+* @description initialise the level2's portal
 **/
 function portalLevel2() {
     if (isFr) {
@@ -103,10 +103,8 @@ function loadLevel2() {
                 blue: defaultValue
             }).data('name', 'pixel_'+$(this).index());
         });
-        //console.log('TEST');
         //Change Active Pixel
         $('.js-framewrapper .js-pixel').click(function () {
-            //console.log($(this));
             $('.pixel-active').removeClass('pixel-active');
             $(this).addClass('pixel-active');
             var thisColors = $(this).data('rvb');
@@ -114,11 +112,6 @@ function loadLevel2() {
             resetCodePixel($('.pixel-active').data('name'), thisColors.red, thisColors.green, thisColors.blue);
             showModal();
         })
-
-        //Run Code
-        //$('.js-run-code').click(function () {
-        //    runCodeLevel2();
-        //});
 
         $('.js-apply-color').on('touch click', hideModal)
 
@@ -150,7 +143,6 @@ function loadLevel2() {
             }
             resetCodePixel($('.pixel-active').data('name'), thisPixel.red, thisPixel.green, thisPixel.blue);
             colorPixelRVB();
-            //verifPixelLevel2();
         })
     })
 }
@@ -177,7 +169,7 @@ function submitLevel2() {
         }
     }
 
-    if (numCorrect == pixels.length || testing) { //{}
+    if (numCorrect == pixels.length || testing) { 
 
         if (!level3IsVisited) {
 
@@ -215,7 +207,7 @@ function submitLevel2() {
 
 /**
 * @function popinEndLevel2
-* @description
+* @description instanciate the success popin and load next level
 **/
 function popinEndLevel2 () {
     var exist = false;

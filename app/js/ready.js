@@ -47,7 +47,6 @@ $(document).ready(function() {
     }
 
 
-    //Username = $('input#name').val();
     $('.hamburger').hide();
 
     $('.hamburger').on('touch click', function() {

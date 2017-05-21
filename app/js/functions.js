@@ -105,7 +105,12 @@ function loadIntro(){
     }
 }
 
-
+/**
+* @function isUserExiste
+* @description check in cookies if the username already exist
+* @param {string} username - Username to check
+* @callback initRealoadSession createCookie
+**/
 function isUserExiste (username) {
     if(readCookie(username)){
         arrayCookieUser = readCookie(username);
@@ -139,7 +144,10 @@ function isUserExiste (username) {
 }
 
 
-
+/**
+* @function initRealoadSession
+* @description set variables as the same value of the last connexion
+**/
 function initRealoadSession() {
     if (eval(arrayCookieUser.$tabSuccess)!= 0 && eval(arrayCookieUser.$tabSuccess)!= undefined) {
         $tabSuccess = eval(arrayCookieUser.$tabSuccess);
@@ -156,7 +164,6 @@ function initRealoadSession() {
     var countEncyclo = arrayCookieUser.$countEncyclo;
     var number = 1; 
     var levelForHelp = 1; 
-    //console.log(countEncyclo)
     for (var i = 0; i < countHelp; i++) {
         var thecontent = 'jeu'+levelForHelp+'astuce'+number,
             title = (isFr ? 'Niveau '+levelForHelp+' Aide n°'+number : 'Level '+levelForHelp+' Hint n°'+number);
@@ -190,6 +197,13 @@ function initRealoadSession() {
 *
 *********************************/
 
+/**
+* @function createCookie
+* @description create a new cookie
+* @param {string} name - name of the cookie
+* @param {string} tabvalue - value of the cookie
+* @param {number} duration - duration of the cookie (in day)
+**/
 function createCookie(name, tabvalue, duration) {
     // Le nombre de duration est spécifié
     value = decodeURIComponent( $.param( tabvalue ) );
@@ -203,6 +217,13 @@ function createCookie(name, tabvalue, duration) {
     else var expire = "";
     document.cookie = name+"="+value+expire+"; path=/";
 }
+
+/**
+* @function readCookie
+* @description read the value of a cookie
+* @param {string} name - name of the cookie
+* @return the cookie's value
+**/
 function readCookie(name) {
     // Ajoute le signe égale virgule au name
     // pour la recherche
@@ -223,7 +244,11 @@ function readCookie(name) {
     // Aucun cookie trouvé
     return null;
 }
-
+/**
+* @function eraseCookie
+* @description delete a cookie
+* @param {string} name - name of the cookie
+**/
 function eraseCookie(name) {
     createCookie(name,"",-1);
 }
@@ -233,7 +258,12 @@ function eraseCookie(name) {
 *
 *   Page de choix des chapitres 
 *
-*********************/
+*********************/$
+
+/**
+* @function loadChooseLevel
+* @description load a level
+**/
 function loadChooseLevel(){
     $('main').load(views+lang+'/accueil.html');
 }
@@ -245,14 +275,13 @@ Implementation de l'encyclopedie
 
 ********************/
 
-// ici tout le contenu designé sera stoqué en tant que page dans l'encyclopedie
-// en param de la fonction => 
 /**
-* Nom de la page ( titre du li)
-* contenu textuel
-*
-*/
-
+* @function addEncyclo
+* @description add a content in the encyclopedia
+* @param {string} name - name of the content
+* @param {string} content - the content
+* @param {boolean} count - if a content need to be add on cookie
+**/
 function addEncyclo(name, content, count = true) {
     var exist = false;
     for (var i = 0; i < encycloNameTab.length; i++) {
@@ -283,14 +312,12 @@ Implementation de l'aide
 
 ********************/
 
-// ici tout le contenu designé sera stoqué en tant que page dans l'aide
-// en param de la fonction => 
 /**
-* Nom de la page ( titre du li)
-* contenu textuel
-*
-*/
-
+* @function addHelp
+* @description add a content in the help menu
+* @param {string} name - name of the content
+* @param {string} content - the content
+**/
 function addHelp(name, content) {
     var exist = false;
     for (var i = 0; i < helpNameTab.length; i++) {
@@ -314,6 +341,13 @@ function addHelp(name, content) {
 
 }
 
+/**
+* @function helpTitle
+* @description return a title
+* @param {number} level - current level
+* @param {number} help - the number of the current help
+* @return title
+**/
 function helpTitle(level, help) {
     var title = isFr ? 'Niveau '+level+' Aide n°'+help : 'Level '+level+' Help n°'+help;
     return title;
@@ -325,12 +359,12 @@ Implementation des success
 
 ********************/
 
-// ici tout le contenu designé sera stoqué en tant trophé dans la pages des success 
-// en param de la fonction => 
+
 /**
-* class de l'icon du success
-*
-*/
+* @function addSuccess
+* @description add a content in the success menu
+* @param {string} icon - icon of the succes
+**/
 function addSuccess(icon) {
     countSuccess = $tabSuccess.length;
     if (icon) {
@@ -339,11 +373,18 @@ function addSuccess(icon) {
         createCookie(Username, arrayCookieUser, 20);
     }
 }
-
+/**
+* @function openFirstTip
+* @description auto open the first tip
+**/
 function openFirstTip() {
     $(".help-button").removeClass("first-tip").trigger( "click" );   
 }
 
+/**
+* @function alertError
+* @description display error on codemirror
+**/
 function alertErr() {
     var pixel = $('.pixel-active').data('rvb');
     resetCodePixel($('.pixel-active').data('name'), pixel.red, pixel.green, pixel.blue)
@@ -352,6 +393,10 @@ function alertErr() {
     alert('ERROR');
 }
 
+/**
+* @function finish
+* @description show the last screen of the app
+**/
 function finish() {
     var totalSucces = 8,
         nbSucces = (totalSucces - $tabSuccess.length),
@@ -384,6 +429,11 @@ function finish() {
     });
 
 }
+
+/**
+* @function unlockAllSuccess
+* @description For dev, unlock all the success in the success menu
+**/
 function unlockAllSuccess() {
     for (var i = 1; i < 9; i++) {
         var succes = 'succes'+i;
@@ -392,6 +442,11 @@ function unlockAllSuccess() {
 }
 
 // Modal gestion
+
+/**
+* @function showModal
+* @description display the modal
+**/
 function showModal() {
     $('#modal-container').removeAttr('class').addClass('openCode');
     $('body').addClass('modal-active');
@@ -402,6 +457,10 @@ function showModal() {
     }, 1000);
 }
 
+/**
+* @function initEcran
+* @description initialisate some class
+**/
 function initEcrin() {
     $('main').addClass('flex');
     $('.background').addClass('none');
@@ -409,6 +468,10 @@ function initEcrin() {
     ecrin = true;
 }
 
+/**
+* @function hideModal
+* @description hide the modal
+**/
 function hideModal() {
     $('#modal-container').addClass('out');
     $('body').removeClass('modal-active');
@@ -427,6 +490,17 @@ function hideModal() {
 //    count: used to count the loops
 //    source: a string to specify an ID, a message, etc
 //**********************************************************************
+
+/**
+* @function waitforPopinIsOpen
+* @description wait for a event
+* @param {boolean} expectedValue - exepted value who waitind for
+* @param {number} msec - duration of each verification
+* @param {number} count - for debug, count loops
+* @param {string} source - a string to specify an ID, a message, etc
+* @param {number} level - the level of the tip
+* @param {function} callback - the callback in case of success
+**/
 function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback) {
     // Check if condition met. If not, re-check later (msec).
     if (countLevel === level) {
@@ -440,9 +514,6 @@ function waitforPopinIsOpen( expectedValue, msec, count, source, level, callback
     }else {
         return;
     }
-
-    // Condition finally met. callback() can be executed.
-    //console.log(source + ': ' + popinIsOpen + ', expected: ' + expectedValue + ', ' + count + ' loops.');
     callback();
 }
 
