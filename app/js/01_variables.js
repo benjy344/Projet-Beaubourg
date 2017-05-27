@@ -3,6 +3,16 @@
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
+
+
+
+var inIframe = null
+try {
+    inIframe = window.self !== window.top;
+} catch (e) {
+    inIframe = true;
+}
+
 //Folders path
 var dest = './dist/',
     level = '/levels/',
@@ -52,8 +62,8 @@ var dest = './dist/',
         beta: 0,
         gamma: 0
     },
-    isHandheld = typeof window.orientation != 'undefined' &&  window.DeviceMotionEvent
-    inIframe = inIframe(),
+    isHandheld = typeof window.orientation != 'undefined' &&  window.DeviceMotionEvent ? true : false,
+    hasGyro = false,
 
     //Deprecated : used for move() function in developer mode
     up = 'up',
@@ -134,75 +144,59 @@ var level1IsVisited = false,
     // Scenes for the VR experience
     scenes = {
         sandbox: {
-            image: 'test.jpg',
+            image: 'center.jpg',
             hotspots: {
-                level1: {
-                    pitch: 0,
-                    yaw: 0,
-                    radius: 0.5,
-                    distance: 1
-                },
-                level2: {
-                    pitch: 0,
-                    yaw: 150,
-                    radius: 0.05,
-                    distance: 1
-                },
                 level3: {
-                    pitch: -5,
-                    yaw: 150,
+                    pitch: 10,
+                    yaw: -125,
                     radius: 0.05,
-                    distance: 1
+                    distance: 0.9
                 },
                 level4: {
-                    pitch: 0,
-                    yaw: 150,
+                    pitch: 10,
+                    yaw: 125,
                     radius: 0.05,
-                    distance: 1
+                    distance: 0.9
                 }
             }
         },
         level1: {
-            image: '360.jpg',
-            hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
-                    radius: 0.05,
-                    distance: 1
-                }
-            }
+            image: 'center.jpg'
         },
         level2: {
-            image: '360.jpg',
-            hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
-                    radius: 0.05,
-                    distance: 1
-                }
-            }
+            image: 'center.jpg'
         },
         level3: {
-            image: '360.jpg',
+            image: 'level3.jpg',
             hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
+                level4: {
+                    pitch: -10,
+                    yaw: -85,
                     radius: 0.05,
-                    distance: 1
+                    distance: 1.4
+                },
+                sandbox: {
+                    pitch: 10,
+                    yaw: -125,
+                    radius: 0.05,
+                    distance: 0.8
                 }
             }
         },
         level4: {
-            image: '360.jpg',
+            image: 'level4.jpg',
             hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
+                level3: {
+                    pitch: -10,
+                    yaw: 85,
                     radius: 0.05,
-                    distance: 1
+                    distance: 1.4
+                },
+                sandbox: {
+                    pitch: 10,
+                    yaw: 125,
+                    radius: 0.05,
+                    distance: 0.8
                 }
             }
         }

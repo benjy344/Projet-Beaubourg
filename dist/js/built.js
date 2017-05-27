@@ -9,6 +9,16 @@ void 0!==c?null===c?void r.removeAttr(a,b):e&&"set"in e&&void 0!==(d=e.set(a,c,b
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
+
+
+
+var inIframe = null
+try {
+    inIframe = window.self !== window.top;
+} catch (e) {
+    inIframe = true;
+}
+
 //Folders path
 var dest = './dist/',
     level = '/levels/',
@@ -58,8 +68,8 @@ var dest = './dist/',
         beta: 0,
         gamma: 0
     },
-    isHandheld = typeof window.orientation != 'undefined' &&  window.DeviceMotionEvent
-    inIframe = inIframe(),
+    isHandheld = typeof window.orientation != 'undefined' &&  window.DeviceMotionEvent ? true : false,
+    hasGyro = false,
 
     //Deprecated : used for move() function in developer mode
     up = 'up',
@@ -140,75 +150,59 @@ var level1IsVisited = false,
     // Scenes for the VR experience
     scenes = {
         sandbox: {
-            image: 'test.jpg',
+            image: 'center.jpg',
             hotspots: {
-                level1: {
-                    pitch: 0,
-                    yaw: 0,
-                    radius: 0.5,
-                    distance: 1
-                },
-                level2: {
-                    pitch: 0,
-                    yaw: 150,
-                    radius: 0.05,
-                    distance: 1
-                },
                 level3: {
-                    pitch: -5,
-                    yaw: 150,
+                    pitch: 10,
+                    yaw: -125,
                     radius: 0.05,
-                    distance: 1
+                    distance: 0.9
                 },
                 level4: {
-                    pitch: 0,
-                    yaw: 150,
+                    pitch: 10,
+                    yaw: 125,
                     radius: 0.05,
-                    distance: 1
+                    distance: 0.9
                 }
             }
         },
         level1: {
-            image: '360.jpg',
-            hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
-                    radius: 0.05,
-                    distance: 1
-                }
-            }
+            image: 'center.jpg'
         },
         level2: {
-            image: '360.jpg',
-            hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
-                    radius: 0.05,
-                    distance: 1
-                }
-            }
+            image: 'center.jpg'
         },
         level3: {
-            image: '360.jpg',
+            image: 'level3.jpg',
             hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
+                level4: {
+                    pitch: -10,
+                    yaw: -85,
                     radius: 0.05,
-                    distance: 1
+                    distance: 1.4
+                },
+                sandbox: {
+                    pitch: 10,
+                    yaw: -125,
+                    radius: 0.05,
+                    distance: 0.8
                 }
             }
         },
         level4: {
-            image: '360.jpg',
+            image: 'level4.jpg',
             hotspots: {
-                center: {
-                    pitch: 0,
-                    yaw: 110,
+                level3: {
+                    pitch: -10,
+                    yaw: 85,
                     radius: 0.05,
-                    distance: 1
+                    distance: 1.4
+                },
+                sandbox: {
+                    pitch: 10,
+                    yaw: 125,
+                    radius: 0.05,
+                    distance: 0.8
                 }
             }
         }
@@ -9317,14 +9311,6 @@ return CodeMirror$1;
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
-function inIframe () {
-    try {
-        return window.self !== window.top;
-    } catch (e) {
-        return true;
-    }
-}
-
 /********************
 *
 *   gestion niveaux/chapitres 
@@ -9360,6 +9346,9 @@ function reloadLevel() {
 $.fn.loadLevel = function(levelToLoad, callback) {
     reinitMain();
     screen = levelToLoad;
+    if (inIframe) {
+       window.top.screen = levelToLoad; 
+    }
     var file = views + lang + level+levelToLoad+'.html',
         lvl = '#'+levelToLoad,
         modal = '#modal-content';
@@ -9367,6 +9356,8 @@ $.fn.loadLevel = function(levelToLoad, callback) {
     //Google VR
     if (!inIframe) {
         loadScene(screen);
+    } else {
+        window.top.loadScene(screen)
     }
     this.load(file + ' ' + lvl, function() {  
         $('.modal-content').load(file + ' ' + modal, function() {
@@ -12447,127 +12438,153 @@ Portal.prototype = {
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
+
+
 $(document).ready(function() {
 
-    //VRView 
-    if (isHandheld) {
-        $('#js-switchView').remove();
-        window.addEventListener("deviceorientation", function (event) {
-            processGyro(event.alpha, event.beta, event.gamma);  
-        }, true);
-        $('#appFrame').remove();
-        
-        $('#view').addClass('hidden');
+    var testGyro = function(event) {
+        console.log(event)
+        if (event.alpha) {
+            hasGyro = true 
+        }
+        window.removeEventListener('deviceorientation', testGyro)
 
-    } else {
-        
-        
 
-        if(!inIframe) {
-            $('#app').remove();
-            $('#appFrame').attr('src', window.location);  
-            $('#js-switchView').click(function() {
-                $('#appFrame').toggleClass("hidden");
-            })
-        } else {
-            $('#view').remove();
+
+        //VRView 
+        if (isHandheld) { //Mobile
+            if (hasGyro) {
+                $('#js-switchView').remove();
+                window.addEventListener("deviceorientation", function (event) { 
+                    processGyro(event.alpha, event.beta, event.gamma);   
+                }, true);
+            } else {
+                $('#js-switchView').click(function() {
+                    $('#app').toggleClass("hidden");
+                    $('#view').toggleClass('hidden');
+                })
+                window.addEventListener("devicemotion", function(event){
+                    processGyro(event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.y, event.accelerationIncludingGravity.z);              
+                }, true);
+            }
+
             $('#appFrame').remove();
-            $('#js-switchView').remove();
+            $('#view').addClass('hidden');
+
+        } else {
+            if(!inIframe) {
+                $('#app').remove();
+                $('#appFrame').attr('src', window.location);  
+                $('#js-switchView').click(function() {
+                    $('#appFrame').toggleClass("hidden");
+                })
+            } else {
+                $('#view').remove();
+                $('#appFrame').remove();
+                $('#js-switchView').remove();
+            }
+
+
+        }
+
+        console.log(isHandheld)
+
+        console.log(window.self, window.top, window.parent)
+
+        if (!inIframe) {
+            vrView = new VRView.Player('#vrview', {
+                image: vrviews + 'center.jpg',
+                is_autopan_off: true
+            });
+            vrView.on('ready', onVRViewReady);
+            vrView.on('modechange', onModeChange);
+            vrView.on('click', onHotspotClick);
+            vrView.on('error', onVRViewError);
         }
 
 
-    }
 
-    if (!inIframe) {
-        vrView = new VRView.Player('#vrview', {
-            image: vrviews + 'test.jpg',
-            is_autopan_off: true
+
+        $('.hamburger').hide();
+
+        $('.hamburger').on('touch click', function() {
+            $('.hamburger').toggleClass('is-active');
+            $('#overlay').toggleClass('open');
+            $('.main-nav>ul').removeClass('childOpen');
+            $('.main-nav .child').removeClass('isOpen');
         });
 
-        vrView.on('ready', onVRViewReady);
-        vrView.on('modechange', onModeChange);
-        vrView.on('click', onHotspotClick);
-        vrView.on('error', onVRViewError);
-    }
+        $('.loading').slideUp(1000);
 
+        $('.modal .close').on('touch click', hideModal);
 
-    $('.hamburger').hide();
+        //Menu
+        $(document).on('click touch', '.haveChild', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var loader = $(this).attr('data-loading'),
+                $parent = $('.main-nav>ul'),
+                $child = $('.main-nav .child'),
+                $child_content = $('.main-nav .child .child-content');
+            $parent.addClass('childOpen');
+            $child.addClass('isOpen');
+            $child_content.load(views+lang+'/'+loader+'.html');
+        });
+        $(document).on('click touch', '.main-nav .child i', function(event){
+            event.preventDefault();
+            event.stopPropagation();
+            var $parent = $('.main-nav>ul');
+            var $child = $('.main-nav .child');
 
-    $('.hamburger').on('touch click', function() {
-        $('.hamburger').toggleClass('is-active');
-        $('#overlay').toggleClass('open');
-        $('.main-nav>ul').removeClass('childOpen');
-        $('.main-nav .child').removeClass('isOpen');
-    });
+            $parent.removeClass('childOpen');
+            $child.removeClass('isOpen');
 
-    $('.loading').slideUp(1000);
+        });
 
-    $('.modal .close').on('touch click', hideModal);
+        //Formulaire&
+        //placeholder
+        $.support.placeholder = (function(){
+            var i = document.createElement('input');
+            return 'placeholder' in i;
+        })();
 
-    //Menu
-    $(document).on('click touch', '.haveChild', function(event) {
-        event.preventDefault();
-        event.stopPropagation();
-        var loader = $(this).attr('data-loading'),
-            $parent = $('.main-nav>ul'),
-            $child = $('.main-nav .child'),
-            $child_content = $('.main-nav .child .child-content');
-        $parent.addClass('childOpen');
-        $child.addClass('isOpen');
-        $child_content.load(views+lang+'/'+loader+'.html');
-    });
-    $(document).on('click touch', '.main-nav .child i', function(event){
-        event.preventDefault();
-        event.stopPropagation();
-        var $parent = $('.main-nav>ul');
-        var $child = $('.main-nav .child');
+        // Hide labels by default if placeholders are supported
+        if($.support.placeholder) {
+            $('.form-label').each(function(){
+                $(this).addClass('js-hide-label');
+            });  
+            // Code for adding/removing classes here
+            $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
+                //Cache our selectors
+                var $this = $(this),
+                    $parent = $this.parent().find("label");
 
-        $parent.removeClass('childOpen');
-        $child.removeClass('isOpen');
-
-    });
-
-    //Formulaire&
-    //placeholder
-    $.support.placeholder = (function(){
-        var i = document.createElement('input');
-        return 'placeholder' in i;
-    })();
-
-    // Hide labels by default if placeholders are supported
-    if($.support.placeholder) {
-        $('.form-label').each(function(){
-            $(this).addClass('js-hide-label');
-        });  
-        // Code for adding/removing classes here
-        $('.form-group').find('input, textarea').on('keyup blur focus', function(e){
-            //Cache our selectors
-            var $this = $(this),
-                $parent = $this.parent().find("label");
-
-            if (e.type == 'keyup') {
-                if( $this.val() == '' ) {
-                    $parent.addClass('js-hide-label'); 
-                } else {
-                    $parent.removeClass('js-hide-label');   
-                }                     
-            } 
-            else if (e.type == 'blur') {
-                if( $this.val() == '' ) {
-                    $parent.addClass('js-hide-label');
+                if (e.type == 'keyup') {
+                    if( $this.val() == '' ) {
+                        $parent.addClass('js-hide-label'); 
+                    } else {
+                        $parent.removeClass('js-hide-label');   
+                    }                     
                 } 
-                else {
-                    $parent.removeClass('js-hide-label').addClass('js-unhighlight-label');
+                else if (e.type == 'blur') {
+                    if( $this.val() == '' ) {
+                        $parent.addClass('js-hide-label');
+                    } 
+                    else {
+                        $parent.removeClass('js-hide-label').addClass('js-unhighlight-label');
+                    }
+                } 
+                else if (e.type == 'focus') {
+                    if( $this.val() !== '' ) {
+                        $parent.removeClass('js-unhighlight-label');
+                    }
                 }
-            } 
-            else if (e.type == 'focus') {
-                if( $this.val() !== '' ) {
-                    $parent.removeClass('js-unhighlight-label');
-                }
-            }
-        });
+            });
 
-    } 
+        }
+    }
+    window.addEventListener('deviceorientation', testGyro);
+
 });;
  /*********************************************************/
 /**
@@ -13074,12 +13091,25 @@ function processGyro(a, b, g) {
     deviceOrientationData.beta = b;
     deviceOrientationData.gamma = g;
 
-    if (b > 60 && !$('#app').hasClass('hidden')) {
-        $('#app').addClass('hidden');
-        $('#view').removeClass('hidden');
-    } else if (b <= 60 && $('#app').hasClass('hidden')) {
-        $('#app').removeClass('hidden');
-        $('#view').addClass('hidden');
+    if (hasGyro) {
+
+        if (b > 60 && !$('#app').hasClass('hidden')) {
+            $('#app').addClass('hidden');
+            $('#view').removeClass('hidden');
+        } else if (b <= 60 && $('#app').hasClass('hidden')) {
+            $('#app').removeClass('hidden');
+            $('#view').addClass('hidden');
+        }
+    } else {
+
+
+        if (b > 7 && !$('#app').hasClass('hidden')) {
+            $('#app').addClass('hidden');
+            $('#view').removeClass('hidden');
+        } else if (b <= 7 && $('#app').hasClass('hidden')) {
+            $('#app').removeClass('hidden');
+            $('#view').addClass('hidden');
+        }
     }
 }
 
@@ -13089,8 +13119,7 @@ function processGyro(a, b, g) {
 * @param {object} e - VR Event
 **/
 function onVRViewReady(e) {
-    console.log('onVRViewReady');
-    loadScene('sandbox');
+    loadScene('level1');
 }
 
 /**
@@ -13099,7 +13128,6 @@ function onVRViewReady(e) {
 * @param {object} e - VR Event
 **/
 function onModeChange(e) {
-    console.log('onModeChange', e.mode);
 }
 
 /**
@@ -13108,7 +13136,6 @@ function onModeChange(e) {
 * @param {object} e - VR Event
 **/
 function onHotspotClick(e) {
-    console.log('onHotspotClick', e.id);
     if (e.id) {
         loadScene(e.id);
     }
@@ -13123,7 +13150,8 @@ function loadScene(id) {
     // Set the image
     vrView.setContent({
         image: vrviews + scenes[id].image,
-        is_autopan_off: true
+        is_autopan_off: true,
+        default_yaw: 0
     });
 
     // Add all the hotspots for the scene
@@ -13149,7 +13177,6 @@ function loadScene(id) {
 * @param {object} e - VR Event
 **/
 function onVRViewError(e) {
-    console.log('Error! %s', e.message);
 }
 ;
  /*********************************************************/

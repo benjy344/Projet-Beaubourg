@@ -15,12 +15,25 @@ function processGyro(a, b, g) {
     deviceOrientationData.beta = b;
     deviceOrientationData.gamma = g;
 
-    if (b > 60 && !$('#app').hasClass('hidden')) {
-        $('#app').addClass('hidden');
-        $('#view').removeClass('hidden');
-    } else if (b <= 60 && $('#app').hasClass('hidden')) {
-        $('#app').removeClass('hidden');
-        $('#view').addClass('hidden');
+    if (hasGyro) {
+
+        if (b > 60 && !$('#app').hasClass('hidden')) {
+            $('#app').addClass('hidden');
+            $('#view').removeClass('hidden');
+        } else if (b <= 60 && $('#app').hasClass('hidden')) {
+            $('#app').removeClass('hidden');
+            $('#view').addClass('hidden');
+        }
+    } else {
+
+
+        if (b > 7 && !$('#app').hasClass('hidden')) {
+            $('#app').addClass('hidden');
+            $('#view').removeClass('hidden');
+        } else if (b <= 7 && $('#app').hasClass('hidden')) {
+            $('#app').removeClass('hidden');
+            $('#view').addClass('hidden');
+        }
     }
 }
 
@@ -30,8 +43,7 @@ function processGyro(a, b, g) {
 * @param {object} e - VR Event
 **/
 function onVRViewReady(e) {
-    console.log('onVRViewReady');
-    loadScene('sandbox');
+    loadScene('level1');
 }
 
 /**
@@ -40,7 +52,6 @@ function onVRViewReady(e) {
 * @param {object} e - VR Event
 **/
 function onModeChange(e) {
-    console.log('onModeChange', e.mode);
 }
 
 /**
@@ -49,7 +60,6 @@ function onModeChange(e) {
 * @param {object} e - VR Event
 **/
 function onHotspotClick(e) {
-    console.log('onHotspotClick', e.id);
     if (e.id) {
         loadScene(e.id);
     }
@@ -64,7 +74,8 @@ function loadScene(id) {
     // Set the image
     vrView.setContent({
         image: vrviews + scenes[id].image,
-        is_autopan_off: true
+        is_autopan_off: true,
+        default_yaw: 0
     });
 
     // Add all the hotspots for the scene
@@ -90,5 +101,4 @@ function loadScene(id) {
 * @param {object} e - VR Event
 **/
 function onVRViewError(e) {
-    console.log('Error! %s', e.message);
 }
