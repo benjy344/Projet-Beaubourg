@@ -115,6 +115,13 @@ module.exports = function(grunt) {
           ]
         }
       },
+      uglify: {
+        my_target: {
+          files: {
+            'dist/js/built.min.js': ['dist/js/built.js']
+          }
+        }
+      },
 
     // Observons…
     watch: {
@@ -134,6 +141,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-webfont');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
 
@@ -142,5 +150,6 @@ module.exports = function(grunt) {
   grunt.registerTask('spritesmith', ['sprite']);
   grunt.registerTask('font', ['webfont']);
   grunt.registerTask('minifyImg', ['imagemin:png']);
+  //grunt.registerTask('uglify', ['uglify']);
 
 }

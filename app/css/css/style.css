@@ -516,49 +516,69 @@ The `sprites` mixin generates identical output to the CSS template
   -webkit-font-smoothing: antialiased;
 }
 
-.font-icon-info:before {
+.font-icon-hidedesk:before {
   font-family: "font-icons";
   content: "\e101";
 }
 
-.font-icon-success1:before {
+.font-icon-hidemobile:before {
   font-family: "font-icons";
   content: "\e102";
 }
 
-.font-icon-success2:before {
+.font-icon-info:before {
   font-family: "font-icons";
   content: "\e103";
 }
 
-.font-icon-success3:before {
+.font-icon-showdesk:before {
   font-family: "font-icons";
   content: "\e104";
 }
 
-.font-icon-success4:before {
+.font-icon-showmobile:before {
   font-family: "font-icons";
   content: "\e105";
 }
 
-.font-icon-success5:before {
+.font-icon-success1:before {
   font-family: "font-icons";
   content: "\e106";
 }
 
-.font-icon-success6:before {
+.font-icon-success2:before {
   font-family: "font-icons";
   content: "\e107";
 }
 
-.font-icon-success7:before {
+.font-icon-success3:before {
   font-family: "font-icons";
   content: "\e108";
 }
 
-.font-icon-success8:before {
+.font-icon-success4:before {
   font-family: "font-icons";
   content: "\e109";
+}
+
+.font-icon-success5:before {
+  font-family: "font-icons";
+  content: "\e10a";
+}
+
+.font-icon-success6:before {
+  font-family: "font-icons";
+  content: "\e10b";
+}
+
+.font-icon-success7:before {
+  font-family: "font-icons";
+  content: "\e10c";
+}
+
+.font-icon-success8:before {
+  font-family: "font-icons";
+  content: "\e10d";
 }
 
 .icon-close {
@@ -664,14 +684,25 @@ body #appFrame, body #view {
 }
 body #js-switchView {
   z-index: 1;
-  height: 2em;
-  width: 2em;
-  background-color: red;
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+  line-height: 2rem;
+  color: #242322;
   position: absolute;
+  left: 365px;
+  text-align: center;
+  top: 40px;
+  cursor: pointer;
+  transition: all 1s;
+}
+body #js-switchView.hide {
+  left: 0;
+  transition: all 1s;
 }
 body #appFrame {
   top: calc((100% - 600px)/ 2);
-  left: 1em;
+  left: 15px;
   background-color: #242322;
   height: 600px;
   max-width: 360px;
@@ -680,6 +711,11 @@ body #appFrame {
   box-sizing: border-box;
   overflow-y: scroll;
   font-size: 16px;
+  transition: all 1s;
+}
+body #appFrame.hide {
+  left: -360px;
+  transition: all 1s;
 }
 body section, body #vrview, body #vrview iframe, body #vrview iframe iframe {
   width: 100%;

@@ -279,7 +279,8 @@ Implementation de l'encyclopedie
 * @param {string} content - the content
 * @param {boolean} count - if a content need to be add on cookie
 **/
-function addEncyclo(name, content, count = true) {
+function addEncyclo(name, content, count) {
+    if (typeof count === 'undefined') count = true;
     var exist = false;
     for (var i = 0; i < encycloNameTab.length; i++) {
         if (encycloNameTab[i] === name) {

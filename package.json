@@ -8,6 +8,7 @@
     "grunt-contrib-cssmin": "^1.0.2",
     "grunt-contrib-imagemin": "^1.0.1",
     "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^3.0.1",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-spritesmith": "^6.3.1",
     "grunt-webfont": "^1.6.0"

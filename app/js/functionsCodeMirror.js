@@ -17,7 +17,7 @@ function addPixel() {
         x: 0,
         y: 0,
         rot: 0,
-        scale: 4,
+        scale: 4
     }).data('name', 'pixel_'+$(this).index());
     $('.js-sandboxwrapper').append(pixel);
     pixel.trigger('click');
@@ -28,7 +28,7 @@ function addPixel() {
 * @description Use .pixel-active rvb data to color it, with 0 or 255 values - Level 2
 **/
 function colorPixelRVB() {
-    //console.log(pixel)
+    
     var pixel = $('.pixel-active').data('rvb'),
         red = pixel.red ? 255 : 0, 
         green = pixel.green ? 255 : 0, 
@@ -55,7 +55,7 @@ function colorPixel() {
 * @param {number} b - Blue color value
 **/
 function colorModel(r, g, b) {
-    $('.pixel-model').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')')
+    $('.pixel-model').css('background-color', 'rgb(' + r + ', ' + g + ', ' + b + ')');
 }
 
 /**
@@ -88,10 +88,10 @@ function resetCheckboxes(r, g, b) {
     var red = r ? 255 : 0, 
         green = g ? 255 : 0, 
         blue = b ? 255 : 0;
-    $('input.red').prop('checked', r).parent().css('background-color', 'rgb(' + red + ', 0, 0)')
-    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, ' + green + ', 0)')
-    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, ' + blue + ')')
-    colorModel(red, green, blue)
+    $('input.red').prop('checked', r).parent().css('background-color', 'rgb(' + red + ', 0, 0)');
+    $('input.green').prop('checked', g).parent().css('background-color', 'rgb(0, ' + green + ', 0)');
+    $('input.blue').prop('checked', b).parent().css('background-color', 'rgb(0, 0, ' + blue + ')');
+    colorModel(red, green, blue);
 }
 
 /**
@@ -102,10 +102,10 @@ function resetCheckboxes(r, g, b) {
 * @param {number} b - Blue color value
 **/
 function resetSliders(r, g, b) {
-    $('input.red').prop('disabled', '').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)').removeClass('validated')
-    $('input.green').prop('disabled', '').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)').removeClass('validated')
-    $('input.blue').prop('disabled', '').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')').removeClass('validated')
-    colorModel(r, g, b)
+    $('input.red').prop('disabled', '').val(r).parent().css('background-color', 'rgb('+r+', 0, 0)').removeClass('validated');
+    $('input.green').prop('disabled', '').val(g).parent().css('background-color', 'rgb(0, '+g+', 0)').removeClass('validated');
+    $('input.blue').prop('disabled', '').val(b).parent().css('background-color', 'rgb(0, 0, '+b+')').removeClass('validated');
+    colorModel(r, g, b);
 }
 
 /**
@@ -194,7 +194,7 @@ function addCode(btn) {
 function moveLeft() {
     var pos = $('.img-active').data('pos'); 
     pos.x--;
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 /**
 * @function moveRight
@@ -203,7 +203,7 @@ function moveLeft() {
 function moveRight() {
     var pos = $('.img-active').data('pos'); 
     pos.x++;
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 /**
 * @function moveUp
@@ -212,7 +212,7 @@ function moveRight() {
 function moveUp() {
     var pos = $('.img-active').data('pos'); 
     pos.y--;
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 /**
 * @function moveDown
@@ -221,7 +221,7 @@ function moveUp() {
 function moveDown() {
     var pos = $('.img-active').data('pos'); 
     pos.y++;
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 
 /**
@@ -233,7 +233,7 @@ function rotate(deg) {
     deg = !deg ? screen == 'sandbox' ? 22.5 : 90 : deg
     var pos = $('.img-active').data('pos'); 
     pos.rot = pos.rot + deg;
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 
 /**
@@ -244,7 +244,7 @@ function scaleUp() {
     var pos = $('.img-active').data('pos'); 
     pos.scale--;
     if (pos.scale < 2) {size = 2}
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 /**
 * @function scaleDown
@@ -254,7 +254,7 @@ function scaleDown() {
     var pos = $('.img-active').data('pos'); 
     pos.scale++;
     if (pos.scale > 8) {size = 8}
-    $('.img-active').data('pos', pos)
+    $('.img-active').data('pos', pos);
 }
 
 /**
@@ -332,7 +332,7 @@ function move(direction, repeat) {
                 moveRight();
                 break;
             default:
-                //console.log("error") //{DEV}   
+                
                 break;
         }
     }
@@ -370,8 +370,8 @@ function setSelection(varType) {
     //Commencer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
     if (typeof tokens[i] == 'undefined') {
         i = 0;
-        line++
-        tokens = cm.getLineTokens(line)
+        line++;
+        tokens = cm.getLineTokens(line);
     }
 
     //Début de la recherche
@@ -381,17 +381,16 @@ function setSelection(varType) {
         //Continuer la recherche a la ligne suivante si il n'y a plus de tokens sur la ligne
         if (typeof tokens[i] == 'undefined') {
             i = 0;
-            line++
-            tokens = cm.getLineTokens(line)
+            line++;
+            tokens = cm.getLineTokens(line);
         }
         //Il n'y a plus de tokens dans l'editeur. On arrete la boucle et !setPos pour ne pas effectuer les prochaines instructions
         if (line > codeMirror.lineCount()) {
             setPos = false;
-            //console.log('should run code')
             break;
         }
     }
-    //console.log('oui')
+    
     //Si on a trouvé un prochain token, le selectionne
     if (setPos) {
         cm.setSelection({
@@ -402,10 +401,9 @@ function setSelection(varType) {
             ch: tokens[i].end
         });
     } else {//Si on a pas trouvé de token, on vérifie qu'il y ait bien 3 tokens du bon type
-        //console.log('runcode')
+        
         if ($('.cm-atom').length != 3) {
             alertErr();
-            //console.log('nope')
         } else { //Si oui, unfocus l'editeur et lance le code
             if (screen == 'level2') {
                 runCodeLevel2();
@@ -416,8 +414,7 @@ function setSelection(varType) {
             codeMirror.getInputField().blur();
         }
     }
-    //console.log(tokens[i])
-}
+}  
 
 /**
 * @function enterKeyMap
@@ -450,6 +447,6 @@ function enterKeyMap() {
             cm.setCursor({line: linePos, ch: chPos})
         }
     } else {
-        CodeMirror.commands.newlineAndIndent(cm)
+        CodeMirror.commands.newlineAndIndent(cm);
     }
 }

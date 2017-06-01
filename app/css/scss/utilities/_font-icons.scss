@@ -21,57 +21,81 @@
 
 // Icons
 
-.font-icon-info:before {
+.font-icon-hidedesk:before {
      font-family: "font-icons";
      content:"\e101";
 }
 
 
-.font-icon-success1:before {
+.font-icon-hidemobile:before {
      font-family: "font-icons";
      content:"\e102";
 }
 
 
-.font-icon-success2:before {
+.font-icon-info:before {
      font-family: "font-icons";
      content:"\e103";
 }
 
 
-.font-icon-success3:before {
+.font-icon-showdesk:before {
      font-family: "font-icons";
      content:"\e104";
 }
 
 
-.font-icon-success4:before {
+.font-icon-showmobile:before {
      font-family: "font-icons";
      content:"\e105";
 }
 
 
-.font-icon-success5:before {
+.font-icon-success1:before {
      font-family: "font-icons";
      content:"\e106";
 }
 
 
-.font-icon-success6:before {
+.font-icon-success2:before {
      font-family: "font-icons";
      content:"\e107";
 }
 
 
-.font-icon-success7:before {
+.font-icon-success3:before {
      font-family: "font-icons";
      content:"\e108";
 }
 
 
-.font-icon-success8:before {
+.font-icon-success4:before {
      font-family: "font-icons";
      content:"\e109";
+}
+
+
+.font-icon-success5:before {
+     font-family: "font-icons";
+     content:"\e10a";
+}
+
+
+.font-icon-success6:before {
+     font-family: "font-icons";
+     content:"\e10b";
+}
+
+
+.font-icon-success7:before {
+     font-family: "font-icons";
+     content:"\e10c";
+}
+
+
+.font-icon-success8:before {
+     font-family: "font-icons";
+     content:"\e10d";
 }
 
 
@@ -79,66 +103,94 @@
 
 
 
- @if  ($icon == "info") {
+ @if  ($icon == "hidedesk") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e101";
 }
 
 
-@else if ($icon == "success1") {
+@else if ($icon == "hidemobile") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e102";
 }
 
 
-@else if ($icon == "success2") {
+@else if ($icon == "info") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e103";
 }
 
 
-@else if ($icon == "success3") {
+@else if ($icon == "showdesk") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e104";
 }
 
 
-@else if ($icon == "success4") {
+@else if ($icon == "showmobile") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e105";
 }
 
 
-@else if ($icon == "success5") {
+@else if ($icon == "success1") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e106";
 }
 
 
-@else if ($icon == "success6") {
+@else if ($icon == "success2") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e107";
 }
 
 
-@else if ($icon == "success7") {
+@else if ($icon == "success3") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e108";
 }
 
 
-@else if ($icon == "success8") {
+@else if ($icon == "success4") {
     -webkit-font-smoothing: antialiased;
     font-family: "font-icons";
     content:"\e109";
+}
+
+
+@else if ($icon == "success5") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\e10a";
+}
+
+
+@else if ($icon == "success6") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\e10b";
+}
+
+
+@else if ($icon == "success7") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\e10c";
+}
+
+
+@else if ($icon == "success8") {
+    -webkit-font-smoothing: antialiased;
+    font-family: "font-icons";
+    content:"\e10d";
 }
 
 }

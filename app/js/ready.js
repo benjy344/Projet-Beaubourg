@@ -8,7 +8,6 @@
 $(document).ready(function() {
 
     var testGyro = function(event) {
-        console.log(event)
         if (event.alpha) {
             hasGyro = true 
         }
@@ -17,44 +16,49 @@ $(document).ready(function() {
 
 
         //VRView 
+        var $switchView = $('#js-switchView');
+        var $view       = $('#view');
+        var $appFrame   = $('#appFrame');
+        var $app        = $('#app');
         if (isHandheld) { //Mobile
             if (hasGyro) {
-                $('#js-switchView').remove();
+                $switchView.remove();
                 window.addEventListener("deviceorientation", function (event) { 
                     processGyro(event.alpha, event.beta, event.gamma);   
                 }, true);
             } else {
-                $('#js-switchView').click(function() {
-                    $('#app').toggleClass("hidden");
-                    $('#view').toggleClass('hidden');
+                $switchView.addClass('font-icon-hidemobile');
+                $switchView.click(function() {
+                    $app.toggleClass("hide");
+                    $view.toggleClass('hide');
+                    $(this).toggleClass('hide font-icon-showmobile font-icon-hidemobile');
                 })
                 window.addEventListener("devicemotion", function(event){
                     processGyro(event.accelerationIncludingGravity.x, event.accelerationIncludingGravity.y, event.accelerationIncludingGravity.z);              
                 }, true);
             }
 
-            $('#appFrame').remove();
-            $('#view').addClass('hidden');
+            $appFrame.remove();
+            $view.addClass('hidden');
 
         } else {
             if(!inIframe) {
-                $('#app').remove();
-                $('#appFrame').attr('src', window.location);  
-                $('#js-switchView').click(function() {
-                    $('#appFrame').toggleClass("hidden");
+                $app.remove();
+                $appFrame.attr('src', window.location);  
+                $switchView.addClass('font-icon-hidedesk');
+                $switchView.click(function() {
+                    $(this).toggleClass('hide font-icon-showdesk font-icon-hidedesk');
+                    $appFrame.toggleClass("hide");
                 })
             } else {
-                $('#view').remove();
-                $('#appFrame').remove();
-                $('#js-switchView').remove();
+                $view.remove();
+                $appFrame.remove();
+                $switchView.remove();
             }
 
 
         }
 
-        console.log(isHandheld)
-
-        console.log(window.self, window.top, window.parent)
 
         if (!inIframe) {
             vrView = new VRView.Player('#vrview', {
