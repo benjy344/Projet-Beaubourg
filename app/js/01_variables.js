@@ -97,6 +97,11 @@ var dest = './dist/',
     which = 'right',
     isFailedOnce = false;
 
+$switchView = $('#js-switchView');
+$view       = $('#view');
+$appFrame   = $('#appFrame');
+$app        = $('#app');
+
 $Popup = $('.js-popup');
 $content_popup = $Popup.find('.js-content-popup');
 $button = $('.js-fleche-popup');

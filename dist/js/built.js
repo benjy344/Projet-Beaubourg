@@ -103,6 +103,11 @@ var dest = './dist/',
     which = 'right',
     isFailedOnce = false;
 
+$switchView = $('#js-switchView');
+$view       = $('#view');
+$appFrame   = $('#appFrame');
+$app        = $('#app');
+
 $Popup = $('.js-popup');
 $content_popup = $Popup.find('.js-content-popup');
 $button = $('.js-fleche-popup');
@@ -12435,8 +12440,6 @@ Portal.prototype = {
 * @author François-Xavier Bresson & Benjamin Demaizière
 **/
 
-
-
 $(document).ready(function() {
 
     var testGyro = function(event) {
@@ -12445,13 +12448,7 @@ $(document).ready(function() {
         }
         window.removeEventListener('deviceorientation', testGyro)
 
-
-
         //VRView 
-        var $switchView = $('#js-switchView');
-        var $view       = $('#view');
-        var $appFrame   = $('#appFrame');
-        var $app        = $('#app');
         if (isHandheld) { //Mobile
             if (hasGyro) {
                 $switchView.remove();
@@ -12586,6 +12583,8 @@ $(document).ready(function() {
     }
     window.addEventListener('deviceorientation', testGyro);
 
+    var event = new Event ("deviceorientation");
+    window.dispatchEvent(event);
 });;
  /*********************************************************/
 /**
