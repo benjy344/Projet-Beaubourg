@@ -248,7 +248,7 @@ $.fn.verifyPixel = function() {
 
 /**
 * @function popinExplainLevel3
-* @description
+* @description display explain level 3 popin
 **/
 function popinExplainLevel3() {
     var title = isFr ? 'Validation du niveau 3' : 'Level 3 validation',

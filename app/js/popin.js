@@ -83,7 +83,7 @@ Popin.prototype = {
     /**
     * @function updateOpenTriggers
     * @description Update the Open Trigger
-    * @param {jquery element} $element - the new trigger element.
+    * @param {DOMelement} $element - the new trigger element.
     **/   
     updateOpenTriggers: function($element) {
         if (this.$open) {
