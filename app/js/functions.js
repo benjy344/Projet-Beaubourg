@@ -229,8 +229,9 @@ Implementation de l'encyclopedie
 *
 */
 
-function addEncyclo(name, content, count = true) {
+function addEncyclo(name, content, count) {
     var exist = false;
+    if (typeof count === 'undefined') count = true;
     for (var i = 0; i < encycloNameTab.length; i++) {
         if (encycloNameTab[i] === name) {
             exist = true;
