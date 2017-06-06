@@ -12055,6 +12055,11 @@ function loadLevel4() {
                 $(this).removeClass('hovered')
             }
         })
+        
+         $('.js-run-code').on('touch click', function () { 
+            runCodeLevel4(); 
+            hideModal(); 
+        }); 
 
         //Change Active Pixel
         image.on('touch click', function () {
@@ -12762,6 +12767,11 @@ function loadSandbox() {
 
         //Initialisation de codeMirror
         codeMirror = CodeMirror.fromTextArea(textArea, codeConfig);
+        
+        $('.js-run-code').click(function () { 
+            hideModal(); 
+            runCodeLevel4();   
+        }); 
 
         //Change Active Pixel
         $(document).on('touch click', '.js-sandboxwrapper .js-pixel', function () {
@@ -12841,11 +12851,11 @@ function loadSandbox() {
 }
 
 /**
-* @function runCodeLevel4
+* @function runCodeSandbox
 * @description Execute code from Code Mirror Editor - Sandbox
 * @deprecated Was used for developer mode
 **/
-function runSandbox() {
+function runCodeSandbox() {
 
     var code = codeMirror.getValue();
 

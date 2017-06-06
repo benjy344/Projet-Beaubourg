@@ -108,6 +108,11 @@ function loadLevel4() {
                 $(this).removeClass('hovered')
             }
         })
+        
+         $('.js-run-code').on('touch click', function () { 
+            runCodeLevel4(); 
+            hideModal(); 
+        }); 
 
         //Change Active Pixel
         image.on('touch click', function () {
