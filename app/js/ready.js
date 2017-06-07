@@ -6,6 +6,7 @@
 $(document).ready(function() {
 
     var testGyro = function(event) {
+        console.log(event)
         if (event.alpha) {
             hasGyro = true 
         }
@@ -21,8 +22,10 @@ $(document).ready(function() {
             } else {
                 $switchView.addClass('font-icon-hidemobile');
                 $switchView.click(function() {
-                    $app.toggleClass("hide");
-                    $view.toggleClass('hide');
+                    $(".manualSwitch").removeClass("manualSwitch");
+                    $app.toggleClass("hidden");
+                    $view.toggleClass("hidden");
+                    $(".hidden").addClass("manualSwitch");
                     $(this).toggleClass('hide font-icon-showmobile font-icon-hidemobile');
                 })
                 window.addEventListener("devicemotion", function(event){
@@ -146,6 +149,9 @@ $(document).ready(function() {
     }
     window.addEventListener('deviceorientation', testGyro);
 
-    var event = new Event ("deviceorientation");
-    window.dispatchEvent(event);
+    setTimeout(function(){
+        var event = new Event ("deviceorientation");
+        window.dispatchEvent(event);
+    }, 100)
+
 });

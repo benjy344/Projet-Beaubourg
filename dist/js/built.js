@@ -12448,6 +12448,7 @@ Portal.prototype = {
 $(document).ready(function() {
 
     var testGyro = function(event) {
+        console.log(event)
         if (event.alpha) {
             hasGyro = true 
         }
@@ -12463,8 +12464,10 @@ $(document).ready(function() {
             } else {
                 $switchView.addClass('font-icon-hidemobile');
                 $switchView.click(function() {
-                    $app.toggleClass("hide");
-                    $view.toggleClass('hide');
+                    $(".manualSwitch").removeClass("manualSwitch");
+                    $app.toggleClass("hidden");
+                    $view.toggleClass("hidden");
+                    $(".hidden").addClass("manualSwitch");
                     $(this).toggleClass('hide font-icon-showmobile font-icon-hidemobile');
                 })
                 window.addEventListener("devicemotion", function(event){
@@ -12588,8 +12591,11 @@ $(document).ready(function() {
     }
     window.addEventListener('deviceorientation', testGyro);
 
-    var event = new Event ("deviceorientation");
-    window.dispatchEvent(event);
+    setTimeout(function(){
+        var event = new Event ("deviceorientation");
+        window.dispatchEvent(event);
+    }, 100)
+
 });;
  /*********************************************************/
 /**
@@ -13103,25 +13109,39 @@ function processGyro(a, b, g) {
 
     if (hasGyro) {
 
-        if (b > 60 && !$('#app').hasClass('hidden')) {
-            $('#app').addClass('hidden');
-            $('#view').removeClass('hidden');
-        } else if (b <= 60 && $('#app').hasClass('hidden')) {
-            $('#app').removeClass('hidden');
-            $('#view').addClass('hidden');
+        if (b > 60 && !$app.hasClass('hidden')) {
+            $app.addClass('hidden');
+            $view.removeClass('hidden');
+        } else if (b <= 60 && $app.hasClass('hidden')) {
+            $app.removeClass('hidden');
+            $view.addClass('hidden');
         }
     } else {
 
+        if (b > 7 ) { //Hide app
+            $app.removeClass('manualSwitch');
 
-        if (b > 7 && !$('#app').hasClass('hidden')) {
-            $('#app').addClass('hidden');
-            $('#view').removeClass('hidden');
-        } else if (b <= 7 && $('#app').hasClass('hidden')) {
-            $('#app').removeClass('hidden');
-            $('#view').addClass('hidden');
+            if (!$view.hasClass('manualSwitch') && $view.hasClass('hidden')) {
+                $app.addClass('hidden');
+                $view.removeClass('hidden');
+                $switchView.addClass('hide font-icon-showmobile');
+                $switchView.removeClass('font-icon-hidemobile');
+            } 
+
+        } else if (b <= 7) { //Hide view
+
+            $view.removeClass('manualSwitch');
+
+            if (!$app.hasClass('manualSwitch') && $app.hasClass('hidden') ) {
+                $app.removeClass('hidden');
+                $view.addClass('hidden');
+                $switchView.removeClass('hide font-icon-showmobile');
+                $switchView.addClass('font-icon-hidemobile');
+            } 
         }
     }
 }
+
 
 /**
 * @function onVRViewReady
