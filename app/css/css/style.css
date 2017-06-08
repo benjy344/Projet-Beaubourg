@@ -679,6 +679,24 @@ body {
   * Spin
   */
 }
+body.noGyro.mobile #js-switchView {
+  z-index: 1;
+  height: 4rem;
+  width: 4rem;
+  font-size: 4rem;
+  line-height: 2rem;
+  color: white;
+  position: absolute;
+  left: 70px;
+  text-align: center;
+  top: 20px;
+  cursor: pointer;
+  transition: all 1s;
+}
+body.noGyro.mobile #js-switchView.hide {
+  left: 20px;
+  transition: all 1s;
+}
 body #appFrame, body #view {
   position: fixed;
 }

@@ -4,22 +4,23 @@
 **/
 
 $(document).ready(function() {
-
     var testGyro = function(event) {
-        console.log(event)
         if (event.alpha) {
             hasGyro = true 
         }
         window.removeEventListener('deviceorientation', testGyro)
 
-        //VRView 
+        //VRView
         if (isHandheld) { //Mobile
+            $('body').addClass('mobile');
             if (hasGyro) {
+                $('body').removeClass('noGyro');
                 $switchView.remove();
                 window.addEventListener("deviceorientation", function (event) { 
                     processGyro(event.alpha, event.beta, event.gamma);   
                 }, true);
             } else {
+                $('body').addClass('noGyro');
                 $switchView.addClass('font-icon-hidemobile');
                 $switchView.click(function() {
                     $(".manualSwitch").removeClass("manualSwitch");
@@ -37,6 +38,7 @@ $(document).ready(function() {
             $view.addClass('hidden');
 
         } else {
+            $('body').removeClass('mobile');
             if(!inIframe) {
                 $app.remove();
                 $appFrame.attr('src', window.location);  
